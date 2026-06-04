@@ -36,6 +36,24 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: 'Bank System',
+      description: 'Complete banking application system design with transaction management',
+      tags: ['System Design', 'Finance', 'UI/UX'],
+      link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&p=f&t=jLGr8ymNClQSHL72-0',
+    },
+    {
+      title: 'Converter System',
+      description: 'Multi-purpose converter application with currency and unit conversion',
+      tags: ['System Design', 'Utility', 'Mobile'],
+      link: 'https://www.figma.com/design/HTviG6YNluJ5W8Uc1N5QxL/CONVERTER-SYSTEM?node-id=0-1&p=f&t=4H0fPzfBfzBv1hOp-0',
+    },
+    {
+      title: 'Freshly Dropped',
+      description: 'Food delivery and marketplace application design',
+      tags: ['E-Commerce', 'Mobile', 'Food Delivery'],
+      link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
+    },
+    {
       title: 'Onlook - Thesis Project',
       description: 'Comprehensive design system and UI/UX framework',
       tags: ['Figma', 'UI/UX', 'Design System'],
