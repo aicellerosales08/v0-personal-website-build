@@ -8,6 +8,7 @@ import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart } fr
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [activeTab, setActiveTab] = useState('projects')
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -19,6 +20,7 @@ export default function Portfolio() {
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Certificates', href: '#certificates' },
     { name: 'Skills', href: '#skills' },
   ]
 
@@ -122,6 +124,34 @@ export default function Portfolio() {
     { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
   ]
 
+  const certificates = [
+    {
+      title: 'I2CS Update',
+      description: 'Comprehensive cybersecurity training certification',
+      issueDate: 'Oct 18, 2025',
+    },
+    {
+      title: 'Introduction to Cybersecurity',
+      description: 'Cybersecurity fundamentals and best practices',
+      issueDate: '2025',
+    },
+    {
+      title: 'Professional Certification',
+      description: 'Industry-recognized professional development',
+      issueDate: '2025',
+    },
+    {
+      title: 'Operating Systems Basics',
+      description: 'Operating systems concepts and architecture',
+      issueDate: 'Oct 2025',
+    },
+    {
+      title: 'Linux Essentials',
+      description: 'Linux operating system fundamentals',
+      issueDate: 'Oct 2025',
+    },
+  ]
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Navigation */}
@@ -182,7 +212,12 @@ export default function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12">
+      <section id="home" className="max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12 relative">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10 opacity-5">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
+        </div>
         <div className="flex-1 space-y-8 animate-slide-in-left">
           <div className="space-y-3">
             <p className="text-pink-500 font-medium text-sm">Hello, I&apos;m</p>
@@ -396,7 +431,37 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Certificates Section */}
+      <section id="certificates" className="bg-gradient-to-b from-gray-50 to-white py-20 md:py-32">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center animate-slide-in-up">
+            Certifications & Achievements
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {certificates.map((cert, i) => (
+              <div
+                key={cert.title}
+                style={{ animationDelay: `${i * 100}ms` }}
+                className="bg-white border-2 border-purple-200 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg transition-all animate-slide-in-up group cursor-pointer"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-1">{cert.title}</h3>
+                    <p className="text-sm text-purple-600 font-medium">{cert.issueDate}</p>
+                  </div>
+                  <div className="text-3xl">🏆</div>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">{cert.description}</p>
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <p className="text-xs text-gray-500 group-hover:text-purple-600 transition-colors">
+                    ✓ Verified Credential
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
           <h2 className="text-4xl md:text-5xl font-bold text-white animate-slide-in-up">
