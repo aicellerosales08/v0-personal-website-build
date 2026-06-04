@@ -39,8 +39,9 @@ export default function Portfolio() {
   const projects = [
     {
       title: 'Bank System',
-      description: 'Complete banking application system design with transaction managementhghghghg',
+      description: 'Complete banking application system design with transaction management',
       tags: ['System Design', 'Finance', 'UI/UX'],
+      image: '/converter.jpg',
       link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&p=f&t=jLGr8ymNClQSHL72-0',
     },
     {
