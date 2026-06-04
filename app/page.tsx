@@ -43,7 +43,7 @@ export default function Portfolio() {
       tags: ['Figma', 'UI/UX', 'Design System'],
       image: '/onlook.png',
       website: 'https://onlook-livid.vercel.app/',
-    }
+    },
     {
       title: 'Bank System',
       description: 'Complete banking application system design with transaction management',
