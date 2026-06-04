@@ -8,7 +8,7 @@ import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart } fr
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [activeTab, setActiveTab] = useState('projects')
+  const [selectedCert, setSelectedCert] = useState(null)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -130,30 +130,35 @@ export default function Portfolio() {
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-green-400 to-green-600',
+      image: '/cert-cybersecurity.png',
     },
     {
       title: 'Introduction to Cybersecurity (I2CS)',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-green-400 to-green-600',
+      image: '/cert-cybersecurity.png',
     },
     {
       title: 'Operating Systems Basics',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-blue-400 to-blue-600',
+      image: '/cert-operating-systems.png',
     },
     {
       title: 'Linux Essentials',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Dec 14, 2025',
       badgeColor: 'from-blue-400 to-blue-600',
+      image: '/cert-linux.png',
     },
     {
       title: 'IT Specialist - Cybersecurity',
       issuer: 'Pearson',
       issueDate: 'Apr 30, 2026',
       badgeColor: 'from-indigo-400 to-indigo-600',
+      image: '/cert-it-specialist.png',
     },
   ]
 
@@ -448,6 +453,7 @@ export default function Portfolio() {
                 key={cert.title}
                 style={{ animationDelay: `${i * 100}ms` }}
                 className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all animate-slide-in-up group cursor-pointer border border-gray-100"
+                onClick={() => setSelectedCert(cert)}
               >
                 {/* Certificate Badge */}
                 <div className="flex justify-center mb-6">
@@ -471,12 +477,68 @@ export default function Portfolio() {
                   <p className="text-sm text-gray-600">
                     Issued by {cert.issuer}
                   </p>
+                  <p className="text-xs text-purple-600 font-medium mt-3">Click to view certificate</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Certificate Modal */}
+      {selectedCert && (
+        <div
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <h3 className="text-2xl font-bold text-gray-900">{selectedCert.title}</h3>
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            {/* Certificate Image */}
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="relative w-full h-full flex items-center justify-center">
+                <Image
+                  src={selectedCert.image}
+                  alt={selectedCert.title}
+                  width={1000}
+                  height={700}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-gray-200 p-6 flex gap-3 justify-end">
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="px-6 py-2 bg-gray-200 text-gray-900 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+              >
+                Close
+              </button>
+              <a
+                href={selectedCert.image}
+                download
+                className="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center gap-2"
+              >
+                <ExternalLink size={18} />
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
           <h2 className="text-4xl md:text-5xl font-bold text-white animate-slide-in-up">
