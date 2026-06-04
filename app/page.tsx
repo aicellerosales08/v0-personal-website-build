@@ -451,9 +451,9 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                  <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
-                    View Project <ExternalLink size={16} />
-                  </div>
+                <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
+                  View Project <ExternalLink size={16} />
+                </div>
               </div>
             </a>
           ))}
