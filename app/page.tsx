@@ -126,29 +126,34 @@ export default function Portfolio() {
 
   const certificates = [
     {
-      title: 'I2CS Update',
-      description: 'Comprehensive cybersecurity training certification',
-      issueDate: 'Oct 18, 2025',
-    },
-    {
       title: 'Introduction to Cybersecurity',
-      description: 'Cybersecurity fundamentals and best practices',
-      issueDate: '2025',
+      issuer: 'Cisco Networking Academy',
+      issueDate: 'Oct 18, 2025',
+      badgeColor: 'from-green-400 to-green-600',
     },
     {
-      title: 'Professional Certification',
-      description: 'Industry-recognized professional development',
-      issueDate: '2025',
+      title: 'Introduction to Cybersecurity (I2CS)',
+      issuer: 'Cisco Networking Academy',
+      issueDate: 'Oct 18, 2025',
+      badgeColor: 'from-green-400 to-green-600',
     },
     {
       title: 'Operating Systems Basics',
-      description: 'Operating systems concepts and architecture',
-      issueDate: 'Oct 2025',
+      issuer: 'Cisco Networking Academy',
+      issueDate: 'Oct 18, 2025',
+      badgeColor: 'from-blue-400 to-blue-600',
     },
     {
       title: 'Linux Essentials',
-      description: 'Linux operating system fundamentals',
-      issueDate: 'Oct 2025',
+      issuer: 'Cisco Networking Academy',
+      issueDate: 'Dec 14, 2025',
+      badgeColor: 'from-blue-400 to-blue-600',
+    },
+    {
+      title: 'IT Specialist - Cybersecurity',
+      issuer: 'Pearson',
+      issueDate: 'Apr 30, 2026',
+      badgeColor: 'from-indigo-400 to-indigo-600',
     },
   ]
 
@@ -432,29 +437,39 @@ export default function Portfolio() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="bg-gradient-to-b from-gray-50 to-white py-20 md:py-32">
+      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center animate-slide-in-up">
             Certifications & Achievements
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {certificates.map((cert, i) => (
               <div
                 key={cert.title}
                 style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white border-2 border-purple-200 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg transition-all animate-slide-in-up group cursor-pointer"
+                className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all animate-slide-in-up group cursor-pointer border border-gray-100"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{cert.title}</h3>
-                    <p className="text-sm text-purple-600 font-medium">{cert.issueDate}</p>
+                {/* Certificate Badge */}
+                <div className="flex justify-center mb-6">
+                  <div className={`w-24 h-24 bg-gradient-to-br ${cert.badgeColor} rounded-lg flex items-center justify-center text-white text-3xl font-bold shadow-lg transform group-hover:scale-110 transition-transform`}>
+                    ✓
                   </div>
-                  <div className="text-3xl">🏆</div>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed">{cert.description}</p>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <p className="text-xs text-gray-500 group-hover:text-purple-600 transition-colors">
-                    ✓ Verified Credential
+
+                {/* Date Badge */}
+                <div className="flex justify-center mb-4">
+                  <span className="bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    {cert.issueDate}
+                  </span>
+                </div>
+
+                {/* Certificate Info */}
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 text-balance">
+                    {cert.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Issued by {cert.issuer}
                   </p>
                 </div>
               </div>
