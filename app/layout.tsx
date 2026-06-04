@@ -10,8 +10,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Aicelle Rosales - Frontend Developer & UI/UX Designer',
+  description: 'Portfolio of Aicelle Rosales, a talented frontend developer and UI/UX designer specializing in responsive web applications and user-friendly interfaces.',
   generator: 'v0.app',
   icons: {
     icon: [
