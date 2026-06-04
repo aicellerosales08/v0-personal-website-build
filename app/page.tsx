@@ -429,9 +429,14 @@ export default function Portfolio() {
               style={{ animationDelay: `${i * 150}ms` }}
               className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all animate-slide-in-up"
             >
-              <div className="aspect-video bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center group-hover:from-purple-200 group-hover:to-pink-200 transition-colors">
-                <div className="text-6xl">✨</div>
-              </div>
+              <div className="aspect-video relative overflow-hidden">
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
               <div className="p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-4">{project.description}</p>
