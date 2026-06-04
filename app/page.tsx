@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink } from 'lucide-react'
+import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart } from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -23,32 +23,85 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    'React',
-    'Next.js',
-    'TypeScript',
-    'Tailwind CSS',
-    'UI/UX Design',
-    'Figma',
-    'Web Development',
-    'System Design',
+    { name: 'HTML', level: '95%' },
+    { name: 'CSS', level: '90%' },
+    { name: 'JavaScript', level: '85%' },
+    { name: 'Python', level: '75%' },
+    { name: 'C++', level: '70%' },
+    { name: 'PHP', level: '65%' },
+    { name: 'Figma', level: '90%' },
+    { name: 'Adobe XD', level: '85%' },
+    { name: 'Canva', level: '95%' },
   ]
 
   const projects = [
     {
-      title: 'Modern Web Application',
-      description: 'Responsive web app with React and Next.js',
-      tags: ['React', 'Next.js', 'Tailwind'],
+      title: 'Onlook - Thesis Project',
+      description: 'Comprehensive design system and UI/UX framework',
+      tags: ['Figma', 'UI/UX', 'Design System'],
+      link: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?node-id=0-1&p=f&t=CNkSAoqkofDTsk9I-0',
     },
     {
-      title: 'UI/UX Design System',
-      description: 'Comprehensive design system for digital products',
-      tags: ['Figma', 'Design', 'Components'],
+      title: 'Flutter Mobile App',
+      description: 'Cross-platform mobile application design',
+      tags: ['Flutter', 'Mobile', 'UI Design'],
+      link: 'https://www.figma.com/design/PkV6mrlKLDxl1Ny3HPUZW1/Flutter-mobile-app?node-id=0-1&p=f&t=iSvAJasEP321GKaj-0',
     },
     {
-      title: 'E-commerce Platform',
-      description: 'Full-stack e-commerce solution',
-      tags: ['Next.js', 'Database', 'Payment Integration'],
+      title: 'Aura Co. Website',
+      description: 'Modern corporate website design',
+      tags: ['Web Design', 'UI/UX', 'Figma'],
+      link: 'https://www.figma.com/design/58HwSxAIXk6U9hnIUc4NFc/Aura---Co.-Website?node-id=0-1&p=f&t=jCM8KGTrnHvm9W19-0',
     },
+    {
+      title: 'LifeHaven iOS App',
+      description: 'Health and wellness mobile application',
+      tags: ['iOS', 'Mobile', 'Health App'],
+      link: 'https://www.figma.com/design/lcpe4JHUmionm4yfgHjnZ0/LIFEHAVEN-IOS-APP?node-id=0-1&p=f&t=JaCsUwDSOA9bcute-0',
+    },
+    {
+      title: 'Pizza Mobile App',
+      description: 'Food delivery application design',
+      tags: ['Mobile App', 'E-Commerce', 'UI/UX'],
+      link: 'https://www.figma.com/design/32TNLdaicalexwMrWKmWra/PIZZA-MOBILE-APP?node-id=0-1&p=f&t=RqTLXYmj0jULqNZZ-0',
+    },
+    {
+      title: 'Digi Academia Website',
+      description: 'Educational platform web design',
+      tags: ['Web Design', 'Education', 'UI/UX'],
+      link: 'https://www.figma.com/design/9uQZnejw6o8yXbFgYxBLyU/DIGI-ACADEMIA-WEBSITE?node-id=0-1&p=f&t=MDYmfWXRw2fz8TBD-0',
+    },
+    {
+      title: 'Skincare Mobile App',
+      description: 'Beauty and skincare product application',
+      tags: ['Mobile', 'Beauty', 'UI Design'],
+      link: 'https://www.figma.com/design/HnbGL83GBrmEbUxXdlDTzY/SKINCARE-MOBILE-APP?node-id=0-1&p=f&t=ayOWQcWdiaMiR1C0-0',
+    },
+    {
+      title: 'FilmTrack Website',
+      description: 'Movie tracking and review platform',
+      tags: ['PHP', 'Web App', 'UI/UX'],
+      link: 'https://www.figma.com/design/bLes37eN9u3aa13n4X2n4b/FILMTRACK-WEBSITE-PHP?node-id=0-1&p=f&t=xNK21DHHM5u1Y183-0',
+    },
+    {
+      title: 'Travel Mobile App',
+      description: 'Travel planning and booking application',
+      tags: ['Mobile', 'Travel', 'UI Design'],
+      link: 'https://www.figma.com/design/pPCwRmSdrq87AmdbtKWzv2/TRAVEL-MOBILE-APP?node-id=0-1&p=f&t=wP5c9EjzJ7jOpFxn-0',
+    },
+    {
+      title: 'Saint Matthew System',
+      description: 'Educational management system design',
+      tags: ['System Design', 'Education', 'UI/UX'],
+      link: 'https://www.figma.com/design/XmyRcz7gL3ekjjWBP5Qhh1/SAINT-MATTHEW-SYSTEM?node-id=0-1&p=f&t=gCr3fSVO0kAjYZ7p-0',
+    },
+  ]
+
+  const socialLinks = [
+    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: 'facebook' },
+    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: 'instagram' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: 'linkedin' },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
   ]
 
   return (
@@ -143,24 +196,18 @@ export default function Portfolio() {
           <div className="flex items-center gap-6 pt-4">
             <p className="text-sm text-gray-500 font-medium">FOLLOW ME</p>
             <div className="flex gap-4">
-              <a
-                href="#"
-                className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
-              >
-                <AtSign size={20} />
-              </a>
-              <a
-                href="#"
-                className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
-              >
-                <GitBranch size={20} />
-              </a>
-              <a
-                href="#"
-                className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
-              >
-                <Mail size={20} />
-              </a>
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
+                  title={social.name}
+                >
+                  <AtSign size={20} />
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -266,16 +313,25 @@ export default function Portfolio() {
       <section id="skills" className="bg-gray-50 py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center animate-slide-in-up">
-            Skills
+            My Skills
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills.map((skill, i) => (
               <div
-                key={skill}
+                key={skill.name}
                 style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white p-6 rounded-xl border border-gray-100 text-center hover:border-purple-300 hover:shadow-lg transition-all cursor-pointer animate-slide-in-up"
+                className="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-300 hover:shadow-lg transition-all animate-slide-in-up"
               >
-                <p className="font-semibold text-gray-900">{skill}</p>
+                <div className="flex justify-between items-center mb-3">
+                  <p className="font-semibold text-gray-900">{skill.name}</p>
+                  <span className="text-sm font-bold text-purple-600">{skill.level}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500"
+                    style={{ width: skill.level }}
+                  ></div>
+                </div>
               </div>
             ))}
           </div>
@@ -287,18 +343,21 @@ export default function Portfolio() {
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 animate-slide-in-up">
           Featured Projects
         </h2>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, i) => (
-            <div
+            <a
               key={project.title}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ animationDelay: `${i * 150}ms` }}
-              className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all cursor-pointer animate-slide-in-up"
+              className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all animate-slide-in-up"
             >
               <div className="aspect-video bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center group-hover:from-purple-200 group-hover:to-pink-200 transition-colors">
-                <div className="text-6xl">🚀</div>
+                <div className="text-6xl">✨</div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-4">{project.description}</p>
                 <div className="flex gap-2 flex-wrap mb-4">
                   {project.tags.map((tag) => (
@@ -310,11 +369,11 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                <button className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
+                <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
                   View Project <ExternalLink size={16} />
-                </button>
+                </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
@@ -366,20 +425,24 @@ export default function Portfolio() {
             <div>
               <p className="font-bold mb-3">Connect</p>
             <div className="flex gap-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.facebook.com/seikii08/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Facebook">
                   <AtSign size={20} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <GitBranch size={20} />
+                <a href="https://www.instagram.com/aicelleeeeee_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Instagram">
+                  <AtSign size={20} />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Mail size={20} />
+                <a href="https://www.linkedin.com/in/aicelle-r-66298537b/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="LinkedIn">
+                  <AtSign size={20} />
+                </a>
+                <a href="https://www.tiktok.com/@aiiiiiiqt?lang=en" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="TikTok">
+                  <GitBranch size={20} />
                 </a>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
             <p>© 2024 Aicelle Rosales. All rights reserved.</p>
+            <p>Designed with ♥ in the Philippines</p>
           </div>
         </div>
       </footer>
