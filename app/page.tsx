@@ -43,7 +43,6 @@ export default function Portfolio() {
       tags: ['Figma', 'UI/UX', 'Design System'],
       image: '/onlook.png',
       website: 'https://onlook-livid.vercel.app/',
-      figma: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook',
     }
     {
       title: 'Bank System',
@@ -620,7 +619,7 @@ export default function Portfolio() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
-            <p>© 2024 Aicelle Rosales. All rights reserved.</p>
+            <p>© 2026 Aicelle Rosales. All rights reserved.</p>
             <p>Designed with ♥ in the Philippines</p>
           </div>
         </div>
