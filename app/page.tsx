@@ -38,6 +38,14 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: 'Onlook - Thesis Project',
+      description: 'Comprehensive design system and UI/UX framework',
+      tags: ['Figma', 'UI/UX', 'Design System'],
+      image: '/onlook.png',
+      link: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?node-id=0-1&p=f&t=CNkSAoqkofDTsk9I-0',
+      link: 'https://onlook-livid.vercel.app/',
+    },
+    {
       title: 'Bank System',
       description: 'Complete banking application system design with transaction management',
       tags: ['System Design', 'Finance', 'UI/UX'],
@@ -57,13 +65,6 @@ export default function Portfolio() {
       tags: ['E-Commerce', 'Mobile', 'Food Delivery'],
       image: '/freshly-dropped.png',
       link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
-    },
-    {
-      title: 'Onlook - Thesis Project',
-      description: 'Comprehensive design system and UI/UX framework',
-      tags: ['Figma', 'UI/UX', 'Design System'],
-      image: '/onlook.png',
-      link: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?node-id=0-1&p=f&t=CNkSAoqkofDTsk9I-0',
     },
     {
       title: 'Flutter Mobile App',
