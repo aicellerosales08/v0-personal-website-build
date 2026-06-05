@@ -1,17 +1,16 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const inter = Inter({
   subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: 'Aicelle Rosales - Frontend Developer & UI/UX Designer',
-  description: 'Portfolio of Aicelle Rosales, a talented frontend developer and UI/UX designer specializing in responsive web applications and user-friendly interfaces.',
+  description:
+    'Portfolio of Aicelle Rosales, a talented frontend developer and UI/UX designer specializing in responsive web applications and user-friendly interfaces.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -38,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en">
+      <body className={`${inter.className} antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
