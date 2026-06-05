@@ -731,4 +731,4 @@ export default function Portfolio() {
     </div>
   )
 }
-bakit error yung sa social media
+
