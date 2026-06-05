@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown, ExternalLink, Mail } from 'lucide-react'
-import { Facebook, Instagram, Linkedin, Music2, AtSign, GitBranch } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, , Tiktok, Music2, AtSign, GitBranch } from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -687,53 +687,57 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-6xl mx-auto px-6">
+      
+          {/* GRID SECTION */}
           <div className="grid md:grid-cols-3 gap-8 mb-8">
+      
+            {/* LEFT */}
             <div>
               <p className="font-bold mb-2">Aicelle Rosales</p>
-              <p className="text-gray-400 text-sm">Frontend Developer & UI/UX Designer</p>
+              <p className="text-gray-400 text-sm">
+                Frontend Developer & UI/UX Designer
+              </p>
             </div>
+      
+            {/* MIDDLE */}
             <div>
               <p className="font-bold mb-3">Links</p>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Projects
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Skills
-                  </a>
-                </li>
+                <li><a href="#home" className="hover:text-white">Home</a></li>
+                <li><a href="#projects" className="hover:text-white">Projects</a></li>
+                <li><a href="#skills" className="hover:text-white">Skills</a></li>
               </ul>
             </div>
-          <div className="flex gap-4">
-          {socialLinks.map((social) => {
-            const Icon = icons[social.icon]
-        
-            return (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-                title={social.name}
-              >
-                <Icon size={20} />
-              </a>
-            )
-          })}
-        </div>
+      
+            {/* RIGHT - SOCIAL ICONS */}
+            <div className="flex gap-4">
+              {socialLinks.map((social) => {
+                const Icon = icons[social.icon]
+                if (!Icon) return null
+      
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                    title={social.name}
+                  >
+                    <Icon size={20} />
+                  </a>
+                )
+              })}
+            </div>
+      
+          </div>
+      
+          {/* BOTTOM TEXT */}
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
             <p>© 2026 Aicelle Rosales. All rights reserved.</p>
             <p>Designed with ♥ in the Philippines</p>
           </div>
+      
         </div>
       </footer>
     </div>
