@@ -25,15 +25,15 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%',  image: '/html-5.png' },
-    { name: 'CSS', level: '90%', image: '/CSS-3.png'},
-    { name: 'JavaScript', level: '55%' },
-    { name: 'Python', level: '75%' },
-    { name: 'C++', level: '50%' },
-    { name: 'PHP', level: '65%' },
-    { name: 'Figma', level: '100%' },
-    { name: 'Adobe XD', level: '85%' },
-    { name: 'Canva', level: '100%' },
+    { name: 'HTML', level: '95%', image: '/html-5.png' },
+    { name: 'CSS', level: '90%', image: '/css-3.png' },
+    { name: 'JavaScript', level: '85%', image: '/java-script.png' },
+    { name: 'Python', level: '75%', image: '/python.png' },
+    { name: 'C++', level: '70%', image: '/c-.png' },
+    { name: 'PHP', level: '65%', image: '/php.png' },
+    { name: 'Figma', level: '90%', image: '/figma.png' },
+    { name: 'Adobe XD', level: '85%', image: '/xd.png' },
+    { name: 'Canva', level: '95%', image: '/palette.png' },
   ]
 
   const projects = [
@@ -396,10 +396,25 @@ export default function Portfolio() {
                 style={{ animationDelay: `${i * 100}ms` }}
                 className="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-300 hover:shadow-lg transition-all animate-slide-in-up"
               >
-                <div className="flex justify-between items-center mb-3">
-                  <p className="font-semibold text-gray-900">{skill.name}</p>
-                  <span className="text-sm font-bold text-purple-600">{skill.level}</span>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={skill.image}
+                    alt={skill.name}
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+              
+                  <p className="font-semibold text-gray-900">
+                    {skill.name}
+                  </p>
                 </div>
+              
+                <span className="text-sm font-bold text-purple-600">
+                  {skill.level}
+                </span>
+              </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500"
