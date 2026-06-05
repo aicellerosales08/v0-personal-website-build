@@ -607,10 +607,23 @@ export default function Portfolio() {
           <p className="text-xl text-white/90 animate-slide-in-up">
             I&apos;m always interested in hearing about new projects and opportunities.
           </p>
-          <button className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-2 animate-slide-in-up">
-            Get In Touch
-            <Mail size={20} />
-          </button>
+          <section id="contact" className="py-20 bg-white">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+              <h2 className="text-4xl font-bold mb-4">Contact Me</h2>
+          
+              <p className="text-gray-600 mb-8">
+                Feel free to reach out for collaborations, projects, or opportunities.
+              </p>
+          
+              <a
+                href="aicellerosales08@gmail.com"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition"
+              >
+                <Mail size={20} />
+                aicellerosales08@gmail.com
+              </a>
+            </div>
+          </section>
         </div>
       </section>
 
