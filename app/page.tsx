@@ -43,6 +43,7 @@ export default function Portfolio() {
       tags: ['Figma', 'UI/UX', 'Design System'],
       image: '/onlook.png',
       website: 'https://onlook-livid.vercel.app/',
+      figma: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?t=9Y2YU2dMUX2gJL7T-0',
     },
     {
       title: 'Bank System',
@@ -450,9 +451,33 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
-                  View Project <ExternalLink size={16} />
-                </div>
+                {project.title === 'Onlook - Thesis Project' ? (
+                  <div className="flex gap-2 mt-4">
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-600 font-medium text-sm"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View Website
+                    </a>
+                
+                    <a
+                      href={project.figma}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-pink-600 font-medium text-sm"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View Figma
+                    </a>
+                  </div>
+                ) : (
+                  <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
+                    View Project <ExternalLink size={16} />
+                  </div>
+                )}
               </div>
             </a>
           ))}
