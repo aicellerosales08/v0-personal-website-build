@@ -599,25 +599,75 @@ export default function Portfolio() {
           </div>
         </div>
       )}
-      <div className="bg-white rounded-3xl p-8 border border-pink-100 shadow-sm flex flex-col justify-center items-center text-center">
+      {/* Contact Section */}
+      <section id="contact" className="py-24 bg-[#fdf7f9]">
+        <div className="max-w-6xl mx-auto px-6">
       
-        <h3 className="text-3xl font-semibold text-gray-900 mb-4">
-          Send Me a Message
-        </h3>
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">
+              Contact
+            </h2>
       
-        <p className="text-gray-500 mb-8 leading-relaxed">
-          Interested in working together?  
-          Click the button below and send me an email directly.
-        </p>
+            <p className="text-gray-500 text-lg">
+              Let’s work together and build something beautiful.
+            </p>
+          </div>
       
-        <a
-          href="mailto:aicellerosales08@gmail.com"
-          className="w-full bg-gray-900 text-white py-4 rounded-xl hover:opacity-90 transition text-center font-medium"
-        >
-          Send Email →
-        </a>
+          <div className="grid md:grid-cols-2 gap-10 items-center">
       
-      </div>
+            {/* LEFT SIDE */}
+            <div className="space-y-6">
+      
+              <div>
+                <h3 className="text-3xl font-semibold text-gray-900 mb-3">
+                  Let’s Work <span className="text-pink-400">Together</span>
+                </h3>
+      
+                <p className="text-gray-500 leading-relaxed">
+                  Interested in working together? Feel free to contact me anytime.
+                </p>
+              </div>
+      
+              {/* EMAIL */}
+              <a
+                href="mailto:aicellerosales08@gmail.com"
+                className="flex items-center gap-4 bg-white border border-pink-100 rounded-2xl p-5 hover:shadow-md transition"
+              >
+                <div className="w-14 h-14 rounded-xl bg-pink-50 flex items-center justify-center">
+                  <Mail className="text-pink-400" size={24} />
+                </div>
+      
+                <div>
+                  <p className="text-sm text-gray-400">Email</p>
+                  <p className="font-medium text-gray-800">
+                    aicellerosales08@gmail.com
+                  </p>
+                </div>
+              </a>
+      
+            </div>
+      
+            {/* RIGHT SIDE */}
+            <div className="bg-white rounded-3xl p-8 border border-pink-100 shadow-sm flex flex-col justify-center items-center text-center">
+      
+              <h3 className="text-3xl font-semibold text-gray-900 mb-4">
+                Send Me a Message
+              </h3>
+      
+              <p className="text-gray-500 mb-8 leading-relaxed">
+                Click the button below and send me an email directly.
+              </p>
+      
+              <a
+                href="mailto:aicellerosales08@gmail.com"
+                className="w-full bg-gray-900 text-white py-4 rounded-xl hover:opacity-90 transition text-center font-medium"
+              >
+                Send Email →
+              </a>
+      
+            </div>
+      
+          </div>
         </div>
       </section>
 
