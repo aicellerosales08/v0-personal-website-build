@@ -1,10 +1,21 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, ExternalLink, Mail, Music } from 'lucide-react'
-import { Facebook, Instagram, Linkedin } from 'lucide-react'
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ExternalLink,
+  Mail,
+  Music
+} from 'lucide-react'
+
+import {
+  Facebook,
+  Instagram,
+  Linkedin
+} from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -139,7 +150,6 @@ export default function Portfolio() {
     { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
   ]
 
-  // ✅ FIXED ICONS ONLY
   const icons = {
     facebook: Facebook,
     instagram: Instagram,
@@ -150,7 +160,7 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
 
-      {/* SOCIAL ICONS FIX */}
+      {/* SOCIAL ICONS FIXED */}
       <div className="flex gap-4">
         {socialLinks.map((social) => {
           const Icon = icons[social.icon]
@@ -162,7 +172,7 @@ export default function Portfolio() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-100 rounded-full hover:bg-purple-100"
+              className="p-3 bg-gray-100 rounded-full hover:bg-purple-100 transition"
             >
               <Icon size={20} />
             </a>
