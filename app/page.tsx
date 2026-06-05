@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart } from 'lucide-react'
+import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart, Facebook, Instagram, Linkedin, Music2 } from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -35,6 +35,8 @@ export default function Portfolio() {
     { name: 'Adobe XD', level: '85%', image: '/xd.png' },
     { name: 'Canva', level: '95%', image: '/palette.png' },
   ]
+
+
 
   const projects = [
     {
@@ -270,18 +272,21 @@ export default function Portfolio() {
           <div className="flex items-center gap-6 pt-4">
             <p className="text-sm text-gray-500 font-medium">FOLLOW ME</p>
             <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
-                  title={social.name}
-                >
-                  <AtSign size={20} />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const Icon = icons[social.icon]
+              
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
+                  >
+                    <Icon size={20} />
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>
