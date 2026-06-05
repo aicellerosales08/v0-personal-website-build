@@ -140,6 +140,13 @@ export default function Portfolio() {
     { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
   ]
 
+  const icons = {
+  facebook: Facebook,
+  instagram: Instagram,
+  linkedin: Linkedin,
+  tiktok: Music2,
+  }
+
   const certificates = [
     {
       title: 'Introduction to Cybersecurity',
