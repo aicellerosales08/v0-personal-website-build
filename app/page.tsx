@@ -607,21 +607,190 @@ export default function Portfolio() {
           <p className="text-xl text-white/90 animate-slide-in-up">
             I&apos;m always interested in hearing about new projects and opportunities.
           </p>
-          <section id="contact" className="py-20 bg-white">
-            <div className="max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-4xl font-bold mb-4">Contact Me</h2>
+          <section id="contact" className="py-24 bg-[#fdf7f9]">
+            <div className="max-w-6xl mx-auto px-6">
           
-              <p className="text-gray-600 mb-8">
-                Feel free to reach out for collaborations, projects, or opportunities.
-              </p>
+              {/* Title */}
+              <div className="text-center mb-16">
+                <h2 className="text-5xl font-bold text-gray-900 mb-4">
+                  Contact
+                </h2>
           
-              <a
-                href="aicellerosales08@gmail.com"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition"
-              >
-                <Mail size={20} />
-                aicellerosales08@gmail.com
-              </a>
+                <p className="text-gray-500 text-lg">
+                  Let’s work together and build something beautiful.
+                </p>
+              </div>
+          
+              <div className="grid md:grid-cols-2 gap-10 items-start">
+          
+                {/* LEFT SIDE */}
+                <div className="space-y-8">
+          
+                  <div>
+                    <h3 className="text-3xl font-semibold text-gray-900 mb-3">
+                      Let’s Work <span className="text-pink-400">Together</span>
+                    </h3>
+          
+                    <p className="text-gray-500 leading-relaxed">
+                      Have a project in mind? Feel free to contact me anytime.
+                      I’d love to hear your ideas and collaborate with you.
+                    </p>
+                  </div>
+          
+                  {/* CONTACT CARDS */}
+                  <div className="space-y-5">
+          
+                    {/* EMAIL */}
+                    <a
+                      href="mailto:aicellerosales08@gmail.com"
+                      className="flex items-center gap-4 bg-white border border-pink-100 rounded-2xl p-5 hover:shadow-md transition"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-pink-50 flex items-center justify-center">
+                        <Mail className="text-pink-400" size={24} />
+                      </div>
+          
+                      <div>
+                        <p className="text-sm text-gray-400">Email</p>
+                        <p className="font-medium text-gray-800">
+                          aicellerosales08@gmail.com
+                        </p>
+                      </div>
+                    </a>
+          
+                    {/* PHONE */}
+                    <div className="flex items-center gap-4 bg-white border border-pink-100 rounded-2xl p-5">
+                      <div className="w-14 h-14 rounded-xl bg-pink-50 flex items-center justify-center">
+                        📞
+                      </div>
+          
+                      <div>
+                        <p className="text-sm text-gray-400">Phone</p>
+                        <p className="font-medium text-gray-800">
+                          +63 991 889 4648
+                        </p>
+                      </div>
+                    </div>
+          
+                    {/* LOCATION */}
+                    <div className="flex items-center gap-4 bg-white border border-pink-100 rounded-2xl p-5">
+                      <div className="w-14 h-14 rounded-xl bg-pink-50 flex items-center justify-center">
+                        📍
+                      </div>
+          
+                      <div>
+                        <p className="text-sm text-gray-400">Location</p>
+                        <p className="font-medium text-gray-800">
+                          Philippines
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+          
+                  {/* SOCIALS */}
+                  <div className="flex gap-4 pt-2">
+          
+                    <a
+                      href="https://www.linkedin.com/in/aicelle-r-66298537b/"
+                      target="_blank"
+                      className="w-12 h-12 rounded-xl bg-gray-900 text-white flex items-center justify-center hover:scale-105 transition"
+                    >
+                      in
+                    </a>
+          
+                    <a
+                      href="https://www.facebook.com/seikii08/"
+                      target="_blank"
+                      className="w-12 h-12 rounded-xl bg-gray-900 text-white flex items-center justify-center hover:scale-105 transition"
+                    >
+                      f
+                    </a>
+          
+                    <a
+                      href="https://www.instagram.com/aicelleeeeee_/"
+                      target="_blank"
+                      className="w-12 h-12 rounded-xl bg-gray-900 text-white flex items-center justify-center hover:scale-105 transition"
+                    >
+                      ig
+                    </a>
+          
+                    <a
+                      href="https://www.tiktok.com/@aiiiiiiqt"
+                      target="_blank"
+                      className="w-12 h-12 rounded-xl bg-gray-900 text-white flex items-center justify-center hover:scale-105 transition"
+                    >
+                      t
+                    </a>
+          
+                  </div>
+                </div>
+          
+                {/* RIGHT SIDE */}
+                <div className="bg-white rounded-3xl p-8 border border-pink-100 shadow-sm">
+          
+                  <form className="space-y-5">
+          
+                    <div className="grid md:grid-cols-2 gap-4">
+          
+                      <div>
+                        <label className="text-sm text-gray-600 mb-2 block">
+                          Name
+                        </label>
+          
+                        <input
+                          type="text"
+                          placeholder="Your name"
+                          className="w-full px-4 py-4 rounded-xl border border-pink-100 bg-[#fdf7f9] outline-none focus:border-pink-300"
+                        />
+                      </div>
+          
+                      <div>
+                        <label className="text-sm text-gray-600 mb-2 block">
+                          Email
+                        </label>
+          
+                        <input
+                          type="email"
+                          placeholder="your@email.com"
+                          className="w-full px-4 py-4 rounded-xl border border-pink-100 bg-[#fdf7f9] outline-none focus:border-pink-300"
+                        />
+                      </div>
+          
+                    </div>
+          
+                    <div>
+                      <label className="text-sm text-gray-600 mb-2 block">
+                        Subject
+                      </label>
+          
+                      <input
+                        type="text"
+                        placeholder="Project inquiry"
+                        className="w-full px-4 py-4 rounded-xl border border-pink-100 bg-[#fdf7f9] outline-none focus:border-pink-300"
+                      />
+                    </div>
+          
+                    <div>
+                      <label className="text-sm text-gray-600 mb-2 block">
+                        Message
+                      </label>
+          
+                      <textarea
+                        rows="6"
+                        placeholder="Tell me about your project..."
+                        className="w-full px-4 py-4 rounded-xl border border-pink-100 bg-[#fdf7f9] outline-none focus:border-pink-300 resize-none"
+                      ></textarea>
+                    </div>
+          
+                    <button
+                      type="submit"
+                      className="w-full bg-gray-900 text-white py-4 rounded-xl hover:opacity-90 transition"
+                    >
+                      Send Message →
+                    </button>
+          
+                  </form>
+                </div>
+              </div>
             </div>
           </section>
         </div>
