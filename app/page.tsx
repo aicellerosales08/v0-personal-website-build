@@ -161,7 +161,7 @@ export default function Portfolio() {
       issueDate: 'Dec 14, 2025',
       badgeColor: 'from-blue-400 to-blue-600',
       image: '/cert-linux.png',
-      badge: '/LINUXpng',
+      badge: '/LINUX.png',
     },
     {
       title: 'IT Specialist - Cybersecurity',
