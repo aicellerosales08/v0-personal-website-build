@@ -17,7 +17,6 @@
     "next": "16.2.6",
     "react": "^19",
     "react-dom": "^19",
-@@ -30,4 +30,4 @@
     "tailwindcss": "^4.2.0",
     "typescript": "5.7.3"
   }
