@@ -3,12 +3,31 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, AtSign, ExternalLink } from 'lucide-react'
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  ExternalLink, 
+  Facebook, 
+  Instagram, 
+  Linkedin, 
+  Globe 
+} from 'lucide-react'
+
+// TypeScript definition para sa certificates
+interface Certificate {
+  title: string;
+  issuer: string;
+  issueDate: string;
+  badgeColor: string;
+  image: string;
+  badge: string;
+}
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [selectedCert, setSelectedCert] = useState<any>(null)
+  const [selectedCert, setSelectedCert] = useState<Certificate | null>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -132,13 +151,13 @@ export default function Portfolio() {
   ]
 
   const socialLinks = [
-    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: 'facebook' },
-    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: 'instagram' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: 'linkedin' },
-    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
+    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: Facebook },
+    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: Instagram },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: Linkedin },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: Globe }, // Fallback icon para sa TikTok
   ]
 
-  const certificates = [
+  const certificates: Certificate[] = [
     {
       title: 'Introduction to Cybersecurity',
       issuer: 'Cisco Networking Academy',
@@ -174,7 +193,7 @@ export default function Portfolio() {
   ]
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
         <h1 className="font-bold text-xl tracking-tight text-gray-900">
@@ -192,15 +211,17 @@ export default function Portfolio() {
               {link.name}
             </a>
           ))}
-          <button className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+          <button type="button" className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
             Contact Me
           </button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
+          type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          aria-label="Toggle Menu"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -219,7 +240,7 @@ export default function Portfolio() {
               {link.name}
             </a>
           ))}
-          <button className="w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+          <button type="button" className="w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
             Contact Me
           </button>
         </div>
@@ -227,13 +248,12 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section id="home" className="max-w-6xl mx-auto px-6 pt-32 pb-20 md:py-40 flex flex-col md:flex-row items-center gap-12 relative">
-        {/* Background decoration */}
         <div className="absolute inset-0 -z-10 opacity-5">
           <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="flex-1 space-y-8 animate-slide-in-left">
+        <div className="flex-1 space-y-8">
           <div className="space-y-3">
             <p className="text-pink-500 font-medium text-sm">Hello, I&apos;m</p>
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 text-balance">
@@ -251,12 +271,12 @@ export default function Portfolio() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <button className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group">
+            <button type="button" className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group">
               <span>Download CV</span>
-              <span className="group-hover:translate-y-1 transition-transform">↓</span>
+              <span className="group-hover:translate-y-1 transition-transform">&darr;</span>
             </button>
             <a href="#projects" className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 transition-colors text-center">
-              View Work →
+              View Work &rarr;
             </a>
           </div>
 
@@ -264,38 +284,38 @@ export default function Portfolio() {
           <div className="flex items-center gap-6 pt-4">
             <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
             <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
-                  title={social.name}
-                >
-                  <AtSign size={20} />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const IconComponent = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
+                    title={social.name}
+                  >
+                    <IconComponent size={20} />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* Profile Image Column */}
+        {/* Profile Image */}
         <div className="flex-1 relative w-full max-w-md mx-auto">
-          {/* Decorative glow background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60 animate-glow"></div>
-          
-          {/* Profile image container */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60"></div>
           <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl mx-auto w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
             <Image
               src="/profile.jpg"
               alt="Aicelle Rosales"
               fill
               className="object-cover"
+              priority
             />
           </div>
 
-          {/* Stat badges */}
           <div className="absolute top-8 right-4 z-20 bg-white rounded-2xl px-4 py-3 shadow-lg border border-gray-100 text-center min-w-[70px]">
             <p className="font-bold text-lg text-gray-900">4+</p>
             <p className="text-xs text-gray-600">Years</p>
@@ -328,7 +348,7 @@ export default function Portfolio() {
       {/* About Section */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 animate-slide-in-left">
+          <div className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">About Me</h2>
             <p className="text-gray-600 text-lg leading-relaxed">
               I&apos;m an Information Technology graduate with a passion for creating beautiful and functional digital experiences. With expertise in web development and UI/UX design, I transform ideas into elegant solutions that users love.
@@ -348,24 +368,24 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="space-y-6 animate-slide-in-right">
+          <div className="space-y-6">
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">What I Do</h3>
               <ul className="space-y-3">
                 <li className="flex gap-3 items-start">
-                  <span className="text-purple-600 font-bold mt-1">•</span>
+                  <span className="text-purple-600 font-bold mt-1">&bull;</span>
                   <span className="text-gray-700">Develop responsive web applications</span>
                 </li>
                 <li className="flex gap-3 items-start">
-                  <span className="text-pink-600 font-bold mt-1">•</span>
+                  <span className="text-pink-600 font-bold mt-1">&bull;</span>
                   <span className="text-gray-700">Design user-friendly interfaces</span>
                 </li>
                 <li className="flex gap-3 items-start">
-                  <span className="text-purple-600 font-bold mt-1">•</span>
+                  <span className="text-purple-600 font-bold mt-1">&bull;</span>
                   <span className="text-gray-700">Collaborate with teams</span>
                 </li>
                 <li className="flex gap-3 items-start">
-                  <span className="text-pink-600 font-bold mt-1">•</span>
+                  <span className="text-pink-600 font-bold mt-1">&bull;</span>
                   <span className="text-gray-700">Create design systems</span>
                 </li>
               </ul>
@@ -381,10 +401,9 @@ export default function Portfolio() {
             My Skills
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill, i) => (
+            {skills.map((skill) => (
               <div
                 key={skill.name}
-                style={{ animationDelay: `${i * 100}ms` }}
                 className="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-300 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
@@ -396,13 +415,9 @@ export default function Portfolio() {
                       height={40}
                       className="object-contain"
                     />
-                    <p className="font-semibold text-gray-900">
-                      {skill.name}
-                    </p>
+                    <p className="font-semibold text-gray-900">{skill.name}</p>
                   </div>
-                  <span className="text-sm font-bold text-purple-600">
-                    {skill.level}
-                  </span>
+                  <span className="text-sm font-bold text-purple-600">{skill.level}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
@@ -422,10 +437,9 @@ export default function Portfolio() {
           Featured Projects
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <div
               key={project.title}
-              style={{ animationDelay: `${i * 150}ms` }}
               className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
             >
               <div className="aspect-video relative overflow-hidden bg-gray-100">
@@ -496,15 +510,13 @@ export default function Portfolio() {
             Certifications & Achievements
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert, i) => (
+            {certificates.map((cert) => (
               <div
                 key={cert.title}
-                style={{ animationDelay: `${i * 100}ms` }}
                 className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all group cursor-pointer border border-gray-100 flex flex-col justify-between"
                 onClick={() => setSelectedCert(cert)}
               >
                 <div>
-                  {/* Certificate Badge */}
                   <div className="flex justify-center mb-6">
                     <div className="relative w-24 h-24 transform group-hover:scale-110 transition-transform">
                       <Image
@@ -516,7 +528,6 @@ export default function Portfolio() {
                     </div>
                   </div>
 
-                  {/* Date Badge */}
                   <div className="flex justify-center mb-4">
                     <span className="bg-gray-900 text-white px-4 py-1 rounded-full text-sm font-semibold">
                       {cert.issueDate}
@@ -524,7 +535,6 @@ export default function Portfolio() {
                   </div>
                 </div>
 
-                {/* Certificate Info */}
                 <div className="text-center mt-4">
                   <h3 className="text-lg font-bold text-gray-900 mb-2 text-balance">
                     {cert.title}
@@ -543,7 +553,7 @@ export default function Portfolio() {
       {/* Certificate Modal */}
       {selectedCert && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedCert(null)}
         >
           <div
@@ -554,14 +564,16 @@ export default function Portfolio() {
             <div className="flex justify-between items-center p-6 border-b border-gray-200">
               <h3 className="text-2xl font-bold text-gray-900">{selectedCert.title}</h3>
               <button
+                type="button"
                 onClick={() => setSelectedCert(null)}
                 className="text-gray-600 hover:text-gray-900 transition-colors"
+                aria-label="Close Modal"
               >
                 <X size={28} />
               </button>
             </div>
 
-            {/* Certificate Image Body */}
+            {/* Body */}
             <div className="flex-1 overflow-y-auto p-6 bg-gray-50 flex items-center justify-center min-h-[300px]">
               <div className="relative w-full h-[60vh]">
                 <Image
@@ -576,6 +588,7 @@ export default function Portfolio() {
             {/* Footer */}
             <div className="border-t border-gray-200 p-6 flex justify-end">
               <button
+                type="button"
                 onClick={() => setSelectedCert(null)}
                 className="px-6 py-2 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition-colors"
               >
