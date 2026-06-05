@@ -1,20 +1,36 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { 
   Menu, 
   X, 
   ChevronDown, 
   ExternalLink, 
+  Mail,
   Facebook, 
   Instagram, 
   Linkedin, 
   Globe 
 } from 'lucide-react'
 
-// TypeScript definition para sa certificates
+// TypeScript definitions para sa strict type checking
+interface Skill {
+  name: string;
+  level: string;
+  image: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  website?: string;
+  figma?: string;
+  link?: string;
+}
+
 interface Certificate {
   title: string;
   issuer: string;
@@ -43,7 +59,7 @@ export default function Portfolio() {
     { name: 'Skills', href: '#skills' },
   ]
 
-  const skills = [
+  const skills: Skill[] = [
     { name: 'HTML', level: '95%', image: '/html-5.png' },
     { name: 'CSS', level: '90%', image: '/css-3.png' },
     { name: 'JavaScript', level: '85%', image: '/java-script.png' },
@@ -55,7 +71,7 @@ export default function Portfolio() {
     { name: 'Canva', level: '95%', image: '/palette.png' },
   ]
 
-  const projects = [
+  const projects: Project[] = [
     {
       title: 'Onlook - Thesis Project',
       description: 'A web-based collaborative system designed to monitor, report, and assist missing and cognitively impaired individuals. Features include case management, incident mapping, real-time reporting, and data-driven analytics to support faster response and community collaboration.',
@@ -196,9 +212,15 @@ export default function Portfolio() {
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center transition-all ${scrollY > 20 ? 'bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm' : 'bg-transparent'}`}>
-        <h1 className="font-bold text-xl tracking-tight text-gray-900">
-          AR<span className="text-purple-600">icelle</span>
-        </h1>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+            AR
+          </div>
+          <div className="hidden sm:block">
+            <p className="font-semibold text-sm text-gray-900">Aicelle</p>
+            <p className="text-xs text-gray-500">Front-End Developer / UI/UX Designer</p>
+          </div>
+        </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
@@ -394,7 +416,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* Skills Section (Inayos Dito) */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
@@ -408,13 +430,14 @@ export default function Portfolio() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <Image
-                      src={skill.image}
-                      alt={skill.name}
-                      width={40}
-                      height={40}
-                      className="object-contain"
-                    />
+                    <div className="relative w-10 h-10">
+                      <Image
+                        src={skill.image}
+                        alt={skill.name}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                     <p className="font-semibold text-gray-900">{skill.name}</p>
                   </div>
                   <span className="text-sm font-bold text-purple-600">{skill.level}</span>
@@ -466,7 +489,7 @@ export default function Portfolio() {
                   </div>
                 </div>
                 
-                <div className="pt-4 border-t border-gray-50">
+                <div className="pt-4 border-t border-gray-100">
                   {project.title === 'Onlook - Thesis Project' ? (
                     <div className="flex gap-4">
                       <a
@@ -586,7 +609,7 @@ export default function Portfolio() {
             </div>
 
             {/* Footer */}
-            <div className="border-t border-gray-200 p-6 flex justify-end">
+            <div className="border-t border-gray-200 p-6 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setSelectedCert(null)}
@@ -594,10 +617,78 @@ export default function Portfolio() {
               >
                 Close
               </button>
+              <a
+                href={selectedCert.image}
+                download
+                className="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center gap-2"
+              >
+                <ExternalLink size={18} />
+                Download
+              </a>
             </div>
           </div>
         </div>
       )}
+
+      {/* Get In Touch */}
+      <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-32">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
+            Let&apos;s Create Something Amazing
+          </h2>
+          <p className="text-xl text-white/90">
+            I&apos;m always interested in hearing about new projects and opportunities.
+          </p>
+          <button type="button" className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-2">
+            Get In Touch
+            <Mail size={20} />
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <p className="font-bold mb-2">Aicelle Rosales</p>
+              <p className="text-gray-400 text-sm">Frontend Developer & UI/UX Designer</p>
+            </div>
+            <div>
+              <p className="font-bold mb-3">Links</p>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
+                <li><a href="#projects" className="hover:text-white transition-colors">Projects</a></li>
+                <li><a href="#skills" className="hover:text-white transition-colors">Skills</a></li>
+              </ul>
+            </div>
+            <div>
+              <p className="font-bold mb-3">Connect</p>
+              <div className="flex gap-4">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a 
+                      key={social.name} 
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-gray-400 hover:text-white transition-colors" 
+                      title={social.name}
+                    >
+                      <Icon size={20} />
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
+            <p>&copy; 2026 Aicelle Rosales. All rights reserved.</p>
+            <p>Designed with &hearts; in the Philippines</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
