@@ -148,14 +148,6 @@ export default function Portfolio() {
       badge: '/INTRO_CYBER.png',
     },
     {
-      title: 'Introduction to Cybersecurity (I2CS)',
-      issuer: 'Cisco Networking Academy',
-      issueDate: 'Oct 18, 2025',
-      badgeColor: 'from-green-400 to-green-600',
-      image: '/cert-cybersecurity.png',
-      badge: '/INTRO_CYBER.png',
-    },
-    {
       title: 'Operating Systems Basics',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
