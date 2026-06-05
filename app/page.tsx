@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Facebook, Instagram, Linkedin, Music2 } from 'lucide-react'
+import { Menu, X, ChevronDown, ExternalLink, Mail } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Music2, AtSign, GitBranch } from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -711,24 +712,24 @@ export default function Portfolio() {
                 </li>
               </ul>
             </div>
-            <div>
-              <p className="font-bold mb-3">Connect</p>
-            <div className="flex gap-4">
-                <a href="https://www.facebook.com/seikii08/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Facebook">
-                  <AtSign size={20} />
-                </a>
-                <a href="https://www.instagram.com/aicelleeeeee_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Instagram">
-                  <AtSign size={20} />
-                </a>
-                <a href="https://www.linkedin.com/in/aicelle-r-66298537b/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="LinkedIn">
-                  <AtSign size={20} />
-                </a>
-                <a href="https://www.tiktok.com/@aiiiiiiqt?lang=en" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="TikTok">
-                  <GitBranch size={20} />
-                </a>
-              </div>
-            </div>
-          </div>
+          <div className="flex gap-4">
+          {socialLinks.map((social) => {
+            const Icon = icons[social.icon]
+        
+            return (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                title={social.name}
+              >
+                <Icon size={20} />
+              </a>
+            )
+          })}
+        </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
             <p>© 2026 Aicelle Rosales. All rights reserved.</p>
             <p>Designed with ♥ in the Philippines</p>
