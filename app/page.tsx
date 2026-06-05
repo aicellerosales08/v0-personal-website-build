@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown, ExternalLink, Mail } from 'lucide-react'
-import { Facebook, Instagram, Linkedin, , Tiktok, Music2, AtSign, GitBranch } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Music2, AtSign, GitBranch } from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
