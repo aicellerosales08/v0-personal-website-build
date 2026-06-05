@@ -27,13 +27,13 @@ export default function Portfolio() {
   const skills = [
     { name: 'HTML', level: '95%' },
     { name: 'CSS', level: '90%' },
-    { name: 'JavaScript', level: '85%' },
+    { name: 'JavaScript', level: '55%' },
     { name: 'Python', level: '75%' },
-    { name: 'C++', level: '70%' },
+    { name: 'C++', level: '50%' },
     { name: 'PHP', level: '65%' },
-    { name: 'Figma', level: '90%' },
+    { name: 'Figma', level: '100%' },
     { name: 'Adobe XD', level: '85%' },
-    { name: 'Canva', level: '95%' },
+    { name: 'Canva', level: '100%' },
   ]
 
   const projects = [
@@ -184,7 +184,7 @@ export default function Portfolio() {
             </div>
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">Designer</p>
+              <p className="text-xs text-gray-500">FrontEnd Developer/UI/UX Designer</p>
             </div>
           </div>
 
