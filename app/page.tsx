@@ -39,7 +39,7 @@ export default function Portfolio() {
   const projects = [
     {
       title: 'Onlook - Thesis Project',
-description: 'A web-based collaborative system designed to monitor, report, and assist missing and cognitively impaired individuals. Features include case management, incident mapping, real-time reporting, and data-driven analytics to support faster response and community collaboration.',
+      description: 'A web-based collaborative system designed to monitor, report, and assist missing and cognitively impaired individuals. Features include case management, incident mapping, real-time reporting, and data-driven analytics to support faster response and community collaboration.',
       tags: ['Figma', 'UI/UX', 'Design System'],
       image: '/onlook.png',
       website: 'https://onlook-livid.vercel.app/',
