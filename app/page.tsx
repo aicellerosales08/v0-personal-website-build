@@ -25,8 +25,8 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%' },
-    { name: 'CSS', level: '90%' },
+    { name: 'HTML', level: '95%',  image: '/html-5.png' },
+    { name: 'CSS', level: '90%', image: '/CSS-3.png'},
     { name: 'JavaScript', level: '55%' },
     { name: 'Python', level: '75%' },
     { name: 'C++', level: '50%' },
@@ -184,7 +184,7 @@ export default function Portfolio() {
             </div>
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">FrontEnd Developer/UI/UX Designer</p>
+              <p className="text-xs text-gray-500">Front-End Developer/UI/UX Designer</p>
             </div>
           </div>
 
