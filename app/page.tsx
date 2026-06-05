@@ -154,7 +154,7 @@ export default function Portfolio() {
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: Facebook },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: Instagram },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: Linkedin },
-    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: Globe }, // Fallback icon para sa TikTok
+    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: Globe },
   ]
 
   const certificates: Certificate[] = [
@@ -195,7 +195,7 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
+      <nav className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center transition-all ${scrollY > 20 ? 'bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm' : 'bg-transparent'}`}>
         <h1 className="font-bold text-xl tracking-tight text-gray-900">
           AR<span className="text-purple-600">icelle</span>
         </h1>
@@ -304,9 +304,9 @@ export default function Portfolio() {
         </div>
 
         {/* Profile Image */}
-        <div className="flex-1 relative w-full max-w-md mx-auto">
+        <div className="flex-1 relative w-full max-w-md mx-auto flex justify-center">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60"></div>
-          <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl mx-auto w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
+          <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
             <Image
               src="/profile.jpg"
               alt="Aicelle Rosales"
