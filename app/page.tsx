@@ -145,6 +145,7 @@ export default function Portfolio() {
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-green-400 to-green-600',
       image: '/cert-cybersecurity.png',
+      badge: '/INTRO_CYBER.png',
     },
     {
       title: 'Introduction to Cybersecurity (I2CS)',
@@ -152,6 +153,7 @@ export default function Portfolio() {
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-green-400 to-green-600',
       image: '/cert-cybersecurity.png',
+      badge: '/INTRO_CYBER.png',
     },
     {
       title: 'Operating Systems Basics',
@@ -159,6 +161,7 @@ export default function Portfolio() {
       issueDate: 'Oct 18, 2025',
       badgeColor: 'from-blue-400 to-blue-600',
       image: '/cert-operating-systems.png',
+      badge: '/OSB.png',
     },
     {
       title: 'Linux Essentials',
@@ -166,6 +169,7 @@ export default function Portfolio() {
       issueDate: 'Dec 14, 2025',
       badgeColor: 'from-blue-400 to-blue-600',
       image: '/cert-linux.png',
+      badge: '/LINUXpng',
     },
     {
       title: 'IT Specialist - Cybersecurity',
@@ -173,6 +177,7 @@ export default function Portfolio() {
       issueDate: 'Apr 30, 2026',
       badgeColor: 'from-indigo-400 to-indigo-600',
       image: '/cert-it-specialist.png',
+      badge: '/ITS-Badges-Cybersecurity.png',
     },
   ]
 
@@ -500,8 +505,13 @@ export default function Portfolio() {
               >
                 {/* Certificate Badge */}
                 <div className="flex justify-center mb-6">
-                  <div className={`w-24 h-24 bg-gradient-to-br ${cert.badgeColor} rounded-lg flex items-center justify-center text-white text-3xl font-bold shadow-lg transform group-hover:scale-110 transition-transform`}>
-                    ✓
+                  <div className="relative w-24 h-24 transform group-hover:scale-110 transition-transform">
+                    <Image
+                      src={cert.badge}
+                      alt={cert.title}
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
 
