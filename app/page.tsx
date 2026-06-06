@@ -621,12 +621,17 @@ export default function Portfolio() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="#projects" className="hover:text-white transition-colors">
+                    Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="#certificates" className="hover:text-white transition-colors">
                     Certificates
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="#skills" className="hover:text-white transition-colors">
                     Skills
                   </a>
                 </li>
