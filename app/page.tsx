@@ -17,7 +17,7 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCert, setSelectedCert] = useState<typeof Experience[number] | null>(null)
+  const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
 
   // Smooth automatic scrolling function
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -39,7 +39,7 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/public/html-5.png' },
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/skills/html.png' },
     { name: 'CSS', level: '90%', type: 'dev', icon: '/skills/css.png' },
     { name: 'JavaScript', level: '55%', type: 'dev', icon: '/skills/javascript.png' },
     { name: 'Python', level: '75%', type: 'dev', icon: '/skills/python.png' },
@@ -145,10 +145,20 @@ export default function Portfolio() {
     },
   ]
 
+  // UPDATED: Added TikTok with customized native SVG path
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
+    { 
+      name: 'TikTok', 
+      url: 'https://www.tiktok.com/@aicelleeeeee_', 
+      icon: (
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.25 1.96 3.69 2.32v3.9c-1.52-.13-3.01-.71-4.24-1.66-.46-.35-.88-.75-1.25-1.19v7.19c.04 2.22-.92 4.38-2.58 5.82-1.74 1.51-4.14 2.14-6.42 1.69-2.56-.51-4.71-2.43-5.55-4.89-.9-2.65-.18-5.7 1.83-7.65 1.66-1.61 4.07-2.31 6.34-1.84v3.9c-1.21-.33-2.53-.05-3.51.72-.94.75-1.42 1.96-1.3 3.16.14 1.34.99 2.51 2.24 3.03 1.25.53 2.73.32 3.77-.52.82-.67 1.25-1.7 1.23-2.76V0z"/>
+        </svg>
+      ) 
+    },
   ]
 
   const certificates = [
@@ -274,7 +284,6 @@ export default function Portfolio() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            {/* UPDATED: Download Resume Link */}
             <a 
               href="/ROSALES_A_RESUME.pdf" 
               download="ROSALES_A_RESUME.pdf"
@@ -302,7 +311,7 @@ export default function Portfolio() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
+                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors flex items-center justify-center"
                   title={social.name}
                 >
                   {social.icon}
@@ -328,14 +337,20 @@ export default function Portfolio() {
               />
             </div>
 
-            {/* Stat badges */}
-            <div className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-4 py-2 shadow-md border border-gray-100 text-center min-w-[70px] animate-[float_6s_ease-in-out_infinite_delay-1500]">
-              <p className="font-bold text-lg text-gray-900 leading-none">10+</p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">Certificates</p>
+            {/* UPDATED: Matches exactly with the screenshot badge style */}
+            <div 
+              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
+              style={{ animationDelay: '1.5s' }}
+            >
+              <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">Experiences</p>
             </div>
 
-            <div className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-4 py-2 shadow-md border border-gray-800 text-center animate-[float_6s_ease-in-out_infinite_delay-3000]">
-              <p className="font-bold text-lg leading-none">20+</p>
+            <div 
+              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
+              style={{ animationDelay: '3s' }}
+            >
+              <p className="font-bold text-xl leading-none">20+</p>
               <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
             </div>
           </div>
@@ -695,16 +710,20 @@ export default function Portfolio() {
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
+              {/* UPDATED: Added TikTok icon integration wrapper inside footer as well */}
               <div className="flex gap-3">
-                <a href="https://www.facebook.com/seikii08/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all" title="Facebook">
-                  <Facebook size={18} />
-                </a>
-                <a href="https://www.instagram.com/aicelleeeeee_/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-pink-600 transition-all" title="Instagram">
-                  <Instagram size={18} />
-                </a>
-                <a href="https://www.linkedin.com/in/aicelle-r-66298537b/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-blue-600 transition-all" title="LinkedIn">
-                  <Linkedin size={18} />
-                </a>
+                {socialLinks.map((social) => (
+                  <a 
+                    key={social.name}
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all flex items-center justify-center" 
+                    title={social.name}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
