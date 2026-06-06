@@ -611,13 +611,18 @@ export default function Portfolio() {
               <p className="font-bold mb-3">Links</p>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="#home" className="hover:text-white transition-colors">
                     Home
                   </a>
                 </li>
                 <li>
+                  <a href="#about" className="hover:text-white transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
                   <a href="#" className="hover:text-white transition-colors">
-                    Projects
+                    Certificates
                   </a>
                 </li>
                 <li>
