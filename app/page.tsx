@@ -27,7 +27,7 @@ export default function Portfolio() {
   const skills = [
     { name: 'HTML', level: '95%',  image: '/html-5.png' },
     { name: 'CSS', level: '90%', image: '/CSS-3.png'},
-    { name: 'JavaScript', level: '55%' },
+    { name: 'JavaScript', level: '55%', image: '/java-script.png'},
     { name: 'Python', level: '75%' },
     { name: 'C++', level: '50%' },
     { name: 'PHP', level: '65%' },
