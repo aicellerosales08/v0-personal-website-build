@@ -19,7 +19,7 @@ export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
 
-  // Function para sa smooth automatic scrolling kapag pinindot ang nav links
+  // Smooth automatic scrolling function
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     setIsMenuOpen(false)
@@ -226,7 +226,7 @@ export default function Portfolio() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Popdown */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
             {navLinks.map((link) => (
@@ -311,12 +311,14 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image */}
+        {/* Profile Image - BALIK ANIMATION AT LAYOUT */}
         <div className="flex-1">
-          <div className="relative w-full max-w-md mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60"></div>
+          <div className="relative w-full max-w-md mx-auto group">
+            {/* Pulsing colored glow element */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
 
-            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl">
+            {/* Float Floating Core Animation */}
+            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500">
               <Image
                 src="/profile.jpg"
                 alt="Aicelle Rosales"
@@ -328,12 +330,12 @@ export default function Portfolio() {
             </div>
 
             {/* Stat badges */}
-            <div className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-4 py-2 shadow-md border border-gray-100 text-center min-w-[70px]">
+            <div className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-4 py-2 shadow-md border border-gray-100 text-center min-w-[70px] animate-[float_6s_ease-in-out_infinite_delay-1500]">
               <p className="font-bold text-lg text-gray-900 leading-none">10+</p>
               <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">Certificates</p>
             </div>
 
-            <div className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-4 py-2 shadow-md border border-gray-800 text-center">
+            <div className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-4 py-2 shadow-md border border-gray-800 text-center animate-[float_6s_ease-in-out_infinite_delay-3000]">
               <p className="font-bold text-lg leading-none">20+</p>
               <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
             </div>
@@ -398,7 +400,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Upgraded Skills Section */}
+      {/* Skills Section */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
@@ -425,7 +427,6 @@ export default function Portfolio() {
                 
                 <div className="flex justify-between items-center mb-4 relative z-10">
                   <div className="flex items-center gap-3">
-                    {/* Picture/Logo Wrapper */}
                     <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:bg-white transition-all duration-300 relative">
                       <Image 
                         src={skill.icon} 
@@ -433,9 +434,7 @@ export default function Portfolio() {
                         width={28} 
                         height={28}
                         className="object-contain"
-                        // Fallback handling wrapper if direct loading encounters layout issues
                         onError={(e) => {
-                          // Fallback display if missing icon file
                           e.currentTarget.style.display = 'none';
                         }}
                       />
@@ -454,7 +453,6 @@ export default function Portfolio() {
                   </span>
                 </div>
 
-                {/* Animated Progress Bar */}
                 <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full w-0 group-hover:w-full transition-all duration-1000 ease-out relative"
@@ -542,48 +540,60 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Certificates Section */}
+      {/* Certificates Section - BINALEK ANG CARD IMAGES */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
             Certifications & Achievements
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {certificates.map((cert) => (
               <div
                 key={cert.title}
-                className="bg-white rounded-2xl p-6 hover:shadow-lg transition-all group cursor-pointer border border-gray-100 flex flex-col justify-between text-center"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
-                <div>
-                  <div className="flex justify-center mb-4">
-                    <div className="relative w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center text-purple-600">
-                      <Award size={32} />
+                {/* Certificate Image Block Display */}
+                <div className="aspect-[4/3] w-full relative bg-gray-100 overflow-hidden border-b border-gray-100">
+                  <Image
+                    src={cert.image}
+                    alt={cert.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                    <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1">
+                      Enlarge <ExternalLink size={12} />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Info Text block */}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
+                        {cert.issuer}
+                      </span>
+                      <span className="text-[11px] text-gray-400 font-medium">{cert.issueDate}</span>
                     </div>
+                    <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-purple-600 transition-colors">
+                      {cert.title}
+                    </h3>
                   </div>
 
-                  <span className="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold mb-3">
-                    {cert.issueDate}
-                  </span>
-
-                  <h3 className="text-base font-bold text-gray-900 mb-1 line-clamp-2">
-                    {cert.title}
-                  </h3>
-                  <p className="text-xs text-gray-500">
-                    {cert.issuer}
-                  </p>
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-purple-600 transition-colors">
+                    <span>View Details</span>
+                    <Award size={14} className="text-gray-400 group-hover:text-purple-500" />
+                  </div>
                 </div>
-                
-                <p className="text-xs text-purple-600 font-semibold mt-4 group-hover:underline">
-                  View Certificate →
-                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Certificate Modal */}
+      {/* Certificate Modal View */}
       {selectedCert && (
         <div
           className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
