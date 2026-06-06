@@ -39,17 +39,17 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/skills/html.png' },
-    { name: 'CSS', level: '90%', type: 'dev', icon: '/skills/css.png' },
-    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/skills/javascript.png' },
-    { name: 'Python', level: '75%', type: 'dev', icon: '/skills/python.png' },
-    { name: 'C++', level: '50%', type: 'dev', icon: '/skills/cplusplus.png' },
-    { name: 'PHP', level: '65%', type: 'dev', icon: '/skills/php.png' },
-    { name: 'Figma', level: '100%', type: 'design', icon: '/skills/figma.png' },
-    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/skills/adobexd.png' },
-    { name: 'Canva', level: '100%', type: 'design', icon: '/skills/canva.png' },
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
+    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },  
+    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' }, 
+    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' }, 
+    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },      
+    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
+    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
+    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
+    { name: 'Canva', level: '100%', type: 'design', icon: '/pallete.png' },
   ]
-
+  
   const projects = [
     {
       title: 'Onlook - Thesis Project',
