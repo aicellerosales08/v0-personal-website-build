@@ -17,7 +17,7 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
+  const [selectedCert, setSelectedCert] = useState<typeof Experience[number] | null>(null)
 
   // Smooth automatic scrolling function
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -39,7 +39,7 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/skills/html.png' },
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/public/html-5.png' },
     { name: 'CSS', level: '90%', type: 'dev', icon: '/skills/css.png' },
     { name: 'JavaScript', level: '55%', type: 'dev', icon: '/skills/javascript.png' },
     { name: 'Python', level: '75%', type: 'dev', icon: '/skills/python.png' },
