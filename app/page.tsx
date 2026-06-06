@@ -274,9 +274,10 @@ export default function Portfolio() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
+            {/* UPDATED: Download Resume Link */}
             <a 
-              href="/resume.pdf" 
-              download
+              href="/ROSALES_A_RESUME.pdf" 
+              download="ROSALES_A_RESUME.pdf"
               className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group"
             >
               <span>Download CV</span>
@@ -647,7 +648,7 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Contact Banner - CONNECTED TO YOUR NEW EMAIL */}
+      {/* Contact Banner */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
