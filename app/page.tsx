@@ -1,39 +1,53 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, GitBranch, AtSign, Mail, ExternalLink, Heart } from 'lucide-react'
+import { 
+  Menu, 
+  X, 
+  ChevronDown, 
+  ExternalLink, 
+  Mail, 
+  Facebook, 
+  Instagram, 
+  Linkedin, 
+  Download,
+  Award
+} from 'lucide-react'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const [selectedCert, setSelectedCert] = useState(null)
+  const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  // Function para sa smooth automatic scrolling kapag pinindot ang nav links
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    setIsMenuOpen(false)
+    const targetId = href.replace('#', '')
+    const elem = document.getElementById(targetId)
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Certificates', href: '#certificates' },
-    { name: 'Skills', href: '#skills' },
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%',  image: '/html-5.png' },
-    { name: 'CSS', level: '90%', image: '/CSS-3.png'},
-    { name: 'JavaScript', level: '55%', image: '/java-script.png'},
-    { name: 'Python', level: '75%' },
-    { name: 'C++', level: '50%' },
-    { name: 'PHP', level: '65%' },
-    { name: 'Figma', level: '100%' },
-    { name: 'Adobe XD', level: '85%' },
-    { name: 'Canva', level: '100%' },
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/skills/html.png' },
+    { name: 'CSS', level: '90%', type: 'dev', icon: '/skills/css.png' },
+    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/skills/javascript.png' },
+    { name: 'Python', level: '75%', type: 'dev', icon: '/skills/python.png' },
+    { name: 'C++', level: '50%', type: 'dev', icon: '/skills/cplusplus.png' },
+    { name: 'PHP', level: '65%', type: 'dev', icon: '/skills/php.png' },
+    { name: 'Figma', level: '100%', type: 'design', icon: '/skills/figma.png' },
+    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/skills/adobexd.png' },
+    { name: 'Canva', level: '100%', type: 'design', icon: '/skills/canva.png' },
   ]
 
   const projects = [
@@ -132,10 +146,9 @@ export default function Portfolio() {
   ]
 
   const socialLinks = [
-    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: 'facebook' },
-    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: 'instagram' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: 'linkedin' },
-    { name: 'TikTok', url: 'https://www.tiktok.com/@aiiiiiiqt?lang=en', icon: 'tiktok' },
+    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
+    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
   ]
 
   const certificates = [
@@ -143,7 +156,6 @@ export default function Portfolio() {
       title: 'Introduction to Cybersecurity',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
-      badgeColor: 'from-green-400 to-green-600',
       image: '/cert-cybersecurity.png',
       badge: '/INTRO_CYBER.png',
     },
@@ -151,7 +163,6 @@ export default function Portfolio() {
       title: 'Operating Systems Basics',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Oct 18, 2025',
-      badgeColor: 'from-blue-400 to-blue-600',
       image: '/cert-operating-systems.png',
       badge: '/OSB.png',
     },
@@ -159,7 +170,6 @@ export default function Portfolio() {
       title: 'Linux Essentials',
       issuer: 'Cisco Networking Academy',
       issueDate: 'Dec 14, 2025',
-      badgeColor: 'from-blue-400 to-blue-600',
       image: '/cert-linux.png',
       badge: '/LINUX.png',
     },
@@ -167,24 +177,23 @@ export default function Portfolio() {
       title: 'IT Specialist - Cybersecurity',
       issuer: 'Pearson',
       issueDate: 'Apr 30, 2026',
-      badgeColor: 'from-indigo-400 to-indigo-600',
       image: '/cert-it-specialist.png',
       badge: '/ITS-Badges-Cybersecurity.png',
     },
   ]
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3 animate-fade-in">
+          <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
               AR
             </div>
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">Front-End Developer/UI/UX Designer</p>
+              <p className="text-xs text-gray-500">Front-End Developer / UI/UX Designer</p>
             </div>
           </div>
 
@@ -194,14 +203,18 @@ export default function Portfolio() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleScrollTo(e, link.href)}
                 className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
               >
                 {link.name}
               </a>
             ))}
-            <button className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+            <a 
+              href="mailto:rosales.aicelle@gmail.com" 
+              className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+            >
               Contact Me
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -215,34 +228,38 @@ export default function Portfolio() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3 animate-slide-in-down">
+          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleScrollTo(e, link.href)}
                 className="block text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors py-2"
               >
                 {link.name}
               </a>
             ))}
-            <button className="w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+            <a 
+              href="mailto:rosales.aicelle@gmail.com"
+              className="block text-center w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+            >
               Contact Me
-            </button>
+            </a>
           </div>
         )}
       </nav>
 
       {/* Hero Section */}
       <section id="home" className="max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12 relative">
-        {/* Background decoration */}
         <div className="absolute inset-0 -z-10 opacity-5">
           <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
         </div>
-        <div className="flex-1 space-y-8 animate-slide-in-left">
+        
+        <div className="flex-1 space-y-8">
           <div className="space-y-3">
             <p className="text-pink-500 font-medium text-sm">Hello, I&apos;m</p>
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 text-balance">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
               Aicelle
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
@@ -257,19 +274,27 @@ export default function Portfolio() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <button className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group">
+            <a 
+              href="/resume.pdf" 
+              download
+              className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group"
+            >
               <span>Download CV</span>
-              <span className="group-hover:translate-y-1 transition-transform">↓</span>
-            </button>
-            <button className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 transition-colors">
+              <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
+            </a>
+            <a 
+              href="#projects"
+              onClick={(e) => handleScrollTo(e, '#projects')}
+              className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 transition-colors"
+            >
               View Work →
-            </button>
+            </a>
           </div>
 
           {/* Social Links */}
           <div className="flex items-center gap-6 pt-4">
-            <p className="text-sm text-gray-500 font-medium">FOLLOW ME</p>
-            <div className="flex gap-4">
+            <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
+            <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -279,7 +304,7 @@ export default function Portfolio() {
                   className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors"
                   title={social.name}
                 >
-                  <AtSign size={20} />
+                  {social.icon}
                 </a>
               ))}
             </div>
@@ -287,124 +312,156 @@ export default function Portfolio() {
         </div>
 
         {/* Profile Image */}
-        <div className="flex-1 animate-slide-in-right">
+        <div className="flex-1">
           <div className="relative w-full max-w-md mx-auto">
-            {/* Decorative glow background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60 animate-glow"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent rounded-full blur-3xl opacity-60"></div>
 
-            {/* Profile image container */}
-            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-float">
+            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl">
               <Image
                 src="/profile.jpg"
                 alt="Aicelle Rosales"
                 width={400}
                 height={400}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto aspect-square object-cover"
+                priority
               />
             </div>
 
             {/* Stat badges */}
-            <div className="absolute top-8 right-0 z-20 bg-white rounded-full px-4 py-3 shadow-lg animate-slide-in-right border border-gray-100">
-              <p className="font-bold text-lg text-gray-900">4+</p>
-              <p className="text-xs text-gray-600">Years</p>
+            <div className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-4 py-2 shadow-md border border-gray-100 text-center min-w-[70px]">
+              <p className="font-bold text-lg text-gray-900 leading-none">10+</p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">Certificates</p>
             </div>
 
-            <div className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-full px-4 py-3 shadow-lg animate-fade-in border border-gray-800">
-              <p className="font-bold text-lg">20+</p>
-              <p className="text-xs">Projects Done</p>
+            <div className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-4 py-2 shadow-md border border-gray-800 text-center">
+              <p className="font-bold text-lg leading-none">20+</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Scroll Indicator */}
-      <div className="flex justify-center pb-8 animate-fade-in">
-        <div className="animate-bounce">
-          <ChevronDown className="text-gray-400" size={24} />
-        </div>
+      <div className="flex justify-center pb-8">
+        <ChevronDown className="text-gray-400 animate-bounce" size={24} />
       </div>
 
       {/* Quote Section */}
       <section className="bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-2xl md:text-3xl font-serif text-gray-800 italic text-balance mb-6">
-            "Design is not just what it looks like and feels like. Design is how it works."
+          <p className="text-2xl md:text-3xl font-serif text-gray-800 italic mb-6">
+            &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
           </p>
-          <p className="text-gray-600">— Steve Jobs</p>
+          <p className="text-gray-600 font-medium">— Steve Jobs</p>
         </div>
       </section>
 
       {/* About Section */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 animate-slide-in-left">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">About Me</h2>
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">About Me</h2>
             <p className="text-gray-600 text-lg leading-relaxed">
               I&apos;m an Information Technology graduate with a passion for creating beautiful and functional digital experiences. With expertise in web development and UI/UX design, I transform ideas into elegant solutions that users love.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
               My journey includes work on academic projects, internship experiences, and collaborative team environments. I&apos;m continuously learning modern web technologies and best practices in design and development.
             </p>
-            <div className="flex gap-4 pt-4">
-              <div className="flex-1">
-                <p className="text-3xl font-bold text-purple-600">50+</p>
-                <p className="text-gray-600">Components</p>
+            <div className="flex gap-8 pt-4">
+              <div>
+                <p className="text-4xl font-bold text-purple-600">50+</p>
+                <p className="text-sm text-gray-500 font-medium mt-1">Design Components</p>
               </div>
-              <div className="flex-1">
-                <p className="text-3xl font-bold text-pink-600">20+</p>
-                <p className="text-gray-600">Projects</p>
+              <div>
+                <p className="text-4xl font-bold text-pink-600">20+</p>
+                <p className="text-sm text-gray-500 font-medium mt-1">Created Layouts</p>
               </div>
             </div>
           </div>
 
-          <div className="space-y-6 animate-slide-in-right">
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">What I Do</h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3 items-start">
-                  <span className="text-purple-600 font-bold mt-1">•</span>
-                  <span className="text-gray-700">Develop responsive web applications</span>
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100/50 space-y-6">
+            <h3 className="text-2xl font-bold text-gray-900">What I Do</h3>
+            <ul className="space-y-4">
+              {[
+                'Develop responsive and clean web applications',
+                'Design intuitive, user-friendly interfaces',
+                'Build interactive wireframes and prototypes',
+                'Formulate structured design systems'
+              ].map((text, idx) => (
+                <li key={idx} className="flex gap-3 items-start">
+                  <span className={`font-bold mt-0.5 ${idx % 2 === 0 ? 'text-purple-600' : 'text-pink-600'}`}>•</span>
+                  <span className="text-gray-700 font-medium">{text}</span>
                 </li>
-                <li className="flex gap-3 items-start">
-                  <span className="text-pink-600 font-bold mt-1">•</span>
-                  <span className="text-gray-700">Design user-friendly interfaces</span>
-                </li>
-                <li className="flex gap-3 items-start">
-                  <span className="text-purple-600 font-bold mt-1">•</span>
-                  <span className="text-gray-700">Collaborate with teams</span>
-                </li>
-                <li className="flex gap-3 items-start">
-                  <span className="text-pink-600 font-bold mt-1">•</span>
-                  <span className="text-gray-700">Create design systems</span>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="bg-gray-50 py-20 md:py-32">
+      {/* Upgraded Skills Section */}
+      <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
+
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center animate-slide-in-up">
-            My Skills
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill, i) => (
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              Capabilities
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+              Technical Skills & Tools
+            </h2>
+            <p className="text-gray-500 text-sm">
+              My proficiency in various programming languages, frameworks, and design software tools.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skill) => (
               <div
                 key={skill.name}
-                style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white p-6 rounded-xl border border-gray-100 hover:border-purple-300 hover:shadow-lg transition-all animate-slide-in-up"
+                className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
               >
-                <div className="flex justify-between items-center mb-3">
-                  <p className="font-semibold text-gray-900">{skill.name}</p>
-                  <span className="text-sm font-bold text-purple-600">{skill.level}</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="flex justify-between items-center mb-4 relative z-10">
+                  <div className="flex items-center gap-3">
+                    {/* Picture/Logo Wrapper */}
+                    <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:bg-white transition-all duration-300 relative">
+                      <Image 
+                        src={skill.icon} 
+                        alt={`${skill.name} logo`} 
+                        width={28} 
+                        height={28}
+                        className="object-contain"
+                        // Fallback handling wrapper if direct loading encounters layout issues
+                        onError={(e) => {
+                          // Fallback display if missing icon file
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
+                        {skill.name}
+                      </p>
+                      <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400">
+                        {skill.type === 'design' ? 'UI/UX Design' : 'Development'}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                    {skill.level}
+                  </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+
+                {/* Animated Progress Bar */}
+                <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full w-0 group-hover:w-full transition-all duration-1000 ease-out relative"
                     style={{ width: skill.level }}
-                  ></div>
+                  >
+                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                  </div>
                 </div>
               </div>
             ))}
@@ -414,116 +471,112 @@ export default function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 animate-slide-in-up">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 tracking-tight">
           Featured Projects
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, i) => (
-            <a
+          {projects.map((project) => (
+            <div
               key={project.title}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ animationDelay: `${i * 150}ms` }}
-              className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all animate-slide-in-up"
+              className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
             >
-              <div className="aspect-video relative overflow-hidden">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
-                <p className="text-gray-600 text-sm mb-4">{project.description}</p>
-                <div className="flex gap-2 flex-wrap mb-4">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                {project.title === 'Onlook - Thesis Project' ? (
-                  <div className="flex gap-2 mt-4">
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-purple-600 font-medium text-sm"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      View Website
-                    </a>
-                
-                    <a
-                      href={project.figma}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-pink-600 font-medium text-sm"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      View Figma
-                    </a>
-                  </div>
-                ) : (
-                  <div className="text-purple-600 font-medium text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
-                    View Project <ExternalLink size={16} />
-                  </div>
-                )}
+              <div className="aspect-video relative overflow-hidden bg-gray-100">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-102 transition-transform duration-300"
+                />
               </div>
-            </a>
+              
+              <div className="p-6 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-4">{project.description}</p>
+                  <div className="flex gap-2 flex-wrap mb-6">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  {'website' in project ? (
+                    <div className="flex gap-4 border-t border-gray-100 pt-4">
+                      <a
+                        href={project.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                      >
+                        Live Site <ExternalLink size={14} />
+                      </a>
+                      <a
+                        href={project.figma}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                      >
+                        Figma <ExternalLink size={14} />
+                      </a>
+                    </div>
+                  ) : (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
+                    >
+                      View Project Design <ExternalLink size={15} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50 to-white py-20 md:py-32">
+      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center animate-slide-in-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
             Certifications & Achievements
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert, i) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {certificates.map((cert) => (
               <div
                 key={cert.title}
-                style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all animate-slide-in-up group cursor-pointer border border-gray-100"
+                className="bg-white rounded-2xl p-6 hover:shadow-lg transition-all group cursor-pointer border border-gray-100 flex flex-col justify-between text-center"
                 onClick={() => setSelectedCert(cert)}
               >
-                {/* Certificate Badge */}
-                <div className="flex justify-center mb-6">
-                  <div className="relative w-24 h-24 transform group-hover:scale-110 transition-transform">
-                    <Image
-                      src={cert.badge}
-                      alt={cert.title}
-                      fill
-                      className="object-contain"
-                    />
+                <div>
+                  <div className="flex justify-center mb-4">
+                    <div className="relative w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center text-purple-600">
+                      <Award size={32} />
+                    </div>
                   </div>
-                </div>
 
-                {/* Date Badge */}
-                <div className="flex justify-center mb-4">
-                  <span className="bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  <span className="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold mb-3">
                     {cert.issueDate}
                   </span>
-                </div>
 
-                {/* Certificate Info */}
-                <div className="text-center">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 text-balance">
+                  <h3 className="text-base font-bold text-gray-900 mb-1 line-clamp-2">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-gray-600">
-                    Issued by {cert.issuer}
+                  <p className="text-xs text-gray-500">
+                    {cert.issuer}
                   </p>
-                  <p className="text-xs text-purple-600 font-medium mt-3">Click to view certificate</p>
                 </div>
+                
+                <p className="text-xs text-purple-600 font-semibold mt-4 group-hover:underline">
+                  View Certificate →
+                </p>
               </div>
             ))}
           </div>
@@ -533,131 +586,120 @@ export default function Portfolio() {
       {/* Certificate Modal */}
       {selectedCert && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setSelectedCert(null)}
         >
           <div
-            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-fade-in"
+            className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden flex flex-col shadow-2xl transition-all transform max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b border-gray-200">
-              <h3 className="text-2xl font-bold text-gray-900">{selectedCert.title}</h3>
+            <div className="flex justify-between items-center p-6 border-b border-gray-100">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">{selectedCert.title}</h3>
+                <p className="text-xs text-gray-500 mt-0.5">Issued by {selectedCert.issuer} • {selectedCert.issueDate}</p>
+              </div>
               <button
                 onClick={() => setSelectedCert(null)}
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                <X size={28} />
+                <X size={24} />
               </button>
             </div>
 
-            {/* Certificate Image */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="relative w-full h-full flex items-center justify-center">
+            <div className="flex-1 overflow-y-auto p-6 bg-gray-50 flex items-center justify-center min-h-[300px]">
+              <div className="relative w-full h-full max-h-[60vh] aspect-[4/3]">
                 <Image
                   src={selectedCert.image}
                   alt={selectedCert.title}
-                  width={1000}
-                  height={700}
-                  className="w-full h-auto object-contain"
+                  fill
+                  className="object-contain"
                 />
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="border-t border-gray-200 p-6 flex gap-3 justify-end">
+            <div className="border-t border-gray-100 p-4 flex gap-3 justify-end bg-white">
               <button
                 onClick={() => setSelectedCert(null)}
-                className="px-6 py-2 bg-gray-200 text-gray-900 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                className="px-5 py-2 text-sm bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
               >
                 Close
               </button>
               <a
                 href={selectedCert.image}
                 download
-                className="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center gap-2"
+                className="px-5 py-2 text-sm bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors flex items-center gap-1.5"
               >
-                <ExternalLink size={18} />
+                <Download size={16} />
                 Download
               </a>
             </div>
           </div>
         </div>
       )}
-      <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white animate-slide-in-up">
+
+      {/* Contact Banner */}
+      <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Let&apos;s Create Something Amazing
           </h2>
-          <p className="text-xl text-white/90 animate-slide-in-up">
-            I&apos;m always interested in hearing about new projects and opportunities.
+          <p className="text-lg text-white/90 max-w-xl mx-auto">
+            I&apos;m always open to discussing web development initiatives, UI/UX design opportunities, or collaborative projects.
           </p>
-          <button className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-2 animate-slide-in-up">
+          <a 
+            href="mailto:rosales.aicelle@gmail.com"
+            className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 transition-colors inline-flex items-center gap-2 shadow-lg"
+          >
             Get In Touch
-            <Mail size={20} />
-          </button>
+            <Mail size={18} />
+          </a>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <p className="font-bold mb-2">Aicelle Rosales</p>
+              <p className="font-bold text-lg mb-1 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 inline-block">
+                Aicelle Rosales
+              </p>
               <p className="text-gray-400 text-sm">Frontend Developer & UI/UX Designer</p>
             </div>
             <div>
-              <p className="font-bold mb-3">Links</p>
+              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Links</p>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#home" className="hover:text-white transition-colors">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="#about" className="hover:text-white transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#projects" className="hover:text-white transition-colors">
-                    Projects
-                  </a>
-                </li>
-                <li>
-                  <a href="#certificates" className="hover:text-white transition-colors">
-                    Certificates
-                  </a>
-                </li>
-                <li>
-                  <a href="#skills" className="hover:text-white transition-colors">
-                    Skills
-                  </a>
-                </li>
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <a 
+                      href={link.href} 
+                      onClick={(e) => handleScrollTo(e, link.href)}
+                      className="hover:text-white transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
-              <p className="font-bold mb-3">Connect</p>
-            <div className="flex gap-4">
-                <a href="https://www.facebook.com/seikii08/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Facebook">
-                  <AtSign size={20} />
+              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
+              <div className="flex gap-3">
+                <a href="https://www.facebook.com/seikii08/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all" title="Facebook">
+                  <Facebook size={18} />
                 </a>
-                <a href="https://www.instagram.com/aicelleeeeee_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="Instagram">
-                  <AtSign size={20} />
+                <a href="https://www.instagram.com/aicelleeeeee_/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-pink-600 transition-all" title="Instagram">
+                  <Instagram size={18} />
                 </a>
-                <a href="https://www.linkedin.com/in/aicelle-r-66298537b/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="LinkedIn">
-                  <AtSign size={20} />
-                </a>
-                <a href="https://www.tiktok.com/@aiiiiiiqt?lang=en" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" title="TikTok">
-                  <GitBranch size={20} />
+                <a href="https://www.linkedin.com/in/aicelle-r-66298537b/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-blue-600 transition-all" title="LinkedIn">
+                  <Linkedin size={18} />
                 </a>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm space-y-2">
-            <p>© 2026 Aicelle Rosales. All rights reserved.</p>
-            <p>Designed with ♥ in the Philippines</p>
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs space-y-1">
+            <p>© {new Date().getFullYear()} Aicelle Rosales. All rights reserved.</p>
+            <p>Designed with ❤️ in the Philippines</p>
           </div>
         </div>
       </footer>
