@@ -210,7 +210,7 @@ export default function Portfolio() {
               </a>
             ))}
             <a 
-              href="mailto:rosales.aicelle@gmail.com" 
+              href="mailto:aicellerosales08@gmail.com" 
               className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Contact Me
@@ -240,7 +240,7 @@ export default function Portfolio() {
               </a>
             ))}
             <a 
-              href="mailto:rosales.aicelle@gmail.com"
+              href="mailto:aicellerosales08@gmail.com"
               className="block text-center w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Contact Me
@@ -311,7 +311,7 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image - May Floating Animation */}
+        {/* Profile Image */}
         <div className="flex-1">
           <div className="relative w-full max-w-md mx-auto group">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
@@ -538,7 +538,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Certificates Section - BADGE IMAGES USED HERE */}
+      {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
@@ -551,7 +551,7 @@ export default function Portfolio() {
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
-                {/* Certificate BADGE Display (Centered with proper aspect ratio) */}
+                {/* Certificate BADGE Display */}
                 <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
                   <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                     <Image
@@ -647,7 +647,7 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Contact Banner */}
+      {/* Contact Banner - CONNECTED TO YOUR NEW EMAIL */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
@@ -657,7 +657,7 @@ export default function Portfolio() {
             I&apos;m always open to discussing web development initiatives, UI/UX design opportunities, or collaborative projects.
           </p>
           <a 
-            href="mailto:rosales.aicelle@gmail.com"
+            href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
             className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 transition-colors inline-flex items-center gap-2 shadow-lg"
           >
             Get In Touch
