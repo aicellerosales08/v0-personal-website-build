@@ -322,24 +322,25 @@ export default function Portfolio() {
 
         {/* Profile Image Section */}
         <div className="flex-1">
-          <div className="relative w-full max-w-sm mx-auto group">
+          <div className="relative w-full max-w-md mx-auto group">
             {/* Soft background glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
 
-            {/* UPDATED: Binago mula sa aspect-square/rounded-full para maging portrait at mahaba ulit ang pic */}
-            <div className="relative z-10 rounded-3xl overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500 aspect-[3/4] w-full">
+            {/* BALIK-BILOG: Ibinalik sa rounded-full at aspect-square gaya nung una mong screenshot */}
+            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500 aspect-square w-full">
               <Image
                 src="/profile.jpg"
                 alt="Aicelle Rosales"
-                fill
-                className="object-cover"
+                width={400}
+                height={400}
+                className="w-full h-auto aspect-square object-cover"
                 priority
               />
             </div>
 
             {/* Floating Badges */}
             <div 
-              className="absolute -top-4 -right-4 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-xl border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
+              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '1.5s' }}
             >
               <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
@@ -347,7 +348,7 @@ export default function Portfolio() {
             </div>
 
             <div 
-              className="absolute -bottom-4 -left-4 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-xl border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
+              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '3s' }}
             >
               <p className="font-bold text-xl leading-none">20+</p>
@@ -503,7 +504,7 @@ export default function Portfolio() {
               
               <div className="p-6 flex flex-col flex-1 justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
+                  h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-4">{project.description}</p>
                   <div className="flex gap-2 flex-wrap mb-6">
                     {project.tags.map((tag) => (
