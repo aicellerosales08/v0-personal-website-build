@@ -145,6 +145,7 @@ export default function Portfolio() {
     },
   ]
 
+  // UPDATED: Added TikTok with customized native SVG path
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
@@ -320,14 +321,12 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image Section */}
+        {/* Profile Image */}
         <div className="flex-1">
           <div className="relative w-full max-w-md mx-auto group">
-            {/* Soft background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
 
-            {/* BALIK-BILOG: Ibinalik sa rounded-full at aspect-square gaya nung una mong screenshot */}
-            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500 aspect-square w-full">
+            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500">
               <Image
                 src="/profile.jpg"
                 alt="Aicelle Rosales"
@@ -338,7 +337,7 @@ export default function Portfolio() {
               />
             </div>
 
-            {/* Floating Badges */}
+            {/* UPDATED: Matches exactly with the screenshot badge style */}
             <div 
               className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '1.5s' }}
@@ -504,7 +503,7 @@ export default function Portfolio() {
               
               <div className="p-6 flex flex-col flex-1 justify-between">
                 <div>
-                  h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-4">{project.description}</p>
                   <div className="flex gap-2 flex-wrap mb-6">
                     {project.tags.map((tag) => (
@@ -568,6 +567,7 @@ export default function Portfolio() {
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
+                {/* Certificate BADGE Display */}
                 <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
                   <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                     <Image
@@ -584,6 +584,7 @@ export default function Portfolio() {
                   </div>
                 </div>
 
+                {/* Info Text block */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -709,6 +710,7 @@ export default function Portfolio() {
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
+              {/* UPDATED: Added TikTok icon integration wrapper inside footer as well */}
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <a 
