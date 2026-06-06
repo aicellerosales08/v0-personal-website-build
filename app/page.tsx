@@ -311,13 +311,11 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image - BALIK ANIMATION AT LAYOUT */}
+        {/* Profile Image - May Floating Animation */}
         <div className="flex-1">
           <div className="relative w-full max-w-md mx-auto group">
-            {/* Pulsing colored glow element */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
 
-            {/* Float Floating Core Animation */}
             <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500">
               <Image
                 src="/profile.jpg"
@@ -540,7 +538,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Certificates Section - BINALEK ANG CARD IMAGES */}
+      {/* Certificates Section - BADGE IMAGES USED HERE */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
@@ -553,17 +551,19 @@ export default function Portfolio() {
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
-                {/* Certificate Image Block Display */}
-                <div className="aspect-[4/3] w-full relative bg-gray-100 overflow-hidden border-b border-gray-100">
-                  <Image
-                    src={cert.image}
-                    alt={cert.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                {/* Certificate BADGE Display (Centered with proper aspect ratio) */}
+                <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
+                  <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                    <Image
+                      src={cert.badge}
+                      alt={`${cert.title} badge`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                     <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1">
-                      Enlarge <ExternalLink size={12} />
+                      View Certificate <ExternalLink size={12} />
                     </span>
                   </div>
                 </div>
@@ -583,7 +583,7 @@ export default function Portfolio() {
                   </div>
 
                   <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-purple-600 transition-colors">
-                    <span>View Details</span>
+                    <span>Enlarge Document</span>
                     <Award size={14} className="text-gray-400 group-hover:text-purple-500" />
                   </div>
                 </div>
