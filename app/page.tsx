@@ -47,7 +47,7 @@ export default function Portfolio() {
     { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
     { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
     { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
-    { name: 'Canva', level: '100%', type: 'design', icon: '/pallete.png' },
+    { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
   ]
   
   const projects = [
