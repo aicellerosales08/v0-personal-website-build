@@ -145,7 +145,6 @@ export default function Portfolio() {
     },
   ]
 
-  // UPDATED: Added TikTok with customized native SVG path
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
@@ -321,25 +320,26 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image */}
+        {/* Profile Image Section */}
         <div className="flex-1">
-          <div className="relative w-full max-w-md mx-auto group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
+          <div className="relative w-full max-w-sm mx-auto group">
+            {/* Soft background glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
 
-            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500">
+            {/* UPDATED: Binago mula sa aspect-square/rounded-full para maging portrait at mahaba ulit ang pic */}
+            <div className="relative z-10 rounded-3xl overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500 aspect-[3/4] w-full">
               <Image
                 src="/profile.jpg"
                 alt="Aicelle Rosales"
-                width={400}
-                height={400}
-                className="w-full h-auto aspect-square object-cover"
+                fill
+                className="object-cover"
                 priority
               />
             </div>
 
-            {/* UPDATED: Matches exactly with the screenshot badge style */}
+            {/* Floating Badges */}
             <div 
-              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
+              className="absolute -top-4 -right-4 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-xl border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '1.5s' }}
             >
               <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
@@ -347,7 +347,7 @@ export default function Portfolio() {
             </div>
 
             <div 
-              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
+              className="absolute -bottom-4 -left-4 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-xl border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '3s' }}
             >
               <p className="font-bold text-xl leading-none">20+</p>
@@ -567,7 +567,6 @@ export default function Portfolio() {
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
-                {/* Certificate BADGE Display */}
                 <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
                   <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                     <Image
@@ -584,7 +583,6 @@ export default function Portfolio() {
                   </div>
                 </div>
 
-                {/* Info Text block */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -710,7 +708,6 @@ export default function Portfolio() {
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
-              {/* UPDATED: Added TikTok icon integration wrapper inside footer as well */}
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <a 
