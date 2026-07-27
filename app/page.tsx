@@ -338,8 +338,9 @@ export default function Portfolio() {
               <Image
                 src="/aicelle-illustration.png"
                 alt="Aicelle Rosales"
-                fill
-                className="object-cover object-top scale-[1.35]"
+                width={400}
+                height={400}
+                className="w-full h-auto aspect-square object-cover object-top"
                 priority
               />
         
