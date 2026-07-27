@@ -430,43 +430,103 @@ export default function Portfolio() {
 
       {/* About Section */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">About Me</h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              I&apos;m an Information Technology graduate with a passion for creating beautiful and functional digital experiences. With expertise in web development and UI/UX design, I transform ideas into elegant solutions that users love.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              My journey includes work on academic projects, internship experiences, and collaborative team environments. I&apos;m continuously learning modern web technologies and best practices in design and development.
-            </p>
-            <div className="flex gap-8 pt-4">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+      
+          {/* Left - About Me */}
+          <div className="space-y-7">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-widest text-purple-600 mb-3">
+                Get to Know Me
+              </p>
+      
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+                About Me
+              </h2>
+            </div>
+      
+            <div className="space-y-5">
+              <p className="text-gray-600 text-lg leading-relaxed">
+                I&apos;m an Information Technology graduate passionate about creating
+                beautiful, functional, and user-centered digital experiences. With
+                experience in <span className="font-semibold text-gray-900">web development,
+                UI/UX design, and system development</span>, I combine creativity and
+                technical skills to turn ideas into meaningful digital solutions.
+              </p>
+      
+              <p className="text-gray-600 text-lg leading-relaxed">
+                My experience includes academic projects, internship experience,
+                collaborative team environments, and hands-on work in web and
+                interface design. I&apos;m continuously improving my skills and learning
+                modern technologies to create clean, responsive, and engaging
+                experiences for users.
+              </p>
+            </div>
+      
+            {/* Stats */}
+            <div className="flex gap-10 pt-4">
               <div>
-                <p className="text-4xl font-bold text-purple-600">50+</p>
-                <p className="text-sm text-gray-500 font-medium mt-1">Design Components</p>
+                <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  20+
+                </p>
+                <p className="text-sm text-gray-500 font-medium mt-1">
+                  Projects Created
+                </p>
               </div>
+      
               <div>
-                <p className="text-4xl font-bold text-pink-600">20+</p>
-                <p className="text-sm text-gray-500 font-medium mt-1">Created Layouts</p>
+                <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">
+                  3
+                </p>
+                <p className="text-sm text-gray-500 font-medium mt-1">
+                  Areas of Expertise
+                </p>
               </div>
             </div>
           </div>
-
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100/50 space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900">What I Do</h3>
-            <ul className="space-y-4">
-              {[
-                'Develop responsive and clean web applications',
-                'Design intuitive, user-friendly interfaces',
-                'Build interactive wireframes and prototypes',
-                'Formulate structured design systems'
-              ].map((text, idx) => (
-                <li key={idx} className="flex gap-3 items-start">
-                  <span className={`font-bold mt-0.5 ${idx % 2 === 0 ? 'text-purple-600' : 'text-pink-600'}`}>•</span>
-                  <span className="text-gray-700 font-medium">{text}</span>
-                </li>
-              ))}
-            </ul>
+      
+          {/* Right - What I Do */}
+          <div className="relative">
+            {/* Decorative Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-purple-200/40 to-pink-200/40 rounded-3xl blur-2xl -z-10" />
+      
+            <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50 p-8 md:p-10 rounded-3xl border border-purple-100/70 shadow-sm">
+      
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+                  <span className="text-white font-bold">✦</span>
+                </div>
+      
+                <h3 className="text-2xl font-bold text-gray-900">
+                  What I Do
+                </h3>
+              </div>
+      
+              <ul className="space-y-6">
+                {[
+                  'Develop responsive and clean web applications',
+                  'Design intuitive and user-friendly interfaces',
+                  'Create wireframes, prototypes, and design systems',
+                  'Build functional digital solutions with a focus on user experience',
+                ].map((text, idx) => (
+                  <li key={idx} className="flex gap-4 items-start group">
+                    <span
+                      className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${
+                        idx % 2 === 0
+                          ? 'bg-purple-600'
+                          : 'bg-pink-600'
+                      }`}
+                    />
+      
+                    <span className="text-gray-700 font-medium leading-relaxed group-hover:text-gray-900 transition-colors">
+                      {text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+      
+            </div>
           </div>
+      
         </div>
       </section>
 
