@@ -289,8 +289,8 @@ export default function Portfolio() {
 
           <div className="flex gap-4 flex-wrap">
             <a 
-              href="/ROSALES_A_RESUME.pdf" 
-              download="ROSALES_A_RESUME.pdf"
+              href="/rosales_aicelle_resume.pdf" 
+              download="rosales_aicelle_resume.pdf"
               className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group"
             >
               <span>Download CV</span>
