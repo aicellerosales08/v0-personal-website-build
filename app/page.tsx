@@ -199,17 +199,15 @@ export default function Portfolio() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-              <img
-                src="/aicelle-logo-circle.png"
-                alt="Aicelle Rosales Logo"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+              <span className="text-white font-bold text-lg">A</span>
             </div>
           
             <div className="hidden sm:block">
-              <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">UI/UX · Web Dev· Creative Design</p>
+              <p className="font-bold text-sm text-gray-900">Aicelle</p>
+              <p className="text-xs text-gray-500">
+                UI/UX · Web Dev · Creative Design
+              </p>
             </div>
           </div>
 
