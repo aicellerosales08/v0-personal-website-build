@@ -514,74 +514,121 @@ export default function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 tracking-tight">
-          Featured Projects
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.title}
-              className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+            Featured Projects
+          </h2>
+      
+          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
+            A collection of my web, mobile, and system design projects.
+          </p>
+        </div>
+      
+        {/* Project Category Tabs */}
+        <div className="flex justify-center flex-wrap gap-3 mb-12">
+          {['All', 'Web', 'Mobile', 'System'].map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                activeCategory === category
+                  ? 'bg-gray-900 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-600'
+              }`}
             >
-              <div className="aspect-video relative overflow-hidden bg-gray-100">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-102 transition-transform duration-300"
-                />
-              </div>
-              
-              <div className="p-6 flex flex-col flex-1 justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-4">{project.description}</p>
-                  <div className="flex gap-2 flex-wrap mb-6">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
-                      >
-                        {tag}
+              {category}
+            </button>
+          ))}
+        </div>
+      
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects
+            .filter(
+              (project) =>
+                activeCategory === 'All' || project.category === activeCategory
+            )
+            .map((project) => (
+              <div
+                key={project.title}
+                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
+              >
+                {/* Project Image */}
+                <div className="aspect-video relative overflow-hidden bg-gray-100">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+      
+                {/* Project Content */}
+                <div className="p-6 flex flex-col flex-1 justify-between">
+                  <div>
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        {project.title}
+                      </h3>
+      
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full whitespace-nowrap">
+                        {project.category}
                       </span>
-                    ))}
+                    </div>
+      
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-4">
+                      {project.description}
+                    </p>
+      
+                    {/* Tags */}
+                    <div className="flex gap-2 flex-wrap mb-6">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+      
+                  {/* Project Link */}
+                  <div>
+                    {'website' in project ? (
+                      <div className="flex gap-4 border-t border-gray-100 pt-4">
+                        <a
+                          href={project.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                        >
+                          Live Site <ExternalLink size={14} />
+                        </a>
+      
+                        <a
+                          href={project.figma}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                        >
+                          Figma <ExternalLink size={14} />
+                        </a>
+                      </div>
+                    ) : (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
+                      >
+                        View Project Design <ExternalLink size={15} />
+                      </a>
+                    )}
                   </div>
                 </div>
-
-                <div>
-                  {'website' in project ? (
-                    <div className="flex gap-4 border-t border-gray-100 pt-4">
-                      <a
-                        href={project.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
-                      >
-                        Live Site <ExternalLink size={14} />
-                      </a>
-                      <a
-                        href={project.figma}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
-                      >
-                        Figma <ExternalLink size={14} />
-                      </a>
-                    </div>
-                  ) : (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
-                    >
-                      View Project Design <ExternalLink size={15} />
-                    </a>
-                  )}
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
