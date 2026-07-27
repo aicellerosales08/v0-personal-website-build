@@ -158,6 +158,30 @@ export default function Portfolio() {
       link: 'https://www.figma.com/design/XmyRcz7gL3ekjjWBP5Qhh1/SAINT-MATTHEW-SYSTEM?node-id=0-1&p=f&t=gCr3fSVO0kAjYZ7p-0',
       category: 'System',
     },
+    {
+      title: 'Book E-Commerce',
+      description: 'An e-commerce website concept designed for browsing and purchasing books through a clean, modern, and user-friendly online shopping experience.',
+      tags: ['Web Design', 'E-Commerce', 'UI/UX'],
+      image: '/book-ecom.png',
+      link: 'https://www.figma.com/design/ncu16eexK4XUHavfcXDfcx/BOOK-ECOM?node-id=0-1&p=f&t=xxif6hGaBjYqnyjQ-0',
+      category: 'Web',
+    },
+    {
+      title: 'Aicelle Naomi',
+      description: 'A modern and visually engaging website design focused on creating a polished digital experience with intuitive navigation and user-centered interface design.',
+      tags: ['Web Design', 'UI/UX', 'Figma'],
+      image: '/aicelle-naomi.png',
+      link: 'https://www.figma.com/design/VqQnqxrZGLtEoaihetBCXC/Aicelle-Naomi?node-id=0-1&p=f&t=AC86TVrVxcMeEeG4-0',
+      category: 'Web',
+    },
+    {
+      title: 'E-Commerce Website',
+      description: 'A modern e-commerce website concept designed to provide an intuitive online shopping experience with product browsing, organized categories, and user-friendly navigation.',
+      tags: ['Web Design', 'E-Commerce', 'UI/UX'],
+      image: '/ecommerce-website.png',
+      link: 'https://www.figma.com/design/qdXZXMKLUHG7Aslk3HliK0/E-COMMERCE-WEBSITE?node-id=0-1&p=f&t=US3ria2yltkMHbLp-0',
+      category: 'Web',
+    },
   ]
 
   // UPDATED: Added TikTok with customized native SVG path
