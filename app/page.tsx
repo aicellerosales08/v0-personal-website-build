@@ -59,6 +59,7 @@ export default function Portfolio() {
       image: '/onlook.png',
       website: 'https://onlook-livid.vercel.app/',
       figma: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?t=9Y2YU2dMUX2gJL7T-0',
+      category: 'Web',
     },
     {
       title: 'Bank System',
@@ -66,6 +67,7 @@ export default function Portfolio() {
       tags: ['System Design', 'Finance', 'UI/UX'],
       image: '/bank-system.png',
       link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&p=f&t=jLGr8ymNClQSHL72-0',
+      category: 'System',
     },
     {
       title: 'Converter System',
@@ -73,6 +75,7 @@ export default function Portfolio() {
       tags: ['System Design', 'Utility', 'Mobile'],
       image: '/converter.jpg',
       link: 'https://www.figma.com/design/HTviG6YNluJ5W8Uc1N5QxL/CONVERTER-SYSTEM?node-id=0-1&p=f&t=4H0fPzfBfzBv1hOp-0',
+      category: 'System',
     },
     {
       title: 'Freshly Dropped',
@@ -80,6 +83,7 @@ export default function Portfolio() {
       tags: ['E-Commerce', 'Mobile', 'Food Delivery'],
       image: '/freshly-dropped.png',
       link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
+      category: 'Mobile',
     },
     {
       title: 'Flutter Mobile App',
@@ -87,6 +91,7 @@ export default function Portfolio() {
       tags: ['Flutter', 'Mobile', 'UI Design'],
       image: '/fluttermobile.png',
       link: 'https://www.figma.com/design/PkV6mrlKLDxl1Ny3HPUZW1/Flutter-mobile-app?node-id=0-1&p=f&t=iSvAJasEP321GKaj-0',
+      category: 'Mobile',
     },
     {
       title: 'Aura Co. Website',
@@ -94,6 +99,7 @@ export default function Portfolio() {
       tags: ['Web Design', 'UI/UX', 'Figma'],
       image: '/auroandco.png',
       link: 'https://www.figma.com/design/58HwSxAIXk6U9hnIUc4NFc/Aura---Co.-Website?node-id=0-1&p=f&t=jCM8KGTrnHvm9W19-0',
+      category: 'Web',
     },
     {
       title: 'LifeHaven iOS App',
@@ -101,6 +107,7 @@ export default function Portfolio() {
       tags: ['iOS', 'Mobile', 'Health App'],
       image: '/lifehaven.png',
       link: 'https://www.figma.com/design/lcpe4JHUmionm4yfgHjnZ0/LIFEHAVEN-IOS-APP?node-id=0-1&p=f&t=JaCsUwDSOA9bcute-0',
+      category: 'Mobile',
     },
     {
       title: 'Pizza Mobile App',
@@ -108,6 +115,7 @@ export default function Portfolio() {
       tags: ['Mobile App', 'E-Commerce', 'UI/UX'],
       image: '/pizza.png',
       link: 'https://www.figma.com/design/32TNLdaicalexwMrWKmWra/PIZZA-MOBILE-APP?node-id=0-1&p=f&t=RqTLXYmj0jULqNZZ-0',
+      category: 'Mobile',
     },
     {
       title: 'Digi Academia Website',
@@ -115,6 +123,7 @@ export default function Portfolio() {
       tags: ['Web Design', 'Education', 'UI/UX'],
       image: '/digiacademia.png',
       link: 'https://www.figma.com/design/9uQZnejw6o8yXbFgYxBLyU/DIGI-ACADEMIA-WEBSITE?node-id=0-1&p=f&t=MDYmfWXRw2fz8TBD-0',
+      category: 'Web',
     },
     {
       title: 'Skincare Mobile App',
@@ -122,6 +131,7 @@ export default function Portfolio() {
       tags: ['Mobile', 'Beauty', 'UI Design'],
       image: '/skincare.png',
       link: 'https://www.figma.com/design/HnbGL83GBrmEbUxXdlDTzY/SKINCARE-MOBILE-APP?node-id=0-1&p=f&t=ayOWQcWdiaMiR1C0-0',
+      category: 'Mobile',
     },
     {
       title: 'FilmTrack Website',
@@ -129,6 +139,7 @@ export default function Portfolio() {
       tags: ['PHP', 'Web App', 'UI/UX'],
       image: '/filmtrack.png',
       link: 'https://www.figma.com/design/bLes37eN9u3aa13n4X2n4b/FILMTRACK-WEBSITE-PHP?node-id=0-1&p=f&t=xNK21DHHM5u1Y183-0',
+      category: 'Web',
     },
     {
       title: 'Travel Mobile App',
@@ -136,6 +147,7 @@ export default function Portfolio() {
       tags: ['Mobile', 'Travel', 'UI Design'],
       image: '/travel.png',
       link: 'https://www.figma.com/design/pPCwRmSdrq87AmdbtKWzv2/TRAVEL-MOBILE-APP?node-id=0-1&p=f&t=wP5c9EjzJ7jOpFxn-0',
+      category: 'Mobile'
     },
     {
       title: 'Saint Matthew System',
@@ -143,6 +155,7 @@ export default function Portfolio() {
       tags: ['System Design', 'Education', 'UI/UX'],
       image: '/saintmatthew.png',
       link: 'https://www.figma.com/design/XmyRcz7gL3ekjjWBP5Qhh1/SAINT-MATTHEW-SYSTEM?node-id=0-1&p=f&t=gCr3fSVO0kAjYZ7p-0',
+      category: 'System',
     },
   ]
 
