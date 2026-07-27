@@ -318,7 +318,7 @@ export default function Portfolio() {
                 Rosales
               </span>
             </h1>
-            <p className="text-xl text-gray-600">Web Designer & Frontend Developer</p>
+            <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
           </div>
 
           <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
