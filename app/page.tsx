@@ -200,15 +200,15 @@ export default function Portfolio() {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
               <img
-                src="/aicelle-logo.png"
+                src="/aicelle-logo-circle.png"
                 alt="Aicelle Rosales Logo"
                 className="w-full h-full object-cover"
               />
             </div>
           
             <div className="hidden sm:block">
-              <p className="font-semibold text-sm">Aicelle Rosales</p>
-              <p className="text-xs text-gray-500">UI/UX · Web · Creative Design</p>
+              <p className="font-semibold text-sm">Aicelle</p>
+              <p className="text-xs text-gray-500">UI/UX · Web Dev· Creative Design</p>
             </div>
           </div>
 
