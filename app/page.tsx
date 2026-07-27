@@ -428,96 +428,102 @@ export default function Portfolio() {
         </div>
       </section>
 
-       {/* About Section */}
-      <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+      {/* About Section */}
+      <section id="about" className="max-w-7xl mx-auto px-6 py-20 md:py-24">
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-start">
       
-          {/* LEFT - ABOUT ME */}
-          <div className="space-y-6">
+          {/* LEFT SIDE */}
+          <div>
       
-            {/* About Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-purple-200 bg-purple-50/30">
-              <span className="text-purple-600 text-lg">♙</span>
-              <span className="text-sm font-bold uppercase tracking-wide text-purple-600">
+            {/* About Me Badge */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-purple-200 bg-white mb-8">
+              <span className="text-purple-600 text-xl">♙</span>
+              <span className="text-base font-bold uppercase tracking-wide text-purple-600">
                 About Me
               </span>
             </div>
       
-            {/* Heading */}
-            <div>
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 tracking-tight leading-tight">
-                Hi, I&apos;m Aicelle
-              </h2>
+            {/* Main Heading */}
+            <h2 className="text-6xl md:text-7xl font-bold text-gray-900 tracking-tight leading-none">
+              Hi, I&apos;m Aicelle
+            </h2>
       
-              <p className="mt-3 text-2xl md:text-3xl font-serif italic text-pink-500">
-                Nice to meet you! ♡
-              </p>
-            </div>
+            {/* Nice to meet you */}
+            <p className="mt-5 text-3xl md:text-4xl font-serif italic text-pink-500">
+              Nice to meet you! ♡
+            </p>
       
             {/* Role */}
-            <h3 className="text-3xl md:text-4xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+            <h3 className="mt-8 text-4xl md:text-5xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
               Web Designer & Developer
               <br />
               UI/UX Designer
             </h3>
       
-            {/* Description */}
-            <div className="space-y-5 max-w-xl">
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                I&apos;m an Information Technology graduate with a passion for
-                creating beautiful, functional, and user-centered digital
-                experiences.
-              </p>
+            {/* First Paragraph */}
+            <p className="mt-8 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+              I&apos;m an Information Technology graduate with a passion for
+              creating beautiful, functional, and user-centered digital
+              experiences.
+            </p>
       
-              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
+            {/* Divider */}
+            <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full my-7" />
       
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                I combine creativity and technical skills to design and build
-                responsive websites, intuitive interfaces, and interactive
-                prototypes that solve real problems and delight users.
-              </p>
+            {/* Second Paragraph */}
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+              I combine creativity and technical skills to design and build
+              responsive websites, intuitive interfaces, and interactive
+              prototypes that solve real problems and delight users.
+            </p>
       
-              <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                My journey includes academic projects, internship experiences,
-                and collaborative work with real clients. I&apos;m always learning
-                and exploring new tools and technologies to deliver better solutions.
-              </p>
-            </div>
+            {/* Third Paragraph */}
+            <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+              My journey includes academic projects, internship experiences,
+              and collaborative work with real clients. I&apos;m always learning
+              and exploring new tools and technologies to deliver better solutions.
+            </p>
       
             {/* Stats */}
-            <div className="grid grid-cols-2 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-100/50 overflow-hidden">
+            <div className="mt-9 grid grid-cols-2 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-100 overflow-hidden">
       
-              <div className="p-5 md:p-6 flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-purple-600 text-2xl">
+              {/* Stat 1 */}
+              <div className="p-6 flex items-center gap-5">
+                <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-purple-600 text-3xl">
                   ✧
                 </div>
       
                 <div>
-                  <p className="text-3xl font-bold text-purple-600">
+                  <p className="text-4xl font-bold text-purple-600">
                     50+
                   </p>
-                  <p className="text-sm font-semibold text-gray-800">
+      
+                  <p className="text-base font-semibold text-gray-800">
                     Design Components
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+      
+                  <p className="text-sm text-gray-500 mt-1">
                     Reusable UI elements
                   </p>
                 </div>
               </div>
       
-              <div className="p-5 md:p-6 flex items-center gap-4 border-l border-purple-100">
-                <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-pink-500 text-2xl">
+              {/* Stat 2 */}
+              <div className="p-6 flex items-center gap-5 border-l border-purple-100">
+                <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-pink-500 text-3xl">
                   ▣
                 </div>
       
                 <div>
-                  <p className="text-3xl font-bold text-pink-500">
+                  <p className="text-4xl font-bold text-pink-500">
                     20+
                   </p>
-                  <p className="text-sm font-semibold text-gray-800">
+      
+                  <p className="text-base font-semibold text-gray-800">
                     Created Layouts
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+      
+                  <p className="text-sm text-gray-500 mt-1">
                     Web & mobile layouts
                   </p>
                 </div>
@@ -526,112 +532,130 @@ export default function Portfolio() {
             </div>
           </div>
       
-          {/* RIGHT - WHAT I DO */}
+      
+          {/* RIGHT SIDE - WHAT I DO */}
           <div className="relative">
       
             {/* Glow */}
-            <div className="absolute -inset-3 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-3xl blur-2xl" />
+            <div className="absolute -inset-4 bg-gradient-to-r from-purple-200/40 to-pink-200/40 rounded-3xl blur-2xl" />
       
-            <div className="relative bg-white rounded-3xl border border-purple-100 shadow-sm p-7 md:p-9 overflow-hidden">
+            {/* Main Card */}
+            <div className="relative bg-white rounded-3xl border border-purple-100 shadow-sm p-9 md:p-10 overflow-hidden">
       
               {/* Decorative Dots */}
-              <div className="absolute top-0 right-0 w-40 h-40 opacity-30"
+              <div
+                className="absolute top-0 right-0 w-44 h-44 opacity-30"
                 style={{
-                  backgroundImage: 'radial-gradient(#e879f9 2px, transparent 2px)',
-                  backgroundSize: '16px 16px'
+                  backgroundImage:
+                    'radial-gradient(#e879f9 2px, transparent 2px)',
+                  backgroundSize: '16px 16px',
                 }}
               />
       
               {/* Header */}
-              <div className="relative flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 text-3xl shadow-sm">
+              <div className="relative flex items-center gap-5 mb-8">
+      
+                <div className="w-20 h-20 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 text-4xl shadow-sm">
                   ☆
                 </div>
       
                 <div>
-                  <h3 className="text-3xl font-bold text-gray-900">
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
                     What I Do
                   </h3>
       
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
-                    <div className="w-2 h-2 bg-pink-500 rounded-full" />
-                  </div>
-                </div>
-              </div>
-      
-              {/* Services */}
-              <div className="relative">
-      
-                {/* Web Development */}
-                <div className="flex gap-5 py-5 border-b border-gray-100">
-                  <div className="w-20 h-20 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-3xl">
-                    &lt;/&gt;
-                  </div>
-      
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Web Development
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      Develop responsive, fast, and clean websites
-                      using modern technologies.
-                    </p>
-                  </div>
-                </div>
-      
-                {/* UI/UX */}
-                <div className="flex gap-5 py-5 border-b border-gray-100">
-                  <div className="w-20 h-20 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-500 text-3xl">
-                    ✧
-                  </div>
-      
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      UI/UX Design
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      Design intuitive and visually appealing interfaces
-                      that provide great user experiences.
-                    </p>
-                  </div>
-                </div>
-      
-                {/* Wireframing */}
-                <div className="flex gap-5 py-5 border-b border-gray-100">
-                  <div className="w-20 h-20 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-3xl">
-                    ▣
-                  </div>
-      
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Wireframing & Prototyping
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      Build interactive wireframes and prototypes
-                      to visualize ideas and test user flows.
-                    </p>
-                  </div>
-                </div>
-      
-                {/* Design Systems */}
-                <div className="flex gap-5 pt-5">
-                  <div className="w-20 h-20 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-500 text-3xl">
-                    ▢
-                  </div>
-      
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Design Systems
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      Create consistent and scalable design systems
-                      for efficient and cohesive digital products.
-                    </p>
+                  <div className="flex items-center gap-2 mt-3">
+                    <div className="w-14 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
+                    <div className="w-2.5 h-2.5 bg-pink-500 rounded-full" />
                   </div>
                 </div>
       
               </div>
+      
+      
+              {/* Web Development */}
+              <div className="flex gap-6 py-7 border-b border-gray-100">
+      
+                <div className="w-24 h-24 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-4xl">
+                  &lt;/&gt;
+                </div>
+      
+                <div>
+                  <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                    Web Development
+                  </h4>
+      
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Develop responsive, fast, and clean websites
+                    using modern technologies.
+                  </p>
+                </div>
+      
+              </div>
+      
+      
+              {/* UI/UX Design */}
+              <div className="flex gap-6 py-7 border-b border-gray-100">
+      
+                <div className="w-24 h-24 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-500 text-4xl">
+                  ✧
+                </div>
+      
+                <div>
+                  <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                    UI/UX Design
+                  </h4>
+      
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Design intuitive and visually appealing interfaces
+                    that provide great user experiences.
+                  </p>
+                </div>
+      
+              </div>
+      
+      
+              {/* Wireframing */}
+              <div className="flex gap-6 py-7 border-b border-gray-100">
+      
+                <div className="w-24 h-24 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-4xl">
+                  ▣
+                </div>
+      
+                <div>
+                  <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                    Wireframing & Prototyping
+                  </h4>
+      
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Build interactive wireframes and prototypes
+                    to visualize ideas and test user flows.
+                  </p>
+                </div>
+      
+              </div>
+      
+      
+              {/* Design Systems */}
+              <div className="flex gap-6 pt-7">
+      
+                <div className="w-24 h-24 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-500 text-4xl">
+                  ▢
+                </div>
+      
+                <div>
+                  <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                    Design Systems
+                  </h4>
+      
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    Create consistent and scalable design systems
+                    for efficient and cohesive digital products.
+                  </p>
+                </div>
+      
+              </div>
+      
             </div>
           </div>
       
