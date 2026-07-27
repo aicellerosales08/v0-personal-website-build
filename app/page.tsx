@@ -336,7 +336,7 @@ export default function Portfolio() {
             <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-[float_6s_ease-in-out_infinite] group-hover:scale-[1.02] transition-transform duration-500">
         
               <Image
-                src="/profile.png"
+                src="/aicelle-illustration.png"
                 alt="Aicelle Rosales"
                 fill
                 className="object-cover object-top scale-[1.35]"
