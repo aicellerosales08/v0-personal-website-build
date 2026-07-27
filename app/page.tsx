@@ -325,38 +325,51 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Profile Image */}
-        <div className="flex-1">
-          <div className="relative w-full max-w-md mx-auto group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
+        {/* Profile Illustration */}
+        <div className="flex-1 relative">
+          <div className="relative w-full max-w-lg mx-auto group">
 
-            <div className="relative z-10 rounded-full overflow-hidden border-8 border-white shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-102 transition-transform duration-500">
+            {/* Soft Purple-Pink Glow */}
+            <div className="absolute inset-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+
+            {/* Character Illustration */}
+            <div className="relative z-10 flex justify-center items-end">
               <Image
-                src="/profile.jpg"
-                alt="Aicelle Rosales"
-                width={400}
-                height={400}
-                className="w-full h-auto aspect-square object-cover"
+                src="/aicelle-illustration.png"
+                alt="Aicelle Rosales - Web Designer & Developer"
+                width={550}
+                height={650}
+                className="w-full h-auto object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite] group-hover:scale-105 transition-transform duration-500"
                 priority
               />
             </div>
 
-            {/* UPDATED: Matches exactly with the screenshot badge style */}
-            <div 
-              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
+            {/* Experience Badge */}
+            <div
+              className="absolute top-12 right-0 z-20 bg-white rounded-2xl px-5 py-3 shadow-lg border border-gray-100 text-center min-w-[120px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '1.5s' }}
             >
-              <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">Experiences</p>
+              <p className="font-bold text-xl text-gray-900 leading-none">
+                4+
+              </p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">
+                Experiences
+              </p>
             </div>
 
-            <div 
-              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
+            {/* Projects Badge */}
+            <div
+              className="absolute bottom-16 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-3 shadow-lg border border-gray-800 text-center min-w-[130px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '3s' }}
             >
-              <p className="font-bold text-xl leading-none">20+</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
+              <p className="font-bold text-xl leading-none">
+                20+
+              </p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">
+                Projects Done
+              </p>
             </div>
+
           </div>
         </div>
       </section>
@@ -372,7 +385,9 @@ export default function Portfolio() {
           <p className="text-2xl md:text-3xl font-serif text-gray-800 italic mb-6">
             &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
           </p>
-          <p className="text-gray-600 font-medium">— Steve Jobs</p>
+          <p className="text-gray-600 font-medium">
+            — Steve Jobs
+          </p>
         </div>
       </section>
 
