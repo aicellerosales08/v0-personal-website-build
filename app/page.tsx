@@ -203,7 +203,7 @@ export default function Portfolio() {
             </div>
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">Front-End Developer / UI/UX Designer</p>
+              <p className="text-xs text-gray-500">UI/UX · Web · Creative Design</p>
             </div>
           </div>
 
