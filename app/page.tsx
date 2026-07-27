@@ -18,6 +18,7 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
+  const [activeCategory, setActiveCategory] = useState('All')
 
   // Smooth automatic scrolling function
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -520,12 +521,12 @@ export default function Portfolio() {
           </h2>
       
           <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-            A collection of my web, mobile, and system design projects.
+            Explore my selected work across web, mobile, and system design.
           </p>
         </div>
       
-        {/* Project Category Tabs */}
-        <div className="flex justify-center flex-wrap gap-3 mb-12">
+        {/* Category Tabs */}
+        <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
           {['All', 'Web', 'Mobile', 'System'].map((category) => (
             <button
               key={category}
@@ -546,7 +547,8 @@ export default function Portfolio() {
           {projects
             .filter(
               (project) =>
-                activeCategory === 'All' || project.category === activeCategory
+                activeCategory === 'All' ||
+                project.category === activeCategory
             )
             .map((project) => (
               <div
@@ -566,12 +568,12 @@ export default function Portfolio() {
                 {/* Project Content */}
                 <div className="p-6 flex flex-col flex-1 justify-between">
                   <div>
-                    <div className="flex items-center justify-between gap-3 mb-2">
+                    <div className="flex items-start justify-between gap-3 mb-2">
                       <h3 className="text-lg font-bold text-gray-900">
                         {project.title}
                       </h3>
       
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full whitespace-nowrap">
+                      <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
                         {project.category}
                       </span>
                     </div>
@@ -620,7 +622,7 @@ export default function Portfolio() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 group-hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
+                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
                       >
                         View Project Design <ExternalLink size={15} />
                       </a>
