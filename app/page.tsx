@@ -318,11 +318,11 @@ export default function Portfolio() {
                 Rosales
               </span>
             </h1>
-            <p className="text-xl text-gray-600">Frontend Developer & UI/UX Designer</p>
+            <p className="text-xl text-gray-600">Web Designer & Frontend Developer</p>
           </div>
 
           <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-            Information Technology graduate with experience in web development, UI/UX design, system development, and technical support. Passionate about creating beautiful digital experiences.
+           I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
           </p>
 
           <div className="flex gap-4 flex-wrap">
