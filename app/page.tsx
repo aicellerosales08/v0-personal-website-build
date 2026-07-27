@@ -429,254 +429,315 @@ export default function Portfolio() {
       </section>
 
         {/* About Section */}
-          <section id="about" className="max-w-6xl mx-auto px-6 py-20 md:py-28">
-            {/* Top About Content */}
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
-          
-              {/* LEFT - About Me */}
-              <div className="flex flex-col">
-                {/* Label */}
-                <div className="inline-flex items-center gap-2 w-fit px-4 py-2 mb-6 rounded-full border border-purple-200 bg-purple-50/50">
-                  <span className="text-purple-600 text-lg">♙</span>
-                  <span className="text-sm font-bold uppercase tracking-wide text-purple-600">
-                    About Me
+        <section
+          id="about"
+          className="relative max-w-7xl mx-auto px-6 py-20 md:py-28 overflow-hidden"
+        >
+          {/* Soft Background Glow */}
+          <div className="absolute top-20 left-0 w-72 h-72 bg-purple-200/20 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
+        
+          {/* Main About Grid */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+        
+            {/* ================= LEFT SIDE ================= */}
+            <div className="flex flex-col">
+        
+              {/* About Me Label */}
+              <div className="inline-flex items-center gap-2 w-fit px-5 py-2 rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 font-semibold text-sm uppercase tracking-wide mb-7">
+                <span className="text-lg">♙</span>
+                About Me
+              </div>
+        
+              {/* Heading */}
+              <div className="mb-6">
+                <div className="flex flex-wrap items-center gap-4">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">
+                    Hi, I&apos;m Aicelle
+                  </h2>
+        
+                  <span className="text-2xl md:text-3xl text-pink-500 italic font-serif">
+                    Nice to meet you! ♡
                   </span>
                 </div>
-          
-                {/* Heading */}
-                <div className="mb-6">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-tight">
-                    Hi, I&apos;m Aicelle
-                    <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                      Web Designer & Developer
-                    </span>
-                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                      UI/UX Designer
-                    </span>
-                  </h2>
-                </div>
-          
-                {/* Introduction */}
-                <div className="space-y-5 max-w-xl">
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    I&apos;m an Information Technology graduate with a passion for
-                    creating beautiful, functional, and user-centered digital
-                    experiences.
-                  </p>
-          
-                  <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
-          
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    I combine creativity and technical skills to design and build
-                    responsive websites, intuitive interfaces, and interactive
-                    prototypes that solve real problems and delight users.
-                  </p>
-          
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    My journey includes academic projects, internship experiences,
-                    and collaborative work with real clients. I&apos;m always learning
-                    and exploring new tools and technologies to deliver better
-                    solutions.
-                  </p>
-                </div>
-          
-                {/* Stats */}
-                <div className="mt-8 grid grid-cols-2 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70 overflow-hidden">
+        
+                {/* Gradient Heading */}
+                <h3 className="mt-5 text-3xl md:text-4xl font-bold leading-tight">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+                    Web Designer & Developer
+                  </span>
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+                    UI/UX Designer
+                  </span>
+                </h3>
+              </div>
+        
+              {/* First Paragraph */}
+              <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
+                I&apos;m an Information Technology graduate with a passion for
+                creating beautiful, functional, and user-centered digital
+                experiences.
+              </p>
+        
+              {/* Decorative Line */}
+              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full my-6" />
+        
+              {/* Second Paragraph */}
+              <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
+                I combine creativity and technical skills to design and build
+                responsive websites, intuitive interfaces, and interactive
+                prototypes that solve real problems and delight users.
+              </p>
+        
+              {/* Third Paragraph */}
+              <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mt-5">
+                My journey includes academic projects, internship experiences,
+                and collaborative work with real clients. I&apos;m always learning
+                and exploring new tools and technologies to deliver better
+                solutions.
+              </p>
+        
+              {/* ================= STATS ================= */}
+              <div className="mt-8 p-5 md:p-6 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 via-white to-pink-50/70 shadow-sm">
+                <div className="grid grid-cols-2 divide-x divide-purple-100">
+        
                   {/* Stat 1 */}
-                  <div className="p-6 md:p-7 border-r border-purple-100">
-                    <p className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                      50+
-                    </p>
-                    <p className="text-base font-semibold text-gray-900 mt-2">
-                      Design Components
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Reusable UI elements created in Figma
-                    </p>
+                  <div className="flex items-center gap-4 pr-5">
+                    <div className="hidden sm:flex w-14 h-14 rounded-full bg-purple-100 items-center justify-center text-purple-600 text-2xl">
+                      ✧
+                    </div>
+        
+                    <div>
+                      <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+                        50+
+                      </p>
+        
+                      <p className="font-semibold text-gray-900">
+                        Design Components
+                      </p>
+        
+                      <p className="text-sm text-gray-500 mt-1">
+                        Reusable UI elements created in Figma
+                      </p>
+                    </div>
                   </div>
-          
+        
                   {/* Stat 2 */}
-                  <div className="p-6 md:p-7">
-                    <p className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
-                      20+
-                    </p>
-                    <p className="text-base font-semibold text-gray-900 mt-2">
-                      Created Layouts
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Web & mobile layouts designed
-                    </p>
+                  <div className="flex items-center gap-4 pl-5">
+                    <div className="hidden sm:flex w-14 h-14 rounded-full bg-pink-100 items-center justify-center text-pink-600 text-2xl">
+                      ▣
+                    </div>
+        
+                    <div>
+                      <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">
+                        20+
+                      </p>
+        
+                      <p className="font-semibold text-gray-900">
+                        Created Layouts
+                      </p>
+        
+                      <p className="text-sm text-gray-500 mt-1">
+                        Web & mobile layouts designed
+                      </p>
+                    </div>
                   </div>
+        
                 </div>
               </div>
-          
-          
-              {/* RIGHT - What I Do */}
-              <div className="relative">
-                {/* Glow */}
-                <div className="absolute -inset-3 bg-gradient-to-r from-purple-200/40 to-pink-200/40 rounded-3xl blur-2xl" />
-          
-                <div className="relative h-full bg-white rounded-3xl border border-purple-100 shadow-lg overflow-hidden">
-          
-                  {/* Decorative Dots */}
-                  <div className="absolute top-0 right-0 w-48 h-48 opacity-40">
-                    <div
-                      className="w-full h-full"
-                      style={{
-                        backgroundImage:
-                          'radial-gradient(#d946ef 1.5px, transparent 1.5px)',
-                        backgroundSize: '14px 14px',
-                      }}
-                    />
-                  </div>
-          
-                  <div className="relative p-8 md:p-10">
-                    {/* Header */}
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center">
-                        <span className="text-3xl text-purple-600">✦</span>
+            </div>
+        
+        
+            {/* ================= RIGHT SIDE ================= */}
+            <div className="relative">
+        
+              {/* Glow */}
+              <div className="absolute -inset-3 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-[2rem] blur-2xl -z-10" />
+        
+              {/* What I Do Card */}
+              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-[2rem] border border-purple-100 shadow-xl shadow-purple-100/30 overflow-hidden">
+        
+                {/* Decorative Dots */}
+                <div className="absolute top-0 right-0 w-56 h-40 opacity-40 pointer-events-none">
+                  <div
+                    className="w-full h-full"
+                    style={{
+                      backgroundImage:
+                        'radial-gradient(circle, #e9a8ed 2px, transparent 2px)',
+                      backgroundSize: '16px 16px',
+                      maskImage:
+                        'linear-gradient(to bottom left, black, transparent)',
+                    }}
+                  />
+                </div>
+        
+                <div className="relative p-8 md:p-10">
+        
+                  {/* Card Header */}
+                  <div className="flex items-center gap-5 mb-8">
+        
+                    <div className="w-16 h-16 rounded-full bg-purple-50 flex items-center justify-center shadow-sm">
+                      <span className="text-4xl text-purple-600">☆</span>
+                    </div>
+        
+                    <div>
+                      <h3 className="text-3xl font-bold text-gray-900">
+                        What I Do
+                      </h3>
+        
+                      <div className="flex items-center gap-2 mt-3">
+                        <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
+                        <div className="w-2 h-2 bg-pink-500 rounded-full" />
                       </div>
-          
+                    </div>
+        
+                  </div>
+        
+        
+                  {/* Services */}
+                  <div className="space-y-0">
+        
+                    {/* Web Development */}
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
+                      <div className="w-20 h-20 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-3xl">
+                        &lt;/&gt;
+                      </div>
+        
                       <div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
-                          What I Do
-                        </h3>
-          
-                        <div className="flex items-center gap-2 mt-2">
-                          <div className="w-12 h-1 bg-purple-600 rounded-full" />
-                          <div className="w-2 h-2 bg-pink-500 rounded-full" />
-                        </div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-2">
+                          Web Development
+                        </h4>
+        
+                        <p className="text-gray-600 leading-relaxed">
+                          Develop responsive, fast, and clean websites
+                          using modern technologies.
+                        </p>
                       </div>
                     </div>
-          
-                    {/* Services */}
-                    <div className="divide-y divide-gray-100">
-          
-                      {/* Web Development */}
-                      <div className="flex gap-5 py-5 first:pt-0 group">
-                        <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <span className="text-2xl text-purple-600">⌨</span>
-                        </div>
-          
-                        <div>
-                          <h4 className="text-lg md:text-xl font-bold text-gray-900">
-                            Web Development
-                          </h4>
-                          <p className="text-gray-600 mt-1 leading-relaxed">
-                            Develop responsive, fast, and clean websites using
-                            modern technologies.
-                          </p>
-                        </div>
+        
+        
+                    {/* UI/UX Design */}
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
+                      <div className="w-20 h-20 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-600 text-3xl">
+                        ✧
                       </div>
-          
-                      {/* UI/UX Design */}
-                      <div className="flex gap-5 py-5 group">
-                        <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <span className="text-2xl text-pink-600">✧</span>
-                        </div>
-          
-                        <div>
-                          <h4 className="text-lg md:text-xl font-bold text-gray-900">
-                            UI/UX Design
-                          </h4>
-                          <p className="text-gray-600 mt-1 leading-relaxed">
-                            Design intuitive and visually appealing interfaces
-                            that provide great user experiences.
-                          </p>
-                        </div>
+        
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-2">
+                          UI/UX Design
+                        </h4>
+        
+                        <p className="text-gray-600 leading-relaxed">
+                          Design intuitive and visually appealing
+                          interfaces that provide great user experiences.
+                        </p>
                       </div>
-          
-                      {/* Wireframing */}
-                      <div className="flex gap-5 py-5 group">
-                        <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <span className="text-2xl text-purple-600">▣</span>
-                        </div>
-          
-                        <div>
-                          <h4 className="text-lg md:text-xl font-bold text-gray-900">
-                            Wireframing & Prototyping
-                          </h4>
-                          <p className="text-gray-600 mt-1 leading-relaxed">
-                            Build interactive wireframes and prototypes to
-                            visualize ideas and test user flows.
-                          </p>
-                        </div>
-                      </div>
-          
-                      {/* Design Systems */}
-                      <div className="flex gap-5 py-5 last:pb-0 group">
-                        <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <span className="text-2xl text-pink-600">◇</span>
-                        </div>
-          
-                        <div>
-                          <h4 className="text-lg md:text-xl font-bold text-gray-900">
-                            Design Systems
-                          </h4>
-                          <p className="text-gray-600 mt-1 leading-relaxed">
-                            Create consistent and scalable design systems for
-                            efficient and cohesive digital products.
-                          </p>
-                        </div>
-                      </div>
-          
                     </div>
+        
+        
+                    {/* Wireframing */}
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
+                      <div className="w-20 h-20 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 text-3xl">
+                        ▣
+                      </div>
+        
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-2">
+                          Wireframing & Prototyping
+                        </h4>
+        
+                        <p className="text-gray-600 leading-relaxed">
+                          Build interactive wireframes and prototypes
+                          to visualize ideas and test user flows.
+                        </p>
+                      </div>
+                    </div>
+        
+        
+                    {/* Design Systems */}
+                    <div className="flex gap-6 py-5">
+                      <div className="w-20 h-20 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center text-pink-600 text-3xl">
+                        ◫
+                      </div>
+        
+                      <div>
+                        <h4 className="text-xl font-bold text-gray-900 mb-2">
+                          Design Systems
+                        </h4>
+        
+                        <p className="text-gray-600 leading-relaxed">
+                          Create consistent and scalable design systems
+                          for efficient and cohesive digital products.
+                        </p>
+                      </div>
+                    </div>
+        
                   </div>
                 </div>
               </div>
             </div>
-          
-          
-            {/* Tools I Use */}
-            <div className="mt-10 rounded-3xl border border-purple-100 bg-gradient-to-r from-purple-50/70 via-white to-pink-50/70 shadow-sm p-6 md:p-7">
-              <div className="flex flex-col lg:flex-row items-center gap-8">
-          
-                {/* Title */}
-                <div className="flex items-center gap-4 lg:pr-8 lg:border-r border-purple-200 shrink-0">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center">
-                    <span className="text-2xl text-purple-600">✦</span>
-                  </div>
-          
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900">
-                    Tools I Use
-                  </h3>
+        
+          </div>
+        
+        
+          {/* ================= TOOLS I USE ================= */}
+          <div className="mt-10 p-6 md:p-7 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 via-white to-pink-50/60 shadow-sm">
+        
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+        
+              {/* Title */}
+              <div className="flex items-center gap-4 lg:pr-8 lg:border-r border-purple-100 shrink-0">
+        
+                <div className="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 text-2xl">
+                  ✧
                 </div>
-          
-                {/* Tools */}
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-6 w-full">
-          
-                  {[
-                    { name: 'Figma', icon: '/figma.png' },
-                    { name: 'VS Code', icon: '/vscode.png' },
-                    { name: 'Tailwind CSS', icon: '/tailwind.png' },
-                    { name: 'GitHub', icon: '/github.png' },
-                    { name: 'Photoshop', icon: '/photoshop.png' },
-                    { name: 'Illustrator', icon: '/illustrator.png' },
-                  ].map((tool) => (
-                    <div
-                      key={tool.name}
-                      className="flex flex-col items-center gap-2 group"
-                    >
-                      <div className="w-12 h-12 bg-white rounded-xl border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:scale-110 group-hover:shadow-md transition-all">
-                        <Image
-                          src={tool.icon}
-                          alt={`${tool.name} logo`}
-                          width={32}
-                          height={32}
-                          className="object-contain"
-                        />
-                      </div>
-          
-                      <span className="text-xs md:text-sm font-medium text-gray-700 text-center">
-                        {tool.name}
-                      </span>
+        
+                <h3 className="text-xl font-bold text-gray-900">
+                  Tools I Use
+                </h3>
+        
+              </div>
+        
+        
+              {/* Tools */}
+              <div className="flex-1 grid grid-cols-3 sm:grid-cols-6 gap-6 w-full">
+        
+                {[
+                  { name: 'Figma', icon: '/figma.png' },
+                  { name: 'VS Code', icon: '/vscode.png' },
+                  { name: 'Tailwind CSS', icon: '/tailwind.png' },
+                  { name: 'GitHub', icon: '/github.png' },
+                  { name: 'Photoshop', icon: '/photoshop.png' },
+                  { name: 'Illustrator', icon: '/illustrator.png' },
+                ].map((tool) => (
+                  <div
+                    key={tool.name}
+                    className="flex flex-col items-center gap-2 group"
+                  >
+        
+                    <div className="w-14 h-14 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-3 group-hover:-translate-y-1 group-hover:shadow-md transition-all">
+                      <Image
+                        src={tool.icon}
+                        alt={tool.name}
+                        width={32}
+                        height={32}
+                        className="object-contain"
+                      />
                     </div>
-                  ))}
-          
-                </div>
+        
+                    <span className="text-xs font-medium text-gray-600 text-center">
+                      {tool.name}
+                    </span>
+        
+                  </div>
+                ))}
+        
               </div>
             </div>
-          </section>
+          </div>
+        
+        </section>
 
       {/* Skills Section */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
