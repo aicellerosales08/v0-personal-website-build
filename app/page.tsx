@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import {
   Menu,
   X,
@@ -19,7 +18,6 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
-  const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
   // Smooth automatic scrolling function
@@ -67,78 +65,6 @@ export default function Portfolio() {
   'Building meaningful digital experiences.',
   ]
   
-  const designCategories = [
-  {
-    title: 'Ad Creatives & AI Image Generation',
-    category: 'Creative Design',
-    description:
-      'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
-    gradient: 'from-purple-100 to-pink-100',
-    images: [
-      '/ad1.jpg',
-      '/ad2.jpg',
-      '/ad3.jpg',
-      '/ad4.jpg',
-    ],
-  },
-
-  {
-    title: 'CLOTH',
-    category: 'Fashion Design',
-    description:
-      'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
-    gradient: 'from-pink-100 to-purple-100',
-    images: [
-      '/cloth1.jpg',
-      '/cloth2.jpg',
-      '/cloth3.jpg',
-      '/cloth4.jpg',
-    ],
-  },
-
-  {
-    title: 'SOCIAL MEDIA',
-    category: 'Social Media',
-    description:
-      'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
-    gradient: 'from-purple-100 to-pink-100',
-    images: [
-      '/social1.jpg',
-      '/social2.jpg',
-      '/social3.jpg',
-      '/social4.jpg',
-    ],
-  },
-
-  {
-    title: 'Meta',
-    category: 'Advertising',
-    description:
-      'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
-    gradient: 'from-blue-100 to-purple-100',
-    images: [
-      '/meta1.jpg',
-      '/meta2.jpg',
-      '/meta3.jpg',
-      '/meta4.jpg',
-    ],
-  },
-
-  {
-    title: 'PRODUCT LABEL AND VISUAL DESIGN',
-    category: 'Branding & Packaging',
-    description:
-      'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
-    gradient: 'from-pink-100 to-purple-100',
-    images: [
-      '/label1.jpg',
-      '/label2.jpg',
-      '/label3.jpg',
-      '/label4.jpg',
-    ],
-  },
-]
-
   const projects = [
     {
       title: 'Onlook - Thesis Project',
