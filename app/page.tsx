@@ -739,9 +739,10 @@ export default function Portfolio() {
         </div>  
       </section>
 
-      {/* ================= EXPERIENCE SECTION ================= */}
-      <section id="experience" className="bg-white py-20 md:py-32">
+     {/* ================= EXPERIENCE SECTION ================= */}
+      <section id="experience" className="bg-gray-50 py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
+      
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
@@ -753,154 +754,424 @@ export default function Portfolio() {
             </h2>
       
             <p className="text-gray-500 text-sm md:text-base">
-              My professional experience and hands-on work in web development,
-              UI/UX design, and creative digital solutions.
+              My professional experience in web development, UI/UX design,
+              AI data annotation, and IT technical support.
             </p>
           </div>
       
           {/* Experience Timeline */}
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="max-w-4xl mx-auto">
       
-            {/* Experience 1 - Malama */}
-            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
-              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
+            {/* ================= MALAMA ================= */}
+            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      Web Designer & Developer
-                    </h3>
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
       
-                    <p className="text-purple-600 font-semibold mt-1">
-                      Malama Social Media
-                    </p>
+                <div className="flex flex-col sm:flex-row gap-5">
+      
+                  {/* Company Logo */}
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/malama-logo.png"
+                      alt="Malama Co. logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain p-2"
+                    />
                   </div>
       
-                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
-                    2026 – Present
-                  </span>
-                </div>
+                  {/* Experience Details */}
+                  <div className="flex-1">
       
-                <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                  Worked on website design and development tasks, including Wix
-                  website customization, responsive page layouts, content
-                  organization, and visual design improvements. Collaborated on
-                  digital projects while applying UI/UX principles and maintaining
-                  consistent branding across web pages.
-                </p>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          Web Designer & Developer
+                        </h3>
       
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Wix",
-                    "Web Design",
-                    "UI/UX",
-                    "Responsive Design",
-                    "Adobe Illustrator",
-                  ].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                        <p className="text-purple-600 font-semibold mt-1">
+                          Malama Co. · Part-time
+                        </p>
+                      </div>
+      
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                        Jul 2026 – Present · 1 mo
+                      </span>
+                    </div>
+      
+                    <p className="text-sm text-gray-500 mt-2">
+                      Australia · Remote
+                    </p>
+      
+                    <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
+                      <li>
+                        Manage and maintain Wix websites for Australian clients,
+                        ensuring responsive, user-friendly, and visually consistent
+                        web experiences.
+                      </li>
+      
+                      <li>
+                        Design, build, and optimize service landing pages using Wix
+                        Editor based on client and business requirements.
+                      </li>
+      
+                      <li>
+                        Organize and manage website structures, content, and page
+                        layouts to improve usability and overall site performance.
+                      </li>
+      
+                      <li>
+                        Implement Wix CMS features, dynamic pages, collections, and
+                        URL redirects to support scalable and well-structured websites.
+                      </li>
+      
+                      <li>
+                        Update website content, layouts, booking systems, and
+                        interactive elements while maintaining brand consistency
+                        across client websites.
+                      </li>
+      
+                      <li>
+                        Collaborate with the marketing team to develop and launch
+                        new website features, pages, and digital experiences aligned
+                        with campaign and business goals.
+                      </li>
+      
+                      <li>
+                        Apply responsive web design principles to ensure websites
+                        deliver a seamless experience across desktop, tablet, and
+                        mobile devices.
+                      </li>
+                    </ul>
+      
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {[
+                        "Wix Website Builder",
+                        "Responsive Web Design",
+                        "Web Development",
+                        "UI/UX Design",
+                        "Wix CMS",
+                        "Website Management",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+      
+                  </div>
                 </div>
               </div>
             </div>
       
-            {/* Experience 2 - AI Data Annotation */}
-            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
-              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      AI Data Annotator
-                    </h3>
+            {/* ================= OUTLIER ================= */}
+            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
       
-                    <p className="text-pink-500 font-semibold mt-1">
-                      Freelance / Remote
-                    </p>
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+      
+                <div className="flex flex-col sm:flex-row gap-5">
+      
+                  {/* Company Logo */}
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/outlier-logo.png"
+                      alt="Outlier logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain p-2"
+                    />
                   </div>
       
-                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
-                    Previous Experience
-                  </span>
-                </div>
+                  <div className="flex-1">
       
-                <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                  Performed data annotation and review tasks to support AI and
-                  machine learning systems. Followed detailed project guidelines,
-                  maintained accuracy and consistency, and reviewed data carefully
-                  to meet quality requirements.
-                </p>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          AI Training Data Contributor
+                        </h3>
       
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Data Annotation",
-                    "AI Tools",
-                    "Quality Review",
-                    "Attention to Detail",
-                  ].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                        <p className="text-pink-500 font-semibold mt-1">
+                          Outlier · Part-time
+                        </p>
+                      </div>
+      
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                        May 2026 – Jul 2026 · 3 mos
+                      </span>
+                    </div>
+      
+                    <p className="text-sm text-gray-500 mt-2">
+                      Remote
+                    </p>
+      
+                    <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
+                      <li>
+                        Contribute high-quality voice and video datasets used for AI
+                        model training and evaluation.
+                      </li>
+      
+                      <li>
+                        Follow project guidelines to record, review, and submit data
+                        while maintaining accuracy and quality standards.
+                      </li>
+      
+                      <li>
+                        Support the development of AI systems by providing diverse
+                        and reliable training data.
+                      </li>
+      
+                      <li>
+                        Participate in AI data collection and validation projects,
+                        ensuring compliance with project requirements and quality
+                        assurance processes.
+                      </li>
+      
+                      <li>
+                        Collaborate with project teams and adapt to evolving AI
+                        training workflows and data collection tasks.
+                      </li>
+                    </ul>
+      
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {[
+                        "AI Training",
+                        "Data Collection",
+                        "Data Validation",
+                        "Quality Assurance",
+                        "Voice Data",
+                        "Video Data",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+      
+                  </div>
                 </div>
               </div>
             </div>
       
-            {/* Experience 3 - OJT */}
-            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
-              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      IT Intern / OJT
-                    </h3>
+            {/* ================= TORRES TECHNOLOGY ================= */}
+            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
       
-                    <p className="text-purple-600 font-semibold mt-1">
-                      Torres Technology Center Corporation
-                    </p>
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+      
+                <div className="flex flex-col sm:flex-row gap-5">
+      
+                  {/* Company Logo */}
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/torres-logo.png"
+                      alt="Torres Technology Center Corp. logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain p-2"
+                    />
                   </div>
       
-                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
-                    440 Hours
-                  </span>
-                </div>
+                  <div className="flex-1">
       
-                <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                  Gained hands-on experience in IT-related tasks, web development,
-                  system support, and documentation. Applied technical and
-                  problem-solving skills while working in a professional environment
-                  and contributing to real-world digital projects.
-                </p>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          Front-End Developer / IT Technical Support
+                        </h3>
       
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Web Development",
-                    "IT Support",
-                    "Documentation",
-                    "Problem Solving",
-                    "Technical Skills",
-                  ].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                        <p className="text-purple-600 font-semibold mt-1">
+                          Torres Technology Center Corp. · Internship
+                        </p>
+                      </div>
+      
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                        Feb 2026 – May 2026 · 4 mos
+                      </span>
+                    </div>
+      
+                    <p className="text-sm text-gray-500 mt-2">
+                      Calamba, Calabarzon, Philippines · On-site
+                    </p>
+      
+                    <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
+                      <li>
+                        Assisted in the development and maintenance of responsive web
+                        applications using HTML, CSS, JavaScript, and modern web
+                        development practices.
+                      </li>
+      
+                      <li>
+                        Provided technical support to end-users by troubleshooting
+                        hardware, software, network, and system-related issues.
+                      </li>
+      
+                      <li>
+                        Installed, configured, and maintained computer systems,
+                        software applications, and peripheral devices.
+                      </li>
+      
+                      <li>
+                        Collaborated with team members to identify and resolve
+                        technical problems, ensuring minimal downtime and improved
+                        user experience.
+                      </li>
+      
+                      <li>
+                        Participated in testing, debugging, and optimizing web
+                        applications to enhance performance and usability.
+                      </li>
+      
+                      <li>
+                        Documented technical procedures, support solutions, and system
+                        configurations for future reference.
+                      </li>
+      
+                      <li>
+                        Gained hands-on experience in frontend development, technical
+                        troubleshooting, customer support, and IT operations within a
+                        professional work environment.
+                      </li>
+                    </ul>
+      
+                    {/* OJT Certificate */}
+                    <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4">
+                      <div className="w-12 h-12 shrink-0 rounded-lg bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
+                        <Image
+                          src="/ojt-certificate.png"
+                          alt="On-the-Job Training Certificate"
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+      
+                      <div>
+                        <p className="text-sm font-bold text-gray-900">
+                          On-the-Job Training (OJT) Certificate
+                        </p>
+      
+                        <p className="text-xs text-gray-500 mt-1">
+                          Certificate of Completion for successfully completing my
+                          On-the-Job Training as part of my Bachelor of Science in
+                          Information Technology program.
+                        </p>
+                      </div>
+                    </div>
+      
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {[
+                        "Front-End Development",
+                        "Technical Support",
+                        "HTML",
+                        "CSS",
+                        "JavaScript",
+                        "IT Operations",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+      
+                  </div>
                 </div>
               </div>
             </div>
+      
+      
+            {/* ================= CROWDGEN PRO ================= */}
+            <div className="relative pl-8 md:pl-12 border-l-2 border-transparent">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
+      
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+      
+                <div className="flex flex-col sm:flex-row gap-5">
+      
+                  {/* Company Logo */}
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/crowdgen-logo.png"
+                      alt="CrowdGen Pro logo"
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  </div>
+      
+                  <div className="flex-1">
+      
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          Data Annotator / Data Labelling
+                        </h3>
+      
+                        <p className="text-pink-500 font-semibold mt-1">
+                          CrowdGen Pro · Part-time
+                        </p>
+                      </div>
+      
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                        Sep 2025 – Nov 2025 · 3 mos
+                      </span>
+                    </div>
+      
+                    <p className="text-sm text-gray-500 mt-2">
+                      Remote
+                    </p>
+      
+                    <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
+                      <li>
+                        Annotated and reviewed datasets for AI model training.
+                      </li>
+      
+                      <li>
+                        Ensured accuracy and compliance with project guidelines.
+                      </li>
+      
+                      <li>
+                        Performed quality checks and data validation.
+                      </li>
+      
+                      <li>
+                        Worked with image, text, and AI-related annotation tasks.
+                      </li>
+                    </ul>
+      
+                    <div className="flex flex-wrap gap-2 mt-6">
+                      {[
+                        "Data Annotation",
+                        "Data Labeling",
+                        "AI Data",
+                        "Quality Control",
+                      ].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+            </div>
+      
           </div>
         </div>
       </section>
