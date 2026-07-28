@@ -103,56 +103,53 @@ const designs = [
     category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth2.png',
+    image: '/Cloth2.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth3.png',
+    image: '/Cloth3.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth4.png',
+    image: '/Cloth4.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth5.png',
+    image: '/Cloth5.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth6.png',
+    image: '/Cloth6.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth7.png',
+    image: '/Cloth7.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth8.png',
+    image: '/Cloth8.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth9.png',
+    image: '/Cloth9.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth10.png',
+    image: '/Cloth10.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth11.png',
+    image: '/Cloth11.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth12.png',
+    image: '/Cloth12.png',
+    category: 'CLOTH',
   },
     {
-    image: '/design-cloth.png',
-    category: 'Cloth13.png',
+    image: '/Cloth13.png',
+    category: 'CLOTH',
   },
-
-
-
 
 
 
