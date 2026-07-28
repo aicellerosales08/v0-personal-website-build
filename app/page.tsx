@@ -69,7 +69,7 @@ export default function Portfolio() {
   ]
 
 
-  const designs = [
+ const designs = [
   {
     title: 'Ad Creatives & AI Image Generation',
     description:
@@ -78,8 +78,7 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-
-    {
+  {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
@@ -87,8 +86,7 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-
-    {
+  {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
@@ -96,8 +94,7 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-
-    {
+  {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
@@ -105,8 +102,7 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-
-    {
+  {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
@@ -114,8 +110,7 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-
-    {
+  {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
@@ -123,7 +118,6 @@ export default function Portfolio() {
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
-    
   {
     title: 'CLOTH',
     description:
@@ -1468,144 +1462,48 @@ export default function Portfolio() {
       {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
-        className="bg-gray-50 py-20 md:py-32"
+        className="max-w-6xl mx-auto px-6 py-16 md:py-20"
       >
-        <div className="max-w-6xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
+            <span className="text-purple-600 text-sm">✦</span>
       
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-      
-            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-              Creative Work
+            <span className="text-xs font-semibold tracking-wide text-purple-600">
+              MY DESIGNS
             </span>
-      
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-              Designs & Creative Work
-            </h2>
-      
-            <p className="text-gray-500 text-sm md:text-base">
-              A collection of creative designs, digital advertising visuals,
-              branding, social media content, AI-generated imagery, and product
-              visual designs.
-            </p>
-      
           </div>
       
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Creative Works
+          </h2>
       
-          {/* Category Tabs */}
-          <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            A collection of my creative design work and visual projects.
+          </p>
+        </div>
       
-            {[
-              'All',
-              'Ad Creatives',
-              'CLOTH',
-              'Social Media',
-              'Logo',
-              'Meta',
-              'Product Design',
-            ].map((category) => (
-      
-              <button
-                key={category}
-                onClick={() => setActiveDesignCategory(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                  activeDesignCategory === category
-                    ? 'bg-gray-900 text-white shadow-md'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-purple-100 hover:text-purple-600 hover:border-purple-200'
-                }`}
-              >
-                {category}
-              </button>
-      
-            ))}
-      
-          </div>
-      
-      
-          {/* Designs Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      
-            {designs
-              .filter(
-                (design) =>
-                  activeDesignCategory === 'All' ||
-                  design.category === activeDesignCategory
-              )
-              .map((design) => (
-      
-                <div
-                  key={design.title + design.image}
-                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
-                >
-      
-                  {/* Design Image */}
-                  <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 flex items-center justify-center">
-      
-                    <Image
-                      src={design.image}
-                      alt={design.title}
-                      fill
-                      className="object-contain group-hover:scale-105 transition-transform duration-500"
-                    />
-      
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
-                    {/* Category Badge */}
-                    <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-      
-                      <span className="inline-block text-[10px] uppercase font-bold tracking-wider text-white bg-purple-600 px-3 py-1 rounded-full">
-                        {design.category}
-                      </span>
-      
-                    </div>
-      
-                  </div>
-      
-      
-                  {/* Design Information */}
-                  <div className="p-6">
-      
-                    {/* Title */}
-                    <div className="flex items-start justify-between gap-3 mb-3">
-      
-                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-                        {design.title}
-                      </h3>
-      
-                    </div>
-      
-      
-                    {/* Description */}
-                    <p className="text-sm text-gray-600 leading-relaxed mb-5">
-                      {design.description}
-                    </p>
-      
-      
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-      
-                      {design.tags.map((tag) => (
-      
-                        <span
-                          key={tag}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
-                        >
-                          {tag}
-                        </span>
-      
-                      ))}
-      
-                    </div>
-      
-                  </div>
-      
-                </div>
-      
-              ))}
-      
-          </div>
-      
+        {/* ================= IMAGES ONLY ================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {designs.map((design, index) => (
+            <motion.div
+              key={`${design.image}-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.05,
+              }}
+              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <img
+                src={design.image}
+                alt={design.title}
+                className="w-full h-[350px] object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </motion.div>
+          ))}
         </div>
       </section>
 
