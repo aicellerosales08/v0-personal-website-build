@@ -39,7 +39,6 @@ export default function Portfolio() {
     { name: 'Projects', href: '#projects' },
     { name: 'Design', href: '#design' },
     { name: 'Certificates', href: '#certificates' },
-    { name: 'Education', href: '#education' },
   ]
 
   const skills = [
