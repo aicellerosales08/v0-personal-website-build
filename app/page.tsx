@@ -693,49 +693,24 @@ export default function Portfolio() {
         </div>
       
       
-        {/* ================= TOOLS I USE ================= */}
-        <div className="mt-8 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-4">
-      
-          <div className="flex items-center gap-6">
-      
-            {/* Title */}
-            <div className="flex items-center gap-3 pr-8 border-r border-purple-200 shrink-0">
-      
-              <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
-                <span className="text-xl text-purple-600">
-                  ✦
-                </span>
-              </div>
-      
-              <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
-                Tools I Use
-              </h3>    
-            </div>
-      
-      
-            {/* Tools */}
-            <div className="flex-1 flex justify-between items-center px-2">
-      
-              {[
-                { name: 'Figma', icon: '🎨' },
-                { name: 'VS Code', icon: '✕' },
-                { name: 'Tailwind CSS', icon: '〰' },
-                { name: 'GitHub', icon: '●' },
-                { name: 'Photoshop', icon: 'Ps' },
-                { name: 'Illustrator', icon: 'Ai' },
-              ].map((tool) => (
-      
-                <div key={tool.name} className="text-center">
-      
-                  <div className="w-11 h-11 mx-auto rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center font-bold text-sm">
-                    {tool.icon}
-                  </div> 
-                  <p className="text-xs text-gray-600 mt-1.5">
-                    {tool.name}
-                  </p>
-                </div>
-              ))}  
-            </div>
+       {/* ================= ANIMATED QUOTE ================= */}
+        <div className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden">
+          
+          <div className="flex items-center justify-center min-h-[70px]">
+            <motion.div
+              key={aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center"
+            >
+              <p className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+                {aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}
+              </p>
+            </motion.div>
+          </div>
+        
+        </div>
           </div>    
         </div>  
       </section>
