@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
   Menu,
   X,
@@ -18,10 +17,11 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCert, setSelectedCert] = useState<any>(null)
-  const [selectedDesign, setSelectedDesign] = useState<any>(null)
+  const [selectedCert, setSelectedCert] =
+    useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
+  // Smooth automatic scrolling function
   const handleScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -65,78 +65,6 @@ export default function Portfolio() {
   'Where creativity meets technology.',
   'Building meaningful digital experiences.',
 ]
-   // ================= DESIGNS DATA =================
-  const designCategories = [
-    {
-      title: 'Ad Creatives & AI Image Generation',
-      category: 'Creative Design',
-      description:
-        'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
-      gradient: 'from-purple-100 to-pink-100',
-      images: [
-        '/designs/ad-creatives/1.jpg',
-        '/designs/ad-creatives/2.jpg',
-        '/designs/ad-creatives/3.jpg',
-        '/designs/ad-creatives/4.jpg',
-      ],
-    },
-
-    {
-      title: 'CLOTH',
-      category: 'Fashion Design',
-      description:
-        'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
-      gradient: 'from-pink-100 to-purple-100',
-      images: [
-        '/designs/cloth/1.jpg',
-        '/designs/cloth/2.jpg',
-        '/designs/cloth/3.jpg',
-        '/designs/cloth/4.jpg',
-      ],
-    },
-
-    {
-      title: 'SOCIAL MEDIA',
-      category: 'Social Media',
-      description:
-        'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
-      gradient: 'from-purple-100 to-pink-100',
-      images: [
-        '/designs/social-media/1.jpg',
-        '/designs/social-media/2.jpg',
-        '/designs/social-media/3.jpg',
-        '/designs/social-media/4.jpg',
-      ],
-    },
-
-    {
-      title: 'Meta',
-      category: 'Advertising',
-      description:
-        'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
-      gradient: 'from-blue-100 to-purple-100',
-      images: [
-        '/designs/meta/1.jpg',
-        '/designs/meta/2.jpg',
-        '/designs/meta/3.jpg',
-        '/designs/meta/4.jpg',
-      ],
-    },
-
-    {
-      title: 'PRODUCT LABEL AND VISUAL DESIGN',
-      category: 'Branding & Packaging',
-      description:
-        'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
-      gradient: 'from-pink-100 to-purple-100',
-      images: [
-        '/designs/product-label/1.jpg',
-        '/designs/product-label/2.jpg',
-        '/designs/product-label/3.jpg',
-        '/designs/product-label/4.jpg',
-      ],
-    },
-  ]
 
   const projects = [
     {
