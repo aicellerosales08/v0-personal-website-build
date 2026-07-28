@@ -607,11 +607,11 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-1">
-                      <h4 className="text-xl md:text-[22px] font-bold text-gray-900 mb-2">
+                      <h4 className="text-xl md:text-[20px] font-bold text-gray-900 mb-2">
                         Web Development
                       </h4>
       
-                      <p className="text-[16px] md:text-[17px] text-gray-600 leading-[1.55]">
+                      <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.55]">
                         Develop responsive, fast, and clean websites
                         <br />
                         using modern technologies.
@@ -630,11 +630,11 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-1">
-                      <h4 className="text-xl md:text-[22px] font-bold text-gray-900 mb-2">
+                      <h4 className="text-xl md:text-[20px] font-bold text-gray-900 mb-2">
                         UI/UX Design
                       </h4>
       
-                      <p className="text-[16px] md:text-[17px] text-gray-600 leading-[1.55]">
+                      <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.55]">
                         Design intuitive and visually appealing interfaces
                         <br />
                         that provide great user experiences.
@@ -653,11 +653,11 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-1">
-                      <h4 className="text-xl md:text-[22px] font-bold text-gray-900 mb-2">
+                      <h4 className="text-xl md:text-[20px] font-bold text-gray-900 mb-2">
                         Wireframing &amp; Prototyping
                       </h4>
       
-                      <p className="text-[16px] md:text-[17px] text-gray-600 leading-[1.55]">
+                      <p className="text-[15px] md:text-[18px] text-gray-600 leading-[1.55]">
                         Build interactive wireframes and prototypes
                         <br />
                         to visualize ideas and test user flows.
@@ -676,11 +676,11 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-1">
-                      <h4 className="text-xl md:text-[22px] font-bold text-gray-900 mb-2">
+                      <h4 className="text-xl md:text-[20px] font-bold text-gray-900 mb-2">
                         Design Systems
                       </h4>
       
-                      <p className="text-[16px] md:text-[17px] text-gray-600 leading-[1.55]">
+                      <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.55]">
                         Create consistent and scalable design systems
                         <br />
                         for efficient and cohesive digital products.
