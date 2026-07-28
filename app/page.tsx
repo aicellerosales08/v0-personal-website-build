@@ -19,6 +19,7 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
+  const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
   // Smooth automatic scrolling function
@@ -43,6 +44,7 @@ export default function Portfolio() {
     { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Designs', href: '#designs' },
     { name: 'Certificates', href: '#certificates' },
   ]
 
@@ -63,6 +65,78 @@ export default function Portfolio() {
   'Turning ideas into experiences.',
   'Where creativity meets technology.',
   'Building meaningful digital experiences.',
+  ]
+  
+  const designCategories = [
+  {
+    title: 'Ad Creatives & AI Image Generation',
+    category: 'Creative Design',
+    description:
+      'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
+    gradient: 'from-purple-100 to-pink-100',
+    images: [
+      '/ad1.jpg',
+      '/ad2.jpg',
+      '/ad3.jpg',
+      '/ad4.jpg',
+    ],
+  },
+
+  {
+    title: 'CLOTH',
+    category: 'Fashion Design',
+    description:
+      'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
+    gradient: 'from-pink-100 to-purple-100',
+    images: [
+      '/cloth1.jpg',
+      '/cloth2.jpg',
+      '/cloth3.jpg',
+      '/cloth4.jpg',
+    ],
+  },
+
+  {
+    title: 'SOCIAL MEDIA',
+    category: 'Social Media',
+    description:
+      'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
+    gradient: 'from-purple-100 to-pink-100',
+    images: [
+      '/social1.jpg',
+      '/social2.jpg',
+      '/social3.jpg',
+      '/social4.jpg',
+    ],
+  },
+
+  {
+    title: 'Meta',
+    category: 'Advertising',
+    description:
+      'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
+    gradient: 'from-blue-100 to-purple-100',
+    images: [
+      '/meta1.jpg',
+      '/meta2.jpg',
+      '/meta3.jpg',
+      '/meta4.jpg',
+    ],
+  },
+
+  {
+    title: 'PRODUCT LABEL AND VISUAL DESIGN',
+    category: 'Branding & Packaging',
+    description:
+      'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
+    gradient: 'from-pink-100 to-purple-100',
+    images: [
+      '/label1.jpg',
+      '/label2.jpg',
+      '/label3.jpg',
+      '/label4.jpg',
+    ],
+  },
 ]
 
   const projects = [
@@ -1362,6 +1436,90 @@ export default function Portfolio() {
                 </div>
               </div>
             ))}
+        </div>
+      </section>
+      
+      {/* ================= DESIGNS SECTION ================= */}
+      <section
+        id="designs"
+        className="max-w-6xl mx-auto px-6 py-16 md:py-20"
+      >
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
+            <span className="text-purple-600 text-sm">✦</span>
+      
+            <span className="text-xs font-semibold tracking-wide text-purple-600">
+              MY DESIGNS
+            </span>
+          </div>
+      
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Creative Works
+          </h2>
+      
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            A collection of my creative design work, including ad creatives,
+            social media graphics, AI-generated visuals, branding, and product
+            label designs.
+          </p>
+        </div>
+      
+        {/* Design Cards */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {designCategories.map((design, index) => (
+            <motion.div
+              key={design.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              className={index === 4 ? 'md:col-span-2' : ''}
+            >
+              <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      
+                {/* Preview Image */}
+                <div
+                  className={`h-56 bg-gradient-to-br ${design.gradient} relative overflow-hidden`}
+                >
+                  <img
+                    src={design.images[0]}
+                    alt={design.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+      
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                </div>
+      
+                {/* Card Content */}
+                <div className="p-6">
+                  <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                    {design.category}
+                  </span>
+      
+                  <h3 className="text-xl font-bold text-gray-900 mt-2">
+                    {design.title}
+                  </h3>
+      
+                  <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                    {design.description}
+                  </p>
+      
+                  {/* View Designs Button */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDesign(design)}
+                    className="inline-flex mt-5 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200"
+                  >
+                    View Designs →
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
