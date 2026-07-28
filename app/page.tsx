@@ -19,6 +19,7 @@ export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
+  const [activeDesignCategory, setActiveDesignCategory] = useState('All')
 
 
 
