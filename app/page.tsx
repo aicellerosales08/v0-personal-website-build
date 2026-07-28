@@ -21,7 +21,7 @@ export default function Portfolio() {
   const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
-   // ================= DESIGNS DATA =================
+  // ================= DESIGNS DATA =================
   const designCategories = [
     {
       title: 'Ad Creatives & AI Image Generation',
@@ -90,9 +90,7 @@ export default function Portfolio() {
     },
   ]
 
-  // ================= DESIGN POPUP =================
-  const [selectedDesign, setSelectedDesign] =
-    useState<typeof designCategories[number] | null>(null)
+  // WALA NANG selectedDesign useState DITO
 
   const handleScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -118,7 +116,6 @@ export default function Portfolio() {
     { name: 'Designs', href: '#designs' },
     { name: 'Certificates', href: '#certificates' },
   ]
-
 
   const skills = [
     { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
