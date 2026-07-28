@@ -71,55 +71,39 @@ export default function Portfolio() {
 
 const designs = [
   {
-    title: 'Ad Creatives & AI Image Generation',
-    description:
-      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
     image: '/AD1.png',
-    category: 'Ad Creatives',
-    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
   {
-    title: 'CLOTH',
-    description:
-      'Creative fashion and clothing visuals designed to showcase products through engaging compositions and modern visual direction.',
+    image: '/AD2.png',
+  },
+  {
+    image: '/AD3.png',
+  },
+  {
+    image: '/AD4.png',
+  },
+  {
+    image: '/AD5.png',
+  },
+  {
+    image: '/AD6.png',
+  },
+  {
     image: '/design-cloth.png',
-    category: 'CLOTH',
-    tags: ['Fashion', 'Creative Design', 'Visual Design'],
   },
   {
-    title: 'Social Media',
-    description:
-      'Social media graphics and promotional content created to strengthen brand presence and communicate ideas through visually engaging designs.',
     image: '/design-social-media.png',
-    category: 'Social Media',
-    tags: ['Social Media', 'Content Design', 'Branding'],
   },
   {
-    title: 'Logo Design',
-    description:
-      'Custom logo concepts and visual identities designed to create memorable and recognizable brand experiences.',
     image: '/design-logo.png',
-    category: 'Logo',
-    tags: ['Logo Design', 'Brand Identity', 'Visual Identity'],
   },
   {
-    title: 'Meta',
-    description:
-      'Digital creatives and advertising visuals designed for Meta platforms, focusing on clear messaging, visual impact, and audience engagement.',
     image: '/design-meta.png',
-    category: 'Meta',
-    tags: ['Meta Ads', 'Digital Advertising', 'Creative Design'],
   },
   {
-    title: 'Product Label & Visual Design',
-    description:
-      'Product labels and visual assets designed to communicate product identity, enhance shelf appeal, and maintain a cohesive brand presentation.',
     image: '/design-product-label.png',
-    category: 'Product Design',
-    tags: ['Product Label', 'Packaging', 'Visual Design'],
   },
 ]
-  
   const projects = [
     {
       title: 'Onlook - Thesis Project',
@@ -1419,150 +1403,64 @@ const designs = [
             ))}
         </div>
       </section>
-    {/* ================= DESIGNS SECTION ================= */}
-    <section
-      id="designs"
-      className="bg-gray-50 py-20 md:py-32"
-    >
-      <div className="max-w-6xl mx-auto px-6">
-    
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-    
-          <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-            Creative Work
-          </span>
-    
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-            Designs & Creative Work
-          </h2>
-    
-          <p className="text-gray-500 text-sm md:text-base">
-            A collection of creative designs, digital advertising visuals,
-            branding, social media content, AI-generated imagery, and product
-            visual designs.
-          </p>
-    
-        </div>
-    
-    
-        {/* Category Tabs */}
-        <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-    
-          {[
-            'All',
-            'Ad Creatives',
-            'CLOTH',
-            'Social Media',
-            'Logo',
-            'Meta',
-            'Product Design',
-          ].map((category) => (
-    
-            <button
-              key={category}
-              onClick={() => setActiveDesignCategory(category)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeDesignCategory === category
-                  ? 'bg-gray-900 text-white shadow-md'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-purple-100 hover:text-purple-600 hover:border-purple-200'
-              }`}
-            >
-              {category}
-            </button>
-    
-          ))}
-    
-        </div>
-    
-    
-        {/* Designs Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    
-          {designs
-            .filter(
-              (design) =>
-                activeDesignCategory === 'All' ||
-                design.category === activeDesignCategory
-            )
-            .map((design) => (
-    
+       {/* ================= DESIGNS SECTION ================= */}
+      <section
+        id="designs"
+        className="bg-gray-50 py-20 md:py-32"
+      >
+        <div className="max-w-6xl mx-auto px-6">
+      
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
+      
+            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              Creative Work
+            </span>
+      
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+              Designs & Creative Work
+            </h2>
+      
+            <p className="text-gray-500 text-sm md:text-base">
+              A collection of creative designs, digital advertising visuals,
+              branding, social media content, AI-generated imagery, and product
+              visual designs.
+            </p>
+      
+          </div>
+      
+      
+          {/* Designs Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+            {designs.map((design, index) => (
+      
               <div
-                key={design.title + design.image}
+                key={design.image + index}
                 className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
               >
-    
+      
                 {/* Design Image */}
-                <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 flex items-center justify-center">
-    
+                <div className="relative w-full bg-gray-100 flex items-center justify-center">
+      
                   <Image
                     src={design.image}
-                    alt={design.title}
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-500"
+                    alt={`Creative design ${index + 1}`}
+                    width={1200}
+                    height={1200}
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
                   />
-    
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    
-                  {/* Category Badge */}
-                  <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-    
-                    <span className="inline-block text-[10px] uppercase font-bold tracking-wider text-white bg-purple-600 px-3 py-1 rounded-full">
-                      {design.category}
-                    </span>
-    
-                  </div>
-    
+      
                 </div>
-    
-    
-                {/* Design Information */}
-                <div className="p-6">
-    
-                  {/* Title */}
-                  <div className="flex items-start justify-between gap-3 mb-3">
-    
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-                      {design.title}
-                    </h3>
-    
-                  </div>
-    
-    
-                  {/* Description */}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-5">
-                    {design.description}
-                  </p>
-    
-    
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-    
-                    {design.tags.map((tag) => (
-    
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
-                      >
-                        {tag}
-                      </span>
-    
-                    ))}
-    
-                  </div>
-    
-                </div>
-    
+      
               </div>
-    
+      
             ))}
-    
+      
+          </div>
+      
         </div>
-    
-      </div>
-    </section>
-
+      </section>
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
