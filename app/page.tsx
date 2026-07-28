@@ -18,79 +18,7 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<any>(null)
-  const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
-
-  // ================= DESIGNS DATA =================
-  const designCategories = [
-    {
-      title: 'Ad Creatives & AI Image Generation',
-      category: 'Creative Design',
-      description:
-        'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
-      cover: '/designs/ad-creatives/cover.jpg',
-      images: [
-        '/designs/ad-creatives/1.jpg',
-        '/designs/ad-creatives/2.jpg',
-        '/designs/ad-creatives/3.jpg',
-        '/designs/ad-creatives/4.jpg',
-      ],
-    },
-    {
-      title: 'CLOTH',
-      category: 'Fashion Design',
-      description:
-        'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
-      cover: '/designs/cloth/cover.jpg',
-      images: [
-        '/designs/cloth/1.jpg',
-        '/designs/cloth/2.jpg',
-        '/designs/cloth/3.jpg',
-        '/designs/cloth/4.jpg',
-      ],
-    },
-    {
-      title: 'SOCIAL MEDIA',
-      category: 'Social Media',
-      description:
-        'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
-      cover: '/designs/social-media/cover.jpg',
-      images: [
-        '/designs/social-media/1.jpg',
-        '/designs/social-media/2.jpg',
-        '/designs/social-media/3.jpg',
-        '/designs/social-media/4.jpg',
-      ],
-    },
-    {
-      title: 'Meta',
-      category: 'Advertising',
-      description:
-        'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
-      cover: '/designs/meta/cover.jpg',
-      images: [
-        '/designs/meta/1.jpg',
-        '/designs/meta/2.jpg',
-        '/designs/meta/3.jpg',
-        '/designs/meta/4.jpg',
-      ],
-    },
-    {
-      title: 'PRODUCT LABEL AND VISUAL DESIGN',
-      category: 'Branding & Packaging',
-      description:
-        'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
-      cover: '/designs/product-label/cover.jpg',
-      images: [
-        '/designs/product-label/1.jpg',
-        '/designs/product-label/2.jpg',
-        '/designs/product-label/3.jpg',
-        '/designs/product-label/4.jpg',
-      ],
-    },
-  ]
-
-  // WALA NANG selectedDesign useState DITO
 
   const handleScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement>,
