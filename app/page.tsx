@@ -21,7 +21,6 @@ export default function Portfolio() {
   const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
-  // Smooth automatic scrolling function
   const handleScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -46,6 +45,7 @@ export default function Portfolio() {
     { name: 'Designs', href: '#designs' },
     { name: 'Certificates', href: '#certificates' },
   ]
+
 
   const skills = [
     { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
