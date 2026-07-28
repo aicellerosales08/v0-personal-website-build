@@ -657,7 +657,7 @@ export default function Portfolio() {
                         Wireframing &amp; Prototyping
                       </h4>
       
-                      <p className="text-[15px] md:text-[18px] text-gray-600 leading-[1.55]">
+                      <p className="text-[15px] md:text-[16px] text-gray-600 leading-[1.55]">
                         Build interactive wireframes and prototypes
                         <br />
                         to visualize ideas and test user flows.
