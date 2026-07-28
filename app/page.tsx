@@ -21,60 +21,7 @@ export default function Portfolio() {
   const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
-  const handleScrollTo = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    e.preventDefault()
-    setIsMenuOpen(false)
-
-    const targetId = href.replace('#', '')
-    const elem = document.getElementById(targetId)
-
-    if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Designs', href: '#designs' },
-    { name: 'Certificates', href: '#certificates' },
-  ]
-
-
-  const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
-    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },  
-    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' }, 
-    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' }, 
-    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },      
-    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
-    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
-    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
-    { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
-  ]
-  const aboutQuotes = [
-  'Design with purpose.',
-  'Create. Design. Inspire.',
-  'Turning ideas into experiences.',
-  'Where creativity meets technology.',
-  'Building meaningful digital experiences.',
-]
-
-    const aboutQuotes = [
-    'Design with purpose.',
-    'Create. Design. Inspire.',
-    'Turning ideas into experiences.',
-    'Where creativity meets technology.',
-    'Building meaningful digital experiences.',
-  ]
-
-  // ================= DESIGNS DATA =================
+   // ================= DESIGNS DATA =================
   const designCategories = [
     {
       title: 'Ad Creatives & AI Image Generation',
@@ -146,6 +93,59 @@ export default function Portfolio() {
   // ================= DESIGN POPUP =================
   const [selectedDesign, setSelectedDesign] =
     useState<typeof designCategories[number] | null>(null)
+
+  const handleScrollTo = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault()
+    setIsMenuOpen(false)
+
+    const targetId = href.replace('#', '')
+    const elem = document.getElementById(targetId)
+
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Designs', href: '#designs' },
+    { name: 'Certificates', href: '#certificates' },
+  ]
+
+
+  const skills = [
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
+    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },  
+    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' }, 
+    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' }, 
+    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },      
+    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
+    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
+    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
+    { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
+  ]
+  const aboutQuotes = [
+  'Design with purpose.',
+  'Create. Design. Inspire.',
+  'Turning ideas into experiences.',
+  'Where creativity meets technology.',
+  'Building meaningful digital experiences.',
+]
+
+    const aboutQuotes = [
+    'Design with purpose.',
+    'Create. Design. Inspire.',
+    'Turning ideas into experiences.',
+    'Where creativity meets technology.',
+    'Building meaningful digital experiences.',
+  ]
   
   const projects = [
     {
