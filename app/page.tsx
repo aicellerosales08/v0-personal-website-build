@@ -119,18 +119,6 @@ const designs = [
     category: 'CLOTH',
   },
     {
-    image: '/Cloth6.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth7.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth8.png',
-    category: 'CLOTH',
-  },
-    {
     image: '/Cloth9.png',
     category: 'CLOTH',
   },
