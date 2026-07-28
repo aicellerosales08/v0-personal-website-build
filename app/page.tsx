@@ -542,9 +542,7 @@ export default function Portfolio() {
                       designed
                     </p>
                   </div>
-      
                 </div>
-      
               </div>
             </div>
           </div>
@@ -591,7 +589,6 @@ export default function Portfolio() {
                       <div className="w-2 h-2 rounded-full bg-pink-500" />
                     </div>
                   </div>
-      
                 </div>
       
       
@@ -618,7 +615,6 @@ export default function Portfolio() {
                         using modern technologies.
                       </p>
                     </div>
-      
                   </div>
       
       
@@ -642,7 +638,6 @@ export default function Portfolio() {
                         that provide great user experiences.
                       </p>
                     </div>
-      
                   </div>
       
       
@@ -666,7 +661,6 @@ export default function Portfolio() {
                         to visualize ideas and test user flows.
                       </p>
                     </div>
-      
                   </div>
       
       
@@ -690,15 +684,11 @@ export default function Portfolio() {
                         for efficient and cohesive digital products.
                       </p>
                     </div>
-      
-                  </div>
-      
-                </div>
-      
+                  </div> 
+                </div> 
               </div>
             </div>
-          </div>
-      
+          </div> 
         </div>
       
       
@@ -718,8 +708,7 @@ export default function Portfolio() {
       
               <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
                 Tools I Use
-              </h3>
-      
+              </h3>    
             </div>
       
       
@@ -739,22 +728,181 @@ export default function Portfolio() {
       
                   <div className="w-11 h-11 mx-auto rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center font-bold text-sm">
                     {tool.icon}
-                  </div>
-      
+                  </div> 
                   <p className="text-xs text-gray-600 mt-1.5">
                     {tool.name}
                   </p>
-      
                 </div>
-      
-              ))}
-      
+              ))}  
             </div>
+          </div>    
+        </div>  
+      </section>
+
+      {/* ================= EXPERIENCE SECTION ================= */}
+      <section id="experience" className="bg-white py-20 md:py-32">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              Experience
+            </span>
       
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+              My Experience
+            </h2>
+      
+            <p className="text-gray-500 text-sm md:text-base">
+              My professional experience and hands-on work in web development,
+              UI/UX design, and creative digital solutions.
+            </p>
           </div>
       
-        </div>
+          {/* Experience Timeline */}
+          <div className="max-w-4xl mx-auto space-y-8">
       
+            {/* Experience 1 - Malama */}
+            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
+              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
+      
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Web Designer & Developer
+                    </h3>
+      
+                    <p className="text-purple-600 font-semibold mt-1">
+                      Malama Social Media
+                    </p>
+                  </div>
+      
+                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                    2026 – Present
+                  </span>
+                </div>
+      
+                <p className="text-gray-600 text-sm leading-relaxed mb-5">
+                  Worked on website design and development tasks, including Wix
+                  website customization, responsive page layouts, content
+                  organization, and visual design improvements. Collaborated on
+                  digital projects while applying UI/UX principles and maintaining
+                  consistent branding across web pages.
+                </p>
+      
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Wix",
+                    "Web Design",
+                    "UI/UX",
+                    "Responsive Design",
+                    "Adobe Illustrator",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+      
+            {/* Experience 2 - AI Data Annotation */}
+            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
+              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
+      
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      AI Data Annotator
+                    </h3>
+      
+                    <p className="text-pink-500 font-semibold mt-1">
+                      Freelance / Remote
+                    </p>
+                  </div>
+      
+                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                    Previous Experience
+                  </span>
+                </div>
+      
+                <p className="text-gray-600 text-sm leading-relaxed mb-5">
+                  Performed data annotation and review tasks to support AI and
+                  machine learning systems. Followed detailed project guidelines,
+                  maintained accuracy and consistency, and reviewed data carefully
+                  to meet quality requirements.
+                </p>
+      
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Data Annotation",
+                    "AI Tools",
+                    "Quality Review",
+                    "Attention to Detail",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+      
+            {/* Experience 3 - OJT */}
+            <div className="relative pl-8 md:pl-12 border-l-2 border-purple-100">
+              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
+      
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      IT Intern / OJT
+                    </h3>
+      
+                    <p className="text-purple-600 font-semibold mt-1">
+                      Torres Technology Center Corporation
+                    </p>
+                  </div>
+      
+                  <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                    440 Hours
+                  </span>
+                </div>
+      
+                <p className="text-gray-600 text-sm leading-relaxed mb-5">
+                  Gained hands-on experience in IT-related tasks, web development,
+                  system support, and documentation. Applied technical and
+                  problem-solving skills while working in a professional environment
+                  and contributing to real-world digital projects.
+                </p>
+      
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Web Development",
+                    "IT Support",
+                    "Documentation",
+                    "Problem Solving",
+                    "Technical Skills",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       {/* Skills Section */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
