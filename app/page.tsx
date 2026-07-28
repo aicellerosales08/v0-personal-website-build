@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import {
   Menu,
   X,
@@ -17,8 +18,7 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCert, setSelectedCert] =
-    useState<typeof certificates[number] | null>(null)
+  const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
   // Smooth automatic scrolling function
@@ -43,18 +43,17 @@ export default function Portfolio() {
     { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Designs', href: '#designs' },
     { name: 'Certificates', href: '#certificates' },
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
-    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },  
-    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' }, 
-    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' }, 
-    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },      
-    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
-    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' },
+    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },
+    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' },
+    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' },
+    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },
+    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },
+    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' },
     { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
     { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
   ]
@@ -1365,164 +1364,6 @@ export default function Portfolio() {
             ))}
         </div>
       </section>
-
-    {/* ================= DESIGNS SECTION ================= */}
-      <section
-        id="designs"
-        className="max-w-6xl mx-auto px-6 py-16 md:py-20"
-      >
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
-            <span className="text-purple-600 text-sm">✦</span>
-      
-            <span className="text-xs font-semibold tracking-wide text-purple-600">
-              MY DESIGNS
-            </span>
-          </div>
-      
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Creative Works
-          </h2>
-      
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            A collection of my creative design work, including ad creatives,
-            social media graphics, AI-generated visuals, branding, and product
-            label designs.
-          </p>
-        </div>
-      
-        {/* Design Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {designCategories.map((design, index) => (
-            <motion.div
-              key={design.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-              }}
-              className={index === 4 ? 'md:col-span-2' : ''}
-            >
-              <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      
-                {/* Preview Image */}
-                <div
-                  className={`h-56 bg-gradient-to-br ${design.gradient} relative overflow-hidden`}
-                >
-                  <img
-                    src={design.images[0]}
-                    alt={design.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-      
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                </div>
-      
-                {/* Card Content */}
-                <div className="p-6">
-                  <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                    {design.category}
-                  </span>
-      
-                  <h3 className="text-xl font-bold text-gray-900 mt-2">
-                    {design.title}
-                  </h3>
-      
-                  <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                    {design.description}
-                  </p>
-      
-                  <button
-                    type="button"
-                    onClick={() => setSelectedDesign(design)}
-                    className="inline-flex mt-5 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200"
-                  >
-                    View Designs →
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-      
-      
-      {/* ================= DESIGN GALLERY MODAL ================= */}
-      <AnimatePresence>
-        {selectedDesign && (
-          <motion.div
-            className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedDesign(null)}
-          >
-            <motion.div
-              className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl"
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-      
-              {/* Modal Header */}
-              <div className="sticky top-0 z-10 bg-white border-b border-gray-100 px-6 py-5 flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                    {selectedDesign.category}
-                  </p>
-      
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                    {selectedDesign.title}
-                  </h3>
-                </div>
-      
-                <button
-                  type="button"
-                  onClick={() => setSelectedDesign(null)}
-                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-purple-100 flex items-center justify-center text-gray-600 hover:text-purple-600 transition"
-                  aria-label="Close gallery"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-      
-              {/* Image Gallery */}
-              <div className="p-6 overflow-y-auto max-h-[calc(90vh-100px)]">
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      
-                  {selectedDesign.images.map(
-                    (image: string, index: number) => (
-                      <motion.div
-                        key={`${selectedDesign.title}-${index}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.3,
-                          delay: index * 0.05,
-                        }}
-                        className="group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm hover:shadow-lg transition"
-                      >
-                        <img
-                          src={image}
-                          alt={`${selectedDesign.title} design ${index + 1}`}
-                          className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </motion.div>
-                    )
-                  )}
-      
-                </div>
-              </div>
-      
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
