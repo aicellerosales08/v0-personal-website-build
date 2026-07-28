@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Menu, 
   X, 
@@ -17,7 +18,12 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
+
+  const [selectedCert, setSelectedCert] =
+    useState<typeof certificates[number] | null>(null)
+
+  const [selectedDesign, setSelectedDesign] = useState<any>(null)
+
   const [activeCategory, setActiveCategory] = useState('All')
 
   // Smooth automatic scrolling function
@@ -59,6 +65,87 @@ export default function Portfolio() {
   'Where creativity meets technology.',
   'Building meaningful digital experiences.',
 ]
+
+    const aboutQuotes = [
+    'Design with purpose.',
+    'Create. Design. Inspire.',
+    'Turning ideas into experiences.',
+    'Where creativity meets technology.',
+    'Building meaningful digital experiences.',
+  ]
+
+  // ================= DESIGNS DATA =================
+  const designCategories = [
+    {
+      title: 'Ad Creatives & AI Image Generation',
+      category: 'Creative Design',
+      description:
+        'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
+      cover: '/designs/ad-creatives/cover.jpg',
+      images: [
+        '/designs/ad-creatives/1.jpg',
+        '/designs/ad-creatives/2.jpg',
+        '/designs/ad-creatives/3.jpg',
+        '/designs/ad-creatives/4.jpg',
+      ],
+    },
+    {
+      title: 'CLOTH',
+      category: 'Fashion Design',
+      description:
+        'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
+      cover: '/designs/cloth/cover.jpg',
+      images: [
+        '/designs/cloth/1.jpg',
+        '/designs/cloth/2.jpg',
+        '/designs/cloth/3.jpg',
+        '/designs/cloth/4.jpg',
+      ],
+    },
+    {
+      title: 'SOCIAL MEDIA',
+      category: 'Social Media',
+      description:
+        'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
+      cover: '/designs/social-media/cover.jpg',
+      images: [
+        '/designs/social-media/1.jpg',
+        '/designs/social-media/2.jpg',
+        '/designs/social-media/3.jpg',
+        '/designs/social-media/4.jpg',
+      ],
+    },
+    {
+      title: 'Meta',
+      category: 'Advertising',
+      description:
+        'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
+      cover: '/designs/meta/cover.jpg',
+      images: [
+        '/designs/meta/1.jpg',
+        '/designs/meta/2.jpg',
+        '/designs/meta/3.jpg',
+        '/designs/meta/4.jpg',
+      ],
+    },
+    {
+      title: 'PRODUCT LABEL AND VISUAL DESIGN',
+      category: 'Branding & Packaging',
+      description:
+        'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
+      cover: '/designs/product-label/cover.jpg',
+      images: [
+        '/designs/product-label/1.jpg',
+        '/designs/product-label/2.jpg',
+        '/designs/product-label/3.jpg',
+        '/designs/product-label/4.jpg',
+      ],
+    },
+  ]
+
+  // ================= DESIGN POPUP =================
+  const [selectedDesign, setSelectedDesign] =
+    useState<typeof designCategories[number] | null>(null)
   
   const projects = [
     {
@@ -1360,15 +1447,16 @@ export default function Portfolio() {
         </div>
       </section>
 
-     {/* ================= DESIGNS SECTION ================= */}
+      {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
         className="max-w-6xl mx-auto px-6 py-16 md:py-20"
       >
-        {/* Section Header */}
+        {/* ================= SECTION HEADER ================= */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
             <span className="text-purple-600 text-sm">✦</span>
+      
             <span className="text-xs font-semibold tracking-wide text-purple-600">
               MY DESIGNS
             </span>
@@ -1385,179 +1473,139 @@ export default function Portfolio() {
           </p>
         </div>
       
-        {/* Design Categories */}
+        {/* ================= DESIGN CARDS ================= */}
         <div className="grid md:grid-cols-2 gap-6">
+          {designCategories.map((design, index) => (
+            <motion.div
+              key={design.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              className={index === 4 ? "md:col-span-2" : ""}
+            >
+              <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       
-          {/* ================= AD CREATIVES ================= */}
-          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            
-            <div className="h-56 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
-              <span className="text-6xl">✦</span>
-            </div>
-      
-            <div className="p-6">
-              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                Creative Design
-              </span>
-      
-              <h3 className="text-xl font-bold text-gray-900 mt-2">
-                Ad Creatives & AI Image Generation
-              </h3>
-      
-              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                Creative advertising visuals and AI-generated images designed
-                for digital marketing and promotional campaigns.
-              </p>
-      
-              <a
-                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
-              >
-                View Designs →
-              </a>
-            </div>
-          </div>
-      
-      
-          {/* ================= CLOTH ================= */}
-          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            
-            <div className="h-56 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
-              <span className="text-6xl">♧</span>
-            </div>
-      
-            <div className="p-6">
-              <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
-                Fashion Design
-              </span>
-      
-              <h3 className="text-xl font-bold text-gray-900 mt-2">
-                CLOTH
-              </h3>
-      
-              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                Clothing and fashion-related creative designs developed
-                with a focus on visual presentation and branding.
-              </p>
-      
-              <a
-                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
-              >
-                View Designs →
-              </a>
-            </div>
-          </div>
-      
-      
-          {/* ================= SOCIAL MEDIA ================= */}
-          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            
-            <div className="h-56 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
-              <span className="text-6xl">♡</span>
-            </div>
-      
-            <div className="p-6">
-              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                Social Media
-              </span>
-      
-              <h3 className="text-xl font-bold text-gray-900 mt-2">
-                SOCIAL MEDIA
-              </h3>
-      
-              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                Social media graphics and promotional content created for
-                engaging and visually consistent online presence.
-              </p>
-      
-              <a
-                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
-              >
-                View Designs →
-              </a>
-            </div>
-          </div>
-      
-      
-          {/* ================= META ================= */}
-          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            
-            <div className="h-56 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-              <span className="text-6xl">◎</span>
-            </div>
-      
-            <div className="p-6">
-              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
-                Advertising
-              </span>
-      
-              <h3 className="text-xl font-bold text-gray-900 mt-2">
-                Meta
-              </h3>
-      
-              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                Visual assets and creative materials designed for Meta
-                advertising campaigns and digital promotions.
-              </p>
-      
-              <a
-                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
-              >
-                View Designs →
-              </a>
-            </div>
-          </div>
-      
-      
-          {/* ================= PRODUCT LABEL ================= */}
-          <div className="group md:col-span-2 rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            
-            <div className="grid md:grid-cols-2">
-      
-              <div className="h-56 md:h-full min-h-[280px] bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
-                <span className="text-6xl">◫</span>
-              </div>
-      
-              <div className="p-8 flex flex-col justify-center">
-                <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
-                  Branding & Packaging
-                </span>
-      
-                <h3 className="text-2xl font-bold text-gray-900 mt-2">
-                  PRODUCT LABEL AND VISUAL DESIGN
-                </h3>
-      
-                <p className="text-sm text-gray-600 mt-4 leading-relaxed">
-                  Product label designs and visual branding created to build
-                  strong product identity and visually appealing packaging.
-                </p>
-      
-                <a
-                  href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex self-start mt-6 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold hover:opacity-90 transition"
+                {/* Preview Image */}
+                <div
+                  className={`h-56 bg-gradient-to-br ${design.gradient} relative overflow-hidden`}
                 >
-                  View Designs →
-                </a>
+                  <img
+                    src={design.images[0]}
+                    alt={design.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+      
+                  {/* Image Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                </div>
+      
+                {/* Card Content */}
+                <div className="p-6">
+                  <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                    {design.category}
+                  </span>
+      
+                  <h3 className="text-xl font-bold text-gray-900 mt-2">
+                    {design.title}
+                  </h3>
+      
+                  <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                    {design.description}
+                  </p>
+      
+                  {/* View Designs Button */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDesign(design)}
+                    className="inline-flex mt-5 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-200"
+                  >
+                    View Designs →
+                  </button>
+                </div>
               </div>
-      
-            </div>
-          </div>
-      
+            </motion.div>
+          ))}
         </div>
       </section>
+      
+      
+      {/* ================= DESIGN GALLERY MODAL ================= */}
+      <AnimatePresence>
+        {selectedDesign && (
+          <motion.div
+            className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedDesign(null)}
+          >
+            <motion.div
+              className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+      
+              {/* ================= MODAL HEADER ================= */}
+              <div className="sticky top-0 z-10 bg-white border-b border-gray-100 px-6 py-5 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                    {selectedDesign.category}
+                  </p>
+      
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
+                    {selectedDesign.title}
+                  </h3>
+                </div>
+      
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedDesign(null)}
+                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-purple-100 flex items-center justify-center text-gray-600 hover:text-purple-600 transition"
+                  aria-label="Close gallery"
+                >
+                  ✕
+                </button>
+              </div>
+      
+      
+              {/* ================= IMAGE GALLERY ================= */}
+              <div className="p-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      
+                  {selectedDesign.images.map((image, index) => (
+                    <motion.div
+                      key={`${selectedDesign.title}-${index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: index * 0.05,
+                      }}
+                      className="group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm hover:shadow-lg transition"
+                    >
+                      <img
+                        src={image}
+                        alt={`${selectedDesign.title} design ${index + 1}`}
+                        className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </motion.div>
+                  ))}
+      
+                </div>
+              </div>
+      
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
