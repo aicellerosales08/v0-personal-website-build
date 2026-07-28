@@ -18,8 +18,8 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
-  const [selectedDesign, setSelectedDesign] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All')
+  const [selectedDesign, setSelectedDesign] = useState(null);
 
 
   // Smooth automatic scrolling function
