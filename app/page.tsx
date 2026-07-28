@@ -428,16 +428,16 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ================= ABOUT SECTION ================= */}
-      <section id="about" className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+       {/* ================= ABOUT SECTION ================= */}
+      <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
       
-        <div className="grid lg:grid-cols-[0.95fr_1.25fr] gap-10 lg:gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
       
           {/* ================= LEFT SIDE ================= */}
-          <div className="min-w-0">
+          <div className="min-w-0 flex flex-col">
       
             {/* About Me Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
+            <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
               <span className="text-purple-600 text-sm">♙</span>
               <span className="text-xs font-semibold tracking-wide text-purple-600">
                 ABOUT ME
@@ -551,12 +551,12 @@ export default function Portfolio() {
       
       
           {/* ================= RIGHT SIDE ================= */}
-          <div className="relative min-w-0">
+          <div className="relative min-w-0 flex">
       
             {/* Glow */}
             <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
       
-            <div className="relative bg-white rounded-[24px] border border-purple-100 shadow-sm overflow-hidden">
+            <div className="relative w-full bg-white rounded-[24px] border border-purple-100 shadow-sm overflow-hidden">
       
               {/* Decorative Dots */}
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
@@ -570,7 +570,7 @@ export default function Portfolio() {
                 </div>
               </div>
       
-              <div className="relative p-7 md:p-8 lg:p-9">
+              <div className="relative p-7 md:p-8">
       
                 {/* What I Do Header */}
                 <div className="flex items-center gap-4 mb-5">
@@ -599,7 +599,7 @@ export default function Portfolio() {
                 <div>
       
                   {/* Web Development */}
-                  <div className="flex gap-8 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                       <span className="text-2xl font-medium text-purple-600">
@@ -607,7 +607,7 @@ export default function Portfolio() {
                       </span>
                     </div>
       
-                    <div className="pt-0.5">
+                    <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Web Development
                       </h4>
@@ -623,7 +623,7 @@ export default function Portfolio() {
       
       
                   {/* UI/UX Design */}
-                  <div className="flex gap-8 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                       <span className="text-3xl text-pink-500">
@@ -631,7 +631,7 @@ export default function Portfolio() {
                       </span>
                     </div>
       
-                    <div className="pt-0.5">
+                    <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         UI/UX Design
                       </h4>
@@ -647,7 +647,7 @@ export default function Portfolio() {
       
       
                   {/* Wireframing & Prototyping */}
-                  <div className="flex gap-8 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                       <span className="text-2xl text-purple-600">
@@ -655,7 +655,7 @@ export default function Portfolio() {
                       </span>
                     </div>
       
-                    <div className="pt-0.5">
+                    <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Wireframing &amp; Prototyping
                       </h4>
@@ -671,7 +671,7 @@ export default function Portfolio() {
       
       
                   {/* Design Systems */}
-                  <div className="flex gap-8 py-5">
+                  <div className="flex gap-6 py-5">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                       <span className="text-2xl text-pink-500">
@@ -679,7 +679,7 @@ export default function Portfolio() {
                       </span>
                     </div>
       
-                    <div className="pt-0.5">
+                    <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Design Systems
                       </h4>
