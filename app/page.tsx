@@ -52,6 +52,13 @@ export default function Portfolio() {
     { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
     { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
   ]
+  const aboutQuotes = [
+  'Design with purpose.',
+  'Create. Design. Inspire.',
+  'Turning ideas into experiences.',
+  'Where creativity meets technology.',
+  'Building meaningful digital experiences.',
+]
   
   const projects = [
     {
@@ -429,7 +436,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-       {/* ================= ABOUT SECTION ================= */}
+      {/* ================= ABOUT SECTION ================= */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
       
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
@@ -440,6 +447,7 @@ export default function Portfolio() {
             {/* About Me Badge */}
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
               <span className="text-purple-600 text-sm">♙</span>
+      
               <span className="text-xs font-semibold tracking-wide text-purple-600">
                 ABOUT ME
               </span>
@@ -461,7 +469,9 @@ export default function Portfolio() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
               </span>
+      
               <br />
+      
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 UI/UX Designer
               </span>
@@ -471,18 +481,29 @@ export default function Portfolio() {
             <div className="max-w-[560px] space-y-4">
       
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
-                I&apos;m an Information Technology professional with experience in web development, UI/UX design, and creative digital solutions. I&apos;m passionate about creating beautiful, functional, and user-centered digital experiences that combine thoughtful design with practical technology.
+                I&apos;m an Information Technology professional with experience in
+                web development, UI/UX design, and creative digital solutions.
+                I&apos;m passionate about creating beautiful, functional, and
+                user-centered digital experiences that combine thoughtful design
+                with practical technology.
               </p>
       
               {/* Divider */}
               <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
       
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
-                I combine creativity and technical skills to design and build responsive websites, intuitive interfaces, and interactive prototypes that solve real-world problems and deliver meaningful user experiences.
+                I combine creativity and technical skills to design and build
+                responsive websites, intuitive interfaces, and interactive
+                prototypes that solve real-world problems and deliver meaningful
+                user experiences.
               </p>
       
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
-                My experience includes working on real-world projects, collaborating with clients and teams, and applying modern tools and technologies to create effective digital solutions. I&apos;m continuously improving my skills and exploring new technologies to deliver high-quality work and better experiences for users.
+                My experience includes working on real-world projects,
+                collaborating with clients and teams, and applying modern tools
+                and technologies to create effective digital solutions. I&apos;m
+                continuously improving my skills and exploring new technologies
+                to deliver high-quality work and better experiences for users.
               </p>
       
             </div>
@@ -492,7 +513,7 @@ export default function Portfolio() {
       
               <div className="grid grid-cols-2 divide-x divide-purple-100">
       
-                {/* 50+ */}
+                {/* 50+ Design Components */}
                 <div className="flex items-center gap-4 px-2">
       
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm">
@@ -519,7 +540,7 @@ export default function Portfolio() {
       
                 </div>
       
-                {/* 20+ */}
+                {/* 20+ Created Layouts */}
                 <div className="flex items-center gap-4 px-4">
       
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm">
@@ -543,9 +564,12 @@ export default function Portfolio() {
                       designed
                     </p>
                   </div>
+      
                 </div>
+      
               </div>
             </div>
+      
           </div>
       
       
@@ -559,6 +583,7 @@ export default function Portfolio() {
       
               {/* Decorative Dots */}
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
+      
                 <div className="grid grid-cols-10 gap-2.5 p-5">
                   {Array.from({ length: 100 }).map((_, i) => (
                     <span
@@ -567,6 +592,7 @@ export default function Portfolio() {
                     />
                   ))}
                 </div>
+      
               </div>
       
               <div className="relative p-7 md:p-8">
@@ -581,15 +607,21 @@ export default function Portfolio() {
                   </div>
       
                   <div>
+      
                     <h3 className="text-2xl md:text-[26px] font-bold text-gray-900">
                       What I Do
                     </h3>
       
                     <div className="flex items-center gap-2 mt-2">
+      
                       <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
+      
                       <div className="w-2 h-2 rounded-full bg-pink-500" />
+      
                     </div>
+      
                   </div>
+      
                 </div>
       
       
@@ -606,6 +638,7 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
+      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Web Development
                       </h4>
@@ -615,7 +648,9 @@ export default function Portfolio() {
                         <br />
                         using modern technologies.
                       </p>
+      
                     </div>
+      
                   </div>
       
       
@@ -629,6 +664,7 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
+      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         UI/UX Design
                       </h4>
@@ -638,7 +674,9 @@ export default function Portfolio() {
                         <br />
                         that provide great user experiences.
                       </p>
+      
                     </div>
+      
                   </div>
       
       
@@ -652,6 +690,7 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
+      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Wireframing &amp; Prototyping
                       </h4>
@@ -661,7 +700,9 @@ export default function Portfolio() {
                         <br />
                         to visualize ideas and test user flows.
                       </p>
+      
                     </div>
+      
                   </div>
       
       
@@ -675,6 +716,7 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
+      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Design Systems
                       </h4>
@@ -684,19 +726,27 @@ export default function Portfolio() {
                         <br />
                         for efficient and cohesive digital products.
                       </p>
+      
                     </div>
-                  </div> 
-                </div> 
+      
+                  </div>
+      
+                </div>
+      
               </div>
+      
             </div>
-          </div> 
+      
+          </div>
+      
         </div>
       
       
-       {/* ================= ANIMATED QUOTE ================= */}
+        {/* ================= ANIMATED QUOTE ================= */}
         <div className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden">
-          
+      
           <div className="flex items-center justify-center min-h-[70px]">
+      
             <motion.div
               key={aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}
               initial={{ opacity: 0, y: 15 }}
@@ -704,17 +754,18 @@ export default function Portfolio() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
+      
               <p className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                {aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}
+                &ldquo;{aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}&rdquo;
               </p>
+      
             </motion.div>
+      
           </div>
-        
+      
         </div>
-          </div>    
-        </div>  
+      
       </section>
-
      {/* ================= EXPERIENCE SECTION ================= */}
       <section id="experience" className="bg-gray-50 py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
