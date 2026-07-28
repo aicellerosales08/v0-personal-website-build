@@ -99,8 +99,8 @@ const designs = [
 
   
   {
-    image: '/design-cloth.png',
-    category: 'Cloth1.png',
+    image: '/Cloth1.png',
+    category: 'CLOTH',
   },
     {
     image: '/design-cloth.png',
