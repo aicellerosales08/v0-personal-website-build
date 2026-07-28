@@ -164,9 +164,24 @@ const designs = [
 
   
   {
-    image: '/design-meta.png',
+    image: '/Meta1.png',
     category: 'Meta',
   },
+   {
+    image: '/Meta2.png',
+    category: 'Meta',
+  },
+   {
+    image: '/Meta3.png',
+    category: 'Meta',
+  },
+   {
+    image: '/Meta4.png',
+    category: 'Meta',
+  },
+
+
+
 
 
 
