@@ -429,7 +429,7 @@ export default function Portfolio() {
       </section>
 
        {/* About Section */}
-      <section id="about" className="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-24">
+      <section id="about" className="max-w-7xl mx-auto px-4 lg:px-6 py-20 md:py-24">
         <div className="grid lg:grid-cols-[1fr_1.05fr] gap-14 lg:gap-16 items-start">
       
           {/* ================= LEFT SIDE ================= */}
