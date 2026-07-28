@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from "framer-motion";
 import { 
   Menu, 
   X, 
@@ -26,17 +25,7 @@ export default function Portfolio() {
 
   const [activeCategory, setActiveCategory] = useState('All')
 
-  // Smooth automatic scrolling function
-  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    setIsMenuOpen(false)
-    const targetId = href.replace('#', '')
-    const elem = document.getElementById(targetId)
-    if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
+  // DITO NA SUNOD YUNG navLinks mo
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
