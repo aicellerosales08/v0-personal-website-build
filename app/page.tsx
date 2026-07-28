@@ -429,35 +429,33 @@ export default function Portfolio() {
       </section>
 
         {/* ================= ABOUT SECTION ================= */}
-        <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-          <div className="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-12 items-start">
+        <section id="about" className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-12 lg:gap-14 items-start">
         
             {/* ================= LEFT SIDE ================= */}
-            <div className="pt-1">
+            <div className="pt-1 min-w-0">
         
               {/* About Me Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
                 <span className="text-purple-600 text-sm">♙</span>
                 <span className="text-xs font-semibold tracking-wide text-purple-600">
                   ABOUT ME
                 </span>
               </div>
         
-              {/* Name */}
-              <h2 className="text-4xl md:text-[42px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
-                Hi, I&apos;m Aicelle
-              </h2>
+              {/* Name + Nice to meet you */}
+              <div className="flex items-baseline gap-4 mb-3 whitespace-nowrap">
+                <h2 className="text-4xl md:text-[42px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
+                  Hi, I&apos;m Aicelle
+                </h2>
         
-              {/* Nice to meet you - UNDER NAME */}
-              <div className="mt-2 mb-4">
-                <p className="inline-block text-xl md:text-[16px] italic font-medium text-pink-500 relative">
+                <p className="text-xl md:text-[21px] italic font-medium text-pink-500">
                   Nice to meet you! ♡
-                  <span className="absolute left-0 -bottom-1 w-full h-[1px] bg-pink-300/70 rounded-full" />
                 </p>
               </div>
         
               {/* Main Title */}
-              <h3 className="text-2xl md:text-[28px] font-bold leading-[1.15] mb-5">
+              <h3 className="text-2xl md:text-[28px] font-bold leading-[1.15] mb-6">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                   Web Designer &amp; Developer
                 </span>
@@ -471,24 +469,18 @@ export default function Portfolio() {
               <div className="max-w-[560px] space-y-4">
         
                 <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  I&apos;m an Information Technology graduate with a passion for
-                  creating beautiful, functional, and user-centered digital
-                  experiences.
+                  I&apos;m an Information Technology graduate with a passion for creating beautiful, functional, and user-centered digital experiences.
                 </p>
         
                 {/* Divider */}
                 <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
         
                 <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  I combine creativity and technical skills to design and build
-                  responsive websites, intuitive interfaces, and interactive
-                  prototypes that solve real problems and delight users.
+                  I combine creativity and technical skills to design and build responsive websites, intuitive interfaces, and interactive prototypes that solve real problems and delight users.
                 </p>
         
                 <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  My journey includes academic projects, internship experiences,
-                  and collaborative work with real clients. I&apos;m always learning
-                  and exploring new tools and technologies to deliver better solutions.
+                  My journey includes academic projects, internship experiences, and collaborative work with real clients. I&apos;m always learning and exploring new tools and technologies to deliver better solutions.
                 </p>
         
               </div>
@@ -558,7 +550,7 @@ export default function Portfolio() {
         
         
             {/* ================= RIGHT SIDE ================= */}
-            <div className="relative">
+            <div className="relative min-w-0">
         
               {/* Glow */}
               <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
@@ -580,7 +572,7 @@ export default function Portfolio() {
                 <div className="relative p-7 md:p-8">
         
                   {/* What I Do Header */}
-                  <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-4 mb-5">
         
                     <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center">
                       <span className="text-3xl text-purple-600 leading-none">
@@ -697,11 +689,15 @@ export default function Portfolio() {
                           for efficient and cohesive digital products.
                         </p>
                       </div>
+        
                     </div>
+        
                   </div>
+        
                 </div>
               </div>
             </div>
+        
           </div>
         
         
@@ -722,7 +718,9 @@ export default function Portfolio() {
                 <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
                   Tools I Use
                 </h3>
+        
               </div>
+        
         
               {/* Tools */}
               <div className="flex-1 flex justify-between items-center px-2">
@@ -737,17 +735,25 @@ export default function Portfolio() {
                 ].map((tool) => (
         
                   <div key={tool.name} className="text-center">
+        
                     <div className="w-11 h-11 mx-auto rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center font-bold text-sm">
                       {tool.icon}
                     </div>
+        
                     <p className="text-xs text-gray-600 mt-1.5">
                       {tool.name}
                     </p>
+        
                   </div>
+        
                 ))}
+        
               </div>
+        
             </div>
+        
           </div>
+        
         </section>
       {/* Skills Section */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
