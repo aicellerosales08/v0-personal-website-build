@@ -445,17 +445,17 @@ export default function Portfolio() {
         
               {/* Name + Nice to meet you */}
               <div className="flex items-baseline gap-4 mb-3 whitespace-nowrap">
-                <h2 className="text-4xl md:text-[42px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
+                <h2 className="text-4xl md:text-[40px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
                   Hi, I&apos;m Aicelle
                 </h2>
         
-                <p className="text-xl md:text-[21px] italic font-medium text-pink-500">
+                <p className="text-xl md:text-[18px] italic font-medium text-pink-500">
                   Nice to meet you! ♡
                 </p>
               </div>
         
               {/* Main Title */}
-              <h3 className="text-2xl md:text-[28px] font-bold leading-[1.15] mb-6">
+              <h3 className="text-2xl md:text-[25px] font-bold leading-[1.15] mb-6">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                   Web Designer &amp; Developer
                 </span>
