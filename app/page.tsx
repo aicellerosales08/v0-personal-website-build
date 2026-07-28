@@ -18,8 +18,9 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
+  const [selectedDesign, setSelectedDesign] = useState<typeof designs[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
-  const [activeDesignCategory, setActiveDesignCategory] = useState('All')
+
 
   // Smooth automatic scrolling function
   const handleScrollTo = (
@@ -1463,7 +1464,7 @@ export default function Portfolio() {
             ))}
         </div>
       </section>
-      {/* ================= DESIGNS SECTION ================= */}
+     {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
         className="bg-gray-50 py-20 md:py-32"
@@ -1533,27 +1534,25 @@ export default function Portfolio() {
       
                 <div
                   key={design.title + design.image}
-                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
+                  onClick={() => setSelectedDesign(design)}
+                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300 cursor-pointer"
                 >
       
-                  {/* Design Image */}
-                  <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 flex items-center justify-center">
+                  {/* Design Image Preview */}
+                  <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
       
                     <Image
                       src={design.image}
                       alt={design.title}
                       fill
-                      className="object-contain group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
       
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
       
-                    {/* Category Badge */}
-                    <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-      
-                      <span className="inline-block text-[10px] uppercase font-bold tracking-wider text-white bg-purple-600 px-3 py-1 rounded-full">
-                        {design.category}
+                      <span className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-bold shadow-lg">
+                        View Full Design
                       </span>
       
                     </div>
@@ -1564,7 +1563,6 @@ export default function Portfolio() {
                   {/* Design Information */}
                   <div className="p-6">
       
-                    {/* Title */}
                     <div className="flex items-start justify-between gap-3 mb-3">
       
                       <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
@@ -1606,7 +1604,47 @@ export default function Portfolio() {
       
         </div>
       </section>
-
+      
+      
+      {/* ================= DESIGN IMAGE MODAL ================= */}
+      {selectedDesign && (
+        <div
+          className="fixed inset-0 bg-black/80 z-[60] flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setSelectedDesign(null)}
+        >
+      
+          <div
+            className="relative w-full max-w-6xl h-[90vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+      
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedDesign(null)}
+              className="absolute top-2 right-2 md:top-4 md:right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-100 hover:text-purple-600 transition-colors shadow-lg"
+              aria-label="Close image"
+            >
+              <X size={24} />
+            </button>
+      
+      
+            {/* Full Design Image */}
+            <div className="relative w-full h-full flex items-center justify-center">
+      
+              <Image
+                src={selectedDesign.image}
+                alt={selectedDesign.title}
+                fill
+                className="object-contain"
+                sizes="100vw"
+              />
+      
+            </div>
+      
+          </div>
+      
+        </div>
+      )}
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
