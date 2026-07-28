@@ -2,17 +2,21 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  ExternalLink, 
-  Mail, 
-  Facebook, 
-  Instagram, 
-  Linkedin, 
+import { motion } from 'framer-motion'
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ExternalLink,
+  Mail,
+  Facebook,
+  Instagram,
+  Linkedin,
   Download,
-  Award
+  Award,
+  Briefcase,
+  MapPin,
+  Calendar
 } from 'lucide-react'
 
 export default function Portfolio() {
@@ -41,17 +45,92 @@ export default function Portfolio() {
   ]
 
   const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' }, 
-    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },  
-    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' }, 
-    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' }, 
-    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },      
-    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },      
-    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' }, 
+    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' },
+    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },
+    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' },
+    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' },
+    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },
+    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },
+    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' },
     { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
     { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
   ]
-  
+
+  // ================= EXPERIENCE =================
+  const experiences = [
+    {
+      company: 'Malama Co.',
+      role: 'Web Designer & Developer',
+      employmentType: 'Part-time',
+      date: 'Jul 2026 - Present',
+      duration: '1 mo',
+      location: 'Australia · Remote',
+      logo: '/malama-logo.png',
+      description: [
+        'Manage and maintain Wix websites for Australian clients, ensuring responsive, user-friendly, and visually consistent web experiences.',
+        'Design, build, and optimize service landing pages using Wix Editor based on client and business requirements.',
+        'Organize and manage website structures, content, and page layouts to improve usability and overall site performance.',
+        'Implement Wix CMS features, dynamic pages, collections, and URL redirects to support scalable and well-structured websites.',
+        'Update website content, layouts, booking systems, and interactive elements while maintaining brand consistency across client websites.',
+        'Collaborate with the marketing team to develop and launch new website features, pages, and digital experiences aligned with campaign and business goals.',
+        'Apply responsive web design principles to ensure websites deliver a seamless experience across desktop, tablet, and mobile devices.',
+      ],
+      skills: ['Wix Website Builder', 'Responsive Web Design', 'Web Development', 'UI/UX Design', 'Wix CMS', 'Website Management'],
+    },
+    {
+      company: 'Outlier',
+      role: 'AI Training Data Contributor',
+      employmentType: 'Part-time',
+      date: 'May 2026 - Jul 2026',
+      duration: '3 mos',
+      location: 'Remote',
+      logo: '/outlier-logo.png',
+      description: [
+        'Contribute high-quality voice and video datasets used for AI model training and evaluation.',
+        'Follow project guidelines to record, review, and submit data while maintaining accuracy and quality standards.',
+        'Support the development of AI systems by providing diverse and reliable training data.',
+        'Participate in AI data collection and validation projects, ensuring compliance with project requirements and quality assurance processes.',
+        'Collaborate with project teams and adapt to evolving AI training workflows and data collection tasks.',
+      ],
+      skills: ['AI Training', 'Data Collection', 'Data Validation', 'Quality Assurance', 'AI Data'],
+    },
+    {
+      company: 'Torres Technology Center Corp.',
+      role: 'Front-End Developer / IT Technical Support',
+      employmentType: 'Internship',
+      date: 'Feb 2026 - May 2026',
+      duration: '4 mos',
+      location: 'Calamba, Calabarzon, Philippines · On-site',
+      logo: '/torres-logo.png',
+      description: [
+        'Assisted in the development and maintenance of responsive web applications using HTML, CSS, JavaScript, and modern web development practices.',
+        'Provided technical support to end-users by troubleshooting hardware, software, network, and system-related issues.',
+        'Installed, configured, and maintained computer systems, software applications, and peripheral devices.',
+        'Collaborated with team members to identify and resolve technical problems, ensuring minimal downtime and improved user experience.',
+        'Participated in testing, debugging, and optimizing web applications to enhance performance and usability.',
+        'Documented technical procedures, support solutions, and system configurations for future reference.',
+        'Gained hands-on experience in frontend development, technical troubleshooting, customer support, and IT operations within a professional work environment.',
+      ],
+      skills: ['HTML', 'CSS', 'JavaScript', 'Technical Support', 'Troubleshooting', 'IT Operations'],
+    },
+    {
+      company: 'CrowdGen Pro',
+      role: 'Data Annotator / Data Labelling',
+      employmentType: 'Part-time',
+      date: 'Sep 2025 - Nov 2025',
+      duration: '3 mos',
+      location: 'Remote',
+      logo: '/crowdgen-logo.png',
+      description: [
+        'Annotated and reviewed datasets for AI model training.',
+        'Ensured accuracy and compliance with project guidelines.',
+        'Performed quality checks and data validation.',
+        'Worked with image, text, and AI-related annotation tasks.',
+      ],
+      skills: ['Annotation', 'Data AI', 'Data Labelling', 'Quality Assurance'],
+    },
+  ]
+
   const projects = [
     {
       title: 'Onlook - Thesis Project',
@@ -184,19 +263,30 @@ export default function Portfolio() {
     },
   ]
 
-  // UPDATED: Added TikTok with customized native SVG path
   const socialLinks = [
-    { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
-    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
-    { 
-      name: 'TikTok', 
-      url: 'https://www.tiktok.com/@aicelleeeeee_', 
+    {
+      name: 'Facebook',
+      url: 'https://www.facebook.com/seikii08/',
+      icon: <Facebook size={20} />
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/aicelleeeeee_/',
+      icon: <Instagram size={20} />
+    },
+    {
+      name: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/aicelle-r-66298537/',
+      icon: <Linkedin size={20} />
+    },
+    {
+      name: 'TikTok',
+      url: 'https://www.tiktok.com/@aicelleeeeee_',
       icon: (
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.25 1.96 3.69 2.32v3.9c-1.52-.13-3.01-.71-4.24-1.66-.46-.35-.88-.75-1.25-1.19v7.19c.04 2.22-.92 4.38-2.58 5.82-1.74 1.51-4.14 2.14-6.42 1.69-2.56-.51-4.71-2.43-5.55-4.89-.9-2.65-.18-5.7 1.83-7.65 1.66-1.61 4.07-2.31 6.34-1.84v3.9c-1.21-.33-2.53-.05-3.51.72-.94.75-1.42 1.96-1.3 3.16.14 1.34.99 2.51 2.24 3.03 1.25.53 2.73.32 3.77-.52.82-.67 1.25-1.7 1.23-2.76V0z"/>
         </svg>
-      ) 
+      )
     },
   ]
 
@@ -233,14 +323,16 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
+
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
               <span className="text-white font-bold text-lg">A</span>
             </div>
-          
+
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
               <p className="text-xs text-gray-500">
@@ -261,8 +353,9 @@ export default function Portfolio() {
                 {link.name}
               </a>
             ))}
-            <a 
-              href="mailto:aicellerosales08@gmail.com" 
+
+            <a
+              href="mailto:aicellerosales08@gmail.com"
               className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               Contact Me
@@ -291,7 +384,8 @@ export default function Portfolio() {
                 {link.name}
               </a>
             ))}
-            <a 
+
+            <a
               href="mailto:aicellerosales08@gmail.com"
               className="block text-center w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
             >
@@ -303,14 +397,17 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section id="home" className="max-w-6xl mx-auto px-6 py-4 md:py-8 flex flex-col md:flex-row items-center gap-12 relative">
+
         <div className="absolute inset-0 -z-10 opacity-5">
           <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
         </div>
-        
+
         <div className="flex-1 space-y-8">
+
           <div className="space-y-3">
             <p className="text-pink-500 font-medium text-sm">Hello, I&apos;m</p>
+
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
               Aicelle
               <br />
@@ -318,23 +415,27 @@ export default function Portfolio() {
                 Rosales
               </span>
             </h1>
-            <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
+
+            <p className="text-xl text-gray-600">
+              Web Designer & Developer | UI/UX & Creative Designer
+            </p>
           </div>
 
           <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-           I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+            I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <a 
-              href="/rosales_aicelle_resume.pdf" 
+            <a
+              href="/rosales_aicelle_resume.pdf"
               download="rosales_aicelle_resume.pdf"
               className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group"
             >
               <span>Download CV</span>
               <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
             </a>
-            <a 
+
+            <a
               href="#projects"
               onClick={(e) => handleScrollTo(e, '#projects')}
               className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 transition-colors"
@@ -345,7 +446,10 @@ export default function Portfolio() {
 
           {/* Social Links */}
           <div className="flex items-center gap-6 pt-4">
-            <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
+            <p className="text-sm text-gray-500 font-medium tracking-wider">
+              FOLLOW ME
+            </p>
+
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -366,13 +470,11 @@ export default function Portfolio() {
         {/* Profile Image */}
         <div className="flex-1">
           <div className="relative w-full max-w-md mx-auto group">
-        
-            {/* Glow */}
+
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
-        
-            {/* Circular Profile Container */}
+
             <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-[float_6s_ease-in-out_infinite] group-hover:scale-[1.02] transition-transform duration-500">
-        
+
               <Image
                 src="/aicelle-illustration.png"
                 alt="Aicelle Rosales"
@@ -381,11 +483,10 @@ export default function Portfolio() {
                 className="w-full h-auto aspect-square object-cover object-top"
                 priority
               />
-        
+
             </div>
-        
-            {/* Experience Badge */}
-            <div 
+
+            <div
               className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '1.5s' }}
             >
@@ -394,9 +495,8 @@ export default function Portfolio() {
                 Experiences
               </p>
             </div>
-        
-            {/* Projects Badge */}
-            <div 
+
+            <div
               className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
               style={{ animationDelay: '3s' }}
             >
@@ -405,7 +505,7 @@ export default function Portfolio() {
                 Projects Done
               </p>
             </div>
-        
+
           </div>
         </div>
 
@@ -428,34 +528,31 @@ export default function Portfolio() {
         </div>
       </section>
 
-       {/* ================= ABOUT SECTION ================= */}
+      {/* ================= ABOUT SECTION ================= */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-      
+
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
-      
-          {/* ================= LEFT SIDE ================= */}
+
+          {/* LEFT SIDE */}
           <div className="min-w-0 flex flex-col">
-      
-            {/* About Me Badge */}
+
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
               <span className="text-purple-600 text-sm">♙</span>
               <span className="text-xs font-semibold tracking-wide text-purple-600">
                 ABOUT ME
               </span>
             </div>
-      
-            {/* Name + Nice to meet you */}
+
             <div className="flex items-baseline gap-4 mb-3 whitespace-nowrap">
               <h2 className="text-4xl md:text-[40px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
                 Hi, I&apos;m Aicelle
               </h2>
-      
+
               <p className="text-xl md:text-[18px] italic font-medium text-pink-500">
                 Nice to meet you! ♡
               </p>
             </div>
-      
-            {/* Main Title */}
+
             <h3 className="text-2xl md:text-[25px] font-bold leading-[1.15] mb-6">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
@@ -465,100 +562,93 @@ export default function Portfolio() {
                 UI/UX Designer
               </span>
             </h3>
-      
-            {/* About Text */}
+
             <div className="max-w-[560px] space-y-4">
-      
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 I&apos;m an Information Technology professional with experience in web development, UI/UX design, and creative digital solutions. I&apos;m passionate about creating beautiful, functional, and user-centered digital experiences that combine thoughtful design with practical technology.
               </p>
-      
-              {/* Divider */}
+
               <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
-      
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 I combine creativity and technical skills to design and build responsive websites, intuitive interfaces, and interactive prototypes that solve real-world problems and deliver meaningful user experiences.
               </p>
-      
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 My experience includes working on real-world projects, collaborating with clients and teams, and applying modern tools and technologies to create effective digital solutions. I&apos;m continuously improving my skills and exploring new technologies to deliver high-quality work and better experiences for users.
               </p>
-      
+
             </div>
-      
-            {/* ================= STATS ================= */}
+
+            {/* STATS */}
             <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70">
-      
+
               <div className="grid grid-cols-2 divide-x divide-purple-100">
-      
-                {/* 50+ */}
+
                 <div className="flex items-center gap-4 px-2">
-      
+
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm">
                     <span className="text-xl text-purple-600">
                       ♧
                     </span>
                   </div>
-      
+
                   <div>
                     <p className="text-2xl font-bold text-purple-600 leading-none">
                       50+
                     </p>
-      
+
                     <p className="text-sm font-semibold text-gray-800 mt-1">
                       Design Components
                     </p>
-      
+
                     <p className="text-xs text-gray-500 mt-1 leading-snug">
                       Reusable UI elements
                       <br />
                       created in Figma
                     </p>
                   </div>
-      
+
                 </div>
-      
-                {/* 20+ */}
+
                 <div className="flex items-center gap-4 px-4">
-      
+
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm">
                     <span className="text-xl text-pink-500">
                       ▣
                     </span>
                   </div>
-      
+
                   <div>
                     <p className="text-2xl font-bold text-pink-500 leading-none">
                       20+
                     </p>
-      
+
                     <p className="text-sm font-semibold text-gray-800 mt-1">
                       Created Layouts
                     </p>
-      
+
                     <p className="text-xs text-gray-500 mt-1 leading-snug">
                       Web &amp; mobile layouts
                       <br />
                       designed
                     </p>
                   </div>
-      
+
                 </div>
-      
+
               </div>
             </div>
           </div>
-      
-      
-          {/* ================= RIGHT SIDE ================= */}
+
+          {/* RIGHT SIDE */}
           <div className="relative min-w-0 flex">
-      
-            {/* Glow */}
+
             <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
-      
+
             <div className="relative w-full bg-white rounded-[24px] border border-purple-100 shadow-sm overflow-hidden">
-      
-              {/* Decorative Dots */}
+
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
                 <div className="grid grid-cols-10 gap-2.5 p-5">
                   {Array.from({ length: 100 }).map((_, i) => (
@@ -569,163 +659,149 @@ export default function Portfolio() {
                   ))}
                 </div>
               </div>
-      
+
               <div className="relative p-7 md:p-8">
-      
-                {/* What I Do Header */}
+
                 <div className="flex items-center gap-4 mb-5">
-      
+
                   <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center">
                     <span className="text-3xl text-purple-600 leading-none">
                       ☆
                     </span>
                   </div>
-      
+
                   <div>
                     <h3 className="text-2xl md:text-[26px] font-bold text-gray-900">
                       What I Do
                     </h3>
-      
+
                     <div className="flex items-center gap-2 mt-2">
                       <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
                       <div className="w-2 h-2 rounded-full bg-pink-500" />
                     </div>
                   </div>
-      
+
                 </div>
-      
-      
-                {/* ================= SERVICES ================= */}
+
                 <div>
-      
-                  {/* Web Development */}
+
                   <div className="flex gap-6 py-5 border-b border-gray-100">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                       <span className="text-2xl font-medium text-purple-600">
                         &lt;/&gt;
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Web Development
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Develop responsive, fast, and clean websites
                         <br />
                         using modern technologies.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
-                  {/* UI/UX Design */}
+
                   <div className="flex gap-6 py-5 border-b border-gray-100">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                       <span className="text-3xl text-pink-500">
                         ✧
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         UI/UX Design
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Design intuitive and visually appealing interfaces
                         <br />
                         that provide great user experiences.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
-                  {/* Wireframing & Prototyping */}
+
                   <div className="flex gap-6 py-5 border-b border-gray-100">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                       <span className="text-2xl text-purple-600">
                         ▣
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Wireframing &amp; Prototyping
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Build interactive wireframes and prototypes
                         <br />
                         to visualize ideas and test user flows.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
-                  {/* Design Systems */}
+
                   <div className="flex gap-6 py-5">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                       <span className="text-2xl text-pink-500">
                         ◫
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Design Systems
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Create consistent and scalable design systems
                         <br />
                         for efficient and cohesive digital products.
                       </p>
                     </div>
-      
+
                   </div>
-      
+
                 </div>
-      
+
               </div>
             </div>
           </div>
-      
+
         </div>
-      
-      
-        {/* ================= TOOLS I USE ================= */}
+
+        {/* TOOLS I USE */}
         <div className="mt-8 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-4">
-      
+
           <div className="flex items-center gap-6">
-      
-            {/* Title */}
+
             <div className="flex items-center gap-3 pr-8 border-r border-purple-200 shrink-0">
-      
+
               <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center">
                 <span className="text-xl text-purple-600">
                   ✦
                 </span>
               </div>
-      
+
               <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
                 Tools I Use
               </h3>
-      
+
             </div>
-      
-      
-            {/* Tools */}
+
             <div className="flex-1 flex justify-between items-center px-2">
-      
+
               {[
                 { name: 'Figma', icon: '🎨' },
                 { name: 'VS Code', icon: '✕' },
@@ -734,110 +810,342 @@ export default function Portfolio() {
                 { name: 'Photoshop', icon: 'Ps' },
                 { name: 'Illustrator', icon: 'Ai' },
               ].map((tool) => (
-      
+
                 <div key={tool.name} className="text-center">
-      
+
                   <div className="w-11 h-11 mx-auto rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center font-bold text-sm">
                     {tool.icon}
                   </div>
-      
+
                   <p className="text-xs text-gray-600 mt-1.5">
                     {tool.name}
                   </p>
-      
+
                 </div>
-      
+
               ))}
-      
+
             </div>
-      
+
           </div>
-      
+
         </div>
-      
+
       </section>
+
+      {/* ================= EXPERIENCE SECTION ================= */}
+      <section
+        id="experience"
+        className="bg-gray-50 py-20 md:py-32 relative overflow-hidden"
+      >
+
+        {/* Background Decorations */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-6 relative">
+
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-16">
+
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-4 py-2 rounded-full mb-4">
+              <Briefcase size={14} />
+              Professional Journey
+            </span>
+
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4">
+              Experience
+            </h2>
+
+            <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto">
+              My professional experience across web development, UI/UX design,
+              IT technical support, AI training, and data annotation.
+            </p>
+
+          </div>
+
+          {/* Experience Timeline */}
+          <div className="relative">
+
+            {/* Timeline Line */}
+            <div className="absolute left-[27px] md:left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-purple-200 hidden sm:block" />
+
+            <div className="space-y-8">
+
+              {experiences.map((experience, index) => (
+
+                <motion.div
+                  key={experience.company}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1
+                  }}
+                  className="relative flex gap-5 md:gap-8"
+                >
+
+                  {/* Timeline Icon */}
+                  <div className="relative z-10 shrink-0">
+
+                    <div className="w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-white border border-purple-100 shadow-md flex items-center justify-center overflow-hidden">
+
+                      <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+
+                        {experience.logo ? (
+                          <Image
+                            src={experience.logo}
+                            alt={`${experience.company} logo`}
+                            width={56}
+                            height={56}
+                            className="object-contain"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        ) : (
+                          <Briefcase className="text-purple-500" size={24} />
+                        )}
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* Experience Card */}
+                  <div className="flex-1 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 overflow-hidden">
+
+                    <div className="p-6 md:p-8">
+
+                      {/* Top Information */}
+                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+
+                        <div>
+
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+
+                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+                              {experience.role}
+                            </h3>
+
+                            {index === 0 && (
+                              <span className="text-[10px] uppercase font-bold tracking-wider text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
+                                Current
+                              </span>
+                            )}
+
+                          </div>
+
+                          <p className="text-purple-600 font-semibold text-sm md:text-base">
+                            {experience.company}
+                          </p>
+
+                        </div>
+
+                        <div className="lg:text-right shrink-0">
+
+                          <div className="flex items-center gap-2 text-sm text-gray-500 lg:justify-end">
+                            <Calendar size={15} />
+                            <span>{experience.date}</span>
+                          </div>
+
+                          <p className="text-xs text-gray-400 mt-1">
+                            {experience.duration}
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                      {/* Employment + Location */}
+                      <div className="flex flex-wrap gap-3 mb-6">
+
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600">
+                          <Briefcase size={13} />
+                          {experience.employmentType}
+                        </span>
+
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600">
+                          <MapPin size={13} />
+                          {experience.location}
+                        </span>
+
+                      </div>
+
+                      {/* Description */}
+                      <div className="border-t border-gray-100 pt-6">
+
+                        <ul className="space-y-3">
+
+                          {experience.description.map((item, descriptionIndex) => (
+
+                            <li
+                              key={descriptionIndex}
+                              className="flex gap-3 text-sm text-gray-600 leading-relaxed"
+                            >
+
+                              <span className="mt-2 w-1.5 h-1.5 shrink-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
+
+                              <span>
+                                {item}
+                              </span>
+
+                            </li>
+
+                          ))}
+
+                        </ul>
+
+                      </div>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-2 mt-7 pt-6 border-t border-gray-100">
+
+                        {experience.skills.map((skill) => (
+
+                          <span
+                            key={skill}
+                            className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                          >
+                            {skill}
+                          </span>
+
+                        ))}
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </motion.div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
       {/* Skills Section */}
-      <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
+      <section id="skills" className="bg-white py-20 md:py-32 overflow-hidden relative">
+
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-6xl mx-auto px-6">
+
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
               Capabilities
             </span>
+
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
               Technical Skills & Tools
             </h2>
+
             <p className="text-gray-500 text-sm">
               My proficiency in various programming languages, frameworks, and design software tools.
             </p>
+
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
             {skills.map((skill) => (
+
               <div
                 key={skill.name}
                 className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
               >
+
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 <div className="flex justify-between items-center mb-4 relative z-10">
+
                   <div className="flex items-center gap-3">
+
                     <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:bg-white transition-all duration-300 relative">
-                      <Image 
-                        src={skill.icon} 
-                        alt={`${skill.name} logo`} 
-                        width={28} 
+
+                      <Image
+                        src={skill.icon}
+                        alt={`${skill.name} logo`}
+                        width={28}
                         height={28}
                         className="object-contain"
                         onError={(e) => {
-                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.style.display = 'none'
                         }}
                       />
+
                     </div>
+
                     <div>
+
                       <p className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
                         {skill.name}
                       </p>
+
                       <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400">
                         {skill.type === 'design' ? 'UI/UX Design' : 'Development'}
                       </span>
+
                     </div>
+
                   </div>
+
                   <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
                     {skill.level}
                   </span>
+
                 </div>
 
                 <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
+
                   <div
-                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full w-0 group-hover:w-full transition-all duration-1000 ease-out relative"
+                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full relative"
                     style={{ width: skill.level }}
                   >
                     <div className="absolute inset-0 bg-white/20 animate-pulse" />
                   </div>
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
       </section>
 
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
+
         <div className="text-center mb-12">
+
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             Featured Projects
           </h2>
-      
+
           <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
             Explore my selected work across web, mobile, and system design.
           </p>
+
         </div>
-      
+
         {/* Category Tabs */}
         <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
+
           {['All', 'Web', 'Mobile', 'System'].map((category) => (
+
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
@@ -849,11 +1157,14 @@ export default function Portfolio() {
             >
               {category}
             </button>
+
           ))}
+
         </div>
-      
+
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
           {projects
             .filter(
               (project) =>
@@ -861,54 +1172,66 @@ export default function Portfolio() {
                 project.category === activeCategory
             )
             .map((project) => (
+
               <div
                 key={project.title}
                 className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
               >
-                {/* Project Image */}
+
                 <div className="aspect-video relative overflow-hidden bg-gray-100">
+
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+
                 </div>
-      
-                {/* Project Content */}
+
                 <div className="p-6 flex flex-col flex-1 justify-between">
+
                   <div>
+
                     <div className="flex items-start justify-between gap-3 mb-2">
+
                       <h3 className="text-lg font-bold text-gray-900">
                         {project.title}
                       </h3>
-      
+
                       <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
                         {project.category}
                       </span>
+
                     </div>
-      
+
                     <p className="text-gray-600 text-sm mb-4 line-clamp-4">
                       {project.description}
                     </p>
-      
-                    {/* Tags */}
+
                     <div className="flex gap-2 flex-wrap mb-6">
+
                       {project.tags.map((tag) => (
+
                         <span
                           key={tag}
                           className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
                         >
                           {tag}
                         </span>
+
                       ))}
+
                     </div>
+
                   </div>
-      
-                  {/* Project Link */}
+
                   <div>
+
                     {'website' in project ? (
+
                       <div className="flex gap-4 border-t border-gray-100 pt-4">
+
                         <a
                           href={project.website}
                           target="_blank"
@@ -917,7 +1240,7 @@ export default function Portfolio() {
                         >
                           Live Site <ExternalLink size={14} />
                         </a>
-      
+
                         <a
                           href={project.figma}
                           target="_blank"
@@ -926,8 +1249,11 @@ export default function Portfolio() {
                         >
                           Figma <ExternalLink size={14} />
                         </a>
+
                       </div>
+
                     ) : (
+
                       <a
                         href={project.link}
                         target="_blank"
@@ -936,110 +1262,165 @@ export default function Portfolio() {
                       >
                         View Project Design <ExternalLink size={15} />
                       </a>
+
                     )}
+
                   </div>
+
                 </div>
+
               </div>
+
             ))}
+
         </div>
+
       </section>
 
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
+
         <div className="max-w-6xl mx-auto px-6">
+
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
             Certifications & Achievements
           </h2>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
             {certificates.map((cert) => (
+
               <div
                 key={cert.title}
                 className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
                 onClick={() => setSelectedCert(cert)}
               >
-                {/* Certificate BADGE Display */}
+
                 <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
+
                   <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+
                     <Image
                       src={cert.badge}
                       alt={`${cert.title} badge`}
                       fill
                       className="object-contain"
                     />
+
                   </div>
+
                   <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+
                     <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1">
                       View Certificate <ExternalLink size={12} />
                     </span>
+
                   </div>
+
                 </div>
 
-                {/* Info Text block */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+
                   <div>
+
                     <div className="flex items-center justify-between mb-2">
+
                       <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
                         {cert.issuer}
                       </span>
-                      <span className="text-[11px] text-gray-400 font-medium">{cert.issueDate}</span>
+
+                      <span className="text-[11px] text-gray-400 font-medium">
+                        {cert.issueDate}
+                      </span>
+
                     </div>
+
                     <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-purple-600 transition-colors">
                       {cert.title}
                     </h3>
+
                   </div>
 
                   <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-purple-600 transition-colors">
+
                     <span>Enlarge Document</span>
+
                     <Award size={14} className="text-gray-400 group-hover:text-purple-500" />
+
                   </div>
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
+
       </section>
 
       {/* Certificate Modal View */}
       {selectedCert && (
+
         <div
           className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setSelectedCert(null)}
         >
+
           <div
             className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden flex flex-col shadow-2xl transition-all transform max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
+
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
+
               <div>
-                <h3 className="text-xl font-bold text-gray-900">{selectedCert.title}</h3>
-                <p className="text-xs text-gray-500 mt-0.5">Issued by {selectedCert.issuer} • {selectedCert.issueDate}</p>
+
+                <h3 className="text-xl font-bold text-gray-900">
+                  {selectedCert.title}
+                </h3>
+
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Issued by {selectedCert.issuer} • {selectedCert.issueDate}
+                </p>
+
               </div>
+
               <button
                 onClick={() => setSelectedCert(null)}
                 className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <X size={24} />
               </button>
+
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 bg-gray-50 flex items-center justify-center min-h-[300px]">
+
               <div className="relative w-full h-full max-h-[60vh] aspect-[4/3]">
+
                 <Image
                   src={selectedCert.image}
                   alt={selectedCert.title}
                   fill
                   className="object-contain"
                 />
+
               </div>
+
             </div>
 
             <div className="border-t border-gray-100 p-4 flex gap-3 justify-end bg-white">
+
               <button
                 onClick={() => setSelectedCert(null)}
                 className="px-5 py-2 text-sm bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
               >
                 Close
               </button>
+
               <a
                 href={selectedCert.image}
                 download
@@ -1048,81 +1429,132 @@ export default function Portfolio() {
                 <Download size={16} />
                 Download
               </a>
+
             </div>
+
           </div>
+
         </div>
+
       )}
 
       {/* Contact Banner */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
+
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Let&apos;s Create Something Amazing
           </h2>
+
           <p className="text-lg text-white/90 max-w-xl mx-auto">
             I&apos;m always open to discussing web development initiatives, UI/UX design opportunities, or collaborative projects.
           </p>
-          <a 
+
+          <a
             href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
             className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 transition-colors inline-flex items-center gap-2 shadow-lg"
           >
             Get In Touch
             <Mail size={18} />
           </a>
+
         </div>
+
       </section>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
+
         <div className="max-w-6xl mx-auto px-6">
+
           <div className="grid md:grid-cols-3 gap-8 mb-8">
+
             <div>
+
               <p className="font-bold text-lg mb-1 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 inline-block">
                 Aicelle Rosales
               </p>
-              <p className="text-gray-400 text-sm">Frontend Developer & UI/UX Designer</p>
+
+              <p className="text-gray-400 text-sm">
+                Frontend Developer & UI/UX Designer
+              </p>
+
             </div>
+
             <div>
-              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Links</p>
+
+              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">
+                Links
+              </p>
+
               <ul className="space-y-2 text-sm text-gray-400">
+
                 {navLinks.map((link) => (
+
                   <li key={link.name}>
-                    <a 
-                      href={link.href} 
+
+                    <a
+                      href={link.href}
                       onClick={(e) => handleScrollTo(e, link.href)}
                       className="hover:text-white transition-colors"
                     >
                       {link.name}
                     </a>
+
                   </li>
+
                 ))}
+
               </ul>
+
             </div>
+
             <div>
-              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
-              {/* UPDATED: Added TikTok icon integration wrapper inside footer as well */}
+
+              <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">
+                Connect
+              </p>
+
               <div className="flex gap-3">
+
                 {socialLinks.map((social) => (
-                  <a 
+
+                  <a
                     key={social.name}
-                    href={social.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all flex items-center justify-center" 
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all flex items-center justify-center"
                     title={social.name}
                   >
                     {social.icon}
                   </a>
+
                 ))}
+
               </div>
+
             </div>
+
           </div>
+
           <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs space-y-1">
-            <p>© {new Date().getFullYear()} Aicelle Rosales. All rights reserved.</p>
-            <p>Designed with ❤️ in the Philippines</p>
+
+            <p>
+              © {new Date().getFullYear()} Aicelle Rosales. All rights reserved.
+            </p>
+
+            <p>
+              Designed with ❤️ in the Philippines
+            </p>
+
           </div>
+
         </div>
+
       </footer>
+
     </div>
   )
 }
