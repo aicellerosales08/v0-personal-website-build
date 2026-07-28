@@ -468,19 +468,19 @@ export default function Portfolio() {
               {/* About Text */}
               <div className="max-w-[560px] space-y-4">
         
-                <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  I&apos;m an Information Technology graduate with a passion for creating beautiful, functional, and user-centered digital experiences.
+                <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
+                  I&apos;m an Information Technology professional with experience in web development, UI/UX design, and creative digital solutions. I’m passionate about creating beautiful, functional, and user-centered digital experiences that combine thoughtful design with practical technology.
                 </p>
         
                 {/* Divider */}
                 <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
         
-                <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  I combine creativity and technical skills to design and build responsive websites, intuitive interfaces, and interactive prototypes that solve real problems and delight users.
+                <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
+                  I combine creativity and technical skills to design and build responsive websites, intuitive interfaces, and interactive prototypes that solve real-world problems and deliver meaningful user experiences.
                 </p>
         
-                <p className="text-gray-600 text-sm md:text-[15px] leading-[1.6]">
-                  My journey includes academic projects, internship experiences, and collaborative work with real clients. I&apos;m always learning and exploring new tools and technologies to deliver better solutions.
+                <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
+                 My experience includes working on real-world projects, collaborating with clients and teams, and applying modern tools and technologies to create effective digital solutions. I’m continuously improving my skills and exploring new technologies to deliver high-quality work and better experiences for users.
                 </p>
         
               </div>
