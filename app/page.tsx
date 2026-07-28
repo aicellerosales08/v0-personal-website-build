@@ -436,26 +436,28 @@ export default function Portfolio() {
             <div className="pt-1">
         
               {/* About Me Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
                 <span className="text-purple-600 text-sm">♙</span>
                 <span className="text-xs font-semibold tracking-wide text-purple-600">
                   ABOUT ME
                 </span>
               </div>
         
-              {/* Name + Nice to meet you */}
-              <div className="flex items-baseline gap-4 flex-wrap mb-3">
-                <h2 className="text-4xl md:text-[42px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
-                  Hi, I&apos;m Aicelle
-                </h2>
+              {/* Name */}
+              <h2 className="text-4xl md:text-[42px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
+                Hi, I&apos;m Aicelle
+              </h2>
         
-                <p className="text-xl md:text-[21px] italic font-medium text-pink-500 whitespace-nowrap">
+              {/* Nice to meet you - UNDER NAME */}
+              <div className="mt-2 mb-4">
+                <p className="inline-block text-xl md:text-[21px] italic font-medium text-pink-500 relative">
                   Nice to meet you! ♡
+                  <span className="absolute left-0 -bottom-1 w-full h-[1px] bg-pink-300/70 rounded-full" />
                 </p>
               </div>
         
               {/* Main Title */}
-              <h3 className="text-2xl md:text-[28px] font-bold leading-[1.15] mb-6">
+              <h3 className="text-2xl md:text-[28px] font-bold leading-[1.15] mb-5">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                   Web Designer &amp; Developer
                 </span>
@@ -498,6 +500,7 @@ export default function Portfolio() {
         
                   {/* 50+ */}
                   <div className="flex items-center gap-4 px-2">
+        
                     <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm">
                       <span className="text-xl text-purple-600">
                         ♧
@@ -519,10 +522,12 @@ export default function Portfolio() {
                         created in Figma
                       </p>
                     </div>
+        
                   </div>
         
                   {/* 20+ */}
                   <div className="flex items-center gap-4 px-4">
+        
                     <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm">
                       <span className="text-xl text-pink-500">
                         ▣
@@ -544,6 +549,7 @@ export default function Portfolio() {
                         designed
                       </p>
                     </div>
+        
                   </div>
         
                 </div>
@@ -574,7 +580,7 @@ export default function Portfolio() {
                 <div className="relative p-7 md:p-8">
         
                   {/* What I Do Header */}
-                  <div className="flex items-center gap-4 mb-5">
+                  <div className="flex items-center gap-4 mb-4">
         
                     <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center">
                       <span className="text-3xl text-purple-600 leading-none">
@@ -691,15 +697,11 @@ export default function Portfolio() {
                           for efficient and cohesive digital products.
                         </p>
                       </div>
-        
                     </div>
-        
                   </div>
-        
                 </div>
               </div>
             </div>
-        
           </div>
         
         
@@ -720,9 +722,7 @@ export default function Portfolio() {
                 <h3 className="text-base font-bold text-gray-900 whitespace-nowrap">
                   Tools I Use
                 </h3>
-        
               </div>
-        
         
               {/* Tools */}
               <div className="flex-1 flex justify-between items-center px-2">
@@ -737,25 +737,17 @@ export default function Portfolio() {
                 ].map((tool) => (
         
                   <div key={tool.name} className="text-center">
-        
                     <div className="w-11 h-11 mx-auto rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center font-bold text-sm">
                       {tool.icon}
                     </div>
-        
                     <p className="text-xs text-gray-600 mt-1.5">
                       {tool.name}
                     </p>
-        
                   </div>
-        
                 ))}
-        
               </div>
-        
             </div>
-        
           </div>
-        
         </section>
       {/* Skills Section */}
       <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
