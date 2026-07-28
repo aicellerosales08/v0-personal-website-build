@@ -450,7 +450,7 @@ export default function Portfolio() {
         
               {/* Nice to meet you - UNDER NAME */}
               <div className="mt-2 mb-4">
-                <p className="inline-block text-xl md:text-[21px] italic font-medium text-pink-500 relative">
+                <p className="inline-block text-xl md:text-[16px] italic font-medium text-pink-500 relative">
                   Nice to meet you! ♡
                   <span className="absolute left-0 -bottom-1 w-full h-[1px] bg-pink-300/70 rounded-full" />
                 </p>
