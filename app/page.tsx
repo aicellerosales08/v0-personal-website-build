@@ -72,10 +72,56 @@ export default function Portfolio() {
     title: 'Ad Creatives & AI Image Generation',
     description:
       'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
-    image: '/design-ad-creatives.png',
+    image: '/AD1.png',
     category: 'Ad Creatives',
     tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
   },
+
+    {
+    title: 'Ad Creatives & AI Image Generation',
+    description:
+      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
+    image: '/AD2.png',
+    category: 'Ad Creatives',
+    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
+  },
+
+    {
+    title: 'Ad Creatives & AI Image Generation',
+    description:
+      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
+    image: '/AD3.png',
+    category: 'Ad Creatives',
+    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
+  },
+
+    {
+    title: 'Ad Creatives & AI Image Generation',
+    description:
+      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
+    image: '/AD4.png',
+    category: 'Ad Creatives',
+    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
+  },
+
+    {
+    title: 'Ad Creatives & AI Image Generation',
+    description:
+      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
+    image: '/AD5.png',
+    category: 'Ad Creatives',
+    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
+  },
+
+    {
+    title: 'Ad Creatives & AI Image Generation',
+    description:
+      'Creative advertising visuals and AI-generated imagery designed for digital campaigns, promotional content, and brand storytelling.',
+    image: '/AD6.png',
+    category: 'Ad Creatives',
+    tags: ['Ad Creative', 'AI Image Generation', 'Visual Design'],
+  },
+    
   {
     title: 'CLOTH',
     description:
