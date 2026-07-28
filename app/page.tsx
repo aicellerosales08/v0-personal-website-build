@@ -17,15 +17,26 @@ import {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const [selectedCert, setSelectedCert] =
-    useState<typeof certificates[number] | null>(null)
-
+  const [selectedCert, setSelectedCert] = useState<any>(null)
   const [selectedDesign, setSelectedDesign] = useState<any>(null)
-
   const [activeCategory, setActiveCategory] = useState('All')
 
-  // DITO NA SUNOD YUNG navLinks mo
+  // Smooth automatic scrolling function
+  const handleScrollTo = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault()
+    setIsMenuOpen(false)
+
+    const targetId = href.replace('#', '')
+    const elem = document.getElementById(targetId)
+
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
