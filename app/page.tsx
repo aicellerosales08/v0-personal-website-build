@@ -1360,256 +1360,204 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ================= DESIGN SECTION ================= */}
-        <section
-          id="design"
-          className="max-w-6xl mx-auto px-6 py-16 md:py-20"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
-              <span className="text-purple-600 text-sm">✦</span>
-              <span className="text-xs font-semibold tracking-wide text-purple-600">
-                DESIGN WORKS
-              </span>
+     {/* ================= DESIGNS SECTION ================= */}
+      <section
+        id="designs"
+        className="max-w-6xl mx-auto px-6 py-16 md:py-20"
+      >
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
+            <span className="text-purple-600 text-sm">✦</span>
+            <span className="text-xs font-semibold tracking-wide text-purple-600">
+              MY DESIGNS
+            </span>
+          </div>
+      
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Creative Works
+          </h2>
+      
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            A collection of my creative design work, including ad creatives,
+            social media graphics, AI-generated visuals, branding, and product
+            label designs.
+          </p>
+        </div>
+      
+        {/* Design Categories */}
+        <div className="grid md:grid-cols-2 gap-6">
+      
+          {/* ================= AD CREATIVES ================= */}
+          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+            <div className="h-56 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+              <span className="text-6xl">✦</span>
             </div>
-        
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Creative Design
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                {" "}Portfolio
+      
+            <div className="p-6">
+              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                Creative Design
               </span>
-            </h2>
-        
-            <p className="max-w-2xl mx-auto mt-4 text-sm md:text-base text-gray-600 leading-relaxed">
-              A collection of my creative work, including advertising creatives,
-              AI-generated visuals, branding, social media graphics, and product
-              visual designs.
-            </p>
+      
+              <h3 className="text-xl font-bold text-gray-900 mt-2">
+                Ad Creatives & AI Image Generation
+              </h3>
+      
+              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                Creative advertising visuals and AI-generated images designed
+                for digital marketing and promotional campaigns.
+              </p>
+      
+              <a
+                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
+              >
+                View Designs →
+              </a>
+            </div>
           </div>
-        
-          {/* ================= DESIGN CARDS ================= */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-            {/* 1. Ad Creatives & AI Image Generation */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/ad-creatives.jpg"
-                  alt="Ad Creatives and AI Image Generation"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Creative
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Ad Creatives &amp; AI Image Generation
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Creative advertising visuals and AI-generated images designed
-                  for digital campaigns and promotional content.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
-        
-            {/* 2. CLOTH */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/cloth.jpg"
-                  alt="CLOTH Design"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Branding
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  CLOTH
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Creative visual designs and branding materials created for
-                  the CLOTH project.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
-        
-            {/* 3. Social Media */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/social-media.jpg"
-                  alt="Social Media Design"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Social Media
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Social Media
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Social media graphics, promotional posts, and engaging visual
-                  content created for digital platforms.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
-        
-            {/* 4. Logo Design */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/logo-design.jpg"
-                  alt="Logo Design"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Branding
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Logo Design
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Logo concepts and visual identities designed to create
-                  memorable and recognizable brands.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
-        
-            {/* 5. Meta */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/meta.jpg"
-                  alt="Meta Ad Creative"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Advertising
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Meta
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Meta advertising creatives and visual assets designed for
-                  Facebook and Instagram campaigns.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
-        
-            {/* 6. Product Label & Visual Design */}
-            <a
-              href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-2xl overflow-hidden border border-purple-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative h-52 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
-                <img
-                  src="/design/product-label.jpg"
-                  alt="Product Label and Visual Design"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-        
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-semibold text-purple-600">
-                  Product Design
-                </span>
-              </div>
-        
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  Product Label &amp; Visual Design
-                </h3>
-        
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Product label designs and visual assets created to support
-                  strong and consistent product branding.
-                </p>
-        
-                <div className="mt-4 text-sm font-semibold text-purple-600 group-hover:text-pink-500 transition-colors">
-                  View Designs →
-                </div>
-              </div>
-            </a>
-        
+      
+      
+          {/* ================= CLOTH ================= */}
+          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+            <div className="h-56 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
+              <span className="text-6xl">♧</span>
+            </div>
+      
+            <div className="p-6">
+              <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
+                Fashion Design
+              </span>
+      
+              <h3 className="text-xl font-bold text-gray-900 mt-2">
+                CLOTH
+              </h3>
+      
+              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                Clothing and fashion-related creative designs developed
+                with a focus on visual presentation and branding.
+              </p>
+      
+              <a
+                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
+              >
+                View Designs →
+              </a>
+            </div>
           </div>
-        </section>
+      
+      
+          {/* ================= SOCIAL MEDIA ================= */}
+          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+            <div className="h-56 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+              <span className="text-6xl">♡</span>
+            </div>
+      
+            <div className="p-6">
+              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                Social Media
+              </span>
+      
+              <h3 className="text-xl font-bold text-gray-900 mt-2">
+                SOCIAL MEDIA
+              </h3>
+      
+              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                Social media graphics and promotional content created for
+                engaging and visually consistent online presence.
+              </p>
+      
+              <a
+                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
+              >
+                View Designs →
+              </a>
+            </div>
+          </div>
+      
+      
+          {/* ================= META ================= */}
+          <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+            <div className="h-56 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+              <span className="text-6xl">◎</span>
+            </div>
+      
+            <div className="p-6">
+              <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                Advertising
+              </span>
+      
+              <h3 className="text-xl font-bold text-gray-900 mt-2">
+                Meta
+              </h3>
+      
+              <p className="text-sm text-gray-600 mt-3 leading-relaxed">
+                Visual assets and creative materials designed for Meta
+                advertising campaigns and digital promotions.
+              </p>
+      
+              <a
+                href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex mt-5 text-sm font-semibold text-purple-600 hover:text-pink-500 transition"
+              >
+                View Designs →
+              </a>
+            </div>
+          </div>
+      
+      
+          {/* ================= PRODUCT LABEL ================= */}
+          <div className="group md:col-span-2 rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            
+            <div className="grid md:grid-cols-2">
+      
+              <div className="h-56 md:h-full min-h-[280px] bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
+                <span className="text-6xl">◫</span>
+              </div>
+      
+              <div className="p-8 flex flex-col justify-center">
+                <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
+                  Branding & Packaging
+                </span>
+      
+                <h3 className="text-2xl font-bold text-gray-900 mt-2">
+                  PRODUCT LABEL AND VISUAL DESIGN
+                </h3>
+      
+                <p className="text-sm text-gray-600 mt-4 leading-relaxed">
+                  Product label designs and visual branding created to build
+                  strong product identity and visually appealing packaging.
+                </p>
+      
+                <a
+                  href="https://drive.google.com/drive/folders/1ONr8vPfjbN6KcDfk_evkRMzf6oWd0sZJ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex self-start mt-6 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-sm font-semibold hover:opacity-90 transition"
+                >
+                  View Designs →
+                </a>
+              </div>
+      
+            </div>
+          </div>
+      
+        </div>
+      </section>
 
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
