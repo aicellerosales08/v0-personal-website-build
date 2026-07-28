@@ -145,31 +145,83 @@ const designs = [
 
 
 
-
-
-
-
-
-
+  
+  {
+    image: '/design-social-media.png',
+    category: 'Social Media',
+  },
 
 
 
 
   
   {
-    image: '/design-social-media.png',
-    category: 'Social Media',
-  },
-  {
     image: '/design-logo.png',
     category: 'Logo',
   },
+
+
+
+  
   {
     image: '/design-meta.png',
     category: 'Meta',
   },
+
+
+
+
+  
   {
-    image: '/design-product-label.png',
+    image: '/Product2.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product3.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product4.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product5.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product6.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product7.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product8.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product9.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product10.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product11.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product12.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product13.png',
+    category: 'Product Design',
+  },
+    {
+    image: '/Product14.png',
     category: 'Product Design',
   },
 ]
