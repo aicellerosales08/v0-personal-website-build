@@ -598,7 +598,7 @@ export default function Portfolio() {
                   <div>
         
                     {/* Web Development */}
-                    <div className="flex gap-5 py-5 border-b border-gray-100">
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
         
                       <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                         <span className="text-2xl font-medium text-purple-600">
@@ -622,7 +622,7 @@ export default function Portfolio() {
         
         
                     {/* UI/UX Design */}
-                    <div className="flex gap-5 py-5 border-b border-gray-100">
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
         
                       <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                         <span className="text-3xl text-pink-500">
@@ -646,7 +646,7 @@ export default function Portfolio() {
         
         
                     {/* Wireframing & Prototyping */}
-                    <div className="flex gap-5 py-5 border-b border-gray-100">
+                    <div className="flex gap-6 py-5 border-b border-gray-100">
         
                       <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
                         <span className="text-2xl text-purple-600">
@@ -670,7 +670,7 @@ export default function Portfolio() {
         
         
                     {/* Design Systems */}
-                    <div className="flex gap-5 py-5">
+                    <div className="flex gap-6 py-5">
         
                       <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
                         <span className="text-2xl text-pink-500">
