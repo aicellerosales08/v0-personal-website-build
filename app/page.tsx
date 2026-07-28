@@ -430,7 +430,7 @@ export default function Portfolio() {
 
         {/* ================= ABOUT SECTION ================= */}
         <section id="about" className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-12 lg:gap-14 items-start">
+           <div className="grid lg:grid-cols-[0.95fr_1.25fr] gap-10 lg:gap-12 items-start">
         
             {/* ================= LEFT SIDE ================= */}
             <div className="pt-1 min-w-0">
@@ -569,7 +569,7 @@ export default function Portfolio() {
                   </div>
                 </div>
         
-                <div className="relative p-7 md:p-8">
+                <div className="relative p-7 md:p-8 lg:p-9">
         
                   {/* What I Do Header */}
                   <div className="flex items-center gap-4 mb-5">
