@@ -94,10 +94,83 @@ const designs = [
     image: '/AD6.png',
     category: 'Ad Creatives',
   },
+
+
+
+  
   {
     image: '/design-cloth.png',
-    category: 'CLOTH',
+    category: 'Cloth1.png',
   },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth2.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth3.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth4.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth5.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth6.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth7.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth8.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth9.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth10.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth11.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth12.png',
+  },
+    {
+    image: '/design-cloth.png',
+    category: 'Cloth13.png',
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   {
     image: '/design-social-media.png',
     category: 'Social Media',
