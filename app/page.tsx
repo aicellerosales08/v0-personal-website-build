@@ -833,172 +833,539 @@ export default function Portfolio() {
 
       </section>
 
-      {/* ================= EXPERIENCE SECTION ================= */}
-      <section
-        id="experience"
-        className="bg-gray-50 py-20 md:py-32 relative overflow-hidden"
-      >
-
-        {/* Background Decorations */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-5xl mx-auto px-6 relative">
-
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16">
-
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-4 py-2 rounded-full mb-4">
-              <Briefcase size={14} />
-              Professional Journey
-            </span>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4">
-              Experience
-            </h2>
-
-            <p className="text-gray-500 text-sm md:text-base max-w-xl mx-auto">
-              My professional experience across web development, UI/UX design,
-              IT technical support, AI training, and data annotation.
-            </p>
-
-          </div>
-
-          {/* Experience Timeline */}
-          <div className="relative">
-
-            {/* Timeline Line */}
-            <div className="absolute left-[27px] md:left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-purple-200 hidden sm:block" />
-
-            <div className="space-y-8">
-
-              {experiences.map((experience, index) => (
-
-                <motion.div
-                  key={experience.company}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1
-                  }}
-                  className="relative flex gap-5 md:gap-8"
-                >
-
-                  {/* Timeline Icon */}
-                  <div className="relative z-10 shrink-0">
-
-                    <div className="w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-white border border-purple-100 shadow-md flex items-center justify-center overflow-hidden">
-
-                      <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
-
-                        {experience.logo ? (
-                          <Image
-                            src={experience.logo}
-                            alt={`${experience.company} logo`}
-                            width={56}
-                            height={56}
-                            className="object-contain"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none'
-                            }}
-                          />
-                        ) : (
-                          <Briefcase className="text-purple-500" size={24} />
-                        )}
-
-                      </div>
-
+          {/* ================= EXPERIENCE SECTION ================= */}
+          <section
+            id="experience"
+            className="bg-gray-50 py-20 md:py-32 relative overflow-hidden"
+          >
+            {/* Background Decoration */}
+            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -z-10" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
+    
+            <div className="max-w-6xl mx-auto px-6">
+    
+              {/* Section Header */}
+              <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+                  My Journey
+                </span>
+    
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+                  Experience
+                </h2>
+    
+                <p className="text-gray-500 text-sm md:text-base">
+                  My professional experience in web development, UI/UX design,
+                  technical support, and AI data projects.
+                </p>
+              </div>
+    
+              {/* Experience Timeline */}
+              <div className="relative max-w-5xl mx-auto">
+    
+                {/* Timeline Line */}
+                <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-purple-200 md:-translate-x-1/2" />
+    
+                {/* ================= MALAMA CO. ================= */}
+                <div className="relative mb-12 md:mb-16">
+                  <div className="md:grid md:grid-cols-2 md:gap-12 items-start">
+    
+                    {/* Timeline Dot */}
+                    <div className="absolute left-0 md:left-1/2 w-10 h-10 -translate-x-0 md:-translate-x-1/2 rounded-full bg-white border-4 border-purple-500 shadow-md z-10 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-purple-500" />
                     </div>
-
-                  </div>
-
-                  {/* Experience Card */}
-                  <div className="flex-1 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 overflow-hidden">
-
-                    <div className="p-6 md:p-8">
-
-                      {/* Top Information */}
-                      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-
-                        <div>
-
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900">
-                              {experience.role}
-                            </h3>
-
-                            {index === 0 && (
-                              <span className="text-[10px] uppercase font-bold tracking-wider text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
-                                Current
-                              </span>
-                            )}
-
+    
+                    {/* Content */}
+                    <div className="ml-16 md:ml-0 md:pr-12 md:text-right">
+                      <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                        Jul 2026 – Present
+                      </span>
+    
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-2">
+                        Web Designer &amp; Developer
+                      </h3>
+    
+                      <p className="text-sm font-semibold text-gray-600 mt-1">
+                        Malama Co. · Part-time
+                      </p>
+    
+                      <p className="text-xs text-gray-400 mt-1">
+                        Australia · Remote
+                      </p>
+                    </div>
+    
+                    {/* Experience Card */}
+                    <div className="ml-16 mt-6 md:ml-0 md:mt-0 md:pl-12">
+                      <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    
+                        <div className="flex items-center gap-3 mb-5">
+                          <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
+                            <span className="text-xl font-bold text-purple-600">
+                              M
+                            </span>
                           </div>
-
-                          <p className="text-purple-600 font-semibold text-sm md:text-base">
-                            {experience.company}
-                          </p>
-
-                        </div>
-
-                        <div className="lg:text-right shrink-0">
-
-                          <div className="flex items-center gap-2 text-sm text-gray-500 lg:justify-end">
-                            <Calendar size={15} />
-                            <span>{experience.date}</span>
+    
+                          <div>
+                            <p className="font-bold text-gray-900">
+                              Malama Co.
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Web Design &amp; Development
+                            </p>
                           </div>
-
-                          <p className="text-xs text-gray-400 mt-1">
-                            {experience.duration}
-                          </p>
-
                         </div>
-
-                      </div>
-
-                      {/* Employment + Location */}
-                      <div className="flex flex-wrap gap-3 mb-6">
-
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600">
-                          <Briefcase size={13} />
-                          {experience.employmentType}
-                        </span>
-
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-full text-xs font-medium text-gray-600">
-                          <MapPin size={13} />
-                          {experience.location}
-                        </span>
-
-                      </div>
-
-                      {/* Description */}
-                      <div className="border-t border-gray-100 pt-6">
-
-                        <ul className="space-y-3">
-
-                          {experience.description.map((item, descriptionIndex) => (
-
-                            <li
-                              key={descriptionIndex}
-                              className="flex gap-3 text-sm text-gray-600 leading-relaxed"
-                            >
-
-                              <span className="mt-2 w-1.5 h-1.5 shrink-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
-
-                              <span>
-                                {item}
-                              </span>
-
-                            </li>
-
-                          ))}
-
+    
+                        <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Manage and maintain Wix websites for Australian
+                              clients, ensuring responsive, user-friendly, and
+                              visually consistent web experiences.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Design, build, and optimize service landing pages
+                              using Wix Editor based on client and business
+                              requirements.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Organize and manage website structures, content,
+                              and page layouts to improve usability and overall
+                              site performance.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Implement Wix CMS features, dynamic pages,
+                              collections, and URL redirects to support scalable
+                              and well-structured websites.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Update website content, layouts, booking systems,
+                              and interactive elements while maintaining brand
+                              consistency across client websites.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Collaborate with the marketing team to develop and
+                              launch new website features, pages, and digital
+                              experiences aligned with campaign and business
+                              goals.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Apply responsive web design principles to ensure
+                              websites deliver a seamless experience across
+                              desktop, tablet, and mobile devices.
+                            </span>
+                          </li>
                         </ul>
-
+    
+                        <div className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-gray-100">
+                          {[
+                            'Wix Website Builder',
+                            'Responsive Web Design',
+                            'Wix CMS',
+                            'Web Development',
+                            'UI/UX Design',
+                            'Website Management',
+                          ].map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+    
                       </div>
+                    </div>
+                  </div>
+                </div>
+    
+                {/* ================= OUTLIER ================= */}
+                <div className="relative mb-12 md:mb-16">
+                  <div className="md:grid md:grid-cols-2 md:gap-12 items-start">
+    
+                    {/* Timeline Dot */}
+                    <div className="absolute left-0 md:left-1/2 w-10 h-10 -translate-x-0 md:-translate-x-1/2 rounded-full bg-white border-4 border-pink-500 shadow-md z-10 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-pink-500" />
+                    </div>
+    
+                    {/* Content */}
+                    <div className="ml-16 md:order-2 md:ml-0 md:pl-12">
+                      <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
+                        May 2026 – Jul 2026
+                      </span>
+    
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-2">
+                        AI Training Data Contributor
+                      </h3>
+    
+                      <p className="text-sm font-semibold text-gray-600 mt-1">
+                        Outlier · Part-time
+                      </p>
+    
+                      <p className="text-xs text-gray-400 mt-1">
+                        Remote
+                      </p>
+                    </div>
+    
+                    {/* Card */}
+                    <div className="ml-16 mt-6 md:order-1 md:ml-0 md:pr-12">
+                      <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    
+                        <div className="flex items-center gap-3 mb-5">
+                          <div className="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center">
+                            <span className="text-xl font-bold text-pink-500">
+                              AI
+                            </span>
+                          </div>
+    
+                          <div>
+                            <p className="font-bold text-gray-900">
+                              Outlier
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              AI Training &amp; Data Contribution
+                            </p>
+                          </div>
+                        </div>
+    
+                        <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Contributed high-quality voice and video datasets
+                              used for AI model training and evaluation.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Followed project guidelines to record, review,
+                              and submit data while maintaining accuracy and
+                              quality standards.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Supported the development of AI systems by
+                              providing diverse and reliable training data.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Participated in AI data collection and validation
+                              projects while ensuring compliance with project
+                              requirements and quality assurance processes.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Collaborated with project teams and adapted to
+                              evolving AI training workflows and data collection
+                              tasks.
+                            </span>
+                          </li>
+                        </ul>
+    
+                        <div className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-gray-100">
+                          {[
+                            'AI Training',
+                            'Data Collection',
+                            'Data Validation',
+                            'Quality Assurance',
+                            'Voice Data',
+                            'Video Data',
+                          ].map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 bg-pink-50 text-pink-700 text-xs font-semibold rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+                {/* ================= TORRES TECHNOLOGY ================= */}
+                <div className="relative mb-12 md:mb-16">
+                  <div className="md:grid md:grid-cols-2 md:gap-12 items-start">
+    
+                    {/* Timeline Dot */}
+                    <div className="absolute left-0 md:left-1/2 w-10 h-10 -translate-x-0 md:-translate-x-1/2 rounded-full bg-white border-4 border-purple-500 shadow-md z-10 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-purple-500" />
+                    </div>
+    
+                    {/* Content */}
+                    <div className="ml-16 md:ml-0 md:pr-12 md:text-right">
+                      <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
+                        Feb 2026 – May 2026
+                      </span>
+    
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-2">
+                        Front-End Developer / IT Technical Support
+                      </h3>
+    
+                      <p className="text-sm font-semibold text-gray-600 mt-1">
+                        Torres Technology Center Corp. · Internship
+                      </p>
+    
+                      <p className="text-xs text-gray-400 mt-1">
+                        Calamba, Calabarzon, Philippines · On-site
+                      </p>
+                    </div>
+    
+                    {/* Card */}
+                    <div className="ml-16 mt-6 md:ml-0 md:mt-0 md:pl-12">
+                      <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    
+                        <div className="flex items-center gap-3 mb-5">
+                          <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
+                            <span className="text-xl font-bold text-purple-600">
+                              TT
+                            </span>
+                          </div>
+    
+                          <div>
+                            <p className="font-bold text-gray-900">
+                              Torres Technology Center Corp.
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Internship / OJT
+                            </p>
+                          </div>
+                        </div>
+    
+                        <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Assisted in the development and maintenance of
+                              responsive web applications using HTML, CSS,
+                              JavaScript, and modern web development practices.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Provided technical support to end-users by
+                              troubleshooting hardware, software, network, and
+                              system-related issues.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Installed, configured, and maintained computer
+                              systems, software applications, and peripheral
+                              devices.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Collaborated with team members to identify and
+                              resolve technical problems, ensuring minimal
+                              downtime and improved user experience.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Participated in testing, debugging, and optimizing
+                              web applications to enhance performance and
+                              usability.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Documented technical procedures, support solutions,
+                              and system configurations for future reference.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-purple-500 mt-1">•</span>
+                            <span>
+                              Gained hands-on experience in frontend development,
+                              technical troubleshooting, customer support, and
+                              IT operations within a professional work
+                              environment.
+                            </span>
+                          </li>
+                        </ul>
+    
+                        <div className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-gray-100">
+                          {[
+                            'HTML',
+                            'CSS',
+                            'JavaScript',
+                            'Frontend Development',
+                            'Technical Support',
+                            'IT Operations',
+                          ].map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+                {/* ================= CROWDGEN PRO ================= */}
+                <div className="relative">
+                  <div className="md:grid md:grid-cols-2 md:gap-12 items-start">
+    
+                    {/* Timeline Dot */}
+                    <div className="absolute left-0 md:left-1/2 w-10 h-10 -translate-x-0 md:-translate-x-1/2 rounded-full bg-white border-4 border-pink-500 shadow-md z-10 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-pink-500" />
+                    </div>
+    
+                    {/* Content */}
+                    <div className="ml-16 md:order-2 md:ml-0 md:pl-12">
+                      <span className="text-xs font-semibold text-pink-500 uppercase tracking-wider">
+                        Sep 2025 – Nov 2025
+                      </span>
+    
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mt-2">
+                        Data Annotator / Data Labelling
+                      </h3>
+    
+                      <p className="text-sm font-semibold text-gray-600 mt-1">
+                        CrowdGen Pro · Part-time
+                      </p>
+    
+                      <p className="text-xs text-gray-400 mt-1">
+                        Remote
+                      </p>
+                    </div>
+    
+                    {/* Card */}
+                    <div className="ml-16 mt-6 md:order-1 md:ml-0 md:pr-12">
+                      <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    
+                        <div className="flex items-center gap-3 mb-5">
+                          <div className="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center">
+                            <span className="text-xl font-bold text-pink-500">
+                              CG
+                            </span>
+                          </div>
+    
+                          <div>
+                            <p className="font-bold text-gray-900">
+                              CrowdGen Pro
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              AI Data Annotation
+                            </p>
+                          </div>
+                        </div>
+    
+                        <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Annotated and reviewed datasets for AI model
+                              training.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Ensured accuracy and compliance with project
+                              guidelines.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Performed quality checks and data validation to
+                              maintain reliable datasets.
+                            </span>
+                          </li>
+    
+                          <li className="flex gap-3">
+                            <span className="text-pink-500 mt-1">•</span>
+                            <span>
+                              Worked with image, text, and AI-related annotation
+                              tasks.
+                            </span>
+                          </li>
+                        </ul>
+    
+                        <div className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-gray-100">
+                          {[
+                            'Data Annotation',
+                            'Data Labelling',
+                            'AI Data',
+                            'Quality Checking',
+                            'Data Validation',
+                          ].map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 bg-pink-50 text-pink-700 text-xs font-semibold rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+            </div>
+          </section>
 
                       {/* Skills */}
                       <div className="flex flex-wrap gap-2 mt-7 pt-6 border-t border-gray-100">
