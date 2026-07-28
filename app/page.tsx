@@ -2,15 +2,16 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  ExternalLink, 
-  Mail, 
-  Facebook, 
-  Instagram, 
-  Linkedin, 
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ExternalLink,
+  Mail,
+  Facebook,
+  Instagram,
+  Linkedin,
   Download,
   Award
 } from 'lucide-react'
@@ -18,6 +19,7 @@ import {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<any>(null)
+  const [selectedDesign, setSelectedDesign] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('All')
 
   const handleScrollTo = (
@@ -63,15 +65,79 @@ export default function Portfolio() {
   'Where creativity meets technology.',
   'Building meaningful digital experiences.',
 ]
+   // ================= DESIGNS DATA =================
+  const designCategories = [
+    {
+      title: 'Ad Creatives & AI Image Generation',
+      category: 'Creative Design',
+      description:
+        'Creative advertising visuals and AI-generated images designed for digital marketing and promotional campaigns.',
+      gradient: 'from-purple-100 to-pink-100',
+      images: [
+        '/designs/ad-creatives/1.jpg',
+        '/designs/ad-creatives/2.jpg',
+        '/designs/ad-creatives/3.jpg',
+        '/designs/ad-creatives/4.jpg',
+      ],
+    },
 
-    const aboutQuotes = [
-    'Design with purpose.',
-    'Create. Design. Inspire.',
-    'Turning ideas into experiences.',
-    'Where creativity meets technology.',
-    'Building meaningful digital experiences.',
+    {
+      title: 'CLOTH',
+      category: 'Fashion Design',
+      description:
+        'Clothing and fashion-related creative designs developed with a focus on visual presentation and branding.',
+      gradient: 'from-pink-100 to-purple-100',
+      images: [
+        '/designs/cloth/1.jpg',
+        '/designs/cloth/2.jpg',
+        '/designs/cloth/3.jpg',
+        '/designs/cloth/4.jpg',
+      ],
+    },
+
+    {
+      title: 'SOCIAL MEDIA',
+      category: 'Social Media',
+      description:
+        'Social media graphics and promotional content created for an engaging and visually consistent online presence.',
+      gradient: 'from-purple-100 to-pink-100',
+      images: [
+        '/designs/social-media/1.jpg',
+        '/designs/social-media/2.jpg',
+        '/designs/social-media/3.jpg',
+        '/designs/social-media/4.jpg',
+      ],
+    },
+
+    {
+      title: 'Meta',
+      category: 'Advertising',
+      description:
+        'Visual assets and creative materials designed for Meta advertising campaigns and digital promotions.',
+      gradient: 'from-blue-100 to-purple-100',
+      images: [
+        '/designs/meta/1.jpg',
+        '/designs/meta/2.jpg',
+        '/designs/meta/3.jpg',
+        '/designs/meta/4.jpg',
+      ],
+    },
+
+    {
+      title: 'PRODUCT LABEL AND VISUAL DESIGN',
+      category: 'Branding & Packaging',
+      description:
+        'Product label designs and visual branding created to build strong product identity and visually appealing packaging.',
+      gradient: 'from-pink-100 to-purple-100',
+      images: [
+        '/designs/product-label/1.jpg',
+        '/designs/product-label/2.jpg',
+        '/designs/product-label/3.jpg',
+        '/designs/product-label/4.jpg',
+      ],
+    },
   ]
-  
+
   const projects = [
     {
       title: 'Onlook - Thesis Project',
@@ -85,9 +151,9 @@ export default function Portfolio() {
     {
       title: 'Bank System',
       description: 'A modern banking application system featuring secure account management, transaction processing, fund transfers, balance tracking, and financial reporting with a focus on usability, security, and efficient banking operations.',
-      tags: ['System Design', 'Finance', 'UI/UX'],
+      tags: ['System ', 'Finance', 'UI/UX'],
       image: '/bank-system.png',
-      link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&p=f&t=jLGr8ymNClQSHL72-0',
+      link: 'https://www.figma.com//8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&p=f&t=jLGr8ymNClQSHL72-0',
       category: 'System',
     },
     {
@@ -1372,12 +1438,12 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ================= DESIGNS SECTION ================= */}
+    {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
         className="max-w-6xl mx-auto px-6 py-16 md:py-20"
       >
-        {/* ================= SECTION HEADER ================= */}
+        {/* Section Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-5">
             <span className="text-purple-600 text-sm">✦</span>
@@ -1398,7 +1464,7 @@ export default function Portfolio() {
           </p>
         </div>
       
-        {/* ================= DESIGN CARDS ================= */}
+        {/* Design Cards */}
         <div className="grid md:grid-cols-2 gap-6">
           {designCategories.map((design, index) => (
             <motion.div
@@ -1410,7 +1476,7 @@ export default function Portfolio() {
                 duration: 0.5,
                 delay: index * 0.1,
               }}
-              className={index === 4 ? "md:col-span-2" : ""}
+              className={index === 4 ? 'md:col-span-2' : ''}
             >
               <div className="group rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       
@@ -1424,7 +1490,6 @@ export default function Portfolio() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
       
-                  {/* Image Overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
                 </div>
       
@@ -1442,7 +1507,6 @@ export default function Portfolio() {
                     {design.description}
                   </p>
       
-                  {/* View Designs Button */}
                   <button
                     type="button"
                     onClick={() => setSelectedDesign(design)}
@@ -1477,7 +1541,7 @@ export default function Portfolio() {
               onClick={(e) => e.stopPropagation()}
             >
       
-              {/* ================= MODAL HEADER ================= */}
+              {/* Modal Header */}
               <div className="sticky top-0 z-10 bg-white border-b border-gray-100 px-6 py-5 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
@@ -1489,40 +1553,40 @@ export default function Portfolio() {
                   </h3>
                 </div>
       
-                {/* Close Button */}
                 <button
                   type="button"
                   onClick={() => setSelectedDesign(null)}
                   className="w-10 h-10 rounded-full bg-gray-100 hover:bg-purple-100 flex items-center justify-center text-gray-600 hover:text-purple-600 transition"
                   aria-label="Close gallery"
                 >
-                  ✕
+                  <X size={20} />
                 </button>
               </div>
       
-      
-              {/* ================= IMAGE GALLERY ================= */}
+              {/* Image Gallery */}
               <div className="p-6 overflow-y-auto max-h-[calc(90vh-100px)]">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       
-                  {selectedDesign.images.map((image, index) => (
-                    <motion.div
-                      key={`${selectedDesign.title}-${index}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.3,
-                        delay: index * 0.05,
-                      }}
-                      className="group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm hover:shadow-lg transition"
-                    >
-                      <img
-                        src={image}
-                        alt={`${selectedDesign.title} design ${index + 1}`}
-                        className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </motion.div>
-                  ))}
+                  {selectedDesign.images.map(
+                    (image: string, index: number) => (
+                      <motion.div
+                        key={`${selectedDesign.title}-${index}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: index * 0.05,
+                        }}
+                        className="group rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm hover:shadow-lg transition"
+                      >
+                        <img
+                          src={image}
+                          alt={`${selectedDesign.title} design ${index + 1}`}
+                          className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </motion.div>
+                    )
+                  )}
       
                 </div>
               </div>
