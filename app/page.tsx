@@ -37,7 +37,7 @@ export default function Portfolio() {
     { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Design', href: '#design' },
+    { name: 'Designs', href: '#designs' },
     { name: 'Certificates', href: '#certificates' },
   ]
 
