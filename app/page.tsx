@@ -445,17 +445,17 @@ export default function Portfolio() {
       
             {/* Name + Nice to meet you */}
             <div className="flex items-baseline gap-5 flex-wrap mb-3">
-              <h2 className="text-5xl md:text-[58px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
+              <h2 className="text-5xl md:text-[50px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
                 Hi, I&apos;m Aicelle
               </h2>
       
-              <p className="text-2xl md:text-[27px] italic font-medium text-pink-500 whitespace-nowrap">
+              <p className="text-2xl md:text-[25px] italic font-medium text-pink-500 whitespace-nowrap">
                 Nice to meet you! ♡
               </p>
             </div>
       
             {/* Main Title */}
-            <h3 className="text-3xl md:text-[40px] font-bold leading-[1.15] mb-7">
+            <h3 className="text-3xl md:text-[35px] font-bold leading-[1.15] mb-7">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
               </span>
@@ -468,7 +468,7 @@ export default function Portfolio() {
             {/* About Text */}
             <div className="max-w-[650px] space-y-5">
       
-              <p className="text-gray-600 text-[17px] md:text-[18px] leading-[1.65]">
+              <p className="text-gray-600 text-[15px] md:text-[16px] leading-[1.65]">
                 I&apos;m an Information Technology graduate with a passion for
                 creating beautiful, functional, and user-centered digital
                 experiences.
@@ -477,13 +477,13 @@ export default function Portfolio() {
               {/* Divider */}
               <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
       
-              <p className="text-gray-600 text-[17px] md:text-[18px] leading-[1.65]">
+              <p className="text-gray-600 text-[15px] md:text-[16px] leading-[1.65]">
                 I combine creativity and technical skills to design and build
                 responsive websites, intuitive interfaces, and interactive
                 prototypes that solve real problems and delight users.
               </p>
       
-              <p className="text-gray-600 text-[17px] md:text-[18px] leading-[1.65]">
+              <p className="text-gray-600 text-[15px] md:text-[16px] leading-[1.65]">
                 My journey includes academic projects, internship experiences,
                 and collaborative work with real clients. I&apos;m always learning
                 and exploring new tools and technologies to deliver better solutions.
