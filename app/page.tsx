@@ -72,36 +72,47 @@ export default function Portfolio() {
 const designs = [
   {
     image: '/AD1.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/AD2.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/AD3.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/AD4.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/AD5.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/AD6.png',
+    category: 'Ad Creatives',
   },
   {
     image: '/design-cloth.png',
+    category: 'CLOTH',
   },
   {
     image: '/design-social-media.png',
+    category: 'Social Media',
   },
   {
     image: '/design-logo.png',
+    category: 'Logo',
   },
   {
     image: '/design-meta.png',
+    category: 'Meta',
   },
   {
     image: '/design-product-label.png',
+    category: 'Product Design',
   },
 ]
   const projects = [
@@ -1403,7 +1414,7 @@ const designs = [
             ))}
         </div>
       </section>
-       {/* ================= DESIGNS SECTION ================= */}
+      {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
         className="bg-gray-50 py-20 md:py-32"
@@ -1430,32 +1441,68 @@ const designs = [
           </div>
       
       
+          {/* Category Tabs */}
+          <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
+      
+            {[
+              'All',
+              'Ad Creatives',
+              'CLOTH',
+              'Social Media',
+              'Logo',
+              'Meta',
+              'Product Design',
+            ].map((category) => (
+      
+              <button
+                key={category}
+                onClick={() => setActiveDesignCategory(category)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  activeDesignCategory === category
+                    ? 'bg-gray-900 text-white shadow-md'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-purple-100 hover:text-purple-600 hover:border-purple-200'
+                }`}
+              >
+                {category}
+              </button>
+      
+            ))}
+      
+          </div>
+      
+      
           {/* Designs Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       
-            {designs.map((design, index) => (
+            {designs
+              .filter(
+                (design) =>
+                  activeDesignCategory === 'All' ||
+                  design.category === activeDesignCategory
+              )
+              .map((design, index) => (
       
-              <div
-                key={design.image + index}
-                className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
-              >
+                <div
+                  key={design.image + index}
+                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
+                >
       
-                {/* Design Image */}
-                <div className="relative w-full bg-gray-100 flex items-center justify-center">
+                  {/* Design Image */}
+                  <div className="relative w-full bg-gray-100 flex items-center justify-center">
       
-                  <Image
-                    src={design.image}
-                    alt={`Creative design ${index + 1}`}
-                    width={1200}
-                    height={1200}
-                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
+                    <Image
+                      src={design.image}
+                      alt={`Creative design ${index + 1}`}
+                      width={1200}
+                      height={1200}
+                      className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                    />
+      
+                  </div>
       
                 </div>
       
-              </div>
-      
-            ))}
+              ))}
       
           </div>
       
