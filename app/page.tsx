@@ -447,7 +447,6 @@ export default function Portfolio() {
             {/* About Me Badge */}
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
               <span className="text-purple-600 text-sm">♙</span>
-      
               <span className="text-xs font-semibold tracking-wide text-purple-600">
                 ABOUT ME
               </span>
@@ -469,9 +468,7 @@ export default function Portfolio() {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
               </span>
-      
               <br />
-      
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 UI/UX Designer
               </span>
@@ -513,7 +510,7 @@ export default function Portfolio() {
       
               <div className="grid grid-cols-2 divide-x divide-purple-100">
       
-                {/* 50+ Design Components */}
+                {/* 50+ */}
                 <div className="flex items-center gap-4 px-2">
       
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm">
@@ -540,7 +537,7 @@ export default function Portfolio() {
       
                 </div>
       
-                {/* 20+ Created Layouts */}
+                {/* 20+ */}
                 <div className="flex items-center gap-4 px-4">
       
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm">
@@ -583,7 +580,6 @@ export default function Portfolio() {
       
               {/* Decorative Dots */}
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
-      
                 <div className="grid grid-cols-10 gap-2.5 p-5">
                   {Array.from({ length: 100 }).map((_, i) => (
                     <span
@@ -592,7 +588,6 @@ export default function Portfolio() {
                     />
                   ))}
                 </div>
-      
               </div>
       
               <div className="relative p-7 md:p-8">
@@ -607,19 +602,14 @@ export default function Portfolio() {
                   </div>
       
                   <div>
-      
                     <h3 className="text-2xl md:text-[26px] font-bold text-gray-900">
                       What I Do
                     </h3>
       
                     <div className="flex items-center gap-2 mt-2">
-      
                       <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
-      
                       <div className="w-2 h-2 rounded-full bg-pink-500" />
-      
                     </div>
-      
                   </div>
       
                 </div>
@@ -638,7 +628,6 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
-      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Web Development
                       </h4>
@@ -648,7 +637,6 @@ export default function Portfolio() {
                         <br />
                         using modern technologies.
                       </p>
-      
                     </div>
       
                   </div>
@@ -664,7 +652,6 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
-      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         UI/UX Design
                       </h4>
@@ -674,7 +661,6 @@ export default function Portfolio() {
                         <br />
                         that provide great user experiences.
                       </p>
-      
                     </div>
       
                   </div>
@@ -690,7 +676,6 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
-      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Wireframing &amp; Prototyping
                       </h4>
@@ -700,7 +685,6 @@ export default function Portfolio() {
                         <br />
                         to visualize ideas and test user flows.
                       </p>
-      
                     </div>
       
                   </div>
@@ -716,7 +700,6 @@ export default function Portfolio() {
                     </div>
       
                     <div className="pt-0.5 min-w-0">
-      
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Design Systems
                       </h4>
@@ -726,17 +709,14 @@ export default function Portfolio() {
                         <br />
                         for efficient and cohesive digital products.
                       </p>
-      
                     </div>
       
                   </div>
       
                 </div>
-      
               </div>
       
             </div>
-      
           </div>
       
         </div>
@@ -747,19 +727,9 @@ export default function Portfolio() {
       
           <div className="flex items-center justify-center min-h-[70px]">
       
-            <motion.div
-              key={aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-      
-              <p className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-                &ldquo;{aboutQuotes[Math.floor(Date.now() / 3000) % aboutQuotes.length]}&rdquo;
-              </p>
-      
-            </motion.div>
+            <p className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 text-center">
+              Creating with purpose, designing with passion. ♡
+            </p>
       
           </div>
       
