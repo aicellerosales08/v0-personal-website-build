@@ -67,7 +67,9 @@ import {
   Folder,
   FolderOpen,
   ArrowLeft,
-  GraduationCap
+  GraduationCap,
+  MessageCircle,
+  Send
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -288,6 +290,282 @@ function SkillGroupBlock({
           )
         })}
       </div>
+    </div>
+  )
+}
+
+// ================= CHAT WIDGET ================= //
+// A friendly floating chatbot that answers common questions about Aicelle
+// using simple keyword matching — no external API required.
+type ChatMessage = { id: number; sender: 'bot' | 'user'; text: string }
+
+const chatKnowledgeBase: Array<{ keywords: string[]; reply: string }> = [
+  {
+    keywords: ['hello', 'hi', 'hey', 'kumusta', 'kamusta'],
+    reply: "Hi there! 👋 I'm Aicelle's little assistant. Ask me about her skills, experience, projects, or how to get in touch!",
+  },
+  {
+    keywords: ['skill', 'stack', 'tech', 'technology', 'language', 'tool'],
+    reply: "Aicelle works across Development (HTML, CSS, JS, React, Next.js), UI/UX Design (Figma, Adobe XD), Graphic Design (Canva, Photoshop, Illustrator), and she's also big on AI-assisted workflows (ChatGPT, Claude, Gemini). Check out the 'Skills & Tools' section above for the full breakdown! ✨",
+  },
+  {
+    keywords: ['experience', 'work', 'job', 'career', 'company'],
+    reply: "She's currently a Web Designer & Developer at Malama Co., and has previously worked with Outlier, Torres Technology Center Corp., and CrowdGen Pro — with 4+ roles across web dev, UI/UX, and AI data annotation. Scroll up to the Experience timeline for the full story! 💼",
+  },
+  {
+    keywords: ['project', 'portfolio', 'work sample', 'built', 'made'],
+    reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Featured Projects' section for live sites and Figma files! 🚀",
+  },
+  {
+    keywords: ['design', 'creative', 'graphic', 'ad', 'branding', 'logo'],
+    reply: "She's also done tons of creative work — ad creatives, social media designs, logos, and product visuals. Head to the 'Designs & Creative Work' section and click a folder to browse! 🎨",
+  },
+  {
+    keywords: ['certificate', 'certification', 'cert', 'education', 'study', 'school'],
+    reply: "Aicelle holds certifications in Introduction to Cybersecurity, Operating Systems Basics, and Linux Essentials (Cisco Networking Academy), plus an IT Specialist – Cybersecurity certification from Pearson. Check the Certifications section! 🎓",
+  },
+  {
+    keywords: ['contact', 'email', 'hire', 'reach', 'connect', 'touch', 'collab', 'collaborate'],
+    reply: "You can reach her at aicellerosales08@gmail.com, or hit the 'Get In Touch' button below! She's always open to web dev, UI/UX, and collaborative projects. 💌",
+  },
+  {
+    keywords: ['social', 'instagram', 'tiktok', 'facebook', 'linkedin', 'github', 'discord'],
+    reply: "She's on Instagram, Facebook, TikTok, LinkedIn, GitHub, and Discord — you'll find all the links in the hero section up top or the footer below! 🔗",
+  },
+  {
+    keywords: ['location', 'based', 'where', 'live', 'philippines', 'country'],
+    reply: "Aicelle is based in the Philippines and open to remote work! 🇵🇭",
+  },
+  {
+    keywords: ['who', 'about', 'aicelle', 'introduce'],
+    reply: "Aicelle Rosales is a Web Designer, Frontend Developer, and UI/UX Designer who loves turning ideas into clean, functional, and delightful digital experiences! Check out the About section for more. 💜",
+  },
+  {
+    keywords: ['cv', 'resume', 'download'],
+    reply: "You can download her CV right from the hero section — look for the 'Download CV' button near the top of the page! 📄",
+  },
+  {
+    keywords: ['thank', 'thanks', 'salamat'],
+    reply: "You're so welcome! 🌸 Feel free to ask me anything else, or reach out to Aicelle directly!",
+  },
+]
+
+const chatFallbackReplies = [
+  "Hmm, I'm not totally sure about that one — but you can ask about her skills, experience, projects, or how to contact her! 🌷",
+  "Good question! I might not have the exact answer, but Aicelle would love to chat directly — try the 'Get In Touch' button! 💕",
+]
+
+function getBotReply(userText: string): string {
+  const lower = userText.toLowerCase()
+  for (const entry of chatKnowledgeBase) {
+    if (entry.keywords.some((kw) => lower.includes(kw))) {
+      return entry.reply
+    }
+  }
+  return chatFallbackReplies[Math.floor(Math.random() * chatFallbackReplies.length)]
+}
+
+const chatQuickReplies = [
+  'What are your skills?',
+  'Tell me about your experience',
+  'How can I contact you?',
+  'Show me your projects',
+]
+
+function ChatWidget() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [hasOpenedOnce, setHasOpenedOnce] = useState(false)
+  const [showTeaser, setShowTeaser] = useState(false)
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: 0,
+      sender: 'bot',
+      text: "Hiii! 💕 I'm Aicelle's assistant. Ask me anything about her skills, experience, or projects!",
+    },
+  ])
+  const [input, setInput] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowTeaser(true), 2500)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isTyping])
+
+  const sendMessage = (text: string) => {
+    const trimmed = text.trim()
+    if (!trimmed) return
+
+    setMessages((prev) => [...prev, { id: prev.length, sender: 'user', text: trimmed }])
+    setInput('')
+    setIsTyping(true)
+
+    setTimeout(() => {
+      const reply = getBotReply(trimmed)
+      setMessages((prev) => [...prev, { id: prev.length, sender: 'bot', text: reply }])
+      setIsTyping(false)
+    }, 700 + Math.random() * 500)
+  }
+
+  const handleToggle = () => {
+    setIsOpen((prev) => !prev)
+    setHasOpenedOnce(true)
+    setShowTeaser(false)
+  }
+
+  return (
+    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
+      {/* Chat window */}
+      {isOpen && (
+        <div className="w-[92vw] max-w-sm h-[70vh] max-h-[520px] bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden animate-slide-in-up">
+          {/* Header */}
+          <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 px-5 py-4 flex items-center justify-between overflow-hidden">
+            <Sparkle size={14} fill="currentColor" className="absolute top-2 right-16 text-white/30 animate-float" />
+            <Sparkle size={10} fill="currentColor" className="absolute bottom-2 right-24 text-white/20 animate-float" style={{ animationDelay: '1s' }} />
+
+            <div className="flex items-center gap-3 relative">
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/40">
+                <Bot size={20} className="text-white" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-sm leading-tight">Aicelle's Assistant</p>
+                <p className="text-white/80 text-[11px] flex items-center gap-1">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-300 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
+                  </span>
+                  Online
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={handleToggle}
+              className="text-white/80 hover:text-white hover:rotate-90 transition-all duration-300 p-1"
+              aria-label="Close chat"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-purple-50/40 to-pink-50/20">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex animate-fade-in ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                    msg.sender === 'user'
+                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-br-md'
+                      : 'bg-white text-gray-700 border border-gray-100 rounded-bl-md'
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+
+            {isTyping && (
+              <div className="flex justify-start animate-fade-in">
+                <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm inline-flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Quick replies */}
+          {messages.length <= 2 && (
+            <div className="px-4 pb-2 flex flex-wrap gap-2">
+              {chatQuickReplies.map((q, i) => (
+                <button
+                  key={q}
+                  onClick={() => sendMessage(q)}
+                  style={{ animationDelay: `${i * 80}ms` }}
+                  className="text-[11px] font-semibold text-purple-600 bg-purple-50 hover:bg-purple-100 hover:scale-105 active:scale-95 px-3 py-1.5 rounded-full transition-all duration-200 animate-fade-in"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              sendMessage(input)
+            }}
+            className="border-t border-gray-100 p-3 flex items-center gap-2 bg-white"
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask something about Aicelle..."
+              className="flex-1 text-sm px-4 py-2.5 rounded-full bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300 transition-all duration-200"
+            />
+            <button
+              type="submit"
+              disabled={!input.trim()}
+              className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white flex items-center justify-center hover:scale-110 active:scale-90 disabled:opacity-40 disabled:hover:scale-100 transition-all duration-200"
+              aria-label="Send"
+            >
+              <Send size={16} />
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* Teaser bubble */}
+      {showTeaser && !isOpen && !hasOpenedOnce && (
+        <div className="mr-1 mb-1 bg-white rounded-2xl rounded-br-sm shadow-lg border border-purple-100 px-4 py-2.5 max-w-[220px] animate-slide-in-up relative">
+          <button
+            onClick={() => setShowTeaser(false)}
+            className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+            aria-label="Dismiss"
+          >
+            <X size={10} className="text-gray-600" />
+          </button>
+          <p className="text-xs text-gray-700 font-medium">
+            💬 Got questions about me? Ask my assistant!
+          </p>
+        </div>
+      )}
+
+      {/* Floating toggle button */}
+      <button
+        onClick={handleToggle}
+        className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all duration-300 group"
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
+      >
+        {/* Glow pulse ring */}
+        {!isOpen && <span className="absolute inset-0 rounded-full bg-purple-400/50 blur-md animate-glow" />}
+
+        <span className="relative">
+          {isOpen ? (
+            <X size={24} className="animate-fade-in" />
+          ) : (
+            <MessageCircle size={24} className="group-hover:rotate-12 transition-transform duration-300" />
+          )}
+        </span>
+
+        {/* Notification dot */}
+        {!isOpen && !hasOpenedOnce && (
+          <span className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-300 opacity-75" />
+            <span className="relative inline-flex rounded-full h-4 w-4 bg-pink-500 items-center justify-center text-[9px] font-bold">1</span>
+          </span>
+        )}
+      </button>
     </div>
   )
 }
@@ -2708,6 +2986,8 @@ const designs = [
           </div>
         </div>
       </footer>
+
+      <ChatWidget />
     </div>
   )
 }
