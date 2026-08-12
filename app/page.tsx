@@ -91,6 +91,14 @@ export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDesignCategory, setActiveDesignCategory] = useState('All')
   const [heroLoaded, setHeroLoaded] = useState(false)
+  const [quoteIndex, setQuoteIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setQuoteIndex((prev) => (prev + 1) % aboutQuotes.length)
+    }, 2600)
+    return () => clearInterval(interval)
+  }, [])
   const [copiedDiscord, setCopiedDiscord] = useState(false)
 
   const DISCORD_USERNAME = 'prettyyyyyyyyy_'
@@ -684,15 +692,56 @@ const designs = [
         {heroLoaded && (
           <div className="flex-1 space-y-8 animate-slide-in-left">
             <div className="space-y-3">
-              <p className="text-pink-500 font-medium text-sm animate-fade-in">Hello, I&apos;m</p>
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
-                Aicelle
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                  Rosales
+              <p className="text-pink-500 font-medium text-sm animate-fade-in flex items-center gap-1.5">
+                <span className="inline-block animate-bounce origin-[70%_70%]">👋</span>
+                Hello, I&apos;m
+                <Sparkle size={14} className="text-purple-400 animate-[spin_5s_linear_infinite]" fill="currentColor" />
+              </p>
+
+              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight relative">
+                <span className="inline-flex flex-wrap">
+                  {'Aicelle'.split('').map((letter, i) => (
+                    <span
+                      key={`a-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:text-pink-500 hover:rotate-6 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
                 </span>
+                <br />
+                <span className="inline-flex flex-wrap text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  {'Rosales'.split('').map((letter, i) => (
+                    <span
+                      key={`r-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${420 + i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+                <Heart
+                  size={22}
+                  fill="currentColor"
+                  className="hidden sm:inline-block text-pink-400 ml-2 align-top mt-2 animate-float"
+                  style={{ animationDelay: '0.5s' }}
+                />
               </h1>
+
               <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
+
+              {/* Rotating cute tagline */}
+              <div className="h-6 overflow-hidden">
+                <p
+                  key={quoteIndex}
+                  className="text-sm font-semibold text-purple-500 flex items-center gap-1.5 animate-slide-in-up"
+                >
+                  <Sparkles size={14} className="text-pink-400" fill="currentColor" />
+                  {aboutQuotes[quoteIndex]}
+                </p>
+              </div>
             </div>
 
             <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
