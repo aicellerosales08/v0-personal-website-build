@@ -2646,7 +2646,7 @@ const designs = [
               <p className="font-bold text-lg mb-1 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 inline-block">
                 Aicelle Rosales
               </p>
-              <p className="text-gray-400 text-sm">Frontend Developer & UI/UX Designer</p>
+              <p className="text-gray-400 text-sm">UI/UX · Web Dev · Creative Design</p>
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Links</p>
