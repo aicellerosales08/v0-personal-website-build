@@ -397,31 +397,6 @@ function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Restore saved chat history (if any) once, on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('aicelle-chat-history')
-      if (saved) {
-        const parsed = JSON.parse(saved)
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed)
-          setHasOpenedOnce(true) // returning visitor — skip the teaser bubble
-        }
-      }
-    } catch {
-      // localStorage unavailable or corrupted data — just start fresh
-    }
-  }, [])
-
-  // Persist chat history whenever it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem('aicelle-chat-history', JSON.stringify(messages))
-    } catch {
-      // storage full or unavailable — fail silently, chat still works
-    }
-  }, [messages])
-
   useEffect(() => {
     const t = setTimeout(() => setShowTeaser(true), 2500)
     return () => clearTimeout(t)
@@ -1219,20 +1194,6 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-      {/* Respect the visitor's OS-level "reduce motion" preference */}
-      <style jsx global>{`
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-            scroll-behavior: auto !important;
-          }
-        }
-      `}</style>
-
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -1451,7 +1412,6 @@ const designs = [
                       onClick={handleCopyDiscord}
                       className="relative p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                      aria-label="Copy Discord username"
                     >
                       {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
                       {copiedDiscord && (
@@ -1468,7 +1428,6 @@ const designs = [
                       rel="noopener noreferrer"
                       className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={social.name}
-                      aria-label={social.name}
                     >
                       {social.icon}
                     </a>
@@ -2939,14 +2898,19 @@ const designs = [
 
       {/* Contact Banner */}
       <Reveal as="section" direction="up" className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
-        {/* Floating decorative sparkles, hearts, and stars (kept light on mobile) */}
-        <Heart size={22} fill="currentColor" className="hidden sm:block absolute top-8 left-[8%] text-white/20 animate-float" style={{ animationDelay: '0.2s' }} />
+        {/* Floating decorative sparkles, hearts, and stars */}
+        <Heart size={22} fill="currentColor" className="absolute top-8 left-[8%] text-white/20 animate-float" style={{ animationDelay: '0.2s' }} />
         <Sparkle size={18} fill="currentColor" className="absolute top-16 left-[18%] text-white/25 animate-float" style={{ animationDelay: '1.1s' }} />
-        <Star size={16} fill="currentColor" className="hidden sm:block absolute bottom-10 left-[12%] text-white/20 animate-[spin_9s_linear_infinite]" />
+        <Star size={16} fill="currentColor" className="absolute bottom-10 left-[12%] text-white/20 animate-[spin_9s_linear_infinite]" />
+        <Heart size={16} fill="currentColor" className="absolute bottom-16 left-[24%] text-white/25 animate-float" style={{ animationDelay: '1.8s' }} />
 
         <Sparkles size={26} className="absolute top-10 right-[10%] text-white/20 animate-float" style={{ animationDelay: '0.6s' }} />
-        <Heart size={20} fill="currentColor" className="hidden sm:block absolute bottom-12 right-[8%] text-white/25 animate-float" style={{ animationDelay: '1.4s' }} />
+        <Heart size={20} fill="currentColor" className="absolute bottom-12 right-[8%] text-white/25 animate-float" style={{ animationDelay: '1.4s' }} />
+        <Star size={14} fill="currentColor" className="absolute top-20 right-[22%] text-white/20 animate-[spin_7s_linear_infinite]" />
         <Sparkle size={14} fill="currentColor" className="absolute bottom-8 right-[28%] text-white/25 animate-float" style={{ animationDelay: '2.2s' }} />
+
+        <Heart size={12} fill="currentColor" className="hidden md:block absolute top-1/2 left-[4%] text-white/15 animate-float" style={{ animationDelay: '0.9s' }} />
+        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute top-1/2 right-[4%] text-white/15 animate-float" style={{ animationDelay: '1.6s' }} />
 
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight inline-flex items-center gap-3 flex-wrap justify-center">
@@ -2973,11 +2937,14 @@ const designs = [
 
       {/* Footer */}
       <footer className="relative overflow-hidden bg-gray-900 text-white py-12 border-t border-gray-800">
-        {/* Subtle floating decorations, echoing the GitHub trophies section vibe */}
-        <Sparkle size={16} fill="currentColor" className="hidden sm:block absolute top-6 left-[8%] text-purple-400/30 animate-float" style={{ animationDelay: '0.3s' }} />
-        <Heart size={12} fill="currentColor" className="hidden sm:block absolute bottom-10 left-[16%] text-pink-400/25 animate-float" style={{ animationDelay: '1.2s' }} />
-        <Sparkles size={18} className="hidden sm:block absolute top-8 right-[10%] text-purple-400/30 animate-float" style={{ animationDelay: '0.8s' }} />
-        <Star size={12} fill="currentColor" className="hidden sm:block absolute bottom-12 right-[18%] text-pink-400/25 animate-[spin_10s_linear_infinite]" />
+        {/* Floating playful decorations, echoing the GitHub trophies section vibe */}
+        <Sparkle size={16} fill="currentColor" className="absolute top-6 left-[6%] text-purple-400/40 animate-float" style={{ animationDelay: '0.3s' }} />
+        <Star size={14} fill="currentColor" className="absolute top-10 left-[20%] text-pink-400/30 animate-[spin_8s_linear_infinite]" />
+        <Heart size={14} fill="currentColor" className="absolute bottom-10 left-[14%] text-pink-400/30 animate-float" style={{ animationDelay: '1.2s' }} />
+        <Sparkles size={20} className="absolute top-8 right-[8%] text-purple-400/40 animate-float" style={{ animationDelay: '0.8s' }} />
+        <Star size={12} fill="currentColor" className="absolute bottom-14 right-[18%] text-pink-400/30 animate-[spin_10s_linear_infinite]" />
+        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute bottom-6 right-[35%] text-purple-400/30 animate-float" style={{ animationDelay: '1.8s' }} />
+        <Heart size={10} fill="currentColor" className="hidden md:block absolute top-1/2 left-[45%] text-pink-400/20 animate-float" style={{ animationDelay: '2.4s' }} />
 
         <div className="max-w-6xl mx-auto px-6 relative">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
@@ -3015,7 +2982,6 @@ const designs = [
                       onClick={handleCopyDiscord}
                       className="relative p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                      aria-label="Copy Discord username"
                     >
                       {copiedDiscord ? <Check size={20} className="text-green-400" /> : social.icon}
                       {copiedDiscord && (
@@ -3032,7 +2998,6 @@ const designs = [
                       rel="noopener noreferrer" 
                       className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center" 
                       title={social.name}
-                      aria-label={social.name}
                     >
                       {social.icon}
                     </a>
