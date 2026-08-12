@@ -714,7 +714,7 @@ const designs = [
 
         {/* Profile Image */}
         <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
-          <div className="relative w-full max-w-md mx-auto group">
+          <div className="relative w-full max-w-lg mx-auto group">
 
             {/* Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
@@ -768,13 +768,13 @@ const designs = [
             </div>
 
             {/* Circular Profile Container */}
-            <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
+            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
 
               <Image
-                src="/aicelle-illustration.png"
+                src="/newprofile.png"
                 alt="Aicelle Rosales"
-                width={400}
-                height={400}
+                width={480}
+                height={480}
                 className="w-full h-auto aspect-square object-cover object-top"
                 priority
               />
