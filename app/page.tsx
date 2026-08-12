@@ -62,7 +62,8 @@ import {
   Shield,
   Network,
   Package,
-  Lightbulb
+  Lightbulb,
+  Code2
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -158,6 +159,16 @@ function CountUp({ end, suffix = '', duration = 1200 }: { end: number; suffix?: 
   )
 }
 
+const categoryIcons: Record<string, any> = {
+  'Development': Code2,
+  'Web Design & Development': Globe,
+  'UI/UX Design': Layout,
+  'Graphic & Visual Design': Palette,
+  'AI Tools & Workflows': Bot,
+  'Technical & IT': Shield,
+  'Tools & Workflow': Wrench,
+}
+
 function SkillGroupBlock({
   group,
   groupIndex,
@@ -166,21 +177,44 @@ function SkillGroupBlock({
   groupIndex: number
 }) {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>(0.15)
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal<HTMLDivElement>(0.5)
   const isPink = group.accent === 'pink'
+  const CategoryIcon = categoryIcons[group.category] ?? Sparkle
 
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-6">
-        <span
-          className={`w-2 h-2 rounded-full animate-pulse ${isPink ? 'bg-pink-500' : 'bg-purple-500'}`}
-        />
+    <div className="relative">
+      {/* Ambient floating sparkle per category */}
+      <Sparkle
+        size={14}
+        fill="currentColor"
+        className={`hidden lg:block absolute -top-4 right-4 animate-float ${isPink ? 'text-pink-300' : 'text-purple-300'}`}
+        style={{ animationDelay: `${groupIndex * 0.4}s` }}
+      />
+
+      <div
+        ref={headerRef}
+        className={`flex items-center gap-3 mb-6 ${headerVisible ? 'animate-slide-in-left' : 'opacity-0'}`}
+      >
+        <div
+          className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition-transform duration-300 hover:rotate-12 hover:scale-110 ${
+            isPink ? 'bg-pink-50 text-pink-500' : 'bg-purple-50 text-purple-600'
+          }`}
+        >
+          <CategoryIcon size={18} />
+        </div>
         <h3 className="text-lg font-bold text-gray-800">{group.category}</h3>
+        <span
+          className={`w-1.5 h-1.5 rounded-full animate-pulse ${isPink ? 'bg-pink-500' : 'bg-purple-500'}`}
+        />
         <span className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
       </div>
 
       <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {group.skills.map((skill, i) => {
           const LucideIcon = skill.lucideIcon
+          const levelNum = parseInt(skill.level, 10) || 0
+          const isExpert = levelNum >= 90
+
           return (
             <div
               key={skill.name}
@@ -189,7 +223,22 @@ function SkillGroupBlock({
                 isVisible ? 'animate-slide-in-up' : 'opacity-0'
               }`}
             >
+              {/* Hover glow wash */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* Diagonal shine sweep on hover */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -inset-y-4 -left-1/2 w-1/3 bg-white/40 rotate-12 -translate-x-[200%] group-hover:translate-x-[500%] transition-transform duration-[1200ms] ease-out" />
+              </div>
+
+              {/* Expert sparkle badge */}
+              {isExpert && (
+                <Sparkle
+                  size={14}
+                  fill="currentColor"
+                  className={`absolute top-3 right-3 animate-pulse ${isPink ? 'text-pink-400' : 'text-purple-400'}`}
+                />
+              )}
 
               <div className="flex justify-between items-center mb-4 relative z-10">
                 <div className="flex items-center gap-3">
@@ -219,7 +268,7 @@ function SkillGroupBlock({
                   </div>
                 </div>
                 <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                  {skill.level}
+                  <CountUp end={levelNum} suffix="%" duration={1000} />
                 </span>
               </div>
 
