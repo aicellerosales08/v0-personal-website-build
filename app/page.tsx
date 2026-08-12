@@ -20,7 +20,12 @@ import {
   Github,
   Check,
   Quote,
-  Briefcase
+  Briefcase,
+  GitBranch,
+  Triangle,
+  Bot,
+  Gem,
+  Search
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -116,6 +121,87 @@ function CountUp({ end, suffix = '', duration = 1200 }: { end: number; suffix?: 
   )
 }
 
+function SkillGroupBlock({
+  group,
+  groupIndex,
+}: {
+  group: { category: string; accent: string; skills: Array<{ name: string; level: string; icon?: string; lucideIcon?: any }> }
+  groupIndex: number
+}) {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>(0.15)
+  const isPink = group.accent === 'pink'
+
+  return (
+    <div>
+      <div className="flex items-center gap-3 mb-6">
+        <span
+          className={`w-2 h-2 rounded-full animate-pulse ${isPink ? 'bg-pink-500' : 'bg-purple-500'}`}
+        />
+        <h3 className="text-lg font-bold text-gray-800">{group.category}</h3>
+        <span className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
+      </div>
+
+      <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {group.skills.map((skill, i) => {
+          const LucideIcon = skill.lucideIcon
+          return (
+            <div
+              key={skill.name}
+              style={isVisible ? { animationDelay: `${i * 90}ms` } : undefined}
+              className={`group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 hover:border-purple-200 transition-all duration-300 relative overflow-hidden ${
+                isVisible ? 'animate-slide-in-up' : 'opacity-0'
+              }`}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              <div className="flex justify-between items-center mb-4 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:-rotate-6 group-hover:bg-white transition-all duration-300 relative">
+                    {LucideIcon ? (
+                      <LucideIcon size={20} className={isPink ? 'text-pink-500' : 'text-purple-600'} />
+                    ) : (
+                      <Image
+                        src={skill.icon as string}
+                        alt={`${skill.name} logo`}
+                        width={28}
+                        height={28}
+                        className="object-contain"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
+                      {skill.name}
+                    </p>
+                    <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400">
+                      {group.category}
+                    </span>
+                  </div>
+                </div>
+                <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  {skill.level}
+                </span>
+              </div>
+
+              <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out relative"
+                  style={{ width: isVisible ? skill.level : '0%', transitionDelay: `${i * 90 + 200}ms` }}
+                >
+                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
@@ -149,8 +235,7 @@ export default function Portfolio() {
     return () => clearTimeout(t)
   }, [])
 
-  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal<HTMLDivElement>(0.2)
-
+  
   // ================= ACTIVE SECTION (scroll-spy) =================
   const [activeSection, setActiveSection] = useState('home')
   const [pressedLink, setPressedLink] = useState<string | null>(null)
@@ -204,16 +289,51 @@ export default function Portfolio() {
     { name: 'Certificates', href: '#certificates' },
   ]
 
-  const skills = [
-    { name: 'HTML', level: '95%', type: 'dev', icon: '/html-5.png' },
-    { name: 'CSS', level: '90%', type: 'dev', icon: '/css-3.png' },
-    { name: 'JavaScript', level: '55%', type: 'dev', icon: '/java-script.png' },
-    { name: 'Python', level: '75%', type: 'dev', icon: '/python.png' },
-    { name: 'C++', level: '50%', type: 'dev', icon: '/c-.png' },
-    { name: 'PHP', level: '65%', type: 'dev', icon: '/php.png' },
-    { name: 'Figma', level: '100%', type: 'design', icon: '/figma.png' },
-    { name: 'Adobe XD', level: '85%', type: 'design', icon: '/xd.png' },
-    { name: 'Canva', level: '100%', type: 'design', icon: '/palette.png' },
+  // Grouped to match the "Skills & Tools" categories on your GitHub profile.
+  // Entries with an `icon` string use a local /public logo image (same as before).
+  // Entries with a `lucideIcon` use a lucide-react icon as a placeholder —
+  // swap these for real logo PNGs in /public anytime by adding an `icon` path instead.
+  const skillGroups = [
+    {
+      category: 'Front-End Development',
+      accent: 'purple',
+      skills: [
+        { name: 'HTML', level: '95%', icon: '/html-5.png' },
+        { name: 'CSS', level: '90%', icon: '/css-3.png' },
+        { name: 'JavaScript', level: '55%', icon: '/java-script.png' },
+        { name: 'Python', level: '75%', icon: '/python.png' },
+        { name: 'C++', level: '50%', icon: '/c-.png' },
+        { name: 'PHP', level: '65%', icon: '/php.png' },
+      ],
+    },
+    {
+      category: 'UI/UX & Design',
+      accent: 'pink',
+      skills: [
+        { name: 'Figma', level: '100%', icon: '/figma.png' },
+        { name: 'Adobe XD', level: '85%', icon: '/xd.png' },
+        { name: 'Canva', level: '100%', icon: '/palette.png' },
+      ],
+    },
+    {
+      category: 'Tools & Technologies',
+      accent: 'purple',
+      skills: [
+        { name: 'Git', level: '80%', lucideIcon: GitBranch },
+        { name: 'GitHub', level: '85%', lucideIcon: Github },
+        { name: 'Vercel', level: '75%', lucideIcon: Triangle },
+      ],
+    },
+    {
+      category: 'AI Tools',
+      accent: 'pink',
+      skills: [
+        { name: 'ChatGPT', level: '90%', lucideIcon: Sparkles },
+        { name: 'Claude', level: '85%', lucideIcon: Bot },
+        { name: 'Gemini', level: '80%', lucideIcon: Gem },
+        { name: 'Perplexity', level: '75%', lucideIcon: Search },
+      ],
+    },
   ]
   const aboutQuotes = [
   'Design with purpose.',
@@ -1793,7 +1913,12 @@ const designs = [
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-6xl mx-auto px-6">
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
+            <Sparkle
+              size={16}
+              fill="currentColor"
+              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
+            />
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
               Capabilities
             </span>
@@ -1805,54 +1930,9 @@ const designs = [
             </p>
           </Reveal>
 
-          <div ref={skillsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill, i) => (
-              <div
-                key={skill.name}
-                style={skillsVisible ? { animationDelay: `${i * 90}ms` } : undefined}
-                className={`group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden ${
-                  skillsVisible ? 'animate-slide-in-up' : 'opacity-0'
-                }`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="flex justify-between items-center mb-4 relative z-10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:bg-white transition-all duration-300 relative">
-                      <Image 
-                        src={skill.icon} 
-                        alt={`${skill.name} logo`} 
-                        width={28} 
-                        height={28}
-                        className="object-contain"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
-                        {skill.name}
-                      </p>
-                      <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400">
-                        {skill.type === 'design' ? 'UI/UX Design' : 'Development'}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                    {skill.level}
-                  </span>
-                </div>
-
-                <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
-                  <div
-                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out relative"
-                    style={{ width: skillsVisible ? skill.level : '0%', transitionDelay: `${i * 90 + 200}ms` }}
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                  </div>
-                </div>
-              </div>
+          <div className="space-y-14">
+            {skillGroups.map((group, groupIndex) => (
+              <SkillGroupBlock key={group.category} group={group} groupIndex={groupIndex} />
             ))}
           </div>
         </div>
