@@ -297,9 +297,10 @@ function SkillGroupBlock({
 // ================= CHAT WIDGET ================= //
 // A friendly floating chatbot that answers common questions about Aicelle
 // using simple keyword matching — no external API required.
-type ChatMessage = { id: number; sender: 'bot' | 'user'; text: string }
+type ChatAction = { label: string; href: string }
+type ChatMessage = { id: number; sender: 'bot' | 'user'; text: string; action?: ChatAction }
 
-const chatKnowledgeBase: Array<{ keywords: string[]; reply: string }> = [
+const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: ChatAction }> = [
   {
     keywords: ['hello', 'hi', 'hey', 'kumusta', 'kamusta'],
     reply: "Hi there! 👋 I'm Aicelle's little assistant. Ask me about her skills, experience, projects, or how to get in touch!",
@@ -307,30 +308,37 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string }> = [
   {
     keywords: ['skill', 'stack', 'tech', 'technology', 'language', 'tool'],
     reply: "Aicelle works across Development (HTML, CSS, JS, React, Next.js), UI/UX Design (Figma, Adobe XD), Graphic Design (Canva, Photoshop, Illustrator), and she's also big on AI-assisted workflows (ChatGPT, Claude, Gemini). Check out the 'Skills & Tools' section above for the full breakdown! ✨",
+    action: { label: 'View Skills & Tools', href: '#skills' },
   },
   {
     keywords: ['experience', 'work', 'job', 'career', 'company'],
     reply: "She's currently a Web Designer & Developer at Malama Co., and has previously worked with Outlier, Torres Technology Center Corp., and CrowdGen Pro — with 4+ roles across web dev, UI/UX, and AI data annotation. Scroll up to the Experience timeline for the full story! 💼",
+    action: { label: 'View Experience', href: '#experience' },
   },
   {
     keywords: ['project', 'portfolio', 'work sample', 'built', 'made'],
     reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Featured Projects' section for live sites and Figma files! 🚀",
+    action: { label: 'View Projects', href: '#projects' },
   },
   {
     keywords: ['design', 'creative', 'graphic', 'ad', 'branding', 'logo'],
     reply: "She's also done tons of creative work — ad creatives, social media designs, logos, and product visuals. Head to the 'Designs & Creative Work' section and click a folder to browse! 🎨",
+    action: { label: 'Browse Designs', href: '#designs' },
   },
   {
     keywords: ['certificate', 'certification', 'cert', 'education', 'study', 'school'],
     reply: "Aicelle holds certifications in Introduction to Cybersecurity, Operating Systems Basics, and Linux Essentials (Cisco Networking Academy), plus an IT Specialist – Cybersecurity certification from Pearson. Check the Certifications section! 🎓",
+    action: { label: 'View Certifications', href: '#certificates' },
   },
   {
     keywords: ['contact', 'email', 'hire', 'reach', 'connect', 'touch', 'collab', 'collaborate'],
     reply: "You can reach her at aicellerosales08@gmail.com, or hit the 'Get In Touch' button below! She's always open to web dev, UI/UX, and collaborative projects. 💌",
+    action: { label: 'Get In Touch', href: 'mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you.' },
   },
   {
     keywords: ['social', 'instagram', 'tiktok', 'facebook', 'linkedin', 'github', 'discord'],
     reply: "She's on Instagram, Facebook, TikTok, LinkedIn, GitHub, and Discord — you'll find all the links in the hero section up top or the footer below! 🔗",
+    action: { label: 'View Socials', href: '#home' },
   },
   {
     keywords: ['location', 'based', 'where', 'live', 'philippines', 'country'],
@@ -339,10 +347,12 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string }> = [
   {
     keywords: ['who', 'about', 'aicelle', 'introduce'],
     reply: "Aicelle Rosales is a Web Designer, Frontend Developer, and UI/UX Designer who loves turning ideas into clean, functional, and delightful digital experiences! Check out the About section for more. 💜",
+    action: { label: 'View About', href: '#about' },
   },
   {
     keywords: ['cv', 'resume', 'download'],
     reply: "You can download her CV right from the hero section — look for the 'Download CV' button near the top of the page! 📄",
+    action: { label: 'Download CV', href: '/rosales_aicelle_resume.pdf' },
   },
   {
     keywords: ['thank', 'thanks', 'salamat'],
@@ -355,14 +365,14 @@ const chatFallbackReplies = [
   "Good question! I might not have the exact answer, but Aicelle would love to chat directly — try the 'Get In Touch' button! 💕",
 ]
 
-function getBotReply(userText: string): string {
+function getBotReply(userText: string): { text: string; action?: ChatAction } {
   const lower = userText.toLowerCase()
   for (const entry of chatKnowledgeBase) {
     if (entry.keywords.some((kw) => lower.includes(kw))) {
-      return entry.reply
+      return { text: entry.reply, action: entry.action }
     }
   }
-  return chatFallbackReplies[Math.floor(Math.random() * chatFallbackReplies.length)]
+  return { text: chatFallbackReplies[Math.floor(Math.random() * chatFallbackReplies.length)] }
 }
 
 const chatQuickReplies = [
@@ -406,9 +416,21 @@ function ChatWidget() {
 
     setTimeout(() => {
       const reply = getBotReply(trimmed)
-      setMessages((prev) => [...prev, { id: prev.length, sender: 'bot', text: reply }])
+      setMessages((prev) => [...prev, { id: prev.length, sender: 'bot', text: reply.text, action: reply.action }])
       setIsTyping(false)
     }, 700 + Math.random() * 500)
+  }
+
+  const handleActionClick = (href: string) => {
+    if (href.startsWith('#')) {
+      const el = document.getElementById(href.slice(1))
+      el?.scrollIntoView({ behavior: 'smooth' })
+      setIsOpen(false)
+    } else if (href.startsWith('mailto:')) {
+      window.location.href = href
+    } else {
+      window.open(href, '_blank', 'noopener,noreferrer')
+    }
   }
 
   const handleToggle = () => {
@@ -456,7 +478,7 @@ function ChatWidget() {
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex animate-fade-in ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex flex-col animate-fade-in ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
               >
                 <div
                   className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
@@ -467,6 +489,16 @@ function ChatWidget() {
                 >
                   {msg.text}
                 </div>
+
+                {msg.action && (
+                  <button
+                    onClick={() => handleActionClick(msg.action!.href)}
+                    className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 px-3.5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 animate-slide-in-up"
+                  >
+                    {msg.action.label}
+                    <ExternalLink size={12} />
+                  </button>
+                )}
               </div>
             ))}
 
