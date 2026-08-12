@@ -66,7 +66,8 @@ import {
   Code2,
   Folder,
   FolderOpen,
-  ArrowLeft
+  ArrowLeft,
+  GraduationCap
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -2410,24 +2411,52 @@ const designs = [
         </div>
       </section>
       {/* Certificates Section */}
-      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
-        <div className="max-w-6xl mx-auto px-6">
-          <Reveal direction="up">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
+      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-100/30 rounded-full blur-3xl -z-0" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-100/30 rounded-full blur-3xl -z-0" />
+
+        <div className="max-w-6xl mx-auto px-6 relative">
+          <Reveal direction="up" className="text-center mb-12 relative">
+            <Sparkle
+              size={16}
+              fill="currentColor"
+              className="hidden md:block absolute -top-1 left-[34%] text-pink-300 animate-float"
+            />
+            <Star
+              size={14}
+              fill="currentColor"
+              className="hidden md:block absolute top-3 right-[34%] text-purple-300 animate-[spin_8s_linear_infinite]"
+            />
+
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
+              <GraduationCap size={12} />
+              Achievements
+            </span>
+
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
               Certifications & Achievements
             </h2>
           </Reveal>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {certificates.map((cert, i) => (
               <div
                 key={cert.title}
                 style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer animate-slide-in-up"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-purple-200 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer animate-slide-in-up relative"
                 onClick={() => setSelectedCert(cert)}
               >
+                {/* Corner ribbon accent */}
+                <div className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
+                  <Award size={14} className="text-purple-400 group-hover:text-purple-600 transition-colors" />
+                </div>
+
                 {/* Certificate BADGE Display */}
-                <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8">
-                  <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8 overflow-hidden">
+                  {/* Soft glow pulse behind the badge */}
+                  <div className="absolute w-24 h-24 rounded-full bg-purple-200/30 blur-2xl animate-glow" />
+
+                  <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 animate-float" style={{ animationDelay: `${i * 0.3}s` }}>
                     <Image
                       src={cert.badge}
                       alt={`${cert.title} badge`}
@@ -2435,8 +2464,14 @@ const designs = [
                       className="object-contain"
                     />
                   </div>
+
+                  {/* Shine sweep on hover */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/40 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                  </div>
+
                   <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-                    <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1">
+                    <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1 scale-90 group-hover:scale-100 transition-transform duration-300">
                       View Certificate <ExternalLink size={12} />
                     </span>
                   </div>
@@ -2446,7 +2481,7 @@ const designs = [
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded group-hover:bg-purple-100 transition-colors duration-300">
                         {cert.issuer}
                       </span>
                       <span className="text-[11px] text-gray-400 font-medium">{cert.issueDate}</span>
@@ -2457,8 +2492,11 @@ const designs = [
                   </div>
 
                   <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-purple-600 transition-colors">
-                    <span>Enlarge Document</span>
-                    <Award size={14} className="text-gray-400 group-hover:text-purple-500" />
+                    <span className="inline-flex items-center gap-1">
+                      Enlarge Document
+                      <ExternalLink size={10} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                    </span>
+                    <Award size={14} className="text-gray-400 group-hover:text-purple-500 group-hover:scale-110 transition-all duration-300" />
                   </div>
                 </div>
               </div>
@@ -2479,7 +2517,10 @@ const designs = [
           >
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
               <div>
-                <h3 className="text-xl font-bold text-gray-900">{selectedCert.title}</h3>
+                <h3 className="text-xl font-bold text-gray-900 inline-flex items-center gap-2">
+                  {selectedCert.title}
+                  <Award size={16} className="text-purple-400 animate-pulse" />
+                </h3>
                 <p className="text-xs text-gray-500 mt-0.5">Issued by {selectedCert.issuer} • {selectedCert.issueDate}</p>
               </div>
               <button
