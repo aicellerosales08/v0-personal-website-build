@@ -2101,8 +2101,26 @@ const designs = [
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-        <Reveal direction="up" className="text-center mb-12">
+      <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
+
+        <Reveal direction="up" className="text-center mb-12 relative">
+          <Sparkle
+            size={18}
+            fill="currentColor"
+            className="hidden md:block absolute -top-2 left-[32%] text-pink-300 animate-float"
+          />
+          <Star
+            size={14}
+            fill="currentColor"
+            className="hidden md:block absolute top-2 right-[32%] text-purple-300 animate-[spin_7s_linear_infinite]"
+          />
+
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
+            <Layers size={12} />
+            Portfolio
+          </span>
+
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             Featured Projects
           </h2>
@@ -2114,19 +2132,32 @@ const designs = [
       
         {/* Category Tabs */}
         <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-          {['All', 'Web', 'Mobile', 'System'].map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-95 ${
-                activeCategory === category
-                  ? 'bg-gray-900 text-white shadow-md scale-105'
-                  : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-600'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          {['All', 'Web', 'Mobile', 'System'].map((category) => {
+            const count =
+              category === 'All'
+                ? projects.length
+                : projects.filter((p) => p.category === category).length
+            return (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-90 ${
+                  activeCategory === category
+                    ? 'bg-gray-900 text-white shadow-md scale-105'
+                    : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:scale-105'
+                }`}
+              >
+                {category}
+                <span
+                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                    activeCategory === category ? 'bg-white/20' : 'bg-white text-gray-400'
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            )
+          })}
         </div>
       
         {/* Projects Grid */}
@@ -2141,8 +2172,19 @@ const designs = [
               <div
                 key={project.title}
                 style={{ animationDelay: `${(i % 6) * 90}ms` }}
-                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up"
+                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up relative"
               >
+                {/* "Live" badge for projects with a deployed site */}
+                {'website' in project && (
+                  <span className="absolute top-3 left-3 z-20 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-1 rounded-full shadow-sm">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+                    </span>
+                    Live
+                  </span>
+                )}
+
                 {/* Project Image */}
                 <div className="aspect-video relative overflow-hidden bg-gray-100">
                   <Image
@@ -2152,6 +2194,11 @@ const designs = [
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Shine sweep on hover */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                  </div>
                 </div>
       
                 {/* Project Content */}
@@ -2162,7 +2209,7 @@ const designs = [
                         {project.title}
                       </h3>
       
-                      <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
+                      <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
                         {project.category}
                       </span>
                     </div>
@@ -2173,10 +2220,11 @@ const designs = [
       
                     {/* Tags */}
                     <div className="flex gap-2 flex-wrap mb-6">
-                      {project.tags.map((tag) => (
+                      {project.tags.map((tag, ti) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 transition-colors duration-200"
+                          style={{ animationDelay: `${(i % 6) * 90 + ti * 60}ms` }}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {tag}
                         </span>
@@ -2192,18 +2240,18 @@ const designs = [
                           href={project.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline hover:gap-2 transition-all duration-200"
+                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
                         >
-                          Live Site <ExternalLink size={14} />
+                          Live Site <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
                         </a>
       
                         <a
                           href={project.figma}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline hover:gap-2 transition-all duration-200"
+                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
                         >
-                          Figma <ExternalLink size={14} />
+                          Figma <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
                         </a>
                       </div>
                     ) : (
@@ -2211,9 +2259,10 @@ const designs = [
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 hover:gap-3 border-t border-gray-100 pt-4 w-full transition-all duration-200"
+                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link"
                       >
-                        View Project Design <ExternalLink size={15} />
+                        View Project Design
+                        <ExternalLink size={15} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
                       </a>
                     )}
                   </div>
