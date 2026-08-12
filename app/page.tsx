@@ -2335,6 +2335,17 @@ const designs = [
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10 group-hover:from-black/80 transition-colors duration-300" />
 
+                    {/* "Verified" style diagonal ribbon, matching the Certificates badges */}
+                    <div className="absolute -left-9 top-3 -rotate-45 z-20 pointer-events-none">
+                      <span
+                        className={`block w-32 text-center text-[9px] font-bold uppercase tracking-wider text-white py-1 shadow-md ${
+                          isPink ? 'bg-gradient-to-r from-pink-500 to-pink-600' : 'bg-gradient-to-r from-purple-600 to-purple-700'
+                        }`}
+                      >
+                        Curated
+                      </span>
+                    </div>
+
                     <div className="absolute top-3 right-3">
                       <div className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${isPink ? 'bg-pink-500/80' : 'bg-purple-500/80'}`}>
                         <Folder size={16} className="text-white group-hover:hidden" />
@@ -2563,21 +2574,41 @@ const designs = [
       )}
 
       {/* Contact Banner */}
-      <Reveal as="section" direction="up" className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+      <Reveal as="section" direction="up" className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
+        {/* Floating decorative sparkles, hearts, and stars */}
+        <Heart size={22} fill="currentColor" className="absolute top-8 left-[8%] text-white/20 animate-float" style={{ animationDelay: '0.2s' }} />
+        <Sparkle size={18} fill="currentColor" className="absolute top-16 left-[18%] text-white/25 animate-float" style={{ animationDelay: '1.1s' }} />
+        <Star size={16} fill="currentColor" className="absolute bottom-10 left-[12%] text-white/20 animate-[spin_9s_linear_infinite]" />
+        <Heart size={16} fill="currentColor" className="absolute bottom-16 left-[24%] text-white/25 animate-float" style={{ animationDelay: '1.8s' }} />
+
+        <Sparkles size={26} className="absolute top-10 right-[10%] text-white/20 animate-float" style={{ animationDelay: '0.6s' }} />
+        <Heart size={20} fill="currentColor" className="absolute bottom-12 right-[8%] text-white/25 animate-float" style={{ animationDelay: '1.4s' }} />
+        <Star size={14} fill="currentColor" className="absolute top-20 right-[22%] text-white/20 animate-[spin_7s_linear_infinite]" />
+        <Sparkle size={14} fill="currentColor" className="absolute bottom-8 right-[28%] text-white/25 animate-float" style={{ animationDelay: '2.2s' }} />
+
+        <Heart size={12} fill="currentColor" className="hidden md:block absolute top-1/2 left-[4%] text-white/15 animate-float" style={{ animationDelay: '0.9s' }} />
+        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute top-1/2 right-[4%] text-white/15 animate-float" style={{ animationDelay: '1.6s' }} />
+
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative">
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight inline-flex items-center gap-3 flex-wrap justify-center">
             Let&apos;s Create Something Amazing
+            <Heart size={28} fill="currentColor" className="text-pink-200 animate-pulse" />
           </h2>
           <p className="text-lg text-white/90 max-w-xl mx-auto">
             I&apos;m always open to discussing web development initiatives, UI/UX design opportunities, or collaborative projects.
           </p>
-          <a 
-            href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
-            className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 shadow-lg"
-          >
-            Get In Touch
-            <Mail size={18} />
-          </a>
+          <div className="relative inline-block">
+            {/* Glowing pulse ring behind the button */}
+            <span className="absolute inset-0 rounded-full bg-white/40 blur-md animate-glow" />
+            <a 
+              href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
+              className="relative px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-90 transition-all duration-300 inline-flex items-center gap-2 shadow-lg group"
+            >
+              Get In Touch
+              <Mail size={18} className="group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300" />
+              <Sparkle size={14} fill="currentColor" className="absolute -top-1 -right-1 text-pink-400 animate-pulse" />
+            </a>
+          </div>
         </div>
       </Reveal>
 
