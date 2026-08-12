@@ -2335,17 +2335,6 @@ const designs = [
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10 group-hover:from-black/80 transition-colors duration-300" />
 
-                    {/* "Verified" style diagonal ribbon, matching the Certificates badges */}
-                    <div className="absolute -left-9 top-3 -rotate-45 z-20 pointer-events-none">
-                      <span
-                        className={`block w-32 text-center text-[9px] font-bold uppercase tracking-wider text-white py-1 shadow-md ${
-                          isPink ? 'bg-gradient-to-r from-pink-500 to-pink-600' : 'bg-gradient-to-r from-purple-600 to-purple-700'
-                        }`}
-                      >
-                        Curated
-                      </span>
-                    </div>
-
                     <div className="absolute top-3 right-3">
                       <div className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${isPink ? 'bg-pink-500/80' : 'bg-purple-500/80'}`}>
                         <Folder size={16} className="text-white group-hover:hidden" />
