@@ -93,6 +93,33 @@ export default function Portfolio() {
 
   const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal<HTMLDivElement>(0.2)
 
+  // ================= ACTIVE SECTION (scroll-spy) =================
+  const [activeSection, setActiveSection] = useState('home')
+  const [pressedLink, setPressedLink] = useState<string | null>(null)
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'experience', 'skills', 'projects', 'designs', 'certificates']
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [])
+
   // Smooth automatic scrolling function
   const handleScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -494,8 +521,12 @@ const designs = [
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+          <a
+            href="#home"
+            onClick={(e) => handleScrollTo(e, '#home')}
+            className="flex items-center gap-3 active:scale-90 transition-transform duration-150 ease-out"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm hover:shadow-md hover:rotate-6 transition-all duration-300">
               <span className="text-white font-bold text-lg">A</span>
             </div>
           
@@ -505,24 +536,46 @@ const designs = [
                 UI/UX · Web Dev · Creative Design
               </p>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleScrollTo(e, link.href)}
-                className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors relative group"
-              >
-                {link.name}
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace('#', '')
+              const isActive = activeSection === sectionId
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleScrollTo(e, link.href)}
+                  onPointerDown={() => setPressedLink(link.name)}
+                  onPointerUp={() => setPressedLink(null)}
+                  onPointerLeave={() => setPressedLink(null)}
+                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ease-out
+                    ${isActive ? 'text-purple-600' : 'text-gray-600 hover:text-purple-500'}
+                    ${pressedLink === link.name ? 'scale-90' : 'scale-100'}
+                  `}
+                >
+                  {isActive && (
+                    <span className="absolute inset-0 bg-purple-50 rounded-full -z-10 animate-fade-in" />
+                  )}
+                  {link.name}
+                  <span
+                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 origin-left ${
+                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    }`}
+                  />
+                </a>
+              )
+            })}
             <a 
               href="mailto:aicellerosales08@gmail.com" 
-              className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300"
+              onPointerDown={() => setPressedLink('contact-desktop')}
+              onPointerUp={() => setPressedLink(null)}
+              onPointerLeave={() => setPressedLink(null)}
+              className={`ml-2 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200 ease-out ${
+                pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
+              }`}
             >
               Contact Me
             </a>
@@ -531,29 +584,59 @@ const designs = [
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="md:hidden relative p-2.5 rounded-full hover:bg-gray-100 active:bg-purple-100 active:scale-90 transition-all duration-150 ease-out"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <span className="relative w-6 h-6 block">
+              <X
+                size={24}
+                className={`absolute inset-0 text-purple-600 transition-all duration-300 ease-out ${
+                  isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
+                }`}
+              />
+              <Menu
+                size={24}
+                className={`absolute inset-0 text-gray-700 transition-all duration-300 ease-out ${
+                  isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
+                }`}
+              />
+            </span>
           </button>
         </div>
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3 animate-slide-in-up">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleScrollTo(e, link.href)}
-                style={{ animationDelay: `${i * 40}ms` }}
-                className="block text-sm font-medium text-gray-600 hover:text-purple-500 hover:translate-x-1 transition-all py-2 animate-slide-in-up"
-              >
-                {link.name}
-              </a>
-            ))}
+          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1 animate-slide-in-up">
+            {navLinks.map((link, i) => {
+              const sectionId = link.href.replace('#', '')
+              const isActive = activeSection === sectionId
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleScrollTo(e, link.href)}
+                  onPointerDown={() => setPressedLink(link.name)}
+                  onPointerUp={() => setPressedLink(null)}
+                  onPointerLeave={() => setPressedLink(null)}
+                  style={{ animationDelay: `${i * 40}ms` }}
+                  className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
+                    ${isActive ? 'text-purple-600 bg-purple-50' : 'text-gray-600'}
+                    ${pressedLink === link.name ? 'scale-95 bg-purple-100' : 'scale-100'}
+                  `}
+                >
+                  {link.name}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />}
+                </a>
+              )
+            })}
             <a 
               href="mailto:aicellerosales08@gmail.com"
-              className="block text-center w-full px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+              onPointerDown={() => setPressedLink('contact-mobile')}
+              onPointerUp={() => setPressedLink(null)}
+              onPointerLeave={() => setPressedLink(null)}
+              className={`block text-center w-full px-6 py-2.5 mt-2 bg-gray-900 text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
+                pressedLink === 'contact-mobile' ? 'scale-95 bg-gray-800' : 'scale-100'
+              }`}
             >
               Contact Me
             </a>
