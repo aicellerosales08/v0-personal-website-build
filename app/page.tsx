@@ -16,7 +16,9 @@ import {
   Heart,
   Sparkles,
   Star,
-  Sparkle
+  Sparkle,
+  Github,
+  Check
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -89,6 +91,19 @@ export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDesignCategory, setActiveDesignCategory] = useState('All')
   const [heroLoaded, setHeroLoaded] = useState(false)
+  const [copiedDiscord, setCopiedDiscord] = useState(false)
+
+  const DISCORD_USERNAME = 'prettyyyyyyyyy_'
+
+  const handleCopyDiscord = async () => {
+    try {
+      await navigator.clipboard.writeText(DISCORD_USERNAME)
+      setCopiedDiscord(true)
+      setTimeout(() => setCopiedDiscord(false), 2000)
+    } catch {
+      // Clipboard not available — fail silently
+    }
+  }
 
   useEffect(() => {
     const t = setTimeout(() => setHeroLoaded(true), 50)
@@ -473,19 +488,30 @@ const designs = [
     },
   ]
 
-  // UPDATED: Added TikTok with customized native SVG path
+  // UPDATED: Added TikTok, GitHub, and Discord
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
     { 
       name: 'TikTok', 
-      url: 'https://www.tiktok.com/@aicelleeeeee_', 
+      url: 'https://www.tiktok.com/@sunflowershoppp_', 
       icon: (
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.25 1.96 3.69 2.32v3.9c-1.52-.13-3.01-.71-4.24-1.66-.46-.35-.88-.75-1.25-1.19v7.19c.04 2.22-.92 4.38-2.58 5.82-1.74 1.51-4.14 2.14-6.42 1.69-2.56-.51-4.71-2.43-5.55-4.89-.9-2.65-.18-5.7 1.83-7.65 1.66-1.61 4.07-2.31 6.34-1.84v3.9c-1.21-.33-2.53-.05-3.51.72-.94.75-1.42 1.96-1.3 3.16.14 1.34.99 2.51 2.24 3.03 1.25.53 2.73.32 3.77-.52.82-.67 1.25-1.7 1.23-2.76V0z"/>
         </svg>
       ) 
+    },
+    { name: 'GitHub', url: 'https://github.com/aicellerosales08', icon: <Github size={20} /> },
+    {
+      name: 'Discord',
+      url: '',
+      isDiscord: true,
+      icon: (
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.076.076 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.673-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/>
+        </svg>
+      ),
     },
   ]
 
@@ -695,18 +721,35 @@ const designs = [
             <div className="flex items-center gap-6 pt-4">
               <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
               <div className="flex gap-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex items-center justify-center"
-                    title={social.name}
-                  >
-                    {social.icon}
-                  </a>
-                ))}
+                {socialLinks.map((social) =>
+                  (social as any).isDiscord ? (
+                    <button
+                      key={social.name}
+                      type="button"
+                      onClick={handleCopyDiscord}
+                      className="relative p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                    >
+                      {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
+                      {copiedDiscord && (
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                          Copied!
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -2007,20 +2050,37 @@ const designs = [
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
-              {/* UPDATED: Added TikTok icon integration wrapper inside footer as well */}
+              {/* UPDATED: Added TikTok, GitHub, and Discord icon integration inside footer as well */}
               <div className="flex gap-3">
-                {socialLinks.map((social) => (
-                  <a 
-                    key={social.name}
-                    href={social.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center" 
-                    title={social.name}
-                  >
-                    {social.icon}
-                  </a>
-                ))}
+                {socialLinks.map((social) =>
+                  (social as any).isDiscord ? (
+                    <button
+                      key={social.name}
+                      type="button"
+                      onClick={handleCopyDiscord}
+                      className="relative p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                    >
+                      {copiedDiscord ? <Check size={20} className="text-green-400" /> : social.icon}
+                      {copiedDiscord && (
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-purple-600 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                          Copied!
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <a 
+                      key={social.name}
+                      href={social.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center" 
+                      title={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  )
+                )}
               </div>
             </div>
           </div>
