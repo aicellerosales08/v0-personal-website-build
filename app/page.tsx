@@ -19,7 +19,8 @@ import {
   Sparkle,
   Github,
   Check,
-  Quote
+  Quote,
+  Briefcase
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -1333,15 +1334,28 @@ const designs = [
         <div className="max-w-6xl mx-auto px-6">
       
           {/* Section Header */}
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
+            <Sparkle
+              size={18}
+              fill="currentColor"
+              className="hidden md:block absolute -top-2 left-[28%] text-pink-300 animate-float"
+            />
+            <Sparkle
+              size={14}
+              fill="currentColor"
+              className="hidden md:block absolute top-4 right-[28%] text-purple-300 animate-float"
+              style={{ animationDelay: '1s' }}
+            />
+
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              <Briefcase size={12} />
               Experience
             </span>
-      
+
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
               My Experience
             </h2>
-      
+
             <p className="text-gray-500 text-sm md:text-base">
               My professional experience in web development, UI/UX design,
               AI data annotation, and IT technical support.
@@ -1353,14 +1367,16 @@ const designs = [
       
             {/* ================= MALAMA ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
-      
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-      
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm">
+                <span className="absolute inset-0 rounded-full bg-purple-400 animate-ping opacity-75" />
+              </div>
+
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+
                 <div className="flex flex-col sm:flex-row gap-5">
-      
+
                   {/* Company Logo */}
-                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/malama-logo.png"
                       alt="Malama Co. logo"
@@ -1369,30 +1385,34 @@ const designs = [
                       className="w-full h-full object-contain p-2"
                     />
                   </div>
-      
+
                   {/* Experience Details */}
                   <div className="flex-1">
-      
+
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900">
                           Web Designer & Developer
                         </h3>
-      
+
                         <p className="text-purple-600 font-semibold mt-1">
                           Malama Co. · Part-time
                         </p>
                       </div>
-      
-                      <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
-                        Jul 2026 – Present · 1 mo
+
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                        </span>
+                        Jul 2026 – Present · 2 mos
                       </span>
                     </div>
-      
+
                     <p className="text-sm text-gray-500 mt-2">
                       Australia · Remote
                     </p>
-      
+
                     <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
                       <li>
                         Manage and maintain Wix websites for Australian clients,
@@ -1442,10 +1462,11 @@ const designs = [
                         "UI/UX Design",
                         "Wix CMS",
                         "Website Management",
-                      ].map((skill) => (
+                      ].map((skill, i) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200"
+                          style={{ animationDelay: `${i * 60}ms` }}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -1460,14 +1481,14 @@ const designs = [
       
             {/* ================= OUTLIER ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
                   {/* Company Logo */}
-                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/outlier-logo.png"
                       alt="Outlier logo"
@@ -1535,10 +1556,11 @@ const designs = [
                         "Quality Assurance",
                         "Voice Data",
                         "Video Data",
-                      ].map((skill) => (
+                      ].map((skill, i) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200"
+                          style={{ animationDelay: `${i * 60}ms` }}
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -1553,14 +1575,14 @@ const designs = [
       
             {/* ================= TORRES TECHNOLOGY ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
                   {/* Company Logo */}
-                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/torres-logo.png"
                       alt="Torres Technology Center Corp. logo"
@@ -1665,10 +1687,11 @@ const designs = [
                         "CSS",
                         "JavaScript",
                         "IT Operations",
-                      ].map((skill) => (
+                      ].map((skill, i) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200"
+                          style={{ animationDelay: `${i * 60}ms` }}
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -1683,14 +1706,14 @@ const designs = [
       
             {/* ================= CROWDGEN PRO ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 border-l-2 border-transparent">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
                   {/* Company Logo */}
-                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/crowdgen-logo.png"
                       alt="CrowdGen Pro logo"
@@ -1746,10 +1769,11 @@ const designs = [
                         "Data Labeling",
                         "AI Data",
                         "Quality Control",
-                      ].map((skill) => (
+                      ].map((skill, i) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200"
+                          style={{ animationDelay: `${i * 60}ms` }}
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
