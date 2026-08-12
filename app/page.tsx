@@ -1227,18 +1227,14 @@ const designs = [
                   onPointerDown={() => setPressedLink(link.name)}
                   onPointerUp={() => setPressedLink(null)}
                   onPointerLeave={() => setPressedLink(null)}
-                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ease-out
-                    ${isActive ? 'text-purple-600' : 'text-gray-600 hover:text-purple-500'}
+                  className={`relative px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-out group
                     ${pressedLink === link.name ? 'scale-90' : 'scale-100'}
                   `}
                 >
-                  {isActive && (
-                    <span className="absolute inset-0 bg-purple-50 rounded-full -z-10 animate-fade-in" />
-                  )}
                   {link.name}
                   <span
-                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 origin-left ${
-                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-transform duration-300 origin-left ${
+                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
                 </a>
