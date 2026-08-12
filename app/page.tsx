@@ -12,7 +12,11 @@ import {
   Instagram,
   Linkedin,
   Download,
-  Award
+  Award,
+  Heart,
+  Sparkles,
+  Star,
+  Sparkle
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -711,13 +715,61 @@ const designs = [
         {/* Profile Image */}
         <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
           <div className="relative w-full max-w-md mx-auto group">
-        
+
             {/* Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
-        
+
+            {/* Rotating dashed girly frame */}
+            <div className="absolute -inset-4 rounded-full border-2 border-dashed border-pink-300/70 animate-[spin_18s_linear_infinite] pointer-events-none" />
+            <div className="absolute -inset-8 rounded-full border border-dotted border-purple-200/60 animate-[spin_26s_linear_infinite_reverse] pointer-events-none" />
+
+            {/* Twinkling dot accents */}
+            <span className="absolute top-2 left-10 w-2 h-2 rounded-full bg-pink-400 animate-ping [animation-duration:2.5s]" />
+            <span className="absolute bottom-6 right-6 w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping [animation-duration:3.2s]" style={{ animationDelay: '0.6s' }} />
+            <span className="absolute top-1/3 -right-2 w-1.5 h-1.5 rounded-full bg-pink-300 animate-ping [animation-duration:2s]" style={{ animationDelay: '1.1s' }} />
+
+            {/* Floating Sparkles */}
+            <div
+              className="absolute -top-3 left-6 z-20 text-pink-500 animate-float drop-shadow-sm"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <Sparkles size={30} className="animate-[spin_7s_linear_infinite]" fill="currentColor" strokeWidth={1} />
+            </div>
+
+            <div
+              className="absolute top-1/4 -left-6 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '1.8s' }}
+            >
+              <Sparkle size={20} fill="currentColor" strokeWidth={1} />
+            </div>
+
+            {/* Floating Heart */}
+            <div
+              className="absolute bottom-1/4 -right-5 z-20 text-pink-500 animate-float"
+              style={{ animationDelay: '0.9s' }}
+            >
+              <Heart size={26} fill="currentColor" className="drop-shadow-sm" />
+            </div>
+
+            {/* Floating Star */}
+            <div
+              className="absolute -bottom-2 right-16 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '2.2s' }}
+            >
+              <Star size={22} fill="currentColor" className="animate-[spin_10s_linear_infinite]" />
+            </div>
+
+            {/* Small pink heart bottom-left */}
+            <div
+              className="absolute bottom-1/3 -left-4 z-20 text-pink-300 animate-float"
+              style={{ animationDelay: '1.4s' }}
+            >
+              <Heart size={16} fill="currentColor" />
+            </div>
+
             {/* Circular Profile Container */}
             <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
-        
+
               <Image
                 src="/aicelle-illustration.png"
                 alt="Aicelle Rosales"
@@ -726,9 +778,9 @@ const designs = [
                 className="w-full h-auto aspect-square object-cover object-top"
                 priority
               />
-        
+
             </div>
-        
+
             {/* Experience Badge */}
             <div 
               className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
