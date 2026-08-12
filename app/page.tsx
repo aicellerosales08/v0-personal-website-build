@@ -66,8 +66,7 @@ import {
   Code2,
   Folder,
   FolderOpen,
-  ArrowLeft,
-  Images
+  ArrowLeft
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -2295,7 +2294,7 @@ const designs = [
             />
 
             <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-              <Images size={12} />
+              <ImageIcon size={12} />
               Creative Work
             </span>
       
