@@ -681,7 +681,9 @@ const designs = [
     category: 'Product Design',
   },
 ]
-  const designCategoryList = Array.from(new Set(designs.map((d) => d.category)))
+  const designCategoryList = designs
+    .map((d) => d.category)
+    .filter((cat, idx, arr) => arr.indexOf(cat) === idx)
   const projects = [
     {
       title: 'Onlook - Thesis Project',
