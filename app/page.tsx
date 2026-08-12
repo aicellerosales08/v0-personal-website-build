@@ -86,7 +86,34 @@ function Reveal({
   )
 }
 
-export default function Portfolio() {
+function CountUp({ end, suffix = '', duration = 1200 }: { end: number; suffix?: string; duration?: number }) {
+  const { ref, isVisible } = useScrollReveal<HTMLSpanElement>(0.5)
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    if (!isVisible) return
+    let start: number | null = null
+    let frameId: number
+
+    const step = (timestamp: number) => {
+      if (start === null) start = timestamp
+      const progress = Math.min((timestamp - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setValue(Math.round(eased * end))
+      if (progress < 1) frameId = requestAnimationFrame(step)
+    }
+
+    frameId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frameId)
+  }, [isVisible, end, duration])
+
+  return (
+    <span ref={ref}>
+      {value}
+      {suffix}
+    </span>
+  )
+}
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
@@ -964,29 +991,44 @@ const designs = [
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
       
           {/* ================= LEFT SIDE ================= */}
-          <Reveal direction="left" className="min-w-0 flex flex-col">
-      
+          <Reveal direction="left" className="min-w-0 flex flex-col relative">
+
+            {/* Floating decorative accents for this side */}
+            <Sparkle
+              size={16}
+              fill="currentColor"
+              className="hidden md:block absolute -top-2 left-1/3 text-pink-300 animate-float"
+              style={{ animationDelay: '0.8s' }}
+            />
+            <Heart
+              size={14}
+              fill="currentColor"
+              className="hidden md:block absolute top-24 -left-2 text-purple-200 animate-float"
+              style={{ animationDelay: '1.6s' }}
+            />
+
             {/* About Me Badge */}
-            <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
-              <span className="text-purple-600 text-sm">♙</span>
+            <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6 hover:shadow-md hover:-translate-y-0.5 hover:border-purple-300 transition-all duration-300 group cursor-default">
+              <Sparkles size={14} className="text-purple-500 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" />
               <span className="text-xs font-semibold tracking-wide text-purple-600">
                 ABOUT ME
               </span>
             </div>
-      
+
             {/* Name + Nice to meet you */}
-            <div className="flex items-baseline gap-4 mb-3 whitespace-nowrap">
+            <div className="flex items-baseline gap-4 mb-3 flex-wrap">
               <h2 className="text-4xl md:text-[40px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
                 Hi, I&apos;m Aicelle
               </h2>
-      
-              <p className="text-xl md:text-[18px] italic font-medium text-pink-500">
-                Nice to meet you! ♡
+
+              <p className="text-xl md:text-[18px] italic font-medium text-pink-500 flex items-center gap-1">
+                Nice to meet you!
+                <Heart size={16} fill="currentColor" className="animate-pulse text-pink-500" />
               </p>
             </div>
-      
+
             {/* Main Title */}
-            <h3 className="text-2xl md:text-[25px] font-bold leading-[1.15] mb-6">
+            <h3 className="text-2xl md:text-[25px] font-bold leading-[1.15] mb-6 relative inline-block w-fit">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
               </span>
@@ -994,11 +1036,16 @@ const designs = [
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 UI/UX Designer
               </span>
+              <Star
+                size={18}
+                fill="currentColor"
+                className="absolute -right-6 top-0 text-pink-300 animate-[spin_6s_linear_infinite] hidden md:block"
+              />
             </h3>
-      
+
             {/* About Text */}
             <div className="max-w-[560px] space-y-4">
-      
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 I&apos;m an Information Technology professional with experience in
                 web development, UI/UX design, and creative digital solutions.
@@ -1006,17 +1053,19 @@ const designs = [
                 user-centered digital experiences that combine thoughtful design
                 with practical technology.
               </p>
-      
+
               {/* Divider */}
-              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
-      
+              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full relative overflow-hidden">
+                <span className="absolute inset-0 bg-white/40 animate-pulse" />
+              </div>
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 I combine creativity and technical skills to design and build
                 responsive websites, intuitive interfaces, and interactive
                 prototypes that solve real-world problems and deliver meaningful
                 user experiences.
               </p>
-      
+
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
                 My experience includes working on real-world projects,
                 collaborating with clients and teams, and applying modern tools
@@ -1024,71 +1073,77 @@ const designs = [
                 continuously improving my skills and exploring new technologies
                 to deliver high-quality work and better experiences for users.
               </p>
-      
+
             </div>
-      
+
             {/* ================= STATS ================= */}
-            <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70 hover:shadow-lg transition-shadow duration-300">
-      
+            <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70 hover:shadow-lg hover:border-purple-200 transition-all duration-300 relative overflow-hidden">
+
+              <Sparkle
+                size={14}
+                fill="currentColor"
+                className="absolute top-2 right-3 text-pink-300 animate-float"
+              />
+
               <div className="grid grid-cols-2 divide-x divide-purple-100">
-      
+
                 {/* 50+ */}
                 <div className="flex items-center gap-4 px-2 group">
-      
+
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
                     <span className="text-xl text-purple-600">
                       ♧
                     </span>
                   </div>
-      
+
                   <div>
                     <p className="text-2xl font-bold text-purple-600 leading-none">
-                      50+
+                      <CountUp end={50} suffix="+" />
                     </p>
-      
+
                     <p className="text-sm font-semibold text-gray-800 mt-1">
                       Design Components
                     </p>
-      
+
                     <p className="text-xs text-gray-500 mt-1 leading-snug">
                       Reusable UI elements
                       <br />
                       created in Figma
                     </p>
                   </div>
-      
+
                 </div>
-      
+
                 {/* 20+ */}
                 <div className="flex items-center gap-4 px-4 group">
-      
+
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
                     <span className="text-xl text-pink-500">
                       ▣
                     </span>
                   </div>
-      
+
                   <div>
                     <p className="text-2xl font-bold text-pink-500 leading-none">
-                      20+
+                      <CountUp end={20} suffix="+" />
                     </p>
-      
+
                     <p className="text-sm font-semibold text-gray-800 mt-1">
                       Created Layouts
                     </p>
-      
+
                     <p className="text-xs text-gray-500 mt-1 leading-snug">
                       Web &amp; mobile layouts
                       <br />
                       designed
                     </p>
                   </div>
-      
+
                 </div>
-      
+
               </div>
             </div>
-      
+
           </Reveal>
       
       
@@ -1106,7 +1161,8 @@ const designs = [
                   {Array.from({ length: 100 }).map((_, i) => (
                     <span
                       key={i}
-                      className="w-1 h-1 rounded-full bg-pink-200"
+                      className="w-1 h-1 rounded-full bg-pink-200 animate-pulse"
+                      style={{ animationDelay: `${(i % 10) * 100}ms`, animationDuration: '3s' }}
                     />
                   ))}
                 </div>
@@ -1117,10 +1173,8 @@ const designs = [
                 {/* What I Do Header */}
                 <div className="flex items-center gap-4 mb-5">
       
-                  <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center">
-                    <span className="text-3xl text-purple-600 leading-none">
-                      ☆
-                    </span>
+                  <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center hover:scale-110 hover:rotate-12 transition-transform duration-300">
+                    <Star size={26} fill="currentColor" className="text-purple-600 animate-[spin_8s_linear_infinite]" />
                   </div>
       
                   <div>
@@ -1130,7 +1184,7 @@ const designs = [
       
                     <div className="flex items-center gap-2 mt-2">
                       <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
-                      <div className="w-2 h-2 rounded-full bg-pink-500" />
+                      <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
                     </div>
                   </div>
       
@@ -1245,18 +1299,32 @@ const designs = [
       
       
         {/* ================= ANIMATED QUOTE ================= */}
-        <Reveal direction="up" className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden">
-      
-          <div className="flex items-center justify-center min-h-[70px]">
-      
+        <Reveal direction="up" className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden relative">
+
+          <Sparkle
+            size={16}
+            fill="currentColor"
+            className="absolute top-3 left-[12%] text-pink-300 animate-float hidden sm:block"
+          />
+          <Sparkle
+            size={14}
+            fill="currentColor"
+            className="absolute bottom-3 right-[12%] text-purple-300 animate-float hidden sm:block"
+            style={{ animationDelay: '1.2s' }}
+          />
+
+          <div className="flex items-center justify-center gap-2 min-h-[70px]">
+
+            <Heart size={16} fill="currentColor" className="text-pink-400 animate-pulse hidden sm:block" />
             <p className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 text-center">
               Creating with purpose, designing with passion. ♡
             </p>
-      
+            <Heart size={16} fill="currentColor" className="text-pink-400 animate-pulse hidden sm:block" />
+
           </div>
-      
+
         </Reveal>
-      
+
       </section>
      {/* ================= EXPERIENCE SECTION ================= */}
       <section id="experience" className="bg-gray-50 py-20 md:py-32">
