@@ -768,7 +768,7 @@ const designs = [
             </div>
 
             {/* Circular Profile Container */}
-            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
+            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
 
               <Image
                 src="/newprofile.png"
