@@ -684,6 +684,14 @@ const designs = [
   const designCategoryList = designs
     .map((d) => d.category)
     .filter((cat, idx, arr) => arr.indexOf(cat) === idx)
+  const designCategoryBlurbs: Record<string, string> = {
+    'Ad Creatives': 'Eye-catching ad visuals designed to grab attention and drive engagement across digital campaigns.',
+    'CLOTH': 'Fashion and apparel visual concepts blending clean layouts with a strong sense of style.',
+    'Social Media': 'Scroll-stopping social content crafted for feeds, stories, and everyday brand presence.',
+    'Logo': 'Brand identity marks built to be simple, memorable, and versatile across platforms.',
+    'Meta': 'Ad and content designs tailored for Meta platforms like Facebook and Instagram.',
+    'Product Design': 'Clean, detail-oriented visuals showcasing products in their best light.',
+  }
   const projects = [
     {
       title: 'Onlook - Thesis Project',
@@ -2312,58 +2320,67 @@ const designs = [
           </Reveal>
 
           {activeDesignCategory === null ? (
-            /* ================= FOLDER PICKER ================= */
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            /* ================= FOLDER PICKER (styled like Project cards) ================= */
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {designCategoryList.map((category, i) => {
                 const items = designs.filter((d) => d.category === category)
                 const cover = items[0]?.image
-                const isPink = i % 2 === 0
+                const blurb =
+                  designCategoryBlurbs[category] ??
+                  `A curated set of ${items.length} ${items.length === 1 ? 'design' : 'designs'} exploring ${category.toLowerCase()}.`
                 return (
                   <button
                     key={category}
                     onClick={() => setActiveDesignCategory(category)}
                     style={{ animationDelay: `${i * 90}ms` }}
-                    className="group relative aspect-square rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 animate-slide-in-up text-left"
+                    className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
                   >
-                    {cover && (
-                      <Image
-                        src={cover}
-                        alt={category}
-                        fill
-                        className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-110 transition-all duration-500"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10 group-hover:from-black/80 transition-colors duration-300" />
+                    {/* Cover Image */}
+                    <div className="aspect-video relative overflow-hidden bg-gray-100">
+                      {cover && (
+                        <Image
+                          src={cover}
+                          alt={category}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* "Verified" style diagonal ribbon, matching the Certificates badges */}
-                    <div className="absolute -left-9 top-3 -rotate-45 z-20 pointer-events-none">
-                      <span
-                        className={`block w-32 text-center text-[9px] font-bold uppercase tracking-wider text-white py-1 shadow-md ${
-                          isPink ? 'bg-gradient-to-r from-pink-500 to-pink-600' : 'bg-gradient-to-r from-purple-600 to-purple-700'
-                        }`}
-                      >
-                        Curated
-                      </span>
-                    </div>
+                      {/* Shine sweep on hover */}
+                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                      </div>
 
-                    <div className="absolute top-3 right-3">
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${isPink ? 'bg-pink-500/80' : 'bg-purple-500/80'}`}>
-                        <Folder size={16} className="text-white group-hover:hidden" />
-                        <FolderOpen size={16} className="text-white hidden group-hover:block" />
+                      {/* Folder icon badge */}
+                      <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                        <Folder size={16} className="text-purple-500 group-hover:hidden" />
+                        <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
                       </div>
                     </div>
 
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <p className="text-white font-bold text-sm leading-tight">{category}</p>
-                      <p className="text-white/70 text-xs mt-1">{items.length} {items.length === 1 ? 'design' : 'designs'}</p>
-                    </div>
+                    {/* Content */}
+                    <div className="p-6 flex flex-col flex-1 justify-between">
+                      <div>
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                            {category}
+                          </h3>
+                          <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
+                            {items.length} {items.length === 1 ? 'design' : 'designs'}
+                          </span>
+                        </div>
 
-                    {/* Sparkle accent on hover */}
-                    <Sparkle
-                      size={14}
-                      fill="currentColor"
-                      className="absolute top-3 left-3 text-white/0 group-hover:text-white/80 transition-colors duration-300 animate-pulse"
-                    />
+                        <p className="text-gray-600 text-sm mb-6">
+                          {blurb}
+                        </p>
+                      </div>
+
+                      <div className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link">
+                        Browse Folder
+                        <ArrowLeft size={15} className="rotate-180 group-hover/link:translate-x-1 transition-transform duration-200" />
+                      </div>
+                    </div>
                   </button>
                 )
               })}
@@ -2613,8 +2630,17 @@ const designs = [
       </Reveal>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto px-6">
+      <footer className="relative overflow-hidden bg-gray-900 text-white py-12 border-t border-gray-800">
+        {/* Floating playful decorations, echoing the GitHub trophies section vibe */}
+        <Sparkle size={16} fill="currentColor" className="absolute top-6 left-[6%] text-purple-400/40 animate-float" style={{ animationDelay: '0.3s' }} />
+        <Star size={14} fill="currentColor" className="absolute top-10 left-[20%] text-pink-400/30 animate-[spin_8s_linear_infinite]" />
+        <Heart size={14} fill="currentColor" className="absolute bottom-10 left-[14%] text-pink-400/30 animate-float" style={{ animationDelay: '1.2s' }} />
+        <Sparkles size={20} className="absolute top-8 right-[8%] text-purple-400/40 animate-float" style={{ animationDelay: '0.8s' }} />
+        <Star size={12} fill="currentColor" className="absolute bottom-14 right-[18%] text-pink-400/30 animate-[spin_10s_linear_infinite]" />
+        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute bottom-6 right-[35%] text-purple-400/30 animate-float" style={{ animationDelay: '1.8s' }} />
+        <Heart size={10} fill="currentColor" className="hidden md:block absolute top-1/2 left-[45%] text-pink-400/20 animate-float" style={{ animationDelay: '2.4s' }} />
+
+        <div className="max-w-6xl mx-auto px-6 relative">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <p className="font-bold text-lg mb-1 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 inline-block">
@@ -2676,7 +2702,9 @@ const designs = [
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs space-y-1">
             <p>© {new Date().getFullYear()} Aicelle Rosales. All rights reserved.</p>
-            <p>Designed with ❤️ in the Philippines</p>
+            <p className="inline-flex items-center gap-1 justify-center">
+              Designed with <Heart size={11} fill="currentColor" className="text-pink-400 animate-pulse" /> in the Philippines
+            </p>
           </div>
         </div>
       </footer>
