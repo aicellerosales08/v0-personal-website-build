@@ -2132,7 +2132,7 @@ const designs = [
       
         {/* Category Tabs */}
         <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-          {['All', 'Web', 'Mobile', 'System'].map((category) => {
+          {['All', 'Web', 'Mobile', 'System', 'Trial'].map((category) => {
             const count =
               category === 'All'
                 ? projects.length
