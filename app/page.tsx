@@ -18,7 +18,8 @@ import {
   Star,
   Sparkle,
   Github,
-  Check
+  Check,
+  Quote
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -906,14 +907,54 @@ const designs = [
       </div>
 
       {/* Quote Section */}
-      <Reveal as="section" direction="fade" className="bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
+
+        {/* Floating decorative sparkles around the quote */}
+        <Sparkles
+          size={26}
+          className="absolute top-8 left-[15%] text-purple-300 animate-float"
+          style={{ animationDelay: '0.4s' }}
+        />
+        <Sparkle
+          size={18}
+          fill="currentColor"
+          className="absolute bottom-10 right-[18%] text-pink-300 animate-float"
+          style={{ animationDelay: '1.6s' }}
+        />
+        <Star
+          size={16}
+          fill="currentColor"
+          className="absolute top-12 right-[20%] text-pink-300 animate-[spin_9s_linear_infinite]"
+        />
+        <Heart
+          size={16}
+          fill="currentColor"
+          className="absolute bottom-8 left-[18%] text-purple-300 animate-float"
+          style={{ animationDelay: '1s' }}
+        />
+
+        <div className="relative max-w-4xl mx-auto px-6 text-center">
+          {/* Big decorative quote mark */}
+          <Quote
+            size={64}
+            fill="currentColor"
+            className="mx-auto mb-2 text-purple-200 animate-float"
+            strokeWidth={0}
+          />
+
           <p className="text-2xl md:text-3xl font-serif text-gray-800 italic mb-6">
             &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
           </p>
-          <p className="text-gray-600 font-medium">
-            — Steve Jobs
-          </p>
+
+          <div className="flex items-center justify-center gap-3">
+            <span className="h-px w-10 bg-gradient-to-r from-transparent to-pink-400 animate-fade-in" style={{ animationDelay: '0.3s' }} />
+            <p className="text-gray-600 font-medium animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              Steve Jobs
+            </p>
+            <span className="h-px w-10 bg-gradient-to-l from-transparent to-purple-400 animate-fade-in" style={{ animationDelay: '0.3s' }} />
+          </div>
         </div>
       </Reveal>
 
