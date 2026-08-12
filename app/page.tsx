@@ -63,7 +63,11 @@ import {
   Network,
   Package,
   Lightbulb,
-  Code2
+  Code2,
+  Folder,
+  FolderOpen,
+  ArrowLeft,
+  Images
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
@@ -292,7 +296,7 @@ export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
-  const [activeDesignCategory, setActiveDesignCategory] = useState('All')
+  const [activeDesignCategory, setActiveDesignCategory] = useState<string | null>(null)
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [quoteIndex, setQuoteIndex] = useState(0)
 
@@ -677,6 +681,7 @@ const designs = [
     category: 'Product Design',
   },
 ]
+  const designCategoryList = Array.from(new Set(designs.map((d) => d.category)))
   const projects = [
     {
       title: 'Onlook - Thesis Project',
@@ -2274,14 +2279,21 @@ const designs = [
       {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
-        className="bg-gray-50 py-20 md:py-32"
+        className="bg-gray-50 py-20 md:py-32 overflow-hidden"
       >
         <div className="max-w-6xl mx-auto px-6">
       
           {/* Section Header */}
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-      
-            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-12 space-y-4 relative">
+
+            <Sparkle
+              size={16}
+              fill="currentColor"
+              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
+            />
+
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              <Images size={12} />
               Creative Work
             </span>
       
@@ -2292,77 +2304,107 @@ const designs = [
             <p className="text-gray-500 text-sm md:text-base">
               A collection of creative designs, digital advertising visuals,
               branding, social media content, AI-generated imagery, and product
-              visual designs.
+              visual designs. Tap a folder to open it.
             </p>
       
           </Reveal>
-      
-      
-          {/* Category Tabs */}
-          <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-      
-            {[
-              'All',
-              'Ad Creatives',
-              'CLOTH',
-              'Social Media',
-              'Logo',
-              'Meta',
-              'Product Design',
-            ].map((category) => (
-      
-              <button
-                key={category}
-                onClick={() => setActiveDesignCategory(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-95 ${
-                  activeDesignCategory === category
-                    ? 'bg-gray-900 text-white shadow-md scale-105'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-purple-100 hover:text-purple-600 hover:border-purple-200'
-                }`}
-              >
-                {category}
-              </button>
-      
-            ))}
-      
-          </div>
-      
-      
-          {/* Designs Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      
-            {designs
-              .filter(
-                (design) =>
-                  activeDesignCategory === 'All' ||
-                  design.category === activeDesignCategory
-              )
-              .map((design, index) => (
-      
-                <div
-                  key={design.image + index}
-                  style={{ animationDelay: `${(index % 6) * 80}ms` }}
-                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up"
-                >
-      
-                  {/* Design Image */}
-                  <div className="relative w-full bg-gray-100 flex items-center justify-center">
-      
-                    <Image
-                      src={design.image}
-                      alt={`Creative design ${index + 1}`}
-                      width={1200}
-                      height={1200}
-                      className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+
+          {activeDesignCategory === null ? (
+            /* ================= FOLDER PICKER ================= */
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {designCategoryList.map((category, i) => {
+                const items = designs.filter((d) => d.category === category)
+                const cover = items[0]?.image
+                const isPink = i % 2 === 0
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveDesignCategory(category)}
+                    style={{ animationDelay: `${i * 90}ms` }}
+                    className="group relative aspect-square rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 animate-slide-in-up text-left"
+                  >
+                    {cover && (
+                      <Image
+                        src={cover}
+                        alt={category}
+                        fill
+                        className="object-cover opacity-70 group-hover:opacity-90 group-hover:scale-110 transition-all duration-500"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10 group-hover:from-black/80 transition-colors duration-300" />
+
+                    <div className="absolute top-3 right-3">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${isPink ? 'bg-pink-500/80' : 'bg-purple-500/80'}`}>
+                        <Folder size={16} className="text-white group-hover:hidden" />
+                        <FolderOpen size={16} className="text-white hidden group-hover:block" />
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <p className="text-white font-bold text-sm leading-tight">{category}</p>
+                      <p className="text-white/70 text-xs mt-1">{items.length} {items.length === 1 ? 'design' : 'designs'}</p>
+                    </div>
+
+                    {/* Sparkle accent on hover */}
+                    <Sparkle
+                      size={14}
+                      fill="currentColor"
+                      className="absolute top-3 left-3 text-white/0 group-hover:text-white/80 transition-colors duration-300 animate-pulse"
                     />
-      
-                  </div>
-      
+                  </button>
+                )
+              })}
+            </div>
+          ) : (
+            /* ================= OPENED FOLDER: IMAGES ================= */
+            <div>
+              <div className="flex items-center justify-between mb-8 animate-fade-in">
+                <button
+                  onClick={() => setActiveDesignCategory(null)}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
+                >
+                  <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
+                  Back to folders
+                </button>
+
+                <div className="inline-flex items-center gap-2">
+                  <FolderOpen size={18} className="text-purple-500" />
+                  <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
+                  <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                    {designs.filter((d) => d.category === activeDesignCategory).length}
+                  </span>
                 </div>
-      
-              ))}
-      
-          </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {designs
+                  .filter((design) => design.category === activeDesignCategory)
+                  .map((design, index) => (
+                    <div
+                      key={design.image + index}
+                      style={{ animationDelay: `${(index % 6) * 80}ms` }}
+                      className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
+                    >
+                      {/* Design Image */}
+                      <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                        <Image
+                          src={design.image}
+                          alt={`Creative design ${index + 1}`}
+                          width={1200}
+                          height={1200}
+                          className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                        />
+
+                        {/* Shine sweep on hover */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
       
         </div>
       </section>
