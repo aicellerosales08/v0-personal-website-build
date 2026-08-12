@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import {
   Menu,
@@ -15,13 +15,83 @@ import {
   Award
 } from 'lucide-react'
 
+// ================= SCROLL REVEAL HOOK =================
+// Uses the existing keyframe utilities defined in globals.css
+// (animate-fade-in, animate-slide-in-up/left/right) and only
+// applies them once an element scrolls into view.
+type RevealDirection = 'up' | 'left' | 'right' | 'fade'
+
+function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
+  const ref = useRef<T>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [threshold])
+
+  return { ref, isVisible }
+}
+
+const directionClass: Record<RevealDirection, string> = {
+  up: 'animate-slide-in-up',
+  left: 'animate-slide-in-left',
+  right: 'animate-slide-in-right',
+  fade: 'animate-fade-in',
+}
+
+function Reveal({
+  children,
+  className = '',
+  as: Tag = 'div',
+  direction = 'up',
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  as?: 'div' | 'section'
+  direction?: RevealDirection
+  delay?: number
+}) {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>()
+  const Comp = Tag as any
+  return (
+    <Comp
+      ref={ref}
+      style={isVisible ? { animationDelay: `${delay}ms` } : undefined}
+      className={`${isVisible ? directionClass[direction] : 'opacity-0'} ${className}`}
+    >
+      {children}
+    </Comp>
+  )
+}
+
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDesignCategory, setActiveDesignCategory] = useState('All')
+  const [heroLoaded, setHeroLoaded] = useState(false)
 
+  useEffect(() => {
+    const t = setTimeout(() => setHeroLoaded(true), 50)
+    return () => clearTimeout(t)
+  }, [])
 
+  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal<HTMLDivElement>(0.2)
 
   // Smooth automatic scrolling function
   const handleScrollTo = (
@@ -444,14 +514,15 @@ const designs = [
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleScrollTo(e, link.href)}
-                className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors relative group"
               >
                 {link.name}
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
             <a 
               href="mailto:aicellerosales08@gmail.com" 
-              className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+              className="px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300"
             >
               Contact Me
             </a>
@@ -468,13 +539,14 @@ const designs = [
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
-            {navLinks.map((link) => (
+          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3 animate-slide-in-up">
+            {navLinks.map((link, i) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleScrollTo(e, link.href)}
-                className="block text-sm font-medium text-gray-600 hover:text-purple-500 transition-colors py-2"
+                style={{ animationDelay: `${i * 40}ms` }}
+                className="block text-sm font-medium text-gray-600 hover:text-purple-500 hover:translate-x-1 transition-all py-2 animate-slide-in-up"
               >
                 {link.name}
               </a>
@@ -496,70 +568,72 @@ const designs = [
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="flex-1 space-y-8">
-          <div className="space-y-3">
-            <p className="text-pink-500 font-medium text-sm">Hello, I&apos;m</p>
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
-              Aicelle
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                Rosales
-              </span>
-            </h1>
-            <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
-          </div>
+        {heroLoaded && (
+          <div className="flex-1 space-y-8 animate-slide-in-left">
+            <div className="space-y-3">
+              <p className="text-pink-500 font-medium text-sm animate-fade-in">Hello, I&apos;m</p>
+              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
+                Aicelle
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  Rosales
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
+            </div>
 
-          <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-           I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
-          </p>
+            <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
+             I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+            </p>
 
-          <div className="flex gap-4 flex-wrap">
-            <a 
-              href="/rosales_aicelle_resume.pdf" 
-              download="rosales_aicelle_resume.pdf"
-              className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 group"
-            >
-              <span>Download CV</span>
-              <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
-            </a>
-            <a 
-              href="#projects"
-              onClick={(e) => handleScrollTo(e, '#projects')}
-              className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 transition-colors"
-            >
-              View Work →
-            </a>
-          </div>
+            <div className="flex gap-4 flex-wrap">
+              <a 
+                href="/rosales_aicelle_resume.pdf" 
+                download="rosales_aicelle_resume.pdf"
+                className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group"
+              >
+                <span>Download CV</span>
+                <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
+              </a>
+              <a 
+                href="#projects"
+                onClick={(e) => handleScrollTo(e, '#projects')}
+                className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                View Work →
+              </a>
+            </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-6 pt-4">
-            <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
-            <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 transition-colors flex items-center justify-center"
-                  title={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
+            {/* Social Links */}
+            <div className="flex items-center gap-6 pt-4">
+              <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
+              <div className="flex gap-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex items-center justify-center"
+                    title={social.name}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Profile Image */}
-        <div className="flex-1">
+        <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
           <div className="relative w-full max-w-md mx-auto group">
         
             {/* Glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
         
             {/* Circular Profile Container */}
-            <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-[float_6s_ease-in-out_infinite] group-hover:scale-[1.02] transition-transform duration-500">
+            <div className="relative z-10 w-[400px] h-[400px] max-w-full mx-auto rounded-full overflow-hidden border-8 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
         
               <Image
                 src="/aicelle-illustration.png"
@@ -574,7 +648,7 @@ const designs = [
         
             {/* Experience Badge */}
             <div 
-              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-[float_6s_ease-in-out_infinite]"
+              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
               style={{ animationDelay: '1.5s' }}
             >
               <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
@@ -585,8 +659,8 @@ const designs = [
         
             {/* Projects Badge */}
             <div 
-              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-[float_6s_ease-in-out_infinite]"
-              style={{ animationDelay: '3s' }}
+              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: '1s' }}
             >
               <p className="font-bold text-xl leading-none">20+</p>
               <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">
@@ -605,7 +679,7 @@ const designs = [
       </div>
 
       {/* Quote Section */}
-      <section className="bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24">
+      <Reveal as="section" direction="fade" className="bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-2xl md:text-3xl font-serif text-gray-800 italic mb-6">
             &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
@@ -614,7 +688,7 @@ const designs = [
             — Steve Jobs
           </p>
         </div>
-      </section>
+      </Reveal>
 
       {/* ================= ABOUT SECTION ================= */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
@@ -622,7 +696,7 @@ const designs = [
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
       
           {/* ================= LEFT SIDE ================= */}
-          <div className="min-w-0 flex flex-col">
+          <Reveal direction="left" className="min-w-0 flex flex-col">
       
             {/* About Me Badge */}
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6">
@@ -686,14 +760,14 @@ const designs = [
             </div>
       
             {/* ================= STATS ================= */}
-            <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70">
+            <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70 hover:shadow-lg transition-shadow duration-300">
       
               <div className="grid grid-cols-2 divide-x divide-purple-100">
       
                 {/* 50+ */}
-                <div className="flex items-center gap-4 px-2">
+                <div className="flex items-center gap-4 px-2 group">
       
-                  <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
                     <span className="text-xl text-purple-600">
                       ♧
                     </span>
@@ -718,9 +792,9 @@ const designs = [
                 </div>
       
                 {/* 20+ */}
-                <div className="flex items-center gap-4 px-4">
+                <div className="flex items-center gap-4 px-4 group">
       
-                  <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
                     <span className="text-xl text-pink-500">
                       ▣
                     </span>
@@ -747,11 +821,11 @@ const designs = [
               </div>
             </div>
       
-          </div>
+          </Reveal>
       
       
           {/* ================= RIGHT SIDE ================= */}
-          <div className="relative min-w-0 flex">
+          <Reveal direction="right" className="relative min-w-0 flex">
       
             {/* Glow */}
             <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
@@ -799,9 +873,9 @@ const designs = [
                 <div>
       
                   {/* Web Development */}
-                  <div className="flex gap-6 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
-                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
+                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                       <span className="text-2xl font-medium text-purple-600">
                         &lt;/&gt;
                       </span>
@@ -823,9 +897,9 @@ const designs = [
       
       
                   {/* UI/UX Design */}
-                  <div className="flex gap-6 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
-                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
+                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <span className="text-3xl text-pink-500">
                         ✧
                       </span>
@@ -847,9 +921,9 @@ const designs = [
       
       
                   {/* Wireframing & Prototyping */}
-                  <div className="flex gap-6 py-5 border-b border-gray-100">
+                  <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
-                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center">
+                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                       <span className="text-2xl text-purple-600">
                         ▣
                       </span>
@@ -871,9 +945,9 @@ const designs = [
       
       
                   {/* Design Systems */}
-                  <div className="flex gap-6 py-5">
+                  <div className="flex gap-6 py-5 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
-                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center">
+                    <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <span className="text-2xl text-pink-500">
                         ◫
                       </span>
@@ -897,13 +971,13 @@ const designs = [
               </div>
       
             </div>
-          </div>
+          </Reveal>
       
         </div>
       
       
         {/* ================= ANIMATED QUOTE ================= */}
-        <div className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden">
+        <Reveal direction="up" className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden">
       
           <div className="flex items-center justify-center min-h-[70px]">
       
@@ -913,7 +987,7 @@ const designs = [
       
           </div>
       
-        </div>
+        </Reveal>
       
       </section>
      {/* ================= EXPERIENCE SECTION ================= */}
@@ -921,7 +995,7 @@ const designs = [
         <div className="max-w-6xl mx-auto px-6">
       
           {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
               Experience
             </span>
@@ -934,16 +1008,16 @@ const designs = [
               My professional experience in web development, UI/UX design,
               AI data annotation, and IT technical support.
             </p>
-          </div>
+          </Reveal>
       
           {/* Experience Timeline */}
           <div className="max-w-4xl mx-auto">
       
             {/* ================= MALAMA ================= */}
-            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
@@ -1033,7 +1107,7 @@ const designs = [
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200"
                         >
                           {skill}
                         </span>
@@ -1043,14 +1117,14 @@ const designs = [
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
       
       
             {/* ================= OUTLIER ================= */}
-            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
@@ -1126,7 +1200,7 @@ const designs = [
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200"
                         >
                           {skill}
                         </span>
@@ -1136,14 +1210,14 @@ const designs = [
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
       
       
             {/* ================= TORRES TECHNOLOGY ================= */}
-            <div className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
@@ -1221,7 +1295,7 @@ const designs = [
                     </ul>
       
                     {/* OJT Certificate */}
-                    <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4">
+                    <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:bg-purple-50/50 transition-colors duration-300">
                       <div className="w-12 h-12 shrink-0 rounded-lg bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                         <Image
                           src="/ojt-certificate.png"
@@ -1256,7 +1330,7 @@ const designs = [
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200"
                         >
                           {skill}
                         </span>
@@ -1266,14 +1340,14 @@ const designs = [
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
       
       
             {/* ================= CROWDGEN PRO ================= */}
-            <div className="relative pl-8 md:pl-12 border-l-2 border-transparent">
+            <Reveal direction="left" className="relative pl-8 md:pl-12 border-l-2 border-transparent">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm" />
       
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
@@ -1337,7 +1411,7 @@ const designs = [
                       ].map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200"
                         >
                           {skill}
                         </span>
@@ -1347,7 +1421,7 @@ const designs = [
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
       
           </div>
         </div>
@@ -1357,7 +1431,7 @@ const designs = [
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
               Capabilities
             </span>
@@ -1367,13 +1441,16 @@ const designs = [
             <p className="text-gray-500 text-sm">
               My proficiency in various programming languages, frameworks, and design software tools.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill) => (
+          <div ref={skillsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skill, i) => (
               <div
                 key={skill.name}
-                className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
+                style={skillsVisible ? { animationDelay: `${i * 90}ms` } : undefined}
+                className={`group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden ${
+                  skillsVisible ? 'animate-slide-in-up' : 'opacity-0'
+                }`}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
@@ -1407,8 +1484,8 @@ const designs = [
 
                 <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full w-0 group-hover:w-full transition-all duration-1000 ease-out relative"
-                    style={{ width: skill.level }}
+                    className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out relative"
+                    style={{ width: skillsVisible ? skill.level : '0%', transitionDelay: `${i * 90 + 200}ms` }}
                   >
                     <div className="absolute inset-0 bg-white/20 animate-pulse" />
                   </div>
@@ -1421,7 +1498,7 @@ const designs = [
 
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32">
-        <div className="text-center mb-12">
+        <Reveal direction="up" className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             Featured Projects
           </h2>
@@ -1429,7 +1506,7 @@ const designs = [
           <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
             Explore my selected work across web, mobile, and system design.
           </p>
-        </div>
+        </Reveal>
       
         {/* Category Tabs */}
         <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
@@ -1437,9 +1514,9 @@ const designs = [
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-95 ${
                 activeCategory === category
-                  ? 'bg-gray-900 text-white shadow-md'
+                  ? 'bg-gray-900 text-white shadow-md scale-105'
                   : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-600'
               }`}
             >
@@ -1456,10 +1533,11 @@ const designs = [
                 activeCategory === 'All' ||
                 project.category === activeCategory
             )
-            .map((project) => (
+            .map((project, i) => (
               <div
                 key={project.title}
-                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-xl transition-all flex flex-col h-full"
+                style={{ animationDelay: `${(i % 6) * 90}ms` }}
+                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up"
               >
                 {/* Project Image */}
                 <div className="aspect-video relative overflow-hidden bg-gray-100">
@@ -1467,15 +1545,16 @@ const designs = [
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
       
                 {/* Project Content */}
                 <div className="p-6 flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="text-lg font-bold text-gray-900">
+                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
                         {project.title}
                       </h3>
       
@@ -1493,7 +1572,7 @@ const designs = [
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full"
+                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 transition-colors duration-200"
                         >
                           {tag}
                         </span>
@@ -1509,7 +1588,7 @@ const designs = [
                           href={project.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline hover:gap-2 transition-all duration-200"
                         >
                           Live Site <ExternalLink size={14} />
                         </a>
@@ -1518,7 +1597,7 @@ const designs = [
                           href={project.figma}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline"
+                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline hover:gap-2 transition-all duration-200"
                         >
                           Figma <ExternalLink size={14} />
                         </a>
@@ -1528,7 +1607,7 @@ const designs = [
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full"
+                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 hover:gap-3 border-t border-gray-100 pt-4 w-full transition-all duration-200"
                       >
                         View Project Design <ExternalLink size={15} />
                       </a>
@@ -1547,7 +1626,7 @@ const designs = [
         <div className="max-w-6xl mx-auto px-6">
       
           {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-12 space-y-4">
       
             <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
               Creative Work
@@ -1563,7 +1642,7 @@ const designs = [
               visual designs.
             </p>
       
-          </div>
+          </Reveal>
       
       
           {/* Category Tabs */}
@@ -1582,9 +1661,9 @@ const designs = [
               <button
                 key={category}
                 onClick={() => setActiveDesignCategory(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-95 ${
                   activeDesignCategory === category
-                    ? 'bg-gray-900 text-white shadow-md'
+                    ? 'bg-gray-900 text-white shadow-md scale-105'
                     : 'bg-white text-gray-600 border border-gray-200 hover:bg-purple-100 hover:text-purple-600 hover:border-purple-200'
                 }`}
               >
@@ -1609,7 +1688,8 @@ const designs = [
       
                 <div
                   key={design.image + index}
-                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl transition-all duration-300"
+                  style={{ animationDelay: `${(index % 6) * 80}ms` }}
+                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up"
                 >
       
                   {/* Design Image */}
@@ -1636,14 +1716,17 @@ const designs = [
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
-            Certifications & Achievements
-          </h2>
+          <Reveal direction="up">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center tracking-tight">
+              Certifications & Achievements
+            </h2>
+          </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certificates.map((cert) => (
+            {certificates.map((cert, i) => (
               <div
                 key={cert.title}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
+                style={{ animationDelay: `${i * 100}ms` }}
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer animate-slide-in-up"
                 onClick={() => setSelectedCert(cert)}
               >
                 {/* Certificate BADGE Display */}
@@ -1691,11 +1774,11 @@ const designs = [
       {/* Certificate Modal View */}
       {selectedCert && (
         <div
-          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
           onClick={() => setSelectedCert(null)}
         >
           <div
-            className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden flex flex-col shadow-2xl transition-all transform max-h-[90vh]"
+            className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden flex flex-col shadow-2xl max-h-[90vh] animate-slide-in-up"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
@@ -1705,7 +1788,7 @@ const designs = [
               </div>
               <button
                 onClick={() => setSelectedCert(null)}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-gray-400 hover:text-gray-600 hover:rotate-90 p-1 rounded-lg hover:bg-gray-50 transition-all duration-300"
               >
                 <X size={24} />
               </button>
@@ -1732,7 +1815,7 @@ const designs = [
               <a
                 href={selectedCert.image}
                 download
-                className="px-5 py-2 text-sm bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors flex items-center gap-1.5"
+                className="px-5 py-2 text-sm bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 hover:scale-105 transition-all duration-300 flex items-center gap-1.5"
               >
                 <Download size={16} />
                 Download
@@ -1743,7 +1826,7 @@ const designs = [
       )}
 
       {/* Contact Banner */}
-      <section className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
+      <Reveal as="section" direction="up" className="bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Let&apos;s Create Something Amazing
@@ -1753,13 +1836,13 @@ const designs = [
           </p>
           <a 
             href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
-            className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 transition-colors inline-flex items-center gap-2 shadow-lg"
+            className="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 shadow-lg"
           >
             Get In Touch
             <Mail size={18} />
           </a>
         </div>
-      </section>
+      </Reveal>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 border-t border-gray-800">
@@ -1779,7 +1862,7 @@ const designs = [
                     <a 
                       href={link.href} 
                       onClick={(e) => handleScrollTo(e, link.href)}
-                      className="hover:text-white transition-colors"
+                      className="hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
                     >
                       {link.name}
                     </a>
@@ -1797,7 +1880,7 @@ const designs = [
                     href={social.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 transition-all flex items-center justify-center" 
+                    className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center" 
                     title={social.name}
                   >
                     {social.icon}
