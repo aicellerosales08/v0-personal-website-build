@@ -1024,7 +1024,7 @@ const designs = [
       title: 'Converter System',
       description: 'A multi-purpose converter application that provides real-time currency conversion and supports various unit conversions, including length, weight, temperature, and volume, with a clean and intuitive user experience.',
       tags: ['System Design', 'Utility', 'Mobile'],
-      image: '/converter.jpg',
+      image: '/CURRENCY CONVERTER.jpg',
       link: 'https://www.figma.com/design/HTviG6YNluJ5W8Uc1N5QxL/CONVERTER-SYSTEM?node-id=0-1&p=f&t=4H0fPzfBfzBv1hOp-0',
       category: 'System',
     },
