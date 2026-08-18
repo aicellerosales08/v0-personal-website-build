@@ -352,7 +352,7 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: Cha
   {
     keywords: ['cv', 'resume', 'download'],
     reply: "You can download her CV right from the hero section — look for the 'Download CV' button near the top of the page! 📄",
-    action: { label: 'Download CV', href: '/rosales_aicelle_resume.pdf' },
+    action: { label: 'Download CV', href: '/Aicelle_R_Resume.pdf'},
   },
   {
     keywords: ['thank', 'thanks', 'salamat'],
