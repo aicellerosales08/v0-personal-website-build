@@ -1048,7 +1048,7 @@ const designs = [
       title: 'Aura Co. Website',
       description: 'A professional corporate website featuring modern design principles, responsive layouts, service presentation, company information, and user-focused navigation to enhance the overall digital experience.',
       tags: ['Web Design', 'UI/UX', 'Figma'],
-      image: '/auroandco.png',
+      image: '/aura&conewbg.png',
       link: 'https://www.figma.com/design/58HwSxAIXk6U9hnIUc4NFc/Aura---Co.-Website?node-id=0-1&p=f&t=jCM8KGTrnHvm9W19-0',
       category: 'Web',
     },
