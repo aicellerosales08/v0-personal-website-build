@@ -1132,6 +1132,15 @@ const designs = [
       link: 'https://www.figma.com/design/qdXZXMKLUHG7Aslk3HliK0/E-COMMERCE-WEBSITE?node-id=0-1&p=f&t=US3ria2yltkMHbLp-0',
       category: 'Web',
     },
+    {
+      title: 'Codekeeper - About Us Redesign',
+      description: 'A modern About Us page redesign created for Codekeeper, focused on improving visual hierarchy, brand presentation, and user experience through a clean and professional web design.',
+      tags: ['Web Design', 'UI/UX', 'Website Redesign'],
+      image: '/codekeeper-about-us.png',
+      link: 'https://www.figma.com/design/8ozBiDxdouvCTCwCs07Nr7/CODEKEEPER-ABOUT-US-REDESIGN-TRIAL?node-id=0-1&p=f&t=2XmRObcCFuYf0EkN-0',
+      category: 'Trial',
+    },
+    
   ]
 
   // UPDATED: Added TikTok, GitHub, and Discord
