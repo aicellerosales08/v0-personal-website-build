@@ -1016,7 +1016,7 @@ const designs = [
       title: 'Bank System',
       description: 'A modern banking application system featuring secure account management, transaction processing, fund transfers, balance tracking, and financial reporting with a focus on usability, security, and efficient banking operations.',
       tags: ['System ', 'Finance', 'UI/UX'],
-      image: '/banknewbg.png',
+      image: '/banknewbg(2).png',
       link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&t=A3LZYwdV0pN0An9C-1',
       category: 'System',
     },
