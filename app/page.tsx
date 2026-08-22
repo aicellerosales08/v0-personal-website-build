@@ -1144,7 +1144,7 @@ const designs = [
       title: 'BusyBee',
       description: 'A modern web design concept for BusyBee, focused on creating a clean, engaging, and user-friendly digital experience with clear visual hierarchy and intuitive navigation.',
       tags: ['Web Design', 'UI/UX', 'Website Design'],
-      image: '/busybee.png',
+      image: '/busybeenew.png',
       link: 'https://www.figma.com/design/upS0KtTGWiYRcYSo2nA4AA/BusyBee?t=2XmRObcCFuYf0EkN-0',
       category: 'Trial',
     },
