@@ -1072,7 +1072,7 @@ const designs = [
       title: 'Digi Academia Website',
       description: 'A modern educational web platform that supports digital learning through course management, student engagement tools, educational resources, and an intuitive interface designed to improve the learning experience.',
       tags: ['Web Design', 'Education', 'UI/UX'],
-      image: '/digiacademia.png',
+      image: '/loginpagenewbg.jpg',
       link: 'https://www.figma.com/design/9uQZnejw6o8yXbFgYxBLyU/DIGI-ACADEMIA-WEBSITE?node-id=0-1&p=f&t=MDYmfWXRw2fz8TBD-0',
       category: 'Web',
     },
