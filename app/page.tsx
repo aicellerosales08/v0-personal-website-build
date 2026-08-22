@@ -1140,6 +1140,14 @@ const designs = [
       link: 'https://www.figma.com/design/8ozBiDxdouvCTCwCs07Nr7/CODEKEEPER-ABOUT-US-REDESIGN-TRIAL?node-id=0-1&p=f&t=2XmRObcCFuYf0EkN-0',
       category: 'Trial',
     },
+    {
+      title: 'BusyBee',
+      description: 'A modern web design concept for BusyBee, focused on creating a clean, engaging, and user-friendly digital experience with clear visual hierarchy and intuitive navigation.',
+      tags: ['Web Design', 'UI/UX', 'Website Design'],
+      image: '/busybee.png',
+      link: 'https://www.figma.com/design/upS0KtTGWiYRcYSo2nA4AA/BusyBee?t=2XmRObcCFuYf0EkN-0',
+      category: 'Trial',
+    },
     
   ]
 
