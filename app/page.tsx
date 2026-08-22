@@ -1032,7 +1032,7 @@ const designs = [
       title: 'Freshly Dropped',
       description: 'A comprehensive food delivery and marketplace platform designed to streamline online ordering, vendor management, product discovery, and real-time delivery tracking through an intuitive and user-friendly interface.',
       tags: ['E-Commerce', 'Mobile', 'Food Delivery'],
-      image: '/freshly-dropped.png',
+      image: '/freshlydropnew.png',
       link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
       category: 'Mobile',
     },
