@@ -1088,7 +1088,7 @@ const designs = [
       title: 'FilmTrack Website',
       description: 'A modern movie tracking platform that allows users to browse films, maintain personal watchlists, share reviews, rate content, and stay updated with the latest movie releases.',
       tags: ['PHP', 'Web App', 'UI/UX'],
-      image: '/filmtrack.png',
+      image: '/filmtracknewbg.png',
       link: 'https://www.figma.com/design/bLes37eN9u3aa13n4X2n4b/FILMTRACK-WEBSITE-PHP?node-id=0-1&p=f&t=xNK21DHHM5u1Y183-0',
       category: 'Web',
     },
