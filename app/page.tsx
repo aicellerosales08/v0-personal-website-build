@@ -1096,7 +1096,7 @@ const designs = [
       title: 'Travel Mobile App',
       description: 'A comprehensive travel platform that simplifies trip planning by offering destination exploration, itinerary management, accommodation booking, and travel recommendations in a modern and intuitive interface.',
       tags: ['Mobile', 'Travel', 'UI Design'],
-      image: '/travel.png',
+      image: '/travelnew.png',
       link: 'https://www.figma.com/design/pPCwRmSdrq87AmdbtKWzv2/TRAVEL-MOBILE-APP?node-id=0-1&p=f&t=wP5c9EjzJ7jOpFxn-0',
       category: 'Mobile'
     },
