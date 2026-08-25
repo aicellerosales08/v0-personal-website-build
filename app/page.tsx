@@ -1056,7 +1056,7 @@ const designs = [
       title: 'LifeHaven iOS App',
       description: 'A comprehensive health and wellness platform that promotes healthy lifestyles by providing fitness tracking, wellness monitoring, personalized goals, and easy access to health-related information.',
       tags: ['iOS', 'Mobile', 'Health App'],
-      image: '/lifehaven.png',
+      image: '/lifehavennew.png',
       link: 'https://www.figma.com/design/lcpe4JHUmionm4yfgHjnZ0/LIFEHAVEN-IOS-APP?node-id=0-1&p=f&t=JaCsUwDSOA9bcute-0',
       category: 'Mobile',
     },
