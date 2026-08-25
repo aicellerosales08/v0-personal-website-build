@@ -1064,7 +1064,7 @@ const designs = [
       title: 'Pizza Mobile App',
       description: 'A user-friendly food delivery platform that streamlines the ordering process by providing restaurant browsing, menu management, order tracking, and fast delivery services through a responsive mobile interface.',
       tags: ['Mobile App', 'E-Commerce', 'UI/UX'],
-      image: '/pizza.png',
+      image: '/newpizza.png',
       link: 'https://www.figma.com/design/32TNLdaicalexwMrWKmWra/PIZZA-MOBILE-APP?node-id=0-1&p=f&t=RqTLXYmj0jULqNZZ-0',
       category: 'Mobile',
     },
