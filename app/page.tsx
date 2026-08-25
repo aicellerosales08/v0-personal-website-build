@@ -1136,7 +1136,7 @@ const designs = [
       title: 'Codekeeper - About Us Redesign',
       description: 'A modern About Us page redesign created for Codekeeper, focused on improving visual hierarchy, brand presentation, and user experience through a clean and professional web design.',
       tags: ['Web Design', 'UI/UX', 'Website Redesign'],
-      image: '/1786220439506.jpg',
+      image: '/1786219645455.jpg',
       link: 'https://www.figma.com/design/8ozBiDxdouvCTCwCs07Nr7/CODEKEEPER-ABOUT-US-REDESIGN-TRIAL?node-id=0-1&p=f&t=2XmRObcCFuYf0EkN-0',
       category: 'Trial',
     },
