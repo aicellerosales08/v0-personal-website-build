@@ -1080,7 +1080,7 @@ const designs = [
       title: 'Skincare Mobile App',
       description: 'A modern skincare and beauty platform that offers personalized product recommendations, skincare tracking, beauty tips, and a seamless shopping experience through an intuitive mobile interface.',
       tags: ['Mobile', 'Beauty', 'UI Design'],
-      image: '/skincare.png',
+      image: '/skincarenew.png',
       link: 'https://www.figma.com/design/HnbGL83GBrmEbUxXdlDTzY/SKINCARE-MOBILE-APP?node-id=0-1&p=f&t=ayOWQcWdiaMiR1C0-0',
       category: 'Mobile',
     },
