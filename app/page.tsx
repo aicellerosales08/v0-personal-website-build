@@ -607,6 +607,7 @@ export default function Portfolio() {
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDesignCategory, setActiveDesignCategory] = useState<string | null>(null)
+  const [activeSubFolder, setActiveSubFolder] = useState<string | null>(null)
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [quoteIndex, setQuoteIndex] = useState(0)
 
@@ -821,74 +822,26 @@ export default function Portfolio() {
 
 
 const designs = [
-  {
-    image: '/AD1.png',
-    category: 'Ad Creatives',
-  },
-  {
-    image: '/AD2.png',
-    category: 'Ad Creatives',
-  },
-  {
-    image: '/AD3.png',
-    category: 'Ad Creatives',
-  },
-  {
-    image: '/AD4.png',
-    category: 'Ad Creatives',
-  },
-  {
-    image: '/AD5.png',
-    category: 'Ad Creatives',
-  },
-  {
-    image: '/AD6.png',
-    category: 'Ad Creatives',
-  },
+  { image: '/AD1.png', category: 'Ad Creatives', subFolder: 'Set 1' },
+  { image: '/AD2.png', category: 'Ad Creatives', subFolder: 'Set 1' },
+  { image: '/AD3.png', category: 'Ad Creatives', subFolder: 'Set 1' },
+  { image: '/AD4.png', category: 'Ad Creatives', subFolder: 'Set 2' },
+  { image: '/AD5.png', category: 'Ad Creatives', subFolder: 'Set 2' },
+  { image: '/AD6.png', category: 'Ad Creatives', subFolder: 'Set 2' },
 
 
 
   
-  {
-    image: '/Cloth1.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth2.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth3.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth4.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth5.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth9.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth10.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth11.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth12.png',
-    category: 'CLOTH',
-  },
-    {
-    image: '/Cloth13.png',
-    category: 'CLOTH',
-  },
+  { image: '/Cloth1.png', category: 'CLOTH', subFolder: 'Set 1' },
+  { image: '/Cloth2.png', category: 'CLOTH', subFolder: 'Set 1' },
+  { image: '/Cloth3.png', category: 'CLOTH', subFolder: 'Set 1' },
+  { image: '/Cloth4.png', category: 'CLOTH', subFolder: 'Set 1' },
+  { image: '/Cloth5.png', category: 'CLOTH', subFolder: 'Set 1' },
+  { image: '/Cloth9.png', category: 'CLOTH', subFolder: 'Set 2' },
+  { image: '/Cloth10.png', category: 'CLOTH', subFolder: 'Set 2' },
+  { image: '/Cloth11.png', category: 'CLOTH', subFolder: 'Set 2' },
+  { image: '/Cloth12.png', category: 'CLOTH', subFolder: 'Set 2' },
+  { image: '/Cloth13.png', category: 'CLOTH', subFolder: 'Set 2' },
 
 
 
@@ -897,39 +850,21 @@ const designs = [
 
 
   
-  {
-    image: '/design-social-media.png',
-    category: 'Social Media',
-  },
+  { image: '/design-social-media.png', category: 'Social Media' },
 
 
 
 
   
-  {
-    image: '/design-logo.png',
-    category: 'Logo',
-  },
+  { image: '/design-logo.png', category: 'Logo' },
 
 
 
   
-  {
-    image: '/Meta1.png',
-    category: 'Meta',
-  },
-   {
-    image: '/Meta2.png',
-    category: 'Meta',
-  },
-   {
-    image: '/Meta3.png',
-    category: 'Meta',
-  },
-   {
-    image: '/Meta4.png',
-    category: 'Meta',
-  },
+  { image: '/Meta1.png', category: 'Meta', subFolder: 'Set 1' },
+  { image: '/Meta2.png', category: 'Meta', subFolder: 'Set 1' },
+  { image: '/Meta3.png', category: 'Meta', subFolder: 'Set 1' },
+  { image: '/Meta4.png', category: 'Meta', subFolder: 'Set 1' },
 
 
 
@@ -938,58 +873,19 @@ const designs = [
 
 
   
-  {
-    image: '/Product2.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product3.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product4.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product5.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product6.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product7.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product8.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product9.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product10.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product11.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product12.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product13.png',
-    category: 'Product Design',
-  },
-    {
-    image: '/Product14.png',
-    category: 'Product Design',
-  },
+  { image: '/Product2.png', category: 'Product Design', subFolder: 'Set 1' },
+  { image: '/Product3.png', category: 'Product Design', subFolder: 'Set 1' },
+  { image: '/Product4.png', category: 'Product Design', subFolder: 'Set 1' },
+  { image: '/Product5.png', category: 'Product Design', subFolder: 'Set 1' },
+  { image: '/Product6.png', category: 'Product Design', subFolder: 'Set 2' },
+  { image: '/Product7.png', category: 'Product Design', subFolder: 'Set 2' },
+  { image: '/Product8.png', category: 'Product Design', subFolder: 'Set 2' },
+  { image: '/Product9.png', category: 'Product Design', subFolder: 'Set 2' },
+  { image: '/Product10.png', category: 'Product Design', subFolder: 'Set 3' },
+  { image: '/Product11.png', category: 'Product Design', subFolder: 'Set 3' },
+  { image: '/Product12.png', category: 'Product Design', subFolder: 'Set 3' },
+  { image: '/Product13.png', category: 'Product Design', subFolder: 'Set 3' },
+  { image: '/Product14.png', category: 'Product Design', subFolder: 'Set 3' },
 ]
   const designCategoryList = designs
     .map((d) => d.category)
@@ -1396,7 +1292,7 @@ const designs = [
             </div>
 
             <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-             I’m a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+             I'm a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
             </p>
 
             <div className="flex gap-4 flex-wrap">
@@ -2643,7 +2539,7 @@ const designs = [
           </Reveal>
 
           {activeDesignCategory === null ? (
-            /* ================= FOLDER PICKER (styled like Project cards) ================= */
+            /* ============ LEVEL 1: CATEGORY FOLDERS ============ */
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {designCategoryList.map((category, i) => {
                 const items = designs.filter((d) => d.category === category)
@@ -2708,37 +2604,103 @@ const designs = [
                 )
               })}
             </div>
-          ) : (
-            /* ================= OPENED FOLDER: IMAGES ================= */
-            <div>
-              <div className="flex items-center justify-between mb-8 animate-fade-in">
-                <button
-                  onClick={() => setActiveDesignCategory(null)}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
-                >
-                  <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
-                  Back to folders
-                </button>
+          ) : (() => {
+            // Sub-folders that exist inside the currently opened category
+            const itemsInCategory = designs.filter((d) => d.category === activeDesignCategory)
+            const subFolderList = itemsInCategory
+              .map((d) => d.subFolder)
+              .filter((s): s is string => Boolean(s))
+              .filter((s, idx, arr) => arr.indexOf(s) === idx)
+            const hasSubFolders = subFolderList.length > 1
 
-                <div className="inline-flex items-center gap-2">
-                  <FolderOpen size={18} className="text-purple-500" />
-                  <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
-                  <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
-                    {designs.filter((d) => d.category === activeDesignCategory).length}
-                  </span>
+            if (hasSubFolders && activeSubFolder === null) {
+              /* ============ LEVEL 2: SUB-FOLDERS INSIDE THE CATEGORY ============ */
+              return (
+                <div>
+                  <div className="flex items-center justify-between mb-8 animate-fade-in">
+                    <button
+                      onClick={() => setActiveDesignCategory(null)}
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
+                    >
+                      <ArrowLeft size={16} />
+                      Back to categories
+                    </button>
+                    <div className="inline-flex items-center gap-2">
+                      <FolderOpen size={18} className="text-purple-500" />
+                      <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {subFolderList.map((sub, i) => {
+                      const subItems = itemsInCategory.filter((d) => d.subFolder === sub)
+                      const cover = subItems[0]?.image
+                      return (
+                        <button
+                          key={sub}
+                          onClick={() => setActiveSubFolder(sub)}
+                          style={{ animationDelay: `${i * 90}ms` }}
+                          className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
+                        >
+                          <div className="aspect-video relative overflow-hidden bg-gray-100">
+                            {cover && (
+                              <Image src={cover} alt={sub} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                            )}
+                            <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm">
+                              <Folder size={16} className="text-purple-500 group-hover:hidden" />
+                              <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
+                            </div>
+                          </div>
+                          <div className="p-6 flex items-center justify-between">
+                            <h4 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{sub}</h4>
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
+                              {subItems.length}
+                            </span>
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
-              </div>
+              )
+            }
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {designs
-                  .filter((design) => design.category === activeDesignCategory)
-                  .map((design, index) => (
+            /* ============ LEVEL 3 (or level 2 if no sub-folders): IMAGES ============ */
+            const imagesToShow = activeSubFolder
+              ? itemsInCategory.filter((d) => d.subFolder === activeSubFolder)
+              : itemsInCategory
+
+            return (
+              <div>
+                <div className="flex items-center justify-between mb-8 animate-fade-in">
+                  <button
+                    onClick={() => {
+                      if (activeSubFolder) setActiveSubFolder(null)
+                      else setActiveDesignCategory(null)
+                    }}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
+                  >
+                    <ArrowLeft size={16} />
+                    {activeSubFolder ? `Back to ${activeDesignCategory}` : 'Back to categories'}
+                  </button>
+                  <div className="inline-flex items-center gap-2">
+                    <FolderOpen size={18} className="text-purple-500" />
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {activeDesignCategory}{activeSubFolder ? ` / ${activeSubFolder}` : ''}
+                    </h3>
+                    <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                      {imagesToShow.length}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {imagesToShow.map((design, index) => (
                     <div
                       key={design.image + index}
                       style={{ animationDelay: `${(index % 6) * 80}ms` }}
                       className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
                     >
-                      {/* Design Image */}
                       <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
                         <Image
                           src={design.image}
@@ -2747,17 +2709,16 @@ const designs = [
                           height={1200}
                           className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
                         />
-
-                        {/* Shine sweep on hover */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none">
                           <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
                         </div>
                       </div>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
-          )}
+            )
+          })()}
       
         </div>
       </section>
