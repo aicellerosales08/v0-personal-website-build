@@ -836,7 +836,6 @@ const designs = [
   { image: '/AICELLEROSALESSALMPLEWORK11.png', category: 'Ad Creatives', subFolder: 'Set 1' },
   { image: '/AICELLEROSALESSALMPLEWORK12.png', category: 'Ad Creatives', subFolder: 'Set 1' },
   { image: '/AICELLEROSALESSALMPLEWORK13.png', category: 'Ad Creatives', subFolder: 'Set 1' },
-  { image: '/AICELLEROSALESSALMPLEWORK14.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/AICELLEROSALESSALMPLEWORK15.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/AICELLEROSALESSALMPLEWORK16.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/AICELLEROSALESSALMPLEWORK17.png', category: 'Ad Creatives', subFolder: 'Set 2' },
