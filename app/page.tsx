@@ -851,7 +851,10 @@ const designs = [
   { image: '/1.png', category: 'Ad Creatives', subFolder: 'Set 3' },
   { image: '/2.png', category: 'Ad Creatives', subFolder: 'Set 3' },
   { image: '/3.png', category: 'Ad Creatives', subFolder: 'Set 3' },
-
+  { image: '/beauty1.png', category: 'Ad Creatives', subFolder: 'Set 4' },
+  { image: '/beauty2.png', category: 'Ad Creatives', subFolder: 'Set 4' },
+  { image: '/beauty3.png', category: 'Ad Creatives', subFolder: 'Set 4' },
+  { image: '/beauty4.png', category: 'Ad Creatives', subFolder: 'Set 4' },
 
   
   { image: '/Cloth1.png', category: 'CLOTH', subFolder: 'Set 1' },
