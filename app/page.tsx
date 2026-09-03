@@ -959,7 +959,6 @@ const designs = [
   { image: '/foodad3.png', category: 'Ad Creatives', subFolder: 'Set 6' },
   { image: '/foodad4.png', category: 'Ad Creatives', subFolder: 'Set 6' },
   { image: '/foodad5.png', category: 'Ad Creatives', subFolder: 'Set 6' },
-  { image: '/foodad6.png', category: 'Ad Creatives', subFolder: 'Set 6' },
   
   { image: '/Cloth1.png', category: 'CLOTH', subFolder: 'Set 1' },
   { image: '/Cloth2.png', category: 'CLOTH', subFolder: 'Set 1' },
