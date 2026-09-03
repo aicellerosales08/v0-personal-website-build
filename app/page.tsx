@@ -73,9 +73,6 @@ import {
 } from 'lucide-react'
 
 // ================= SCROLL REVEAL HOOK =================
-// Uses the existing keyframe utilities defined in globals.css
-// (animate-fade-in, animate-slide-in-up/left/right) and only
-// applies them once an element scrolls into view.
 type RevealDirection = 'up' | 'left' | 'right' | 'fade'
 
 function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
@@ -165,6 +162,85 @@ function CountUp({ end, suffix = '', duration = 1200 }: { end: number; suffix?: 
   )
 }
 
+// ================= LIKE / HEART HELPERS =================
+// Deterministic "seed" number per item so the like count doesn't look empty
+// on first load. Real likes (from this device) are added on top of this seed.
+function seededLikeCount(key: string, min = 3, max = 41) {
+  let hash = 0
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash << 5) - hash + key.charCodeAt(i)
+    hash |= 0
+  }
+  const range = max - min + 1
+  return min + (Math.abs(hash) % range)
+}
+
+const LIKED_PROJECTS_KEY = 'portfolio_liked_projects'
+const LIKED_DESIGNS_KEY = 'portfolio_liked_designs'
+
+function loadLikedSet(storageKey: string): Set<string> {
+  if (typeof window === 'undefined') return new Set()
+  try {
+    const raw = window.localStorage.getItem(storageKey)
+    if (!raw) return new Set()
+    const arr = JSON.parse(raw)
+    return new Set(Array.isArray(arr) ? arr : [])
+  } catch {
+    return new Set()
+  }
+}
+
+function saveLikedSet(storageKey: string, set: Set<string>) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(Array.from(set)))
+  } catch {
+    // localStorage unavailable — fail silently
+  }
+}
+
+function HeartLikeButton({
+  itemKey,
+  liked,
+  onToggle,
+  size = 'md',
+}: {
+  itemKey: string
+  liked: boolean
+  onToggle: () => void
+  size?: 'sm' | 'md'
+}) {
+  const baseCount = seededLikeCount(itemKey)
+  const displayCount = baseCount + (liked ? 1 : 0)
+  const dims = size === 'sm' ? 'px-2.5 py-1 text-[11px] gap-1' : 'px-3 py-1.5 text-xs gap-1.5'
+  const iconSize = size === 'sm' ? 12 : 14
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onToggle()
+      }}
+      className={`inline-flex items-center ${dims} rounded-full font-bold backdrop-blur-sm shadow-sm transition-all duration-200 active:scale-90 hover:scale-105 ${
+        liked
+          ? 'bg-pink-500 text-white'
+          : 'bg-white/90 text-gray-600 hover:text-pink-500'
+      }`}
+      aria-pressed={liked}
+      aria-label={liked ? 'Unlike' : 'Like'}
+    >
+      <Heart
+        size={iconSize}
+        fill={liked ? 'currentColor' : 'none'}
+        className={liked ? 'animate-[pulse_0.4s_ease-in-out]' : ''}
+      />
+      {displayCount}
+    </button>
+  )
+}
+
 const categoryIcons: Record<string, any> = {
   'Development': Code2,
   'Web Design & Development': Globe,
@@ -189,7 +265,6 @@ function SkillGroupBlock({
 
   return (
     <div className="relative">
-      {/* Ambient floating sparkle per category */}
       <Sparkle
         size={14}
         fill="currentColor"
@@ -229,15 +304,12 @@ function SkillGroupBlock({
                 isVisible ? 'animate-slide-in-up' : 'opacity-0'
               }`}
             >
-              {/* Hover glow wash */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              {/* Diagonal shine sweep on hover */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -inset-y-4 -left-1/2 w-1/3 bg-white/40 rotate-12 -translate-x-[200%] group-hover:translate-x-[500%] transition-transform duration-[1200ms] ease-out" />
               </div>
 
-              {/* Expert sparkle badge */}
               {isExpert && (
                 <Sparkle
                   size={14}
@@ -295,8 +367,6 @@ function SkillGroupBlock({
 }
 
 // ================= CHAT WIDGET ================= //
-// A friendly floating chatbot that answers common questions about Aicelle
-// using simple keyword matching — no external API required.
 type ChatAction = { label: string; href: string }
 type ChatMessage = { id: number; sender: 'bot' | 'user'; text: string; action?: ChatAction }
 
@@ -441,10 +511,8 @@ function ChatWidget() {
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
-      {/* Chat window */}
       {isOpen && (
         <div className="w-[92vw] max-w-sm h-[70vh] max-h-[520px] bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden animate-slide-in-up">
-          {/* Header */}
           <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 px-5 py-4 flex items-center justify-between overflow-hidden">
             <Sparkle size={14} fill="currentColor" className="absolute top-2 right-16 text-white/30 animate-float" />
             <Sparkle size={10} fill="currentColor" className="absolute bottom-2 right-24 text-white/20 animate-float" style={{ animationDelay: '1s' }} />
@@ -473,7 +541,6 @@ function ChatWidget() {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-purple-50/40 to-pink-50/20">
             {messages.map((msg) => (
               <div
@@ -514,7 +581,6 @@ function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick replies */}
           {messages.length <= 2 && (
             <div className="px-4 pb-2 flex flex-wrap gap-2">
               {chatQuickReplies.map((q, i) => (
@@ -530,7 +596,6 @@ function ChatWidget() {
             </div>
           )}
 
-          {/* Input */}
           <form
             onSubmit={(e) => {
               e.preventDefault()
@@ -557,7 +622,6 @@ function ChatWidget() {
         </div>
       )}
 
-      {/* Teaser bubble */}
       {showTeaser && !isOpen && !hasOpenedOnce && (
         <div className="mr-1 mb-1 bg-white rounded-2xl rounded-br-sm shadow-lg border border-purple-100 px-4 py-2.5 max-w-[220px] animate-slide-in-up relative">
           <button
@@ -573,13 +637,11 @@ function ChatWidget() {
         </div>
       )}
 
-      {/* Floating toggle button */}
       <button
         onClick={handleToggle}
         className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all duration-300 group"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
-        {/* Glow pulse ring */}
         {!isOpen && <span className="absolute inset-0 rounded-full bg-purple-400/50 blur-md animate-glow" />}
 
         <span className="relative">
@@ -590,7 +652,6 @@ function ChatWidget() {
           )}
         </span>
 
-        {/* Notification dot */}
         {!isOpen && !hasOpenedOnce && (
           <span className="absolute -top-1 -right-1 flex h-4 w-4">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-300 opacity-75" />
@@ -610,6 +671,35 @@ export default function Portfolio() {
   const [activeSubFolder, setActiveSubFolder] = useState<string | null>(null)
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [quoteIndex, setQuoteIndex] = useState(0)
+
+  // ================= LIKES (per-device, saved in localStorage) =================
+  const [likedProjects, setLikedProjects] = useState<Set<string>>(new Set())
+  const [likedDesigns, setLikedDesigns] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    setLikedProjects(loadLikedSet(LIKED_PROJECTS_KEY))
+    setLikedDesigns(loadLikedSet(LIKED_DESIGNS_KEY))
+  }, [])
+
+  const toggleProjectLike = (title: string) => {
+    setLikedProjects((prev) => {
+      const next = new Set(prev)
+      if (next.has(title)) next.delete(title)
+      else next.add(title)
+      saveLikedSet(LIKED_PROJECTS_KEY, next)
+      return next
+    })
+  }
+
+  const toggleDesignLike = (imagePath: string) => {
+    setLikedDesigns((prev) => {
+      const next = new Set(prev)
+      if (next.has(imagePath)) next.delete(imagePath)
+      else next.add(imagePath)
+      saveLikedSet(LIKED_DESIGNS_KEY, next)
+      return next
+    })
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -690,10 +780,6 @@ export default function Portfolio() {
     { name: 'Certificates', href: '#certificates' },
   ]
 
-  // Full breakdown based on the "Skills & Tools" progress chart on your GitHub profile.
-  // Entries with an `icon` string use a local /public logo image (same as before).
-  // Entries with a `lucideIcon` use a lucide-react icon as a placeholder —
-  // swap these for real logo PNGs in /public anytime by adding an `icon` path instead.
   const skillGroups = [
     {
       category: 'Development',
@@ -886,36 +972,15 @@ const designs = [
   { image: '/Cloth12.png', category: 'CLOTH', subFolder: 'Set 2' },
   { image: '/Cloth13.png', category: 'CLOTH', subFolder: 'Set 2' },
 
-
-
-
-
-
-
-  
   { image: '/design-social-media.png', category: 'Social Media' },
 
-
-
-
-  
   { image: '/design-logo.png', category: 'Logo' },
 
-
-
-  
   { image: '/Meta1.png', category: 'Meta', subFolder: 'Set 1' },
   { image: '/Meta2.png', category: 'Meta', subFolder: 'Set 1' },
   { image: '/Meta3.png', category: 'Meta', subFolder: 'Set 1' },
   { image: '/Meta4.png', category: 'Meta', subFolder: 'Set 1' },
 
-
-
-
-
-
-
-  
   { image: '/Product2.png', category: 'Product Design', subFolder: 'Set 1' },
   { image: '/Product3.png', category: 'Product Design', subFolder: 'Set 1' },
   { image: '/Product4.png', category: 'Product Design', subFolder: 'Set 1' },
@@ -1089,7 +1154,6 @@ const designs = [
     
   ]
 
-  // UPDATED: Added TikTok, GitHub, and Discord
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
@@ -1321,7 +1385,6 @@ const designs = [
 
               <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
 
-              {/* Rotating cute tagline */}
               <div className="h-6 overflow-hidden">
                 <p
                   key={quoteIndex}
@@ -1355,7 +1418,6 @@ const designs = [
               </a>
             </div>
 
-            {/* Social Links */}
             <div className="flex items-center gap-6 pt-4">
               <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
               <div className="flex gap-3">
@@ -1397,19 +1459,15 @@ const designs = [
         <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
           <div className="relative w-full max-w-lg mx-auto group">
 
-            {/* Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
 
-            {/* Rotating dashed girly frame */}
             <div className="absolute -inset-4 rounded-full border-2 border-dashed border-pink-300/70 animate-[spin_18s_linear_infinite] pointer-events-none" />
             <div className="absolute -inset-8 rounded-full border border-dotted border-purple-200/60 animate-[spin_26s_linear_infinite_reverse] pointer-events-none" />
 
-            {/* Twinkling dot accents */}
             <span className="absolute top-2 left-10 w-2 h-2 rounded-full bg-pink-400 animate-ping [animation-duration:2.5s]" />
             <span className="absolute bottom-6 right-6 w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping [animation-duration:3.2s]" style={{ animationDelay: '0.6s' }} />
             <span className="absolute top-1/3 -right-2 w-1.5 h-1.5 rounded-full bg-pink-300 animate-ping [animation-duration:2s]" style={{ animationDelay: '1.1s' }} />
 
-            {/* Floating Sparkles */}
             <div
               className="absolute -top-3 left-6 z-20 text-pink-500 animate-float drop-shadow-sm"
               style={{ animationDelay: '0.3s' }}
@@ -1424,7 +1482,6 @@ const designs = [
               <Sparkle size={20} fill="currentColor" strokeWidth={1} />
             </div>
 
-            {/* Floating Heart */}
             <div
               className="absolute bottom-1/4 -right-5 z-20 text-pink-500 animate-float"
               style={{ animationDelay: '0.9s' }}
@@ -1432,7 +1489,6 @@ const designs = [
               <Heart size={26} fill="currentColor" className="drop-shadow-sm" />
             </div>
 
-            {/* Floating Star */}
             <div
               className="absolute -bottom-2 right-16 z-20 text-purple-400 animate-float"
               style={{ animationDelay: '2.2s' }}
@@ -1440,7 +1496,6 @@ const designs = [
               <Star size={22} fill="currentColor" className="animate-[spin_10s_linear_infinite]" />
             </div>
 
-            {/* Small pink heart bottom-left */}
             <div
               className="absolute bottom-1/3 -left-4 z-20 text-pink-300 animate-float"
               style={{ animationDelay: '1.4s' }}
@@ -1448,7 +1503,6 @@ const designs = [
               <Heart size={16} fill="currentColor" />
             </div>
 
-            {/* Circular Profile Container */}
             <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
 
               <Image
@@ -1462,7 +1516,6 @@ const designs = [
 
             </div>
 
-            {/* Experience Badge */}
             <div 
               className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
               style={{ animationDelay: '1.5s' }}
@@ -1473,7 +1526,6 @@ const designs = [
               </p>
             </div>
         
-            {/* Projects Badge */}
             <div 
               className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
               style={{ animationDelay: '1s' }}
@@ -1496,10 +1548,8 @@ const designs = [
 
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
-        {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
 
-        {/* Floating decorative sparkles around the quote */}
         <Sparkles
           size={26}
           className="absolute top-8 left-[15%] text-purple-300 animate-float"
@@ -1524,7 +1574,6 @@ const designs = [
         />
 
         <div className="relative max-w-4xl mx-auto px-6 text-center">
-          {/* Big decorative quote mark */}
           <Quote
             size={64}
             fill="currentColor"
@@ -1554,7 +1603,6 @@ const designs = [
           {/* ================= LEFT SIDE ================= */}
           <Reveal direction="left" className="min-w-0 flex flex-col relative">
 
-            {/* Floating decorative accents for this side */}
             <Sparkle
               size={16}
               fill="currentColor"
@@ -1568,7 +1616,6 @@ const designs = [
               style={{ animationDelay: '1.6s' }}
             />
 
-            {/* About Me Badge */}
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white mb-6 hover:shadow-md hover:-translate-y-0.5 hover:border-purple-300 transition-all duration-300 group cursor-default">
               <Sparkles size={14} className="text-purple-500 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" />
               <span className="text-xs font-semibold tracking-wide text-purple-600">
@@ -1576,7 +1623,6 @@ const designs = [
               </span>
             </div>
 
-            {/* Name + Nice to meet you */}
             <div className="flex items-baseline gap-4 mb-3 flex-wrap">
               <h2 className="text-4xl md:text-[40px] font-bold text-gray-900 tracking-[-0.04em] leading-none">
                 Hi, I&apos;m Aicelle
@@ -1588,7 +1634,6 @@ const designs = [
               </p>
             </div>
 
-            {/* Main Title */}
             <h3 className="text-2xl md:text-[25px] font-bold leading-[1.15] mb-6 relative inline-block w-fit">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
                 Web Designer &amp; Developer
@@ -1604,7 +1649,6 @@ const designs = [
               />
             </h3>
 
-            {/* About Text */}
             <div className="max-w-[560px] space-y-4">
 
               <p className="text-gray-600 text-sm md:text-[14px] leading-[1.6]">
@@ -1615,7 +1659,6 @@ const designs = [
                 with practical technology.
               </p>
 
-              {/* Divider */}
               <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full relative overflow-hidden">
                 <span className="absolute inset-0 bg-white/40 animate-pulse" />
               </div>
@@ -1637,7 +1680,6 @@ const designs = [
 
             </div>
 
-            {/* ================= STATS ================= */}
             <div className="mt-7 w-full max-w-[560px] p-4 md:p-5 rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/70 to-pink-50/70 hover:shadow-lg hover:border-purple-200 transition-all duration-300 relative overflow-hidden">
 
               <Sparkle
@@ -1648,7 +1690,6 @@ const designs = [
 
               <div className="grid grid-cols-2 divide-x divide-purple-100">
 
-                {/* 50+ */}
                 <div className="flex items-center gap-4 px-2 group">
 
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-purple-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
@@ -1675,7 +1716,6 @@ const designs = [
 
                 </div>
 
-                {/* 20+ */}
                 <div className="flex items-center gap-4 px-4 group">
 
                   <div className="w-12 h-12 shrink-0 rounded-full bg-white border border-pink-100 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">
@@ -1711,12 +1751,10 @@ const designs = [
           {/* ================= RIGHT SIDE ================= */}
           <Reveal direction="right" className="relative min-w-0 flex">
       
-            {/* Glow */}
             <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
       
             <div className="relative w-full bg-white rounded-[24px] border border-purple-100 shadow-sm overflow-hidden">
       
-              {/* Decorative Dots */}
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
                 <div className="grid grid-cols-10 gap-2.5 p-5">
                   {Array.from({ length: 100 }).map((_, i) => (
@@ -1731,7 +1769,6 @@ const designs = [
       
               <div className="relative p-7 md:p-8">
       
-                {/* What I Do Header */}
                 <div className="flex items-center gap-4 mb-5">
       
                   <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center hover:scale-110 hover:rotate-12 transition-transform duration-300">
@@ -1752,10 +1789,8 @@ const designs = [
                 </div>
       
       
-                {/* ================= SERVICES ================= */}
                 <div>
       
-                  {/* Web Development */}
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
@@ -1779,7 +1814,6 @@ const designs = [
                   </div>
       
       
-                  {/* UI/UX Design */}
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
@@ -1803,7 +1837,6 @@ const designs = [
                   </div>
       
       
-                  {/* Wireframing & Prototyping */}
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
@@ -1827,7 +1860,6 @@ const designs = [
                   </div>
       
       
-                  {/* Design Systems */}
                   <div className="flex gap-6 py-5 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
       
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
@@ -1933,7 +1965,6 @@ const designs = [
 
                 <div className="flex flex-col sm:flex-row gap-5">
 
-                  {/* Company Logo */}
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/malama-logo.png"
@@ -1944,7 +1975,6 @@ const designs = [
                     />
                   </div>
 
-                  {/* Experience Details */}
                   <div className="flex-1">
 
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
@@ -2045,7 +2075,6 @@ const designs = [
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
-                  {/* Company Logo */}
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/outlier-logo.png"
@@ -2139,7 +2168,6 @@ const designs = [
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
-                  {/* Company Logo */}
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/torres-logo.png"
@@ -2212,7 +2240,6 @@ const designs = [
                       </li>
                     </ul>
       
-                    {/* OJT Certificate */}
                     <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:bg-purple-50/50 transition-colors duration-300">
                       <div className="w-12 h-12 shrink-0 rounded-lg bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                         <Image
@@ -2270,7 +2297,6 @@ const designs = [
       
                 <div className="flex flex-col sm:flex-row gap-5">
       
-                  {/* Company Logo */}
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/crowdgen-logo.png"
@@ -2460,6 +2486,15 @@ const designs = [
                     Live
                   </span>
                 )}
+
+                {/* Heart / like button */}
+                <div className="absolute top-3 right-3 z-20">
+                  <HeartLikeButton
+                    itemKey={project.title}
+                    liked={likedProjects.has(project.title)}
+                    onToggle={() => toggleProjectLike(project.title)}
+                  />
+                </div>
 
                 {/* Project Image */}
                 <div className="aspect-video relative overflow-hidden bg-gray-100">
@@ -2743,6 +2778,16 @@ const designs = [
                       style={{ animationDelay: `${(index % 6) * 80}ms` }}
                       className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
                     >
+                      {/* Heart / like button */}
+                      <div className="absolute top-3 right-3 z-20">
+                        <HeartLikeButton
+                          itemKey={design.image}
+                          liked={likedDesigns.has(design.image)}
+                          onToggle={() => toggleDesignLike(design.image)}
+                          size="sm"
+                        />
+                      </div>
+
                       <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
                         <Image
                           src={design.image}
