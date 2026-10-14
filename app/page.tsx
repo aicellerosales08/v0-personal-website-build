@@ -1212,14 +1212,18 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-  {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-[#e9e9d9]/85 backdrop-blur-md">
+{/* Navigation */}
+      <nav
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          scrolled || isMenuOpen ? 'bg-[#fbeef1]/85 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        }`}
+      >
         <div className="w-full px-6 md:px-10 lg:px-14 py-5 grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center">
           {/* Logo (left) */}
           <a
             href="#home"
             onClick={(e) => handleScrollTo(e, '#home')}
-            className="justify-self-start font-serif text-2xl font-semibold text-[#204b95] active:scale-90 transition-transform duration-150 ease-out"
+            className="justify-self-start font-serif text-2xl font-semibold text-[#2a2328] active:scale-90 transition-transform duration-150 ease-out"
           >
             aicelle.
           </a>
@@ -1238,12 +1242,12 @@ const designs = [
                   onPointerUp={() => setPressedLink(null)}
                   onPointerLeave={() => setPressedLink(null)}
                   className={`relative px-3 py-2 text-sm font-medium transition-all duration-200 ease-out group ${
-                    isActive ? 'text-[#204b95]' : 'text-[#204b95]/70 hover:text-[#204b95]'
+                    isActive ? 'text-[#2a2328]' : 'text-[#6b5c63] hover:text-[#2a2328]'
                   } ${pressedLink === link.name ? 'scale-90' : 'scale-100'}`}
                 >
                   {link.name}
                   <span
-                    className={`absolute left-3 right-3 -bottom-0.5 h-0.5 bg-[#d73a80] rounded-full transition-transform duration-300 origin-left ${
+                    className={`absolute left-3 right-3 -bottom-0.5 h-0.5 bg-[#d98aa3] rounded-full transition-transform duration-300 origin-left ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
@@ -1258,7 +1262,7 @@ const designs = [
             onPointerDown={() => setPressedLink('contact-desktop')}
             onPointerUp={() => setPressedLink(null)}
             onPointerLeave={() => setPressedLink(null)}
-            className={`hidden md:inline-block justify-self-end px-6 py-2.5 bg-[#d73a80] text-white rounded-full text-sm font-medium hover:bg-[#bc2d6e] transition-all duration-200 ease-out ${
+            className={`hidden md:inline-block justify-self-end px-6 py-2.5 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] transition-all duration-200 ease-out ${
               pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
             }`}
           >
@@ -1268,19 +1272,19 @@ const designs = [
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden justify-self-end relative p-2.5 rounded-full hover:bg-[#d73a80]/15 active:bg-[#d73a80]/15 active:scale-90 transition-all duration-150 ease-out"
+            className="md:hidden justify-self-end relative p-2.5 rounded-full hover:bg-pink-100 active:bg-pink-100 active:scale-90 transition-all duration-150 ease-out"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="relative w-6 h-6 block">
               <X
                 size={24}
-                className={`absolute inset-0 text-[#bc2d6e] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#cf7f9a] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
                 }`}
               />
               <Menu
                 size={24}
-                className={`absolute inset-0 text-[#204b95] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#2a2328] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
                 }`}
               />
@@ -1290,7 +1294,7 @@ const designs = [
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-[#204b95]/15 bg-[#f2f2e8] px-6 py-4 space-y-1 animate-slide-in-up">
+          <div className="md:hidden border-t border-pink-100 bg-[#fdf6f7] px-6 py-4 space-y-1 animate-slide-in-up">
             {navLinks.map((link, i) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1304,12 +1308,12 @@ const designs = [
                   onPointerLeave={() => setPressedLink(null)}
                   style={{ animationDelay: `${i * 40}ms` }}
                   className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
-                    ${isActive ? 'text-[#204b95] bg-[#d73a80]/15' : 'text-[#204b95]/70'}
-                    ${pressedLink === link.name ? 'scale-95 bg-[#d73a80]/15' : 'scale-100'}
+                    ${isActive ? 'text-[#2a2328] bg-pink-100' : 'text-[#6b5c63]'}
+                    ${pressedLink === link.name ? 'scale-95 bg-pink-100' : 'scale-100'}
                   `}
                 >
                   {link.name}
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d73a80]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d98aa3]" />}
                 </a>
               )
             })}
@@ -1318,8 +1322,8 @@ const designs = [
               onPointerDown={() => setPressedLink('contact-mobile')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
-              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d73a80] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
-                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#bc2d6e]' : 'scale-100'
+              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
+                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#cf7f9a]' : 'scale-100'
               }`}
             >
               Let&apos;s Talk
@@ -1330,7 +1334,7 @@ const designs = [
 {/* Hero Section */}
       <section
         id="home"
-        className="relative overflow-hidden bg-gradient-to-r from-[#fbeef1] to-[#fdf6f7] flex flex-col md:flex-row md:items-center md:min-h-[calc(100vh-73px)]"
+        className="relative overflow-hidden bg-gradient-to-r from-[#fbeef1] to-[#fdf6f7] flex flex-col md:flex-row md:items-center md:min-h-screen"
       >
         {/* Soft glow (same animate-glow as before, now pink) */}
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-200/40 rounded-full blur-3xl animate-glow pointer-events-none" />
@@ -1354,7 +1358,7 @@ const designs = [
         />
 
         {/* ================= TEXT ================= */}
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-16 py-12 md:py-24">
+        <div className="relative z-10 w-full px-6 md:px-10 lg:px-14 pt-28 pb-12 md:py-24">
           {heroLoaded && (
             <div className="max-w-xl space-y-7 animate-slide-in-left">
               <div className="space-y-5">
@@ -1422,7 +1426,7 @@ const designs = [
                         key={social.name}
                         type="button"
                         onClick={handleCopyDiscord}
-                        className="relative p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-500 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                        className="relative p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
                         title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
                       >
                         {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
@@ -1438,7 +1442,7 @@ const designs = [
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-500 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                        className="p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
                         title={social.name}
                       >
                         {social.icon}
