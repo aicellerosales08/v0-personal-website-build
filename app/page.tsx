@@ -1334,167 +1334,215 @@ const designs = [
         )}
       </nav>
 
-{/* Hero Section */}
-      <section
-        id="home"
-        className="relative overflow-hidden bg-gradient-to-r from-[#fbeef1] to-[#fdf6f7] flex flex-col md:flex-row md:items-center md:min-h-screen"
-      >
-        {/* Soft glow (same animate-glow as before, now pink) */}
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-200/40 rounded-full blur-3xl animate-glow pointer-events-none" />
-
-        {/* Floating decorations (same float / spin animations) */}
-        <Sparkles
-          size={26}
-          className="hidden md:block absolute top-12 left-[44%] z-10 text-pink-300 animate-float"
-          style={{ animationDelay: '0.3s' }}
-        />
-        <Heart
-          size={20}
-          fill="currentColor"
-          className="hidden md:block absolute bottom-1/4 left-[46%] z-10 text-pink-300 animate-float"
-          style={{ animationDelay: '0.9s' }}
-        />
-        <Star
-          size={18}
-          fill="currentColor"
-          className="hidden md:block absolute bottom-12 left-[32%] z-10 text-pink-200 animate-[spin_10s_linear_infinite]"
-        />
-
-        {/* ================= TEXT ================= */}
-        <div className="relative z-10 w-full px-6 md:px-10 lg:px-14 pt-28 pb-12 md:py-24">
-          {heroLoaded && (
-            <div className="max-w-xl space-y-7 animate-slide-in-left">
-              <div className="space-y-5">
-                <p className="text-xs md:text-[13px] font-medium uppercase tracking-[0.18em] text-pink-400 animate-fade-in">
-                  Web Design · Development · Creative
-                </p>
-
-                <h1 className="font-serif font-medium text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.2] text-[#2a2328]">
-                  {'Designing digital experiences that feel as good as they look.'
-                    .split(' ')
-                    .map((word, i) => (
-                      <span
-                        key={`w-${i}`}
-                        className="inline-block mr-[0.25em] animate-slide-in-up hover:-translate-y-1 hover:text-pink-400 transition-all duration-300 cursor-default"
-                        style={{ animationDelay: `${i * 60}ms` }}
-                      >
-                        {word}
-                      </span>
-                    ))}
-                </h1>
-
-                <p className="text-sm md:text-base font-medium text-[#2a2328]">
-                  Aicelle Rosales — Web Designer &amp; Developer | UI/UX &amp; Creative Designer
-                </p>
-              </div>
-
-              <p className="text-[#6b5c63] text-base leading-relaxed max-w-md">
-                I create responsive websites, intuitive interfaces, and engaging visual content for brands and digital products.
+      {/* Hero Section */}
+      <section id="home" className="max-w-6xl mx-auto px-6 py-4 md:py-8 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-5">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
+        </div>
+        
+        {heroLoaded && (
+          <div className="flex-1 space-y-8 animate-slide-in-left">
+            <div className="space-y-3">
+              <p className="text-pink-500 font-medium text-sm animate-fade-in flex items-center gap-1.5">
+                <span className="inline-block animate-bounce origin-[70%_70%]">👋</span>
+                Hello, I&apos;m
+                <Sparkle size={14} className="text-purple-400 animate-[spin_5s_linear_infinite]" fill="currentColor" />
               </p>
+
+              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight relative">
+                <span className="inline-flex flex-wrap">
+                  {'Aicelle'.split('').map((letter, i) => (
+                    <span
+                      key={`a-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:text-pink-500 hover:rotate-6 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+                <br />
+                <span className="inline-flex flex-wrap text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  {'Rosales'.split('').map((letter, i) => (
+                    <span
+                      key={`r-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${420 + i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+                <Heart
+                  size={22}
+                  fill="currentColor"
+                  className="hidden sm:inline-block text-pink-400 ml-2 align-top mt-2 animate-float"
+                  style={{ animationDelay: '0.5s' }}
+                />
+              </h1>
+
+              <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
 
               <div className="h-6 overflow-hidden">
                 <p
                   key={quoteIndex}
-                  className="text-sm font-semibold text-pink-400 flex items-center gap-1.5 animate-slide-in-up"
+                  className="text-sm font-semibold text-purple-500 flex items-center gap-1.5 animate-slide-in-up"
                 >
-                  <Sparkles size={14} className="text-pink-300" fill="currentColor" />
+                  <Sparkles size={14} className="text-pink-400" fill="currentColor" />
                   {aboutQuotes[quoteIndex]}
                 </p>
               </div>
+            </div>
 
-              <div className="flex gap-4 flex-wrap">
-                <a
-                  href="/rosales_aicelle_resume.pdf"
-                  download="rosales_aicelle_resume.pdf"
-                  className="px-8 py-3 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 group"
-                >
-                  Download CV
-                  <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
-                </a>
-                <a
-                  href="#work"
-                  onClick={(e) => handleScrollTo(e, '#work')}
-                  className="px-8 py-3 bg-white/70 border-[1.5px] border-pink-200 text-[#cf7f9a] rounded-full text-sm font-medium hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300"
-                >
-                  Work →
-                </a>
-              </div>
+            <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
+             I'm a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+            </p>
 
-              <div className="flex items-center gap-6 pt-2">
-                <p className="text-xs text-pink-400 font-medium tracking-[0.18em]">FOLLOW ME</p>
-                <div className="flex gap-3">
-                  {socialLinks.map((social) =>
-                    (social as any).isDiscord ? (
-                      <button
-                        key={social.name}
-                        type="button"
-                        onClick={handleCopyDiscord}
-                        className="relative p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
-                        title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                      >
-                        {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
-                        {copiedDiscord && (
-                          <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
-                            Copied!
-                          </span>
-                        )}
-                      </button>
-                    ) : (
-                      <a
-                        key={social.name}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
-                        title={social.name}
-                      >
-                        {social.icon}
-                      </a>
-                    )
-                  )}
-                </div>
+            <div className="flex gap-4 flex-wrap">
+              <a 
+                href="/rosales_aicelle_resume.pdf" 
+                download="rosales_aicelle_resume.pdf"
+                className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group"
+              >
+                <span>Download CV</span>
+                <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
+              </a>
+              <a 
+                href="#projects"
+                onClick={(e) => handleScrollTo(e, '#projects')}
+                className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                View Work →
+              </a>
+            </div>
+
+            <div className="flex items-center gap-6 pt-4">
+              <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
+              <div className="flex gap-3">
+                {socialLinks.map((social) =>
+                  (social as any).isDiscord ? (
+                    <button
+                      key={social.name}
+                      type="button"
+                      onClick={handleCopyDiscord}
+                      className="relative p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                    >
+                      {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
+                      {copiedDiscord && (
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                          Copied!
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  )
+                )}
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Profile Image */}
+        <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
+          <div className="relative w-full max-w-lg mx-auto group">
+
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
+
+            <div className="absolute -inset-4 rounded-full border-2 border-dashed border-pink-300/70 animate-[spin_18s_linear_infinite] pointer-events-none" />
+            <div className="absolute -inset-8 rounded-full border border-dotted border-purple-200/60 animate-[spin_26s_linear_infinite_reverse] pointer-events-none" />
+
+            <span className="absolute top-2 left-10 w-2 h-2 rounded-full bg-pink-400 animate-ping [animation-duration:2.5s]" />
+            <span className="absolute bottom-6 right-6 w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping [animation-duration:3.2s]" style={{ animationDelay: '0.6s' }} />
+            <span className="absolute top-1/3 -right-2 w-1.5 h-1.5 rounded-full bg-pink-300 animate-ping [animation-duration:2s]" style={{ animationDelay: '1.1s' }} />
+
+            <div
+              className="absolute -top-3 left-6 z-20 text-pink-500 animate-float drop-shadow-sm"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <Sparkles size={30} className="animate-[spin_7s_linear_infinite]" fill="currentColor" strokeWidth={1} />
+            </div>
+
+            <div
+              className="absolute top-1/4 -left-6 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '1.8s' }}
+            >
+              <Sparkle size={20} fill="currentColor" strokeWidth={1} />
+            </div>
+
+            <div
+              className="absolute bottom-1/4 -right-5 z-20 text-pink-500 animate-float"
+              style={{ animationDelay: '0.9s' }}
+            >
+              <Heart size={26} fill="currentColor" className="drop-shadow-sm" />
+            </div>
+
+            <div
+              className="absolute -bottom-2 right-16 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '2.2s' }}
+            >
+              <Star size={22} fill="currentColor" className="animate-[spin_10s_linear_infinite]" />
+            </div>
+
+            <div
+              className="absolute bottom-1/3 -left-4 z-20 text-pink-300 animate-float"
+              style={{ animationDelay: '1.4s' }}
+            >
+              <Heart size={16} fill="currentColor" />
+            </div>
+
+            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
+
+              <Image
+                src="/newprofile.png"
+                alt="Aicelle Rosales"
+                width={480}
+                height={480}
+                className="w-full h-auto aspect-square object-cover object-top"
+                priority
+              />
+
+            </div>
+
+            <div 
+              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: '1.5s' }}
+            >
+              <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">
+                Experiences
+              </p>
+            </div>
+        
+            <div 
+              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: '1s' }}
+            >
+              <p className="font-bold text-xl leading-none">20+</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">
+                Projects Done
+              </p>
+            </div>
+        
+          </div>
         </div>
 
-        {/* ================= PHOTO (fades into the background) ================= */}
-        <div
-          className={`relative h-80 w-full md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[62%] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_30%)] [mask-image:linear-gradient(to_bottom,transparent_0,black_30%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_38%)] md:[mask-image:linear-gradient(to_right,transparent_0,black_38%)] ${
-            heroLoaded ? 'animate-slide-in-right' : 'opacity-0'
-          }`}
-        >
-          <Image
-            src="/hero-workspace.png"
-            alt="Aicelle Rosales smiling at her laptop in a pink workspace"
-            fill
-            priority
-            sizes="(min-width: 768px) 62vw, 100vw"
-            className="object-cover object-[62%_center]"
-          />
-        </div>
-
-        {/* Stat badges (same animate-float + hover scale) */}
-        <div
-          className="absolute z-20 bottom-4 right-4 md:bottom-10 md:right-10 bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-2.5 shadow-md border border-pink-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
-          style={{ animationDelay: '1.5s' }}
-        >
-          <p className="font-serif font-semibold text-xl text-[#2a2328] leading-none">4+</p>
-          <p className="text-[10px] text-[#6b5c63] uppercase tracking-wider font-semibold mt-1">Experiences</p>
-        </div>
-
-        <div
-          className="absolute z-20 bottom-4 left-4 md:left-auto md:bottom-10 md:right-44 bg-[#d98aa3] text-white rounded-2xl px-5 py-2.5 shadow-md text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
-          style={{ animationDelay: '1s' }}
-        >
-          <p className="font-serif font-semibold text-xl leading-none">20+</p>
-          <p className="text-[10px] text-white/80 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
-        </div>
       </section>
 
       {/* Scroll Indicator */}
-      <div className="flex justify-center py-6 bg-[#fdf6f7]">
-        <ChevronDown className="text-pink-300 animate-bounce" size={24} />
+      <div className="flex justify-center pb-8">
+        <ChevronDown className="text-gray-400 animate-bounce" size={24} />
       </div>
 
       {/* Quote Section */}
