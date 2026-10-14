@@ -1402,8 +1402,8 @@ const designs = [
                   <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
                 </a>
                 <a
-                  href="#projects"
-                  onClick={(e) => handleScrollTo(e, '#projects')}
+                  href="#work"
+                  onClick={(e) => handleScrollTo(e, '#work')}
                   className="px-8 py-3 bg-white/70 border-[1.5px] border-pink-200 text-[#cf7f9a] rounded-full text-sm font-medium hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300"
                 >
                   Work →
