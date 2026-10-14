@@ -1351,7 +1351,7 @@ const designs = [
         />
 
         {/* ================= TEXT ================= */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 md:py-24">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-16 py-12 md:py-24">
           {heroLoaded && (
             <div className="max-w-xl space-y-7 animate-slide-in-left">
               <div className="space-y-5">
@@ -1372,6 +1372,11 @@ const designs = [
                       </span>
                     ))}
                 </h1>
+
+                <p className="text-sm md:text-base font-medium text-[#2a2328]">
+                  Aicelle Rosales — Web Designer &amp; Developer | UI/UX &amp; Creative Designer
+                </p>
+              </div>
 
               <p className="text-[#6b5c63] text-base leading-relaxed max-w-md">
                 I create responsive websites, intuitive interfaces, and engaging visual content for brands and digital products.
@@ -1481,7 +1486,6 @@ const designs = [
       <div className="flex justify-center py-6 bg-[#fdf6f7]">
         <ChevronDown className="text-pink-300 animate-bounce" size={24} />
       </div>
-      
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
