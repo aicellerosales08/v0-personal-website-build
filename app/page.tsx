@@ -1373,11 +1373,6 @@ const designs = [
                     ))}
                 </h1>
 
-                <p className="text-sm md:text-base font-medium text-[#2a2328]">
-                  Aicelle Rosales — Web Designer &amp; Developer | UI/UX &amp; Creative Designer
-                </p>
-              </div>
-
               <p className="text-[#6b5c63] text-base leading-relaxed max-w-md">
                 I create responsive websites, intuitive interfaces, and engaging visual content for brands and digital products.
               </p>
