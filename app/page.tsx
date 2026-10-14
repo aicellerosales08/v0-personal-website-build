@@ -1212,24 +1212,15 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-[#fbeef1]/80 backdrop-blur-md border-b border-pink-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e) => handleScrollTo(e, '#home')}
-            className="flex items-center gap-3 active:scale-90 transition-transform duration-150 ease-out"
+            className="font-serif text-2xl font-semibold text-[#2a2328] active:scale-90 transition-transform duration-150 ease-out"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm hover:shadow-md hover:rotate-6 transition-all duration-300">
-              <span className="text-white font-bold text-lg">A</span>
-            </div>
-          
-            <div className="hidden sm:block">
-              <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">
-                UI/UX · Web Dev · Creative Design
-              </p>
-            </div>
+            aicelle.
           </a>
 
           {/* Desktop Menu */}
@@ -1245,48 +1236,48 @@ const designs = [
                   onPointerDown={() => setPressedLink(link.name)}
                   onPointerUp={() => setPressedLink(null)}
                   onPointerLeave={() => setPressedLink(null)}
-                  className={`relative px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-out group
-                    ${pressedLink === link.name ? 'scale-90' : 'scale-100'}
-                  `}
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 ease-out group ${
+                    isActive ? 'text-[#2a2328]' : 'text-[#6b5c63] hover:text-[#2a2328]'
+                  } ${pressedLink === link.name ? 'scale-90' : 'scale-100'}`}
                 >
                   {link.name}
                   <span
-                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-transform duration-300 origin-left ${
+                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-[#d98aa3] rounded-full transition-transform duration-300 origin-left ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
                 </a>
               )
             })}
-            <a 
-              href="mailto:aicellerosales08@gmail.com" 
+            <a
+              href="mailto:aicellerosales08@gmail.com"
               onPointerDown={() => setPressedLink('contact-desktop')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
-              className={`ml-2 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200 ease-out ${
+              className={`ml-3 px-6 py-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] transition-all duration-200 ease-out ${
                 pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
               }`}
             >
-              Contact Me
+              Let&apos;s Talk
             </a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative p-2.5 rounded-full hover:bg-gray-100 active:bg-purple-100 active:scale-90 transition-all duration-150 ease-out"
+            className="md:hidden relative p-2.5 rounded-full hover:bg-pink-100 active:bg-pink-100 active:scale-90 transition-all duration-150 ease-out"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="relative w-6 h-6 block">
               <X
                 size={24}
-                className={`absolute inset-0 text-purple-600 transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#cf7f9a] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
                 }`}
               />
               <Menu
                 size={24}
-                className={`absolute inset-0 text-gray-700 transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#2a2328] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
                 }`}
               />
@@ -1296,7 +1287,7 @@ const designs = [
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1 animate-slide-in-up">
+          <div className="md:hidden border-t border-pink-100 bg-[#fdf6f7] px-6 py-4 space-y-1 animate-slide-in-up">
             {navLinks.map((link, i) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1310,30 +1301,29 @@ const designs = [
                   onPointerLeave={() => setPressedLink(null)}
                   style={{ animationDelay: `${i * 40}ms` }}
                   className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
-                    ${isActive ? 'text-purple-600 bg-purple-50' : 'text-gray-600'}
-                    ${pressedLink === link.name ? 'scale-95 bg-purple-100' : 'scale-100'}
+                    ${isActive ? 'text-[#2a2328] bg-pink-100' : 'text-[#6b5c63]'}
+                    ${pressedLink === link.name ? 'scale-95 bg-pink-100' : 'scale-100'}
                   `}
                 >
                   {link.name}
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d98aa3]" />}
                 </a>
               )
             })}
-            <a 
+            <a
               href="mailto:aicellerosales08@gmail.com"
               onPointerDown={() => setPressedLink('contact-mobile')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
-              className={`block text-center w-full px-6 py-2.5 mt-2 bg-gray-900 text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
-                pressedLink === 'contact-mobile' ? 'scale-95 bg-gray-800' : 'scale-100'
+              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
+                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#cf7f9a]' : 'scale-100'
               }`}
             >
-              Contact Me
+              Let&apos;s Talk
             </a>
           </div>
         )}
       </nav>
-
 {/* Hero Section */}
       <section
         id="home"
