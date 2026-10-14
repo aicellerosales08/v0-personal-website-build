@@ -1212,19 +1212,20 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-    {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-[#fbeef1]/80 backdrop-blur-md border-b border-pink-100">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+  {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-[#e9e9d9]/85 backdrop-blur-md">
+        <div className="w-full px-6 md:px-10 lg:px-14 py-5 grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center">
+          {/* Logo (left) */}
           <a
             href="#home"
             onClick={(e) => handleScrollTo(e, '#home')}
-            className="font-serif text-2xl font-semibold text-[#2a2328] active:scale-90 transition-transform duration-150 ease-out"
+            className="justify-self-start font-serif text-2xl font-semibold text-[#204b95] active:scale-90 transition-transform duration-150 ease-out"
           >
             aicelle.
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Links (center) */}
+          <div className="hidden md:flex items-center gap-2 lg:gap-6">
             {navLinks.map((link) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1236,48 +1237,50 @@ const designs = [
                   onPointerDown={() => setPressedLink(link.name)}
                   onPointerUp={() => setPressedLink(null)}
                   onPointerLeave={() => setPressedLink(null)}
-                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-200 ease-out group ${
-                    isActive ? 'text-[#2a2328]' : 'text-[#6b5c63] hover:text-[#2a2328]'
+                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-200 ease-out group ${
+                    isActive ? 'text-[#204b95]' : 'text-[#204b95]/70 hover:text-[#204b95]'
                   } ${pressedLink === link.name ? 'scale-90' : 'scale-100'}`}
                 >
                   {link.name}
                   <span
-                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-[#d98aa3] rounded-full transition-transform duration-300 origin-left ${
+                    className={`absolute left-3 right-3 -bottom-0.5 h-0.5 bg-[#d73a80] rounded-full transition-transform duration-300 origin-left ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
                 </a>
               )
             })}
-            <a
-              href="mailto:aicellerosales08@gmail.com"
-              onPointerDown={() => setPressedLink('contact-desktop')}
-              onPointerUp={() => setPressedLink(null)}
-              onPointerLeave={() => setPressedLink(null)}
-              className={`ml-3 px-6 py-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] transition-all duration-200 ease-out ${
-                pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
-              }`}
-            >
-              Let&apos;s Talk
-            </a>
           </div>
+
+          {/* Let's Talk (right) */}
+          <a
+            href="mailto:aicellerosales08@gmail.com"
+            onPointerDown={() => setPressedLink('contact-desktop')}
+            onPointerUp={() => setPressedLink(null)}
+            onPointerLeave={() => setPressedLink(null)}
+            className={`hidden md:inline-block justify-self-end px-6 py-2.5 bg-[#d73a80] text-white rounded-full text-sm font-medium hover:bg-[#bc2d6e] transition-all duration-200 ease-out ${
+              pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
+            }`}
+          >
+            Let&apos;s Talk
+          </a>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative p-2.5 rounded-full hover:bg-pink-100 active:bg-pink-100 active:scale-90 transition-all duration-150 ease-out"
+            className="md:hidden justify-self-end relative p-2.5 rounded-full hover:bg-[#d73a80]/15 active:bg-[#d73a80]/15 active:scale-90 transition-all duration-150 ease-out"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="relative w-6 h-6 block">
               <X
                 size={24}
-                className={`absolute inset-0 text-[#cf7f9a] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#bc2d6e] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
                 }`}
               />
               <Menu
                 size={24}
-                className={`absolute inset-0 text-[#2a2328] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-[#204b95] transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
                 }`}
               />
@@ -1287,7 +1290,7 @@ const designs = [
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-pink-100 bg-[#fdf6f7] px-6 py-4 space-y-1 animate-slide-in-up">
+          <div className="md:hidden border-t border-[#204b95]/15 bg-[#f2f2e8] px-6 py-4 space-y-1 animate-slide-in-up">
             {navLinks.map((link, i) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1301,12 +1304,12 @@ const designs = [
                   onPointerLeave={() => setPressedLink(null)}
                   style={{ animationDelay: `${i * 40}ms` }}
                   className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
-                    ${isActive ? 'text-[#2a2328] bg-pink-100' : 'text-[#6b5c63]'}
-                    ${pressedLink === link.name ? 'scale-95 bg-pink-100' : 'scale-100'}
+                    ${isActive ? 'text-[#204b95] bg-[#d73a80]/15' : 'text-[#204b95]/70'}
+                    ${pressedLink === link.name ? 'scale-95 bg-[#d73a80]/15' : 'scale-100'}
                   `}
                 >
                   {link.name}
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d98aa3]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d73a80]" />}
                 </a>
               )
             })}
@@ -1315,8 +1318,8 @@ const designs = [
               onPointerDown={() => setPressedLink('contact-mobile')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
-              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
-                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#cf7f9a]' : 'scale-100'
+              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d73a80] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
+                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#bc2d6e]' : 'scale-100'
               }`}
             >
               Let&apos;s Talk
