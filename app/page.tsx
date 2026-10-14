@@ -77,17 +77,7 @@ type RevealDirection = 'up' | 'left' | 'right' | 'fade'
 
 function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
   const ref = useRef<T>(null)
-    const [scrolled, setScrolled] = useState(false)
-  const [workTab, setWorkTab] = useState<'projects' | 'designs'>('projects')
- 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
   const [isVisible, setIsVisible] = useState(false)
-  
 
   useEffect(() => {
     const node = ref.current
@@ -742,7 +732,7 @@ export default function Portfolio() {
   const [pressedLink, setPressedLink] = useState<string | null>(null)
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'work', 'skills', 'experience', 'certificates']
+    const sectionIds = ['home', 'about', 'experience', 'skills', 'projects', 'designs', 'certificates']
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el))
@@ -780,14 +770,15 @@ export default function Portfolio() {
     }
   }
 
-const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Work', href: '#work' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Certification', href: '#certificates' },
-]
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Designs', href: '#designs' },
+    { name: 'Certificates', href: '#certificates' },
+  ]
 
   const skillGroups = [
     {
@@ -1221,24 +1212,28 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-{/* {/* Navigation */}
-      <nav
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled || isMenuOpen ? 'bg-[#fbeef1]/85 backdrop-blur-md shadow-sm' : 'bg-transparent'
-        }`}
-      >
-        <div className="w-full px-6 md:px-10 lg:px-14 py-5 grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center">
-          {/* Logo (left) */}
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <a
             href="#home"
             onClick={(e) => handleScrollTo(e, '#home')}
-            className="justify-self-start font-serif text-2xl font-semibold text-[#2a2328] active:scale-90 transition-transform duration-150 ease-out"
+            className="flex items-center gap-3 active:scale-90 transition-transform duration-150 ease-out"
           >
-            aicelle.
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm hover:shadow-md hover:rotate-6 transition-all duration-300">
+              <span className="text-white font-bold text-lg">A</span>
+            </div>
+          
+            <div className="hidden sm:block">
+              <p className="font-semibold text-sm">Aicelle</p>
+              <p className="text-xs text-gray-500">
+                UI/UX · Web Dev · Creative Design
+              </p>
+            </div>
           </a>
 
-          {/* Links (center) */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-6">
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1250,50 +1245,48 @@ const designs = [
                   onPointerDown={() => setPressedLink(link.name)}
                   onPointerUp={() => setPressedLink(null)}
                   onPointerLeave={() => setPressedLink(null)}
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-200 ease-out group ${
-                    isActive ? 'text-[#2a2328]' : 'text-[#6b5c63] hover:text-[#2a2328]'
-                  } ${pressedLink === link.name ? 'scale-90' : 'scale-100'}`}
+                  className={`relative px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-out group
+                    ${pressedLink === link.name ? 'scale-90' : 'scale-100'}
+                  `}
                 >
                   {link.name}
                   <span
-                    className={`absolute left-3 right-3 -bottom-0.5 h-0.5 bg-[#d98aa3] rounded-full transition-transform duration-300 origin-left ${
+                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-transform duration-300 origin-left ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
                 </a>
               )
             })}
+            <a 
+              href="mailto:aicellerosales08@gmail.com" 
+              onPointerDown={() => setPressedLink('contact-desktop')}
+              onPointerUp={() => setPressedLink(null)}
+              onPointerLeave={() => setPressedLink(null)}
+              className={`ml-2 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200 ease-out ${
+                pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
+              }`}
+            >
+              Contact Me
+            </a>
           </div>
-
-          {/* Let's Talk (right) */}
-          <a
-            href="mailto:aicellerosales08@gmail.com"
-            onPointerDown={() => setPressedLink('contact-desktop')}
-            onPointerUp={() => setPressedLink(null)}
-            onPointerLeave={() => setPressedLink(null)}
-            className={`hidden md:inline-block justify-self-end px-6 py-2.5 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] transition-all duration-200 ease-out ${
-              pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
-            }`}
-          >
-            Let&apos;s Talk
-          </a>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden justify-self-end relative p-2.5 rounded-full hover:bg-pink-100 active:bg-pink-100 active:scale-90 transition-all duration-150 ease-out"
+            className="md:hidden relative p-2.5 rounded-full hover:bg-gray-100 active:bg-purple-100 active:scale-90 transition-all duration-150 ease-out"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
             <span className="relative w-6 h-6 block">
               <X
                 size={24}
-                className={`absolute inset-0 text-[#cf7f9a] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-purple-600 transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
                 }`}
               />
               <Menu
                 size={24}
-                className={`absolute inset-0 text-[#2a2328] transition-all duration-300 ease-out ${
+                className={`absolute inset-0 text-gray-700 transition-all duration-300 ease-out ${
                   isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
                 }`}
               />
@@ -1303,7 +1296,7 @@ const designs = [
 
         {/* Mobile Menu Popdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-pink-100 bg-[#fdf6f7] px-6 py-4 space-y-1 animate-slide-in-up">
+          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1 animate-slide-in-up">
             {navLinks.map((link, i) => {
               const sectionId = link.href.replace('#', '')
               const isActive = activeSection === sectionId
@@ -1317,193 +1310,241 @@ const designs = [
                   onPointerLeave={() => setPressedLink(null)}
                   style={{ animationDelay: `${i * 40}ms` }}
                   className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
-                    ${isActive ? 'text-[#2a2328] bg-pink-100' : 'text-[#6b5c63]'}
-                    ${pressedLink === link.name ? 'scale-95 bg-pink-100' : 'scale-100'}
+                    ${isActive ? 'text-purple-600 bg-purple-50' : 'text-gray-600'}
+                    ${pressedLink === link.name ? 'scale-95 bg-purple-100' : 'scale-100'}
                   `}
                 >
                   {link.name}
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d98aa3]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />}
                 </a>
               )
             })}
-            <a
+            <a 
               href="mailto:aicellerosales08@gmail.com"
               onPointerDown={() => setPressedLink('contact-mobile')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
-              className={`block text-center w-full px-6 py-2.5 mt-2 bg-[#d98aa3] text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
-                pressedLink === 'contact-mobile' ? 'scale-95 bg-[#cf7f9a]' : 'scale-100'
+              className={`block text-center w-full px-6 py-2.5 mt-2 bg-gray-900 text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
+                pressedLink === 'contact-mobile' ? 'scale-95 bg-gray-800' : 'scale-100'
               }`}
             >
-              Let&apos;s Talk
+              Contact Me
             </a>
           </div>
         )}
       </nav>
-{/* {/* Hero Section */}
-      <section
-        id="home"
-        className="relative overflow-hidden bg-gradient-to-r from-[#fbeef1] to-[#fdf6f7] flex flex-col md:flex-row md:items-center md:min-h-screen"
-      >
-        {/* Soft glow (same animate-glow as before, now pink) */}
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-200/40 rounded-full blur-3xl animate-glow pointer-events-none" />
 
-        {/* Floating decorations (same float / spin animations) */}
-        <Sparkles
-          size={26}
-          className="hidden md:block absolute top-12 left-[44%] z-10 text-pink-300 animate-float"
-          style={{ animationDelay: '0.3s' }}
-        />
-        <Heart
-          size={20}
-          fill="currentColor"
-          className="hidden md:block absolute bottom-1/4 left-[46%] z-10 text-pink-300 animate-float"
-          style={{ animationDelay: '0.9s' }}
-        />
-        <Star
-          size={18}
-          fill="currentColor"
-          className="hidden md:block absolute bottom-12 left-[32%] z-10 text-pink-200 animate-[spin_10s_linear_infinite]"
-        />
-
-        {/* ================= TEXT ================= */}
-        <div className="relative z-10 w-full px-6 md:px-10 lg:px-14 pt-28 pb-12 md:py-24">
-          {heroLoaded && (
-            <div className="max-w-xl space-y-7 animate-slide-in-left">
-              <div className="space-y-5">
-                <p className="text-xs md:text-[13px] font-medium uppercase tracking-[0.18em] text-pink-400 animate-fade-in">
-                  Web Design · Development · Creative
-                </p>
-
-                <h1 className="font-serif font-medium text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.2] text-[#2a2328]">
-                  {'Designing digital experiences that feel as good as they look.'
-                    .split(' ')
-                    .map((word, i) => (
-                      <span
-                        key={`w-${i}`}
-                        className="inline-block mr-[0.25em] animate-slide-in-up hover:-translate-y-1 hover:text-pink-400 transition-all duration-300 cursor-default"
-                        style={{ animationDelay: `${i * 60}ms` }}
-                      >
-                        {word}
-                      </span>
-                    ))}
-                </h1>
-
-                <p className="text-sm md:text-base font-medium text-[#2a2328]">
-                  Aicelle Rosales — Web Designer &amp; Developer | UI/UX &amp; Creative Designer
-                </p>
-              </div>
-
-              <p className="text-[#6b5c63] text-base leading-relaxed max-w-md">
-                I create responsive websites, intuitive interfaces, and engaging visual content for brands and digital products.
+      {/* Hero Section */}
+      <section id="home" className="max-w-6xl mx-auto px-6 py-4 md:py-8 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-5">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
+        </div>
+        
+        {heroLoaded && (
+          <div className="flex-1 space-y-8 animate-slide-in-left">
+            <div className="space-y-3">
+              <p className="text-pink-500 font-medium text-sm animate-fade-in flex items-center gap-1.5">
+                <span className="inline-block animate-bounce origin-[70%_70%]">👋</span>
+                Hello, I&apos;m
+                <Sparkle size={14} className="text-purple-400 animate-[spin_5s_linear_infinite]" fill="currentColor" />
               </p>
+
+              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight relative">
+                <span className="inline-flex flex-wrap">
+                  {'Aicelle'.split('').map((letter, i) => (
+                    <span
+                      key={`a-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:text-pink-500 hover:rotate-6 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+                <br />
+                <span className="inline-flex flex-wrap text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  {'Rosales'.split('').map((letter, i) => (
+                    <span
+                      key={`r-${i}`}
+                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-default"
+                      style={{ animationDelay: `${420 + i * 60}ms` }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+                <Heart
+                  size={22}
+                  fill="currentColor"
+                  className="hidden sm:inline-block text-pink-400 ml-2 align-top mt-2 animate-float"
+                  style={{ animationDelay: '0.5s' }}
+                />
+              </h1>
+
+              <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
 
               <div className="h-6 overflow-hidden">
                 <p
                   key={quoteIndex}
-                  className="text-sm font-semibold text-pink-400 flex items-center gap-1.5 animate-slide-in-up"
+                  className="text-sm font-semibold text-purple-500 flex items-center gap-1.5 animate-slide-in-up"
                 >
-                  <Sparkles size={14} className="text-pink-300" fill="currentColor" />
+                  <Sparkles size={14} className="text-pink-400" fill="currentColor" />
                   {aboutQuotes[quoteIndex]}
                 </p>
               </div>
+            </div>
 
-              <div className="flex gap-4 flex-wrap">
-                <a
-                  href="/rosales_aicelle_resume.pdf"
-                  download="rosales_aicelle_resume.pdf"
-                  className="px-8 py-3 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 group"
-                >
-                  Download CV
-                  <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
-                </a>
-                <a
-                  href="#work"
-                  onClick={(e) => handleScrollTo(e, '#work')}
-                  className="px-8 py-3 bg-white/70 border-[1.5px] border-pink-200 text-[#cf7f9a] rounded-full text-sm font-medium hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300"
-                >
-                  Work →
-                </a>
-              </div>
+            <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
+             I'm a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+            </p>
 
-              <div className="flex items-center gap-6 pt-2">
-                <p className="text-xs text-pink-400 font-medium tracking-[0.18em]">FOLLOW ME</p>
-                <div className="flex gap-3">
-                  {socialLinks.map((social) =>
-                    (social as any).isDiscord ? (
-                      <button
-                        key={social.name}
-                        type="button"
-                        onClick={handleCopyDiscord}
-                        className="relative p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
-                        title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                      >
-                        {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
-                        {copiedDiscord && (
-                          <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
-                            Copied!
-                          </span>
-                        )}
-                      </button>
-                    ) : (
-                      <a
-                        key={social.name}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white/70 rounded-full text-[#cf7f9a] hover:bg-pink-100 hover:text-pink-400 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
-                        title={social.name}
-                      >
-                        {social.icon}
-                      </a>
-                    )
-                  )}
-                </div>
+            <div className="flex gap-4 flex-wrap">
+              <a 
+                href="/rosales_aicelle_resume.pdf" 
+                download="rosales_aicelle_resume.pdf"
+                className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group"
+              >
+                <span>Download CV</span>
+                <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
+              </a>
+              <a 
+                href="#projects"
+                onClick={(e) => handleScrollTo(e, '#projects')}
+                className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                View Work →
+              </a>
+            </div>
+
+            <div className="flex items-center gap-6 pt-4">
+              <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
+              <div className="flex gap-3">
+                {socialLinks.map((social) =>
+                  (social as any).isDiscord ? (
+                    <button
+                      key={social.name}
+                      type="button"
+                      onClick={handleCopyDiscord}
+                      className="relative p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                    >
+                      {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
+                      {copiedDiscord && (
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                          Copied!
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      title={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  )
+                )}
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Profile Image */}
+        <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
+          <div className="relative w-full max-w-lg mx-auto group">
+
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
+
+            <div className="absolute -inset-4 rounded-full border-2 border-dashed border-pink-300/70 animate-[spin_18s_linear_infinite] pointer-events-none" />
+            <div className="absolute -inset-8 rounded-full border border-dotted border-purple-200/60 animate-[spin_26s_linear_infinite_reverse] pointer-events-none" />
+
+            <span className="absolute top-2 left-10 w-2 h-2 rounded-full bg-pink-400 animate-ping [animation-duration:2.5s]" />
+            <span className="absolute bottom-6 right-6 w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping [animation-duration:3.2s]" style={{ animationDelay: '0.6s' }} />
+            <span className="absolute top-1/3 -right-2 w-1.5 h-1.5 rounded-full bg-pink-300 animate-ping [animation-duration:2s]" style={{ animationDelay: '1.1s' }} />
+
+            <div
+              className="absolute -top-3 left-6 z-20 text-pink-500 animate-float drop-shadow-sm"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <Sparkles size={30} className="animate-[spin_7s_linear_infinite]" fill="currentColor" strokeWidth={1} />
+            </div>
+
+            <div
+              className="absolute top-1/4 -left-6 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '1.8s' }}
+            >
+              <Sparkle size={20} fill="currentColor" strokeWidth={1} />
+            </div>
+
+            <div
+              className="absolute bottom-1/4 -right-5 z-20 text-pink-500 animate-float"
+              style={{ animationDelay: '0.9s' }}
+            >
+              <Heart size={26} fill="currentColor" className="drop-shadow-sm" />
+            </div>
+
+            <div
+              className="absolute -bottom-2 right-16 z-20 text-purple-400 animate-float"
+              style={{ animationDelay: '2.2s' }}
+            >
+              <Star size={22} fill="currentColor" className="animate-[spin_10s_linear_infinite]" />
+            </div>
+
+            <div
+              className="absolute bottom-1/3 -left-4 z-20 text-pink-300 animate-float"
+              style={{ animationDelay: '1.4s' }}
+            >
+              <Heart size={16} fill="currentColor" />
+            </div>
+
+            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
+
+              <Image
+                src="/newprofile.png"
+                alt="Aicelle Rosales"
+                width={480}
+                height={480}
+                className="w-full h-auto aspect-square object-cover object-top"
+                priority
+              />
+
+            </div>
+
+            <div 
+              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: '1.5s' }}
+            >
+              <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">
+                Experiences
+              </p>
+            </div>
+        
+            <div 
+              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
+              style={{ animationDelay: '1s' }}
+            >
+              <p className="font-bold text-xl leading-none">20+</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">
+                Projects Done
+              </p>
+            </div>
+        
+          </div>
         </div>
 
-        {/* ================= PHOTO (fades into the background) ================= */}
-        <div
-          className={`relative h-80 w-full md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[62%] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_30%)] [mask-image:linear-gradient(to_bottom,transparent_0,black_30%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_38%)] md:[mask-image:linear-gradient(to_right,transparent_0,black_38%)] ${
-            heroLoaded ? 'animate-slide-in-right' : 'opacity-0'
-          }`}
-        >
-          <Image
-            src="/hero-workspace.png"
-            alt="Aicelle Rosales smiling at her laptop in a pink workspace"
-            fill
-            priority
-            sizes="(min-width: 768px) 62vw, 100vw"
-            className="object-cover object-[62%_center]"
-          />
-        </div>
-
-        {/* Stat badges (same animate-float + hover scale) */}
-        <div
-          className="absolute z-20 bottom-4 right-4 md:bottom-10 md:right-10 bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-2.5 shadow-md border border-pink-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
-          style={{ animationDelay: '1.5s' }}
-        >
-          <p className="font-serif font-semibold text-xl text-[#2a2328] leading-none">4+</p>
-          <p className="text-[10px] text-[#6b5c63] uppercase tracking-wider font-semibold mt-1">Experiences</p>
-        </div>
-
-        <div
-          className="absolute z-20 bottom-4 left-4 md:left-auto md:bottom-10 md:right-44 bg-[#d98aa3] text-white rounded-2xl px-5 py-2.5 shadow-md text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
-          style={{ animationDelay: '1s' }}
-        >
-          <p className="font-serif font-semibold text-xl leading-none">20+</p>
-          <p className="text-[10px] text-white/80 uppercase tracking-wider font-semibold mt-1">Projects Done</p>
-        </div>
       </section>
 
       {/* Scroll Indicator */}
-      <div className="flex justify-center py-6 bg-[#fdf6f7]">
-        <ChevronDown className="text-pink-300 animate-bounce" size={24} />
+      <div className="flex justify-center pb-8">
+        <ChevronDown className="text-gray-400 animate-bounce" size={24} />
       </div>
 
-      
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
@@ -2360,40 +2401,6 @@ const designs = [
         </div>
       </section>
 
-         {/* ================= WORK (Projects + Designs) ================= */}
-      <section id="work" className="bg-[#fdf6f7] scroll-mt-20">
-        <div className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 text-center">
-          <h2 className="font-serif font-medium text-4xl md:text-5xl text-[#2a2328] mb-3">
-            My Work
-          </h2>
-          <p className="text-[#6b5c63] text-sm md:text-base mb-8">
-            Websites, apps, systems, and creative designs I&apos;ve made.
-          </p>
- 
-          <div className="inline-flex p-1 rounded-full bg-white/80 border border-pink-100 shadow-sm">
-            {([
-              { key: 'projects', label: 'Projects' },
-              { key: 'designs', label: 'Designs' },
-            ] as const).map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setWorkTab(tab.key)}
-                className={`px-7 py-2 rounded-full text-sm font-medium transition-all duration-300 active:scale-95 ${
-                  workTab === tab.key
-                    ? 'bg-[#d98aa3] text-white shadow-sm'
-                    : 'text-[#6b5c63] hover:text-[#2a2328]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
- 
-        {workTab === 'projects' && (
-          <div>
- 
-
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
@@ -2574,15 +2581,6 @@ const designs = [
             ))}
         </div>
       </section>
-
-            
-          </div>
-        )}
- 
-        {workTab === 'designs' && (
-          <div>
-
-            
       {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
@@ -2809,11 +2807,6 @@ const designs = [
           })()}
       
         </div>
-      </section>
-
-            
-          </div>
-        )}
       </section>
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
