@@ -1404,29 +1404,21 @@ const designs = [
 
               <div className="flex gap-4 flex-wrap">
                 <a
-                  href="#projects"
-                  onClick={(e) => handleScrollTo(e, '#projects')}
-                  className="px-8 py-3 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] hover:scale-105 active:scale-95 transition-all duration-300"
+                  href="/rosales_aicelle_resume.pdf"
+                  download="rosales_aicelle_resume.pdf"
+                  className="px-8 py-3 bg-[#d98aa3] text-white rounded-full text-sm font-medium hover:bg-[#cf7f9a] hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 group"
                 >
-                  View My Work →
+                  Download CV
+                  <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
                 </a>
                 <a
-                  href="#about"
-                  onClick={(e) => handleScrollTo(e, '#about')}
+                  href="#projects"
+                  onClick={(e) => handleScrollTo(e, '#projects')}
                   className="px-8 py-3 bg-white/70 border-[1.5px] border-pink-200 text-[#cf7f9a] rounded-full text-sm font-medium hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300"
                 >
-                  About Me
+                  Work →
                 </a>
               </div>
-
-              <a
-                href="/rosales_aicelle_resume.pdf"
-                download="rosales_aicelle_resume.pdf"
-                className="inline-flex items-center gap-2 text-sm font-medium text-[#cf7f9a] hover:text-pink-500 transition-colors group"
-              >
-                Download CV
-                <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
-              </a>
 
               <div className="flex items-center gap-6 pt-2">
                 <p className="text-xs text-pink-400 font-medium tracking-[0.18em]">FOLLOW ME</p>
@@ -1504,7 +1496,7 @@ const designs = [
       <div className="flex justify-center py-6 bg-[#fdf6f7]">
         <ChevronDown className="text-pink-300 animate-bounce" size={24} />
       </div>
-
+      
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
