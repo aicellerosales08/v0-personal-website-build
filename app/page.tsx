@@ -77,7 +77,17 @@ type RevealDirection = 'up' | 'left' | 'right' | 'fade'
 
 function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
   const ref = useRef<T>(null)
+    const [scrolled, setScrolled] = useState(false)
+  const [workTab, setWorkTab] = useState<'projects' | 'designs'>('projects')
+ 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   const [isVisible, setIsVisible] = useState(false)
+  
 
   useEffect(() => {
     const node = ref.current
@@ -732,7 +742,7 @@ export default function Portfolio() {
   const [pressedLink, setPressedLink] = useState<string | null>(null)
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'experience', 'skills', 'projects', 'designs', 'certificates']
+    const sectionIds = ['home', 'about', 'work', 'skills', 'experience', 'certificates']
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el))
@@ -2350,6 +2360,40 @@ const designs = [
         </div>
       </section>
 
+         {/* ================= WORK (Projects + Designs) ================= */}
+      <section id="work" className="bg-[#fdf6f7] scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 text-center">
+          <h2 className="font-serif font-medium text-4xl md:text-5xl text-[#2a2328] mb-3">
+            My Work
+          </h2>
+          <p className="text-[#6b5c63] text-sm md:text-base mb-8">
+            Websites, apps, systems, and creative designs I&apos;ve made.
+          </p>
+ 
+          <div className="inline-flex p-1 rounded-full bg-white/80 border border-pink-100 shadow-sm">
+            {([
+              { key: 'projects', label: 'Projects' },
+              { key: 'designs', label: 'Designs' },
+            ] as const).map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setWorkTab(tab.key)}
+                className={`px-7 py-2 rounded-full text-sm font-medium transition-all duration-300 active:scale-95 ${
+                  workTab === tab.key
+                    ? 'bg-[#d98aa3] text-white shadow-sm'
+                    : 'text-[#6b5c63] hover:text-[#2a2328]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+ 
+        {workTab === 'projects' && (
+          <div>
+ 
+
       {/* Projects Section */}
       <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
@@ -2530,6 +2574,15 @@ const designs = [
             ))}
         </div>
       </section>
+
+            
+          </div>
+        )}
+ 
+        {workTab === 'designs' && (
+          <div>
+
+            
       {/* ================= DESIGNS SECTION ================= */}
       <section
         id="designs"
@@ -2756,6 +2809,11 @@ const designs = [
           })()}
       
         </div>
+      </section>
+
+            
+          </div>
+        )}
       </section>
       {/* Certificates Section */}
       <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
