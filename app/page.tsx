@@ -770,15 +770,14 @@ export default function Portfolio() {
     }
   }
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Designs', href: '#designs' },
-    { name: 'Certificates', href: '#certificates' },
-  ]
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Work', href: '#work' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Certification', href: '#certificates' },
+]
 
   const skillGroups = [
     {
