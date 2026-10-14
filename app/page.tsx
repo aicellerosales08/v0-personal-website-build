@@ -1212,7 +1212,7 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-{/* Navigation */}
+{/* {/* Navigation */}
       <nav
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled || isMenuOpen ? 'bg-[#fbeef1]/85 backdrop-blur-md shadow-sm' : 'bg-transparent'
@@ -1331,7 +1331,7 @@ const designs = [
           </div>
         )}
       </nav>
-{/* Hero Section */}
+{/* {/* Hero Section */}
       <section
         id="home"
         className="relative overflow-hidden bg-gradient-to-r from-[#fbeef1] to-[#fdf6f7] flex flex-col md:flex-row md:items-center md:min-h-screen"
@@ -1493,6 +1493,8 @@ const designs = [
       <div className="flex justify-center py-6 bg-[#fdf6f7]">
         <ChevronDown className="text-pink-300 animate-bounce" size={24} />
       </div>
+
+      
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
