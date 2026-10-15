@@ -71,6 +71,9 @@ import {
   Send,
   MapPin,
   ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
   Film,
   Play
 } from 'lucide-react'
@@ -222,85 +225,6 @@ function monthsSince(year: number, monthIndex: number) {
   const yrs = Math.floor(safe / 12)
   const rem = safe % 12
   return `${yrs} ${yrs === 1 ? 'yr' : 'yrs'}${rem ? ` ${rem} ${rem === 1 ? 'mo' : 'mos'}` : ''}`
-}
-
-// ================= LIKE / HEART HELPERS =================
-// Deterministic "seed" number per item so the like count doesn't look empty
-// on first load. Real likes (from this device) are added on top of this seed.
-function seededLikeCount(key: string, min = 3, max = 41) {
-  let hash = 0
-  for (let i = 0; i < key.length; i++) {
-    hash = (hash << 5) - hash + key.charCodeAt(i)
-    hash |= 0
-  }
-  const range = max - min + 1
-  return min + (Math.abs(hash) % range)
-}
-
-const LIKED_PROJECTS_KEY = 'portfolio_liked_projects'
-const LIKED_DESIGNS_KEY = 'portfolio_liked_designs'
-
-function loadLikedSet(storageKey: string): Set<string> {
-  if (typeof window === 'undefined') return new Set()
-  try {
-    const raw = window.localStorage.getItem(storageKey)
-    if (!raw) return new Set()
-    const arr = JSON.parse(raw)
-    return new Set(Array.isArray(arr) ? arr : [])
-  } catch {
-    return new Set()
-  }
-}
-
-function saveLikedSet(storageKey: string, set: Set<string>) {
-  if (typeof window === 'undefined') return
-  try {
-    window.localStorage.setItem(storageKey, JSON.stringify(Array.from(set)))
-  } catch {
-    // localStorage unavailable — fail silently
-  }
-}
-
-function HeartLikeButton({
-  itemKey,
-  liked,
-  onToggle,
-  size = 'md',
-}: {
-  itemKey: string
-  liked: boolean
-  onToggle: () => void
-  size?: 'sm' | 'md'
-}) {
-  const baseCount = seededLikeCount(itemKey)
-  const displayCount = baseCount + (liked ? 1 : 0)
-  const dims = size === 'sm' ? 'px-2.5 py-1 text-[11px] gap-1' : 'px-3 py-1.5 text-xs gap-1.5'
-  const iconSize = size === 'sm' ? 12 : 14
-
-  return (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        onToggle()
-      }}
-      className={`inline-flex items-center ${dims} rounded-full font-bold backdrop-blur-sm shadow-sm transition-all duration-200 active:scale-90 hover:scale-105 ${
-        liked
-          ? 'bg-pink-500 text-white'
-          : 'bg-white/90 text-gray-600 hover:text-pink-500'
-      }`}
-      aria-pressed={liked}
-      aria-label={liked ? 'Unlike' : 'Like'}
-    >
-      <Heart
-        size={iconSize}
-        fill={liked ? 'currentColor' : 'none'}
-        className={liked ? 'animate-[pulse_0.4s_ease-in-out]' : ''}
-      />
-      {displayCount}
-    </button>
-  )
 }
 
 const categoryIcons: Record<string, any> = {
@@ -743,12 +667,14 @@ export default function Portfolio() {
   type WorkTab = 'projects' | 'designs' | 'videos'
   const [workTab, setWorkTab] = useState<WorkTab>('projects')
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const switchWorkTab = (tab: WorkTab) => {
     setWorkTab(tab)
     setActiveCategory('All')
     setActiveDesignCategory(null)
     setActiveSubFolder(null)
+    setLightboxIndex(null)
   }
 
   // Close the video player with the Escape key
@@ -760,35 +686,6 @@ export default function Portfolio() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [selectedVideo])
-
-  // ================= LIKES (per-device, saved in localStorage) =================
-  const [likedProjects, setLikedProjects] = useState<Set<string>>(new Set())
-  const [likedDesigns, setLikedDesigns] = useState<Set<string>>(new Set())
-
-  useEffect(() => {
-    setLikedProjects(loadLikedSet(LIKED_PROJECTS_KEY))
-    setLikedDesigns(loadLikedSet(LIKED_DESIGNS_KEY))
-  }, [])
-
-  const toggleProjectLike = (title: string) => {
-    setLikedProjects((prev) => {
-      const next = new Set(prev)
-      if (next.has(title)) next.delete(title)
-      else next.add(title)
-      saveLikedSet(LIKED_PROJECTS_KEY, next)
-      return next
-    })
-  }
-
-  const toggleDesignLike = (imagePath: string) => {
-    setLikedDesigns((prev) => {
-      const next = new Set(prev)
-      if (next.has(imagePath)) next.delete(imagePath)
-      else next.add(imagePath)
-      saveLikedSet(LIKED_DESIGNS_KEY, next)
-      return next
-    })
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -1325,6 +1222,66 @@ const designs = [
       badge: '/ITS-Badges-Cybersecurity.png',
     },
   ]
+
+  // ================= WORK SECTION: derived data =================
+  const projectFilters = [
+    { key: 'All', label: 'All' },
+    { key: 'Web', label: 'Websites' },
+    { key: 'Mobile', label: 'Mobile apps' },
+    { key: 'System', label: 'Systems' },
+    { key: 'Trial', label: 'Design tests' },
+  ]
+  const projectTypeLabel: Record<string, string> = {
+    Web: 'Website',
+    Mobile: 'Mobile app',
+    System: 'System',
+    Trial: 'Design test',
+  }
+  // "Onlook - Thesis Project" → name "Onlook", note "Thesis Project"
+  const splitProjectTitle = (title: string) => {
+    const [name, ...rest] = title.split(' - ')
+    return { name, note: rest.join(' - ') }
+  }
+  const featuredProject = projects.find((p) => 'website' in p)
+  const filteredProjects = projects.filter(
+    (p) => activeCategory === 'All' || p.category === activeCategory
+  )
+  const showFeatured = activeCategory === 'All' && Boolean(featuredProject)
+  const gridProjects = showFeatured
+    ? filteredProjects.filter((p) => p !== featuredProject)
+    : filteredProjects
+
+  // Friendlier names for design folders (the folder keys in `designs` stay the same)
+  const designCategoryLabel: Record<string, string> = {
+    'Ad Creatives': 'Ad creatives',
+    CLOTH: 'Clothing',
+    'Social Media': 'Social media',
+    Logo: 'Logo',
+    Meta: 'Meta ads',
+    'Product Design': 'Product visuals',
+  }
+  const currentDesignCategory = activeDesignCategory ?? designCategoryList[0]
+  const designsInCategory = designs.filter((d) => d.category === currentDesignCategory)
+  const designSets = designsInCategory
+    .map((d) => d.subFolder)
+    .filter((s): s is string => Boolean(s))
+    .filter((s, idx, arr) => arr.indexOf(s) === idx)
+  const designsShown = activeSubFolder
+    ? designsInCategory.filter((d) => d.subFolder === activeSubFolder)
+    : designsInCategory
+
+  // Lightbox keyboard controls: Esc closes, arrows move between designs
+  useEffect(() => {
+    if (lightboxIndex === null) return
+    const total = designsShown.length
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxIndex(null)
+      if (e.key === 'ArrowRight') setLightboxIndex((i) => (i === null ? i : (i + 1) % total))
+      if (e.key === 'ArrowLeft') setLightboxIndex((i) => (i === null ? i : (i - 1 + total) % total))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightboxIndex, designsShown.length])
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
@@ -1895,518 +1852,323 @@ const designs = [
 
       </section>
 
-      {/* ================= 3. WORK SECTION (Projects + Designs) ================= */}
-      <section id="work" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
+      {/* ================= 3. WORK SECTION (Projects + Designs + Videos) ================= */}
+      <section id="work" className="max-w-6xl mx-auto px-6 py-20 md:py-28">
 
-        <Reveal direction="up" className="text-center mb-10 relative">
-          <Sparkle
-            size={18}
-            fill="currentColor"
-            className="hidden md:block absolute -top-2 left-[32%] text-pink-300 animate-float"
-          />
-          <Star
-            size={14}
-            fill="currentColor"
-            className="hidden md:block absolute top-2 right-[32%] text-purple-300 animate-[spin_7s_linear_infinite]"
-          />
-
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
-            <Layers size={12} />
-            Portfolio
-          </span>
-
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-            My Work
+        {/* Header */}
+        <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-end mb-12 md:mb-16">
+          <h2 className="md:col-span-7 text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
+            Selected
+            <br />
+            work
           </h2>
-
-          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-            UI/UX and web projects, creative designs, and video edits — all in one place.
+          <p className="md:col-span-5 text-gray-600 text-base md:text-lg leading-relaxed max-w-md">
+            Websites, app interfaces, brand visuals and video edits. Most projects open as
+            Figma files, so you can see the full design.
           </p>
-        </Reveal>
-
-        {/* Main Toggle: Projects / Designs / Videos */}
-        <div className="flex justify-center mb-10">
-          <div className="inline-flex max-w-full overflow-x-auto p-1.5 bg-gray-100 rounded-full shadow-inner">
-            {[
-              { key: 'projects' as const, label: 'Projects', icon: Layers, count: projects.length },
-              { key: 'designs' as const, label: 'Designs', icon: ImageIcon, count: designs.length },
-              { key: 'videos' as const, label: 'Videos', icon: Film, count: videos.length },
-            ].map((tab) => {
-              const TabIcon = tab.icon
-              const isActive = workTab === tab.key
-              return (
-                <button
-                  key={tab.key}
-                  onClick={() => switchWorkTab(tab.key)}
-                  className={`shrink-0 inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3 rounded-full text-sm font-bold transition-all duration-300 active:scale-95 ${
-                    isActive
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-purple-600'
-                  }`}
-                >
-                  <TabIcon size={16} />
-                  {tab.label}
-                  <span
-                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                      isActive ? 'bg-white/25' : 'bg-white text-gray-400'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
         </div>
 
-        {workTab === 'videos' ? (
-          /* ==================== VIDEOS TAB ==================== */
-          <div key="videos" className="animate-fade-in">
-            <p className="text-center text-gray-500 text-sm mb-8">
-              Video editing work — reels, ads, and short-form content. Tap a video to play it.
-            </p>
+        {/* Tabs */}
+        <div role="tablist" aria-label="Type of work" className="flex items-end gap-x-6 sm:gap-x-10 overflow-x-auto border-b border-gray-200 mb-10">
+          {[
+            { key: 'projects' as const, label: 'Projects', count: projects.length },
+            { key: 'designs' as const, label: 'Designs', count: designs.length },
+            { key: 'videos' as const, label: 'Videos', count: videos.length },
+          ].map((tab) => {
+            const isActive = workTab === tab.key
+            return (
+              <button
+                key={tab.key}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => switchWorkTab(tab.key)}
+                className={`relative shrink-0 whitespace-nowrap pb-4 text-xl sm:text-3xl font-bold tracking-tight transition-colors duration-200 focus-visible:outline-none focus-visible:text-purple-600 ${
+                  isActive ? 'text-gray-900' : 'text-gray-300 hover:text-gray-500'
+                }`}
+              >
+                {tab.label}
+                <sup className={`ml-1 text-sm font-semibold tabular-nums ${isActive ? 'text-purple-600' : 'text-gray-300'}`}>
+                  {tab.count}
+                </sup>
+                <span
+                  className={`absolute left-0 right-0 bottom-0 h-[3px] rounded-full bg-purple-600 origin-left transition-transform duration-300 ${
+                    isActive ? 'scale-x-100' : 'scale-x-0'
+                  }`}
+                />
+              </button>
+            )
+          })}
+        </div>
 
-            {videos.length === 0 ? (
-              /* Empty state — shows until you add videos to the list */
-              <div className="max-w-xl mx-auto text-center bg-white border-2 border-dashed border-purple-200 rounded-3xl px-8 py-14">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center mb-5">
-                  <Film size={28} className="text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Video edits coming soon</h3>
-                <p className="text-gray-500 text-sm">
-                  I&apos;m putting together my best video editing work. Check back soon!
-                </p>
-              </div>
-            ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {videos.map((video, i) => {
-                  const thumb = getVideoThumbnail(video)
-                  const isPortrait = video.orientation === 'portrait'
-                  return (
-                    <button
-                      key={video.title + i}
-                      type="button"
-                      onClick={() => setSelectedVideo(video)}
-                      style={{ animationDelay: `${(i % 6) * 90}ms` }}
-                      className="group text-left bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up"
-                    >
-                      {/* Thumbnail */}
-                      <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-purple-100 via-fuchsia-50 to-pink-100">
-                        {thumb ? (
-                          // Plain <img> so remote thumbnails (YouTube) work without extra Next.js config
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={thumb}
-                            alt={video.title}
-                            loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        ) : video.source === 'file' ? (
-                          <video
-                            src={`${video.url}#t=0.5`}
-                            muted
-                            playsInline
-                            preload="metadata"
-                            className="absolute inset-0 w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Film size={40} className="text-purple-300" />
-                          </div>
-                        )}
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-300" />
-
-                        {/* Play button */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="w-14 h-14 rounded-full bg-white/95 shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <Play size={22} fill="currentColor" className="text-purple-600 ml-1" />
-                          </span>
-                        </div>
-
-                        {isPortrait && (
-                          <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider text-white bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
-                            Vertical
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-6 flex flex-col flex-1">
-                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300 mb-2">
-                          {video.title}
-                        </h3>
-                        {video.description && (
-                          <p className="text-gray-600 text-sm mb-4 line-clamp-3">{video.description}</p>
-                        )}
-                        {video.tags && video.tags.length > 0 && (
-                          <div className="flex gap-2 flex-wrap mt-auto">
-                            {video.tags.map((tag) => (
-                              <span key={tag} className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        ) : workTab === 'projects' ? (
-          /* ==================== PROJECTS TAB ==================== */
+        {/* ==================== PROJECTS ==================== */}
+        {workTab === 'projects' && (
           <div key="projects" className="animate-fade-in">
-            {/* Category Tabs */}
-            <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-              {['All', 'Web', 'Mobile', 'System', 'Trial'].map((category) => {
+            {/* Filters */}
+            <div className="flex flex-wrap gap-1.5 mb-12">
+              {projectFilters.map((filter) => {
                 const count =
-                  category === 'All'
+                  filter.key === 'All'
                     ? projects.length
-                    : projects.filter((p) => p.category === category).length
+                    : projects.filter((p) => p.category === filter.key).length
+                const isActive = activeCategory === filter.key
                 return (
                   <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 active:scale-90 ${
-                      activeCategory === category
-                        ? 'bg-gray-900 text-white shadow-md scale-105'
-                        : 'bg-white border border-gray-200 text-gray-600 hover:bg-purple-50 hover:text-purple-600 hover:scale-105'
+                    key={filter.key}
+                    onClick={() => setActiveCategory(filter.key)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                      isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
-                    {category}
-                    <span
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                        activeCategory === category ? 'bg-white/20' : 'bg-gray-100 text-gray-400'
-                      }`}
-                    >
-                      {count}
-                    </span>
+                    {filter.label}
+                    <span className={`ml-1.5 tabular-nums ${isActive ? 'text-white/60' : 'text-gray-400'}`}>{count}</span>
                   </button>
                 )
               })}
             </div>
 
-            {/* Projects Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects
-                .filter(
-                  (project) =>
-                    activeCategory === 'All' ||
-                    project.category === activeCategory
-                )
-                .map((project, i) => (
-                  <div
-                    key={project.title}
-                    style={{ animationDelay: `${(i % 6) * 90}ms` }}
-                    className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up relative"
-                  >
-                    {/* "Live" badge for projects with a deployed site */}
-                    {'website' in project && (
-                      <span className="absolute top-3 left-3 z-20 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-1 rounded-full shadow-sm">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
-                        </span>
-                        Live
-                      </span>
-                    )}
-
-                    {/* Heart / like button */}
-                    <div className="absolute top-3 right-3 z-20">
-                      <HeartLikeButton
-                        itemKey={project.title}
-                        liked={likedProjects.has(project.title)}
-                        onToggle={() => toggleProjectLike(project.title)}
-                      />
-                    </div>
-
-                    {/* Project Image */}
-                    <div className="aspect-video relative overflow-hidden bg-gray-100">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                      {/* Shine sweep on hover */}
-                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                      </div>
-                    </div>
-
-                    {/* Project Content */}
-                    <div className="p-6 flex flex-col flex-1 justify-between">
-                      <div>
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
-                            {project.title}
-                          </h3>
-
-                          <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
-                            {project.category}
-                          </span>
-                        </div>
-
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-4">
-                          {project.description}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex gap-2 flex-wrap mb-6">
-                          {project.tags.map((tag, ti) => (
-                            <span
-                              key={tag}
-                              style={{ animationDelay: `${(i % 6) * 90 + ti * 60}ms` }}
-                              className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Project Link */}
-                      <div>
-                        {'website' in project ? (
-                          <div className="flex gap-4 border-t border-gray-100 pt-4">
-                            <a
-                              href={project.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
-                            >
-                              Live Site <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                            </a>
-
-                            <a
-                              href={project.figma}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
-                            >
-                              Figma <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                            </a>
-                          </div>
-                        ) : (
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link"
-                          >
-                            View Project Design
-                            <ExternalLink size={15} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        ) : (
-          /* ==================== DESIGNS TAB ==================== */
-          <div key="designs" className="animate-fade-in">
-            {activeDesignCategory === null ? (
-              /* ============ LEVEL 1: CATEGORY FOLDERS ============ */
-              <>
-                <p className="text-center text-gray-500 text-sm mb-8">
-                  Ad creatives, branding, social media, and product visuals. Tap a folder to open it.
-                </p>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {designCategoryList.map((category, i) => {
-                    const items = designs.filter((d) => d.category === category)
-                    const cover = items[0]?.image
-                    const blurb =
-                      designCategoryBlurbs[category] ??
-                      `A curated set of ${items.length} ${items.length === 1 ? 'design' : 'designs'} exploring ${category.toLowerCase()}.`
-                    return (
-                      <button
-                        key={category}
-                        onClick={() => setActiveDesignCategory(category)}
-                        style={{ animationDelay: `${i * 90}ms` }}
-                        className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
-                      >
-                        {/* Cover Image */}
-                        <div className="aspect-video relative overflow-hidden bg-gray-100">
-                          {cover && (
-                            <Image
-                              src={cover}
-                              alt={category}
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                          {/* Shine sweep on hover */}
-                          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                            <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                          </div>
-
-                          {/* Folder icon badge */}
-                          <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                            <Folder size={16} className="text-purple-500 group-hover:hidden" />
-                            <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
-                          </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-6 flex flex-col flex-1 justify-between">
-                          <div>
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                              <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
-                                {category}
-                              </h3>
-                              <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
-                                {items.length} {items.length === 1 ? 'design' : 'designs'}
-                              </span>
-                            </div>
-
-                            <p className="text-gray-600 text-sm mb-6">
-                              {blurb}
-                            </p>
-                          </div>
-
-                          <div className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link">
-                            Browse Folder
-                            <ArrowLeft size={15} className="rotate-180 group-hover/link:translate-x-1 transition-transform duration-200" />
-                          </div>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </>
-            ) : (() => {
-              // Sub-folders that exist inside the currently opened category
-              const itemsInCategory = designs.filter((d) => d.category === activeDesignCategory)
-              const subFolderList = itemsInCategory
-                .map((d) => d.subFolder)
-                .filter((s): s is string => Boolean(s))
-                .filter((s, idx, arr) => arr.indexOf(s) === idx)
-              const hasSubFolders = subFolderList.length > 1
-
-              if (hasSubFolders && activeSubFolder === null) {
-                /* ============ LEVEL 2: SUB-FOLDERS INSIDE THE CATEGORY ============ */
-                return (
-                  <div>
-                    <div className="flex items-center justify-between mb-8 animate-fade-in">
-                      <button
-                        onClick={() => setActiveDesignCategory(null)}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
-                      >
-                        <ArrowLeft size={16} />
-                        Back to categories
-                      </button>
-                      <div className="inline-flex items-center gap-2">
-                        <FolderOpen size={18} className="text-purple-500" />
-                        <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {subFolderList.map((sub, i) => {
-                        const subItems = itemsInCategory.filter((d) => d.subFolder === sub)
-                        const cover = subItems[0]?.image
-                        return (
-                          <button
-                            key={sub}
-                            onClick={() => setActiveSubFolder(sub)}
-                            style={{ animationDelay: `${i * 90}ms` }}
-                            className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
-                          >
-                            <div className="aspect-video relative overflow-hidden bg-gray-100">
-                              {cover && (
-                                <Image src={cover} alt={sub} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                              )}
-                              <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm">
-                                <Folder size={16} className="text-purple-500 group-hover:hidden" />
-                                <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
-                              </div>
-                            </div>
-                            <div className="p-6 flex items-center justify-between">
-                              <h4 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{sub}</h4>
-                              <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
-                                {subItems.length}
-                              </span>
-                            </div>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              }
-
-              /* ============ LEVEL 3 (or level 2 if no sub-folders): IMAGES ============ */
-              const imagesToShow = activeSubFolder
-                ? itemsInCategory.filter((d) => d.subFolder === activeSubFolder)
-                : itemsInCategory
-
+            {/* Featured project (the one with a live site) */}
+            {showFeatured && featuredProject && 'website' in featuredProject && (() => {
+              const { name, note } = splitProjectTitle(featuredProject.title)
               return (
-                <div>
-                  <div className="flex items-center justify-between mb-8 animate-fade-in">
-                    <button
-                      onClick={() => {
-                        if (activeSubFolder) setActiveSubFolder(null)
-                        else setActiveDesignCategory(null)
-                      }}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
-                    >
-                      <ArrowLeft size={16} />
-                      {activeSubFolder ? `Back to ${activeDesignCategory}` : 'Back to categories'}
-                    </button>
-                    <div className="inline-flex items-center gap-2">
-                      <FolderOpen size={18} className="text-purple-500" />
-                      <h3 className="text-lg font-bold text-gray-800">
-                        {activeDesignCategory}{activeSubFolder ? ` / ${activeSubFolder}` : ''}
-                      </h3>
-                      <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
-                        {imagesToShow.length}
-                      </span>
+                <article className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-20 md:mb-24">
+                  <a
+                    href={featuredProject.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group lg:col-span-7 block relative aspect-[16/10] rounded-3xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                  >
+                    <Image
+                      src={featuredProject.image}
+                      alt={`${name} preview`}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 640px"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
+                  </a>
+
+                  <div className="lg:col-span-5">
+                    <p className="text-sm font-semibold text-purple-600 mb-3">
+                      Featured{note ? `, ${note.toLowerCase()}` : ''}
+                    </p>
+                    <h3 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5">{name}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-7 max-w-[55ch]">{featuredProject.description}</p>
+
+                    <dl className="grid grid-cols-3 gap-4 text-sm border-t border-gray-200 pt-5 mb-8">
+                      <div>
+                        <dt className="text-gray-400">Type</dt>
+                        <dd className="font-medium text-gray-900 mt-0.5">{projectTypeLabel[featuredProject.category] ?? featuredProject.category}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-gray-400">Made with</dt>
+                        <dd className="font-medium text-gray-900 mt-0.5">{featuredProject.tags[0]}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-gray-400">Status</dt>
+                        <dd className="font-medium text-gray-900 mt-0.5 inline-flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-green-500" />
+                          Live
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href={featuredProject.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-purple-700 transition-colors duration-200"
+                      >
+                        Visit live site
+                        <ArrowUpRight size={16} />
+                      </a>
+                      <a
+                        href={featuredProject.figma}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gray-300 text-gray-900 text-sm font-semibold hover:border-gray-900 transition-colors duration-200"
+                      >
+                        Open Figma file
+                      </a>
                     </div>
                   </div>
-
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {imagesToShow.map((design, index) => (
-                      <div
-                        key={design.image + index}
-                        style={{ animationDelay: `${(index % 6) * 80}ms` }}
-                        className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
-                      >
-                        {/* Heart / like button */}
-                        <div className="absolute top-3 right-3 z-20">
-                          <HeartLikeButton
-                            itemKey={design.image}
-                            liked={likedDesigns.has(design.image)}
-                            onToggle={() => toggleDesignLike(design.image)}
-                            size="sm"
-                          />
-                        </div>
-
-                        <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={design.image}
-                            alt={`Creative design ${index + 1}`}
-                            width={1200}
-                            height={1200}
-                            className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                            <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                </article>
               )
             })()}
+
+            {/* Project grid */}
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-16">
+              {gridProjects.map((project) => {
+                const { name, note } = splitProjectTitle(project.title)
+                const href = 'website' in project ? project.website : project.link
+                const isLive = 'website' in project
+                return (
+                  <article key={project.title} className="group">
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${name}`}
+                      className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                    >
+                      <Image
+                        src={project.image}
+                        alt={`${name} preview`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 540px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      />
+                      <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        {isLive ? 'Visit site' : 'Open in Figma'}
+                        <ArrowUpRight size={15} />
+                      </span>
+                    </a>
+
+                    <div className="mt-5 flex items-baseline justify-between gap-4">
+                      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
+                        <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                          {name}
+                        </a>
+                      </h3>
+                      <span className="shrink-0 text-sm text-gray-400">
+                        {note || projectTypeLabel[project.category] || project.category}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[15px] text-gray-600 leading-relaxed line-clamp-2 max-w-[60ch]">
+                      {project.description}
+                    </p>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ==================== DESIGNS ==================== */}
+        {workTab === 'designs' && (
+          <div key="designs" className="animate-fade-in grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+            {/* Category list */}
+            <nav aria-label="Design categories" className="lg:col-span-3 min-w-0">
+              <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
+                {designCategoryList.map((category) => {
+                  const isActive = currentDesignCategory === category
+                  const count = designs.filter((d) => d.category === category).length
+                  return (
+                    <li key={category} className="shrink-0">
+                      <button
+                        onClick={() => {
+                          setActiveDesignCategory(category)
+                          setActiveSubFolder(null)
+                        }}
+                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                          isActive ? 'bg-purple-50 text-purple-700 font-semibold' : 'text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <span>{designCategoryLabel[category] ?? category}</span>
+                        <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            {/* Gallery */}
+            <div className="lg:col-span-9 min-w-0">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <p className="text-gray-600 max-w-[55ch]">{designCategoryBlurbs[currentDesignCategory]}</p>
+
+                {designSets.length > 1 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {[null, ...designSets].map((set) => {
+                      const isActive = activeSubFolder === set
+                      return (
+                        <button
+                          key={set ?? 'all'}
+                          onClick={() => setActiveSubFolder(set)}
+                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                            isActive ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'
+                          }`}
+                        >
+                          {set ?? 'All sets'}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <div className="columns-2 md:columns-3 gap-4">
+                {designsShown.map((design, index) => (
+                  <button
+                    key={design.image}
+                    type="button"
+                    onClick={() => setLightboxIndex(index)}
+                    aria-label={`View ${designCategoryLabel[currentDesignCategory] ?? currentDesignCategory} design ${index + 1}`}
+                    className="group mb-4 block w-full break-inside-avoid rounded-xl overflow-hidden bg-gray-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                  >
+                    <Image
+                      src={design.image}
+                      alt={`${designCategoryLabel[currentDesignCategory] ?? currentDesignCategory} design ${index + 1}`}
+                      width={600}
+                      height={600}
+                      sizes="(max-width: 768px) 50vw, 300px"
+                      className="w-full h-auto transition-opacity duration-300 group-hover:opacity-90"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==================== VIDEOS ==================== */}
+        {workTab === 'videos' && (
+          <div key="videos" className="animate-fade-in">
+            {videos.length === 0 ? (
+              <div className="rounded-3xl border-2 border-dashed border-gray-200 px-8 py-16 md:py-20 text-center">
+                <Film size={32} className="mx-auto text-purple-300 mb-4" />
+                <p className="text-xl font-bold text-gray-900">No video edits posted yet</p>
+                <p className="text-gray-500 mt-2">Reels, ads and short-form edits will show up here soon.</p>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+                {videos.map((video, i) => {
+                  const thumb = getVideoThumbnail(video)
+                  return (
+                    <article key={video.title + i} className="group">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedVideo(video)}
+                        aria-label={`Play ${video.title}`}
+                        className="block w-full relative aspect-video rounded-2xl overflow-hidden bg-gray-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                      >
+                        {thumb ? (
+                          // Plain <img> so remote thumbnails (YouTube) work without extra Next.js config
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={thumb} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                        ) : video.source === 'file' ? (
+                          <video src={`${video.url}#t=0.5`} muted playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
+                        ) : null}
+                        <span className="absolute left-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-md">
+                          <Play size={14} fill="currentColor" />
+                          Play
+                        </span>
+                        {video.orientation === 'portrait' && (
+                          <span className="absolute top-4 right-4 rounded-full bg-black/60 px-2.5 py-1 text-xs font-medium text-white">Vertical</span>
+                        )}
+                      </button>
+                      <h3 className="mt-4 text-lg font-bold text-gray-900">{video.title}</h3>
+                      {video.description && (
+                        <p className="mt-1 text-[15px] text-gray-600 leading-relaxed line-clamp-2">{video.description}</p>
+                      )}
+                      {video.tags && video.tags.length > 0 && (
+                        <p className="mt-2 text-sm text-gray-400">{video.tags.join(', ')}</p>
+                      )}
+                    </article>
+                  )
+                })}
+              </div>
+            )}
           </div>
         )}
       </section>
@@ -2990,6 +2752,66 @@ const designs = [
           </div>
         </div>
       </section>
+
+      {/* Design Lightbox */}
+      {lightboxIndex !== null && designsShown[lightboxIndex] && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Design preview"
+          className="fixed inset-0 z-[70] bg-black/90 flex items-center justify-center px-4 py-16 animate-fade-in"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+            aria-label="Close preview"
+          >
+            <X size={22} />
+          </button>
+
+          {designsShown.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setLightboxIndex((i) => (i === null ? i : (i - 1 + designsShown.length) % designsShown.length))
+              }}
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+              aria-label="Previous design"
+            >
+              <ChevronLeft size={24} />
+            </button>
+          )}
+
+          <div className="relative w-full max-w-5xl h-full" onClick={(e) => e.stopPropagation()}>
+            <Image
+              key={designsShown[lightboxIndex].image}
+              src={designsShown[lightboxIndex].image}
+              alt={`${designCategoryLabel[currentDesignCategory] ?? currentDesignCategory} design ${lightboxIndex + 1}`}
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
+
+          {designsShown.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setLightboxIndex((i) => (i === null ? i : (i + 1) % designsShown.length))
+              }}
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+              aria-label="Next design"
+            >
+              <ChevronRight size={24} />
+            </button>
+          )}
+
+          <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm text-white/70 tabular-nums">
+            {lightboxIndex + 1} / {designsShown.length}
+          </p>
+        </div>
+      )}
 
       {/* Video Player Modal */}
       {selectedVideo && (
