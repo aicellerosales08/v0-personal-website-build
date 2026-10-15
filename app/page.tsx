@@ -5,7 +5,6 @@ import Image from 'next/image'
 import {
   Menu,
   X,
-  ChevronDown,
   ExternalLink,
   Mail,
   Facebook,
@@ -69,8 +68,58 @@ import {
   ArrowLeft,
   GraduationCap,
   MessageCircle,
-  Send
+  Send,
+  MapPin,
+  ArrowRight,
+  Film,
+  Play
 } from 'lucide-react'
+
+// ================= VIDEO HELPERS =================
+// Supported sources:
+//   'youtube' → any YouTube link (watch?v=, youtu.be/, /shorts/)
+//   'vimeo'   → any Vimeo link
+//   'drive'   → Google Drive share link (set sharing to "Anyone with the link")
+//   'file'    → a video file inside your /public folder, e.g. '/videos/reel1.mp4'
+type VideoItem = {
+  title: string
+  description?: string
+  tags?: string[]
+  source: 'youtube' | 'vimeo' | 'drive' | 'file'
+  url: string
+  thumbnail?: string // optional cover image (YouTube makes one automatically)
+  orientation?: 'landscape' | 'portrait' // 'portrait' for Reels / TikTok / Shorts
+}
+
+function getYouTubeId(url: string) {
+  const m = url.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([A-Za-z0-9_-]{11})/)
+  return m ? m[1] : null
+}
+
+function getVideoEmbedUrl(video: VideoItem) {
+  if (video.source === 'youtube') {
+    const id = getYouTubeId(video.url)
+    return id ? `https://www.youtube.com/embed/${id}?autoplay=1&rel=0` : video.url
+  }
+  if (video.source === 'vimeo') {
+    const m = video.url.match(/vimeo\.com\/(?:video\/)?(\d+)/)
+    return m ? `https://player.vimeo.com/video/${m[1]}?autoplay=1` : video.url
+  }
+  if (video.source === 'drive') {
+    const m = video.url.match(/\/d\/([A-Za-z0-9_-]+)/) || video.url.match(/[?&]id=([A-Za-z0-9_-]+)/)
+    return m ? `https://drive.google.com/file/d/${m[1]}/preview` : video.url
+  }
+  return video.url
+}
+
+function getVideoThumbnail(video: VideoItem) {
+  if (video.thumbnail) return video.thumbnail
+  if (video.source === 'youtube') {
+    const id = getYouTubeId(video.url)
+    if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+  }
+  return null
+}
 
 // ================= SCROLL REVEAL HOOK =================
 type RevealDirection = 'up' | 'left' | 'right' | 'fade'
@@ -389,6 +438,11 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: Cha
     reply: "Hi there! 👋 I'm Aicelle's little assistant. Ask me about her skills, experience, projects, or how to get in touch!",
   },
   {
+    keywords: ['video', 'editing', 'reel', 'edit'],
+    reply: "Aicelle also does video editing — reels, ads, and short-form content! 🎬 Head to the 'Work' section and open the Videos tab.",
+    action: { label: 'View Videos', href: '#work' },
+  },
+  {
     keywords: ['skill', 'stack', 'tech', 'technology', 'language', 'tool'],
     reply: "Aicelle works across Development (HTML, CSS, JS, React, Next.js), UI/UX Design (Figma, Adobe XD), Graphic Design (Canva, Photoshop, Illustrator), and she's also big on AI-assisted workflows (ChatGPT, Claude, Gemini). Check out the 'Skills & Tools' section above for the full breakdown! ✨",
     action: { label: 'View Skills & Tools', href: '#skills' },
@@ -685,15 +739,27 @@ export default function Portfolio() {
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [quoteIndex, setQuoteIndex] = useState(0)
 
-  // ================= WORK TAB (Projects / Designs) =================
-  const [workTab, setWorkTab] = useState<'projects' | 'designs'>('projects')
+  // ================= WORK TAB (Projects / Designs / Videos) =================
+  type WorkTab = 'projects' | 'designs' | 'videos'
+  const [workTab, setWorkTab] = useState<WorkTab>('projects')
+  const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null)
 
-  const switchWorkTab = (tab: 'projects' | 'designs') => {
+  const switchWorkTab = (tab: WorkTab) => {
     setWorkTab(tab)
     setActiveCategory('All')
     setActiveDesignCategory(null)
     setActiveSubFolder(null)
   }
+
+  // Close the video player with the Escape key
+  useEffect(() => {
+    if (!selectedVideo) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedVideo(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [selectedVideo])
 
   // ================= LIKES (per-device, saved in localStorage) =================
   const [likedProjects, setLikedProjects] = useState<Set<string>>(new Set())
@@ -1201,6 +1267,34 @@ const designs = [
     },
   ]
 
+  // ================= VIDEO EDITING =================
+  // Add your edited videos here. The tab shows a "coming soon" card until this list has items.
+  // Copy one of the examples below, remove the // at the start of each line, and paste your link.
+  const videos: VideoItem[] = [
+    // {
+    //   title: 'Product Promo Reel',
+    //   description: 'Short-form promo edited for Instagram Reels with motion text and transitions.',
+    //   tags: ['CapCut', 'Reels', 'Motion Text'],
+    //   source: 'youtube',
+    //   url: 'https://youtube.com/shorts/XXXXXXXXXXX',
+    //   orientation: 'portrait',
+    // },
+    // {
+    //   title: 'Brand Highlight Video',
+    //   description: 'Landscape brand video with color grading, music sync, and captions.',
+    //   tags: ['Premiere Pro', 'Color Grading'],
+    //   source: 'drive',
+    //   url: 'https://drive.google.com/file/d/XXXXXXXXXXXX/view',
+    //   thumbnail: '/video-thumb-brand.png',
+    // },
+    // {
+    //   title: 'TikTok Ad',
+    //   source: 'file',
+    //   url: '/videos/tiktok-ad.mp4',
+    //   orientation: 'portrait',
+    // },
+  ]
+
   const certificates = [
     {
       title: 'Introduction to Cybersecurity',
@@ -1357,55 +1451,64 @@ const designs = [
       </nav>
 
       {/* ================= 1. HOME / HERO ================= */}
-      <section id="home" className="max-w-6xl mx-auto px-6 py-4 md:py-8 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 opacity-5">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
-        </div>
+      <section id="home" className="relative overflow-hidden">
+        {/* Background: soft dot grid + gradient glows */}
+        <div
+          className="absolute inset-0 -z-10 opacity-[0.35]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgb(196 181 253 / 0.6) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+            maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 75%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 75%)',
+          }}
+        />
+        <div className="absolute -top-32 -right-32 w-[520px] h-[520px] bg-purple-300/30 rounded-full blur-3xl -z-10" />
+        <div className="absolute -bottom-40 -left-32 w-[480px] h-[480px] bg-pink-300/30 rounded-full blur-3xl -z-10" />
 
-        {heroLoaded && (
-          <div className="flex-1 space-y-8 animate-slide-in-left">
-            <div className="space-y-3">
-              <p className="text-pink-500 font-medium text-sm animate-fade-in flex items-center gap-1.5">
-                <span className="inline-block animate-bounce origin-[70%_70%]">👋</span>
+        <div className="max-w-6xl mx-auto px-6 pt-10 pb-12 md:pt-16 md:pb-20 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 lg:gap-10 items-center">
+
+          {/* ---------- LEFT: TEXT ---------- */}
+          <div className={`space-y-7 ${heroLoaded ? 'animate-slide-in-left' : 'opacity-0'}`}>
+
+            {/* Availability badge */}
+            <div className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-white/80 backdrop-blur border border-purple-100 shadow-sm">
+              <span className="relative flex h-2.5 w-2.5 ml-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+              </span>
+              <span className="text-xs font-semibold text-gray-700">Open to remote &amp; freelance work</span>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-pink-500 font-semibold text-sm tracking-wide flex items-center gap-1.5">
+                <span className="inline-block animate-bounce">👋</span>
                 Hello, I&apos;m
-                <Sparkle size={14} className="text-purple-400 animate-[spin_5s_linear_infinite]" fill="currentColor" />
               </p>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight relative">
-                <span className="inline-flex flex-wrap">
-                  {'Aicelle'.split('').map((letter, i) => (
-                    <span
-                      key={`a-${i}`}
-                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:text-pink-500 hover:rotate-6 transition-all duration-300 cursor-default"
-                      style={{ animationDelay: `${i * 60}ms` }}
-                    >
-                      {letter}
-                    </span>
-                  ))}
-                </span>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-gray-900">
+                Aicelle
                 <br />
-                <span className="inline-flex flex-wrap text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                  {'Rosales'.split('').map((letter, i) => (
-                    <span
-                      key={`r-${i}`}
-                      className="inline-block animate-slide-in-up hover:-translate-y-2 hover:scale-110 transition-all duration-300 cursor-default"
-                      style={{ animationDelay: `${420 + i * 60}ms` }}
-                    >
-                      {letter}
-                    </span>
-                  ))}
+                <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500">
+                  Rosales
+                  {/* hand-drawn style underline */}
+                  <svg
+                    className="absolute -bottom-3 left-0 w-full h-4 text-pink-300"
+                    viewBox="0 0 300 16"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M2 11 C 60 2, 140 2, 298 9" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
+                  </svg>
                 </span>
-                <Heart
-                  size={22}
-                  fill="currentColor"
-                  className="hidden sm:inline-block text-pink-400 ml-2 align-top mt-2 animate-float"
-                  style={{ animationDelay: '0.5s' }}
-                />
               </h1>
 
-              <p className="text-xl text-gray-600">Web Designer & Developer | UI/UX & Creative Designer</p>
+              <p className="text-lg md:text-xl font-semibold text-gray-800 pt-3">
+                Web Designer &amp; Developer
+                <span className="text-gray-300 mx-2">/</span>
+                UI/UX Designer
+              </p>
 
+              {/* Rotating tagline */}
               <div className="h-6 overflow-hidden">
                 <p
                   key={quoteIndex}
@@ -1417,41 +1520,70 @@ const designs = [
               </div>
             </div>
 
-            <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-             I'm a Web Designer, Frontend Developer, and UI/UX Designer with experience creating responsive websites, intuitive user interfaces, and functional digital solutions. I combine creative design and development skills to transform ideas into engaging, user-friendly digital experiences.
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
+              I design and build responsive websites and clean, user-friendly interfaces —
+              from Figma wireframes to live pages. Currently building client sites for
+              Australian businesses at <span className="font-semibold text-gray-900">Malama Co.</span>
             </p>
 
-            <div className="flex gap-4 flex-wrap">
-              <a
-                href="/rosales_aicelle_resume.pdf"
-                download="rosales_aicelle_resume.pdf"
-                className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group"
-              >
-                <span>Download CV</span>
-                <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
-              </a>
+            {/* CTAs */}
+            <div className="flex gap-3 flex-wrap">
               <a
                 href="#work"
                 onClick={(e) => handleScrollTo(e, '#work')}
-                className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300"
+                className="group px-7 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-pink-500/30 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 inline-flex items-center gap-2"
               >
-                View Work →
+                View My Work
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+              </a>
+              <a
+                href="/rosales_aicelle_resume.pdf"
+                download="rosales_aicelle_resume.pdf"
+                className="group px-7 py-3.5 rounded-full font-semibold text-gray-900 bg-white border border-gray-200 hover:border-purple-300 hover:text-purple-600 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 shadow-sm"
+              >
+                Download CV
+                <Download size={18} className="group-hover:translate-y-0.5 transition-transform duration-300" />
               </a>
             </div>
 
-            <div className="flex items-center gap-6 pt-4">
-              <p className="text-sm text-gray-500 font-medium tracking-wider">FOLLOW ME</p>
-              <div className="flex gap-3">
+            {/* Stats (auto-counted from your data) */}
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl pt-2">
+              {[
+                { value: 4, suffix: '+', label: 'Roles' },
+                { value: projects.length, suffix: '', label: 'Projects' },
+                { value: designs.length, suffix: '+', label: 'Designs' },
+                { value: certificates.length, suffix: '', label: 'Certificates' },
+              ].map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className={`text-center sm:text-left ${i > 0 ? 'sm:border-l sm:border-gray-200 sm:pl-4' : ''}`}
+                >
+                  <p className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 leading-none">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1.5">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Socials */}
+            <div className="flex items-center gap-4 pt-1">
+              <span className="text-xs text-gray-400 font-semibold tracking-widest">FIND ME ON</span>
+              <span className="h-px w-8 bg-gray-200" />
+              <div className="flex gap-2">
                 {socialLinks.map((social) =>
                   (social as any).isDiscord ? (
                     <button
                       key={social.name}
                       type="button"
                       onClick={handleCopyDiscord}
-                      className="relative p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      className="relative w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-purple-600 hover:border-purple-300 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px]"
                       title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                      aria-label="Copy Discord username"
                     >
-                      {copiedDiscord ? <Check size={20} className="text-green-500" /> : social.icon}
+                      {copiedDiscord ? <Check size={18} className="text-green-500" /> : social.icon}
                       {copiedDiscord && (
                         <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
                           Copied!
@@ -1464,8 +1596,9 @@ const designs = [
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-gray-100 rounded-full text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:-translate-y-1 hover:shadow-md active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      className="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-purple-600 hover:border-purple-300 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px]"
                       title={social.name}
+                      aria-label={social.name}
                     >
                       {social.icon}
                     </a>
@@ -1474,99 +1607,90 @@ const designs = [
               </div>
             </div>
           </div>
-        )}
 
-        {/* Profile Image */}
-        <div className={`flex-1 ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
-          <div className="relative w-full max-w-lg mx-auto group">
+          {/* ---------- RIGHT: PHOTO ---------- */}
+          <div className={`relative ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
+            <div className="relative w-full max-w-[420px] mx-auto">
 
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-glow"></div>
+              {/* Gradient backdrop card, tilted */}
+              <div className="absolute inset-0 translate-x-4 translate-y-4 rotate-3 rounded-[2.5rem] bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 opacity-90" />
+              <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-purple-400/30 to-pink-400/30 blur-2xl -z-10 animate-glow" />
 
-            <div className="absolute -inset-4 rounded-full border-2 border-dashed border-pink-300/70 animate-[spin_18s_linear_infinite] pointer-events-none" />
-            <div className="absolute -inset-8 rounded-full border border-dotted border-purple-200/60 animate-[spin_26s_linear_infinite_reverse] pointer-events-none" />
+              {/* Photo */}
+              <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-b from-purple-50 to-pink-50">
+                <Image
+                  src="/newphotoseiki.png"
+                  alt="Aicelle Rosales"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 420px"
+                  className="object-cover object-top hover:scale-[1.03] transition-transform duration-700"
+                  priority
+                />
+              </div>
 
-            <span className="absolute top-2 left-10 w-2 h-2 rounded-full bg-pink-400 animate-ping [animation-duration:2.5s]" />
-            <span className="absolute bottom-6 right-6 w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping [animation-duration:3.2s]" style={{ animationDelay: '0.6s' }} />
-            <span className="absolute top-1/3 -right-2 w-1.5 h-1.5 rounded-full bg-pink-300 animate-ping [animation-duration:2s]" style={{ animationDelay: '1.1s' }} />
+              {/* Floating card: current role */}
+              <div
+                className="absolute -left-4 sm:-left-10 bottom-10 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-gray-100 px-4 py-3 flex items-center gap-3 animate-float"
+                style={{ animationDelay: '0.6s' }}
+              >
+                <div className="w-10 h-10 rounded-xl border border-gray-100 bg-white flex items-center justify-center overflow-hidden">
+                  <Image src="/malama-logo.png" alt="Malama Co." width={40} height={40} className="w-full h-full object-contain p-1.5" />
+                </div>
+                <div className="leading-tight">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-green-600">Currently</p>
+                  <p className="text-sm font-bold text-gray-900">Web Designer</p>
+                  <p className="text-xs text-gray-500">Malama Co. · Remote</p>
+                </div>
+              </div>
 
-            <div
-              className="absolute -top-3 left-6 z-20 text-pink-500 animate-float drop-shadow-sm"
-              style={{ animationDelay: '0.3s' }}
-            >
-              <Sparkles size={30} className="animate-[spin_7s_linear_infinite]" fill="currentColor" strokeWidth={1} />
+              {/* Floating card: tools */}
+              <div
+                className="absolute -right-3 sm:-right-8 top-10 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-gray-100 px-3.5 py-3 animate-float"
+                style={{ animationDelay: '1.4s' }}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Daily tools</p>
+                <div className="flex items-center gap-1.5">
+                  {[
+                    { src: '/figma.png', alt: 'Figma' },
+                    { src: '/html-5.png', alt: 'HTML' },
+                    { src: '/css-3.png', alt: 'CSS' },
+                    { src: '/java-script.png', alt: 'JavaScript' },
+                  ].map((tool) => (
+                    <div key={tool.alt} title={tool.alt} className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5">
+                      <Image src={tool.src} alt={tool.alt} width={20} height={20} className="object-contain" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location chip */}
+              <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 bg-gray-900 text-white rounded-full px-4 py-2 shadow-lg inline-flex items-center gap-1.5 whitespace-nowrap">
+                <MapPin size={14} className="text-pink-400" />
+                <span className="text-xs font-semibold">Based in the Philippines</span>
+              </div>
+
+              {/* A couple of subtle accents (kept minimal) */}
+              <Sparkle size={22} fill="currentColor" className="absolute -top-4 left-8 text-pink-400 animate-float" />
+              <Heart size={18} fill="currentColor" className="absolute top-1/2 -right-6 text-purple-300 animate-float hidden sm:block" style={{ animationDelay: '1s' }} />
             </div>
-
-            <div
-              className="absolute top-1/4 -left-6 z-20 text-purple-400 animate-float"
-              style={{ animationDelay: '1.8s' }}
-            >
-              <Sparkle size={20} fill="currentColor" strokeWidth={1} />
-            </div>
-
-            <div
-              className="absolute bottom-1/4 -right-5 z-20 text-pink-500 animate-float"
-              style={{ animationDelay: '0.9s' }}
-            >
-              <Heart size={26} fill="currentColor" className="drop-shadow-sm" />
-            </div>
-
-            <div
-              className="absolute -bottom-2 right-16 z-20 text-purple-400 animate-float"
-              style={{ animationDelay: '2.2s' }}
-            >
-              <Star size={22} fill="currentColor" className="animate-[spin_10s_linear_infinite]" />
-            </div>
-
-            <div
-              className="absolute bottom-1/3 -left-4 z-20 text-pink-300 animate-float"
-              style={{ animationDelay: '1.4s' }}
-            >
-              <Heart size={16} fill="currentColor" />
-            </div>
-
-            <div className="relative z-10 w-[480px] h-[480px] max-w-full mx-auto rounded-full overflow-hidden border-2 border-white shadow-2xl bg-white animate-float group-hover:scale-[1.02] transition-transform duration-500">
-
-              <Image
-                src="/newphotoseiki.png"
-                alt="Aicelle Rosales"
-                width={480}
-                height={480}
-                className="w-full h-auto aspect-square object-cover object-top"
-                priority
-              />
-
-            </div>
-
-            <div
-              className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
-              style={{ animationDelay: '1.5s' }}
-            >
-              <p className="font-bold text-xl text-gray-900 leading-none">4+</p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-1">
-                Experiences
-              </p>
-            </div>
-
-            <div
-              className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
-              style={{ animationDelay: '1s' }}
-            >
-              <p className="font-bold text-xl leading-none">20+</p>
-              <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-1">
-                Projects Done
-              </p>
-            </div>
-
           </div>
         </div>
-
       </section>
 
       {/* Scroll Indicator */}
-      <div className="flex justify-center pb-8">
-        <ChevronDown className="text-gray-400 animate-bounce" size={24} />
+      <div className="flex justify-center pb-10">
+        <a
+          href="#about"
+          onClick={(e) => handleScrollTo(e, '#about')}
+          className="flex flex-col items-center gap-2 text-gray-400 hover:text-purple-500 transition-colors"
+          aria-label="Scroll to About"
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Scroll</span>
+          <span className="w-6 h-10 rounded-full border-2 border-current flex justify-center pt-2">
+            <span className="w-1 h-2 rounded-full bg-current animate-bounce" />
+          </span>
+        </a>
       </div>
-
       {/* Quote Section */}
       <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
@@ -1967,16 +2091,17 @@ const designs = [
           </h2>
 
           <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-            UI/UX and web projects, plus creative designs — all in one place.
+            UI/UX and web projects, creative designs, and video edits — all in one place.
           </p>
         </Reveal>
 
-        {/* Main Toggle: Projects / Designs */}
+        {/* Main Toggle: Projects / Designs / Videos */}
         <div className="flex justify-center mb-10">
-          <div className="inline-flex p-1.5 bg-gray-100 rounded-full shadow-inner">
+          <div className="inline-flex max-w-full overflow-x-auto p-1.5 bg-gray-100 rounded-full shadow-inner">
             {[
               { key: 'projects' as const, label: 'Projects', icon: Layers, count: projects.length },
               { key: 'designs' as const, label: 'Designs', icon: ImageIcon, count: designs.length },
+              { key: 'videos' as const, label: 'Videos', icon: Film, count: videos.length },
             ].map((tab) => {
               const TabIcon = tab.icon
               const isActive = workTab === tab.key
@@ -1984,7 +2109,7 @@ const designs = [
                 <button
                   key={tab.key}
                   onClick={() => switchWorkTab(tab.key)}
-                  className={`inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 active:scale-95 ${
+                  className={`shrink-0 inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-7 py-3 rounded-full text-sm font-bold transition-all duration-300 active:scale-95 ${
                     isActive
                       ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
                       : 'text-gray-600 hover:text-purple-600'
@@ -2005,7 +2130,102 @@ const designs = [
           </div>
         </div>
 
-        {workTab === 'projects' ? (
+        {workTab === 'videos' ? (
+          /* ==================== VIDEOS TAB ==================== */
+          <div key="videos" className="animate-fade-in">
+            <p className="text-center text-gray-500 text-sm mb-8">
+              Video editing work — reels, ads, and short-form content. Tap a video to play it.
+            </p>
+
+            {videos.length === 0 ? (
+              /* Empty state — shows until you add videos to the list */
+              <div className="max-w-xl mx-auto text-center bg-white border-2 border-dashed border-purple-200 rounded-3xl px-8 py-14">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center mb-5">
+                  <Film size={28} className="text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Video edits coming soon</h3>
+                <p className="text-gray-500 text-sm">
+                  I&apos;m putting together my best video editing work. Check back soon!
+                </p>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {videos.map((video, i) => {
+                  const thumb = getVideoThumbnail(video)
+                  const isPortrait = video.orientation === 'portrait'
+                  return (
+                    <button
+                      key={video.title + i}
+                      type="button"
+                      onClick={() => setSelectedVideo(video)}
+                      style={{ animationDelay: `${(i % 6) * 90}ms` }}
+                      className="group text-left bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up"
+                    >
+                      {/* Thumbnail */}
+                      <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-purple-100 via-fuchsia-50 to-pink-100">
+                        {thumb ? (
+                          // Plain <img> so remote thumbnails (YouTube) work without extra Next.js config
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={thumb}
+                            alt={video.title}
+                            loading="lazy"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        ) : video.source === 'file' ? (
+                          <video
+                            src={`${video.url}#t=0.5`}
+                            muted
+                            playsInline
+                            preload="metadata"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Film size={40} className="text-purple-300" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-300" />
+
+                        {/* Play button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="w-14 h-14 rounded-full bg-white/95 shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <Play size={22} fill="currentColor" className="text-purple-600 ml-1" />
+                          </span>
+                        </div>
+
+                        {isPortrait && (
+                          <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider text-white bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
+                            Vertical
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6 flex flex-col flex-1">
+                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300 mb-2">
+                          {video.title}
+                        </h3>
+                        {video.description && (
+                          <p className="text-gray-600 text-sm mb-4 line-clamp-3">{video.description}</p>
+                        )}
+                        {video.tags && video.tags.length > 0 && (
+                          <div className="flex gap-2 flex-wrap mt-auto">
+                            {video.tags.map((tag) => (
+                              <span key={tag} className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        ) : workTab === 'projects' ? (
           /* ==================== PROJECTS TAB ==================== */
           <div key="projects" className="animate-fade-in">
             {/* Category Tabs */}
@@ -2940,6 +3160,50 @@ const designs = [
           </div>
         </div>
       </section>
+
+      {/* Video Player Modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black/80 z-[70] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            className={`relative w-full animate-slide-in-up ${
+              selectedVideo.orientation === 'portrait' ? 'max-w-sm' : 'max-w-4xl'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-3 text-white">
+              <h3 className="font-bold text-base sm:text-lg truncate pr-4">{selectedVideo.title}</h3>
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="shrink-0 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 hover:rotate-90 flex items-center justify-center transition-all duration-300"
+                aria-label="Close video"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div
+              className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-2xl ${
+                selectedVideo.orientation === 'portrait' ? 'aspect-[9/16] max-h-[80vh] mx-auto' : 'aspect-video'
+              }`}
+            >
+              {selectedVideo.source === 'file' ? (
+                <video src={selectedVideo.url} controls autoPlay playsInline className="absolute inset-0 w-full h-full object-contain" />
+              ) : (
+                <iframe
+                  src={getVideoEmbedUrl(selectedVideo)}
+                  title={selectedVideo.title}
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Certificate Modal View */}
       {selectedCert && (
