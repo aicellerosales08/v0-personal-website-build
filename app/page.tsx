@@ -162,6 +162,19 @@ function CountUp({ end, suffix = '', duration = 1200 }: { end: number; suffix?: 
   )
 }
 
+// ================= DURATION HELPER =================
+// Auto-computes months for a "Present" role (LinkedIn-style, inclusive),
+// so it never goes stale like a hardcoded "2 mos".
+function monthsSince(year: number, monthIndex: number) {
+  const now = new Date()
+  const months = (now.getFullYear() - year) * 12 + (now.getMonth() - monthIndex) + 1
+  const safe = Math.max(1, months)
+  if (safe < 12) return `${safe} ${safe === 1 ? 'mo' : 'mos'}`
+  const yrs = Math.floor(safe / 12)
+  const rem = safe % 12
+  return `${yrs} ${yrs === 1 ? 'yr' : 'yrs'}${rem ? ` ${rem} ${rem === 1 ? 'mo' : 'mos'}` : ''}`
+}
+
 // ================= LIKE / HEART HELPERS =================
 // Deterministic "seed" number per item so the like count doesn't look empty
 // on first load. Real likes (from this device) are added on top of this seed.
@@ -382,18 +395,18 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: Cha
   },
   {
     keywords: ['experience', 'work', 'job', 'career', 'company'],
-    reply: "She's currently a Web Designer & Developer at Malama Co., and has previously worked with Outlier, Torres Technology Center Corp., and CrowdGen Pro — with 4+ roles across web dev, UI/UX, and AI data annotation. Scroll up to the Experience timeline for the full story! 💼",
+    reply: "She's currently a Web Designer & Developer at Malama Co., and has previously worked with Outlier, Torres Technology Center Corp., and CrowdGen Pro — with 4+ roles across web dev, UI/UX, and AI data annotation. Scroll to the Experience timeline for the full story! 💼",
     action: { label: 'View Experience', href: '#experience' },
   },
   {
     keywords: ['project', 'portfolio', 'work sample', 'built', 'made'],
-    reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Featured Projects' section for live sites and Figma files! 🚀",
-    action: { label: 'View Projects', href: '#projects' },
+    reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Work' section for live sites and Figma files! 🚀",
+    action: { label: 'View Work', href: '#work' },
   },
   {
     keywords: ['design', 'creative', 'graphic', 'ad', 'branding', 'logo'],
-    reply: "She's also done tons of creative work — ad creatives, social media designs, logos, and product visuals. Head to the 'Designs & Creative Work' section and click a folder to browse! 🎨",
-    action: { label: 'Browse Designs', href: '#designs' },
+    reply: "She's also done tons of creative work — ad creatives, social media designs, logos, and product visuals. Head to the 'Work' section, switch to the Designs tab, and click a folder to browse! 🎨",
+    action: { label: 'Browse Designs', href: '#work' },
   },
   {
     keywords: ['certificate', 'certification', 'cert', 'education', 'study', 'school'],
@@ -422,7 +435,7 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: Cha
   {
     keywords: ['cv', 'resume', 'download'],
     reply: "You can download her CV right from the hero section — look for the 'Download CV' button near the top of the page! 📄",
-    action: { label: 'Download CV', href: '/Aicelle_R_Resume.pdf'},
+    action: { label: 'Download CV', href: '/rosales_aicelle_resume.pdf' },
   },
   {
     keywords: ['thank', 'thanks', 'salamat'],
@@ -672,6 +685,16 @@ export default function Portfolio() {
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [quoteIndex, setQuoteIndex] = useState(0)
 
+  // ================= WORK TAB (Projects / Designs) =================
+  const [workTab, setWorkTab] = useState<'projects' | 'designs'>('projects')
+
+  const switchWorkTab = (tab: 'projects' | 'designs') => {
+    setWorkTab(tab)
+    setActiveCategory('All')
+    setActiveDesignCategory(null)
+    setActiveSubFolder(null)
+  }
+
   // ================= LIKES (per-device, saved in localStorage) =================
   const [likedProjects, setLikedProjects] = useState<Set<string>>(new Set())
   const [likedDesigns, setLikedDesigns] = useState<Set<string>>(new Set())
@@ -726,13 +749,13 @@ export default function Portfolio() {
     return () => clearTimeout(t)
   }, [])
 
-  
+
   // ================= ACTIVE SECTION (scroll-spy) =================
   const [activeSection, setActiveSection] = useState('home')
   const [pressedLink, setPressedLink] = useState<string | null>(null)
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'experience', 'skills', 'projects', 'designs', 'certificates']
+    const sectionIds = ['home', 'about', 'work', 'skills', 'experience', 'certificates']
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el))
@@ -773,10 +796,9 @@ export default function Portfolio() {
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
+    { name: 'Work', href: '#work' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Designs', href: '#designs' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Certificates', href: '#certificates' },
   ]
 
@@ -933,18 +955,18 @@ const designs = [
   { image: '/AICELLEROSALESSALMPLEWORK23.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/AICELLEROSALESSALMPLEWORK24.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/AICELLEROSALESSALMPLEWORK25.png', category: 'Ad Creatives', subFolder: 'Set 2' },
-  { image: '/AICELLEROSALESSALMPLEWORK26.png', category: 'Ad Creatives', subFolder: 'Set 2' }, 
+  { image: '/AICELLEROSALESSALMPLEWORK26.png', category: 'Ad Creatives', subFolder: 'Set 2' },
   { image: '/1.png', category: 'Ad Creatives', subFolder: 'Set 3' },
   { image: '/2.png', category: 'Ad Creatives', subFolder: 'Set 3' },
   { image: '/3.png', category: 'Ad Creatives', subFolder: 'Set 3' },
-  
+
   { image: '/clothad3.png', category: 'Ad Creatives', subFolder: 'Set 4' },
   { image: '/clothad4.png', category: 'Ad Creatives', subFolder: 'Set 4' },
   { image: '/clothad5.png', category: 'Ad Creatives', subFolder: 'Set 4' },
   { image: '/clothad7.png', category: 'Ad Creatives', subFolder: 'Set 4' },
   { image: '/clothad10.png', category: 'Ad Creatives', subFolder: 'Set 4' },
   { image: '/clothad11.png', category: 'Ad Creatives', subFolder: 'Set 4' },
-  
+
 
   { image: '/beauty1.png', category: 'Ad Creatives', subFolder: 'Set 5' },
   { image: '/beauty2.png', category: 'Ad Creatives', subFolder: 'Set 5' },
@@ -959,7 +981,7 @@ const designs = [
   { image: '/foodad3.png', category: 'Ad Creatives', subFolder: 'Set 6' },
   { image: '/foodad4.png', category: 'Ad Creatives', subFolder: 'Set 6' },
   { image: '/foodad5.png', category: 'Ad Creatives', subFolder: 'Set 6' },
-  
+
   { image: '/Cloth1.png', category: 'CLOTH', subFolder: 'Set 1' },
   { image: '/Cloth2.png', category: 'CLOTH', subFolder: 'Set 1' },
   { image: '/Cloth3.png', category: 'CLOTH', subFolder: 'Set 1' },
@@ -1150,21 +1172,21 @@ const designs = [
       link: 'https://www.figma.com/design/upS0KtTGWiYRcYSo2nA4AA/BusyBee?t=2XmRObcCFuYf0EkN-0',
       category: 'Trial',
     },
-    
+
   ]
 
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
     { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
-    { 
-      name: 'TikTok', 
-      url: 'https://www.tiktok.com/@sunflowershoppp_', 
+    {
+      name: 'TikTok',
+      url: 'https://www.tiktok.com/@sunflowershoppp_',
       icon: (
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.25 1.96 3.69 2.32v3.9c-1.52-.13-3.01-.71-4.24-1.66-.46-.35-.88-.75-1.25-1.19v7.19c.04 2.22-.92 4.38-2.58 5.82-1.74 1.51-4.14 2.14-6.42 1.69-2.56-.51-4.71-2.43-5.55-4.89-.9-2.65-.18-5.7 1.83-7.65 1.66-1.61 4.07-2.31 6.34-1.84v3.9c-1.21-.33-2.53-.05-3.51.72-.94.75-1.42 1.96-1.3 3.16.14 1.34.99 2.51 2.24 3.03 1.25.53 2.73.32 3.77-.52.82-.67 1.25-1.7 1.23-2.76V0z"/>
         </svg>
-      ) 
+      )
     },
     { name: 'GitHub', url: 'https://github.com/aicellerosales08', icon: <Github size={20} /> },
     {
@@ -1223,7 +1245,7 @@ const designs = [
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm hover:shadow-md hover:rotate-6 transition-all duration-300">
               <span className="text-white font-bold text-lg">A</span>
             </div>
-          
+
             <div className="hidden sm:block">
               <p className="font-semibold text-sm">Aicelle</p>
               <p className="text-xs text-gray-500">
@@ -1258,8 +1280,8 @@ const designs = [
                 </a>
               )
             })}
-            <a 
-              href="mailto:aicellerosales08@gmail.com" 
+            <a
+              href="mailto:aicellerosales08@gmail.com"
               onPointerDown={() => setPressedLink('contact-desktop')}
               onPointerUp={() => setPressedLink(null)}
               onPointerLeave={() => setPressedLink(null)}
@@ -1319,7 +1341,7 @@ const designs = [
                 </a>
               )
             })}
-            <a 
+            <a
               href="mailto:aicellerosales08@gmail.com"
               onPointerDown={() => setPressedLink('contact-mobile')}
               onPointerUp={() => setPressedLink(null)}
@@ -1334,13 +1356,13 @@ const designs = [
         )}
       </nav>
 
-      {/* Hero Section */}
+      {/* ================= 1. HOME / HERO ================= */}
       <section id="home" className="max-w-6xl mx-auto px-6 py-4 md:py-8 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-5">
           <div className="absolute top-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400 rounded-full blur-3xl"></div>
         </div>
-        
+
         {heroLoaded && (
           <div className="flex-1 space-y-8 animate-slide-in-left">
             <div className="space-y-3">
@@ -1400,17 +1422,17 @@ const designs = [
             </p>
 
             <div className="flex gap-4 flex-wrap">
-              <a 
-                href="/rosales_aicelle_resume.pdf" 
+              <a
+                href="/rosales_aicelle_resume.pdf"
                 download="rosales_aicelle_resume.pdf"
                 className="px-8 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group"
               >
                 <span>Download CV</span>
                 <Download size={18} className="group-hover:translate-y-0.5 transition-transform" />
               </a>
-              <a 
-                href="#projects"
-                onClick={(e) => handleScrollTo(e, '#projects')}
+              <a
+                href="#work"
+                onClick={(e) => handleScrollTo(e, '#work')}
                 className="px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-full font-medium hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 View Work →
@@ -1515,7 +1537,7 @@ const designs = [
 
             </div>
 
-            <div 
+            <div
               className="absolute top-8 right-0 z-20 bg-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-100 text-center min-w-[110px] animate-float hover:scale-110 transition-transform duration-300"
               style={{ animationDelay: '1.5s' }}
             >
@@ -1524,8 +1546,8 @@ const designs = [
                 Experiences
               </p>
             </div>
-        
-            <div 
+
+            <div
               className="absolute bottom-12 left-0 z-20 bg-gray-900 text-white rounded-2xl px-5 py-2.5 shadow-md border border-gray-800 text-center min-w-[125px] animate-float hover:scale-110 transition-transform duration-300"
               style={{ animationDelay: '1s' }}
             >
@@ -1534,7 +1556,7 @@ const designs = [
                 Projects Done
               </p>
             </div>
-        
+
           </div>
         </div>
 
@@ -1594,11 +1616,11 @@ const designs = [
         </div>
       </Reveal>
 
-      {/* ================= ABOUT SECTION ================= */}
+      {/* ================= 2. ABOUT SECTION ================= */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-      
+
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-stretch">
-      
+
           {/* ================= LEFT SIDE ================= */}
           <Reveal direction="left" className="min-w-0 flex flex-col relative">
 
@@ -1745,15 +1767,15 @@ const designs = [
             </div>
 
           </Reveal>
-      
-      
+
+
           {/* ================= RIGHT SIDE ================= */}
           <Reveal direction="right" className="relative min-w-0 flex">
-      
+
             <div className="absolute -inset-3 bg-gradient-to-r from-purple-100/50 to-pink-100/50 rounded-[28px] blur-2xl -z-10" />
-      
+
             <div className="relative w-full bg-white rounded-[24px] border border-purple-100 shadow-sm overflow-hidden">
-      
+
               <div className="absolute top-0 right-0 w-56 h-48 opacity-50 pointer-events-none">
                 <div className="grid grid-cols-10 gap-2.5 p-5">
                   {Array.from({ length: 100 }).map((_, i) => (
@@ -1765,131 +1787,131 @@ const designs = [
                   ))}
                 </div>
               </div>
-      
+
               <div className="relative p-7 md:p-8">
-      
+
                 <div className="flex items-center gap-4 mb-5">
-      
+
                   <div className="w-14 h-14 shrink-0 rounded-full bg-purple-50 flex items-center justify-center hover:scale-110 hover:rotate-12 transition-transform duration-300">
                     <Star size={26} fill="currentColor" className="text-purple-600 animate-[spin_8s_linear_infinite]" />
                   </div>
-      
+
                   <div>
                     <h3 className="text-2xl md:text-[26px] font-bold text-gray-900">
                       What I Do
                     </h3>
-      
+
                     <div className="flex items-center gap-2 mt-2">
                       <div className="w-12 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full" />
                       <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
                     </div>
                   </div>
-      
+
                 </div>
-      
-      
+
+
                 <div>
-      
+
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                       <span className="text-2xl font-medium text-purple-600">
                         &lt;/&gt;
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Web Development
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Develop responsive, fast, and clean websites
                         <br />
                         using modern technologies.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
+
+
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <span className="text-3xl text-pink-500">
                         ✧
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         UI/UX Design
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Design intuitive and visually appealing interfaces
                         <br />
                         that provide great user experiences.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
+
+
                   <div className="flex gap-6 py-5 border-b border-gray-100 group hover:bg-purple-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                       <span className="text-2xl text-purple-600">
                         ▣
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Wireframing &amp; Prototyping
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Build interactive wireframes and prototypes
                         <br />
                         to visualize ideas and test user flows.
                       </p>
                     </div>
-      
+
                   </div>
-      
-      
+
+
                   <div className="flex gap-6 py-5 group hover:bg-pink-50/40 rounded-xl px-2 -mx-2 transition-colors duration-300">
-      
+
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-pink-50 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <span className="text-2xl text-pink-500">
                         ◫
                       </span>
                     </div>
-      
+
                     <div className="pt-0.5 min-w-0">
                       <h4 className="text-base md:text-[17px] font-bold text-gray-900 mb-1.5">
                         Design Systems
                       </h4>
-      
+
                       <p className="text-sm text-gray-600 leading-[1.5]">
                         Create consistent and scalable design systems
                         <br />
                         for efficient and cohesive digital products.
                       </p>
                     </div>
-      
+
                   </div>
-      
+
                 </div>
               </div>
-      
+
             </div>
           </Reveal>
-      
+
         </div>
-      
-      
+
+
         {/* ================= ANIMATED QUOTE ================= */}
         <Reveal direction="up" className="mt-8 w-full rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50/60 to-pink-50/60 px-6 py-5 overflow-hidden relative">
 
@@ -1918,10 +1940,461 @@ const designs = [
         </Reveal>
 
       </section>
-     {/* ================= EXPERIENCE SECTION ================= */}
-      <section id="experience" className="bg-gray-50 py-20 md:py-32">
+
+      {/* ================= 3. WORK SECTION (Projects + Designs) ================= */}
+      <section id="work" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
+
+        <Reveal direction="up" className="text-center mb-10 relative">
+          <Sparkle
+            size={18}
+            fill="currentColor"
+            className="hidden md:block absolute -top-2 left-[32%] text-pink-300 animate-float"
+          />
+          <Star
+            size={14}
+            fill="currentColor"
+            className="hidden md:block absolute top-2 right-[32%] text-purple-300 animate-[spin_7s_linear_infinite]"
+          />
+
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
+            <Layers size={12} />
+            Portfolio
+          </span>
+
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+            My Work
+          </h2>
+
+          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
+            UI/UX and web projects, plus creative designs — all in one place.
+          </p>
+        </Reveal>
+
+        {/* Main Toggle: Projects / Designs */}
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex p-1.5 bg-gray-100 rounded-full shadow-inner">
+            {[
+              { key: 'projects' as const, label: 'Projects', icon: Layers, count: projects.length },
+              { key: 'designs' as const, label: 'Designs', icon: ImageIcon, count: designs.length },
+            ].map((tab) => {
+              const TabIcon = tab.icon
+              const isActive = workTab === tab.key
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => switchWorkTab(tab.key)}
+                  className={`inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 active:scale-95 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-purple-600'
+                  }`}
+                >
+                  <TabIcon size={16} />
+                  {tab.label}
+                  <span
+                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                      isActive ? 'bg-white/25' : 'bg-white text-gray-400'
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {workTab === 'projects' ? (
+          /* ==================== PROJECTS TAB ==================== */
+          <div key="projects" className="animate-fade-in">
+            {/* Category Tabs */}
+            <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
+              {['All', 'Web', 'Mobile', 'System', 'Trial'].map((category) => {
+                const count =
+                  category === 'All'
+                    ? projects.length
+                    : projects.filter((p) => p.category === category).length
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 active:scale-90 ${
+                      activeCategory === category
+                        ? 'bg-gray-900 text-white shadow-md scale-105'
+                        : 'bg-white border border-gray-200 text-gray-600 hover:bg-purple-50 hover:text-purple-600 hover:scale-105'
+                    }`}
+                  >
+                    {category}
+                    <span
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                        activeCategory === category ? 'bg-white/20' : 'bg-gray-100 text-gray-400'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Projects Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects
+                .filter(
+                  (project) =>
+                    activeCategory === 'All' ||
+                    project.category === activeCategory
+                )
+                .map((project, i) => (
+                  <div
+                    key={project.title}
+                    style={{ animationDelay: `${(i % 6) * 90}ms` }}
+                    className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up relative"
+                  >
+                    {/* "Live" badge for projects with a deployed site */}
+                    {'website' in project && (
+                      <span className="absolute top-3 left-3 z-20 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-1 rounded-full shadow-sm">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+                        </span>
+                        Live
+                      </span>
+                    )}
+
+                    {/* Heart / like button */}
+                    <div className="absolute top-3 right-3 z-20">
+                      <HeartLikeButton
+                        itemKey={project.title}
+                        liked={likedProjects.has(project.title)}
+                        onToggle={() => toggleProjectLike(project.title)}
+                      />
+                    </div>
+
+                    {/* Project Image */}
+                    <div className="aspect-video relative overflow-hidden bg-gray-100">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      {/* Shine sweep on hover */}
+                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                      </div>
+                    </div>
+
+                    {/* Project Content */}
+                    <div className="p-6 flex flex-col flex-1 justify-between">
+                      <div>
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                            {project.title}
+                          </h3>
+
+                          <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
+                            {project.category}
+                          </span>
+                        </div>
+
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-4">
+                          {project.description}
+                        </p>
+
+                        {/* Tags */}
+                        <div className="flex gap-2 flex-wrap mb-6">
+                          {project.tags.map((tag, ti) => (
+                            <span
+                              key={tag}
+                              style={{ animationDelay: `${(i % 6) * 90 + ti * 60}ms` }}
+                              className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Project Link */}
+                      <div>
+                        {'website' in project ? (
+                          <div className="flex gap-4 border-t border-gray-100 pt-4">
+                            <a
+                              href={project.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
+                            >
+                              Live Site <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
+                            </a>
+
+                            <a
+                              href={project.figma}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
+                            >
+                              Figma <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
+                            </a>
+                          </div>
+                        ) : (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link"
+                          >
+                            View Project Design
+                            <ExternalLink size={15} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ) : (
+          /* ==================== DESIGNS TAB ==================== */
+          <div key="designs" className="animate-fade-in">
+            {activeDesignCategory === null ? (
+              /* ============ LEVEL 1: CATEGORY FOLDERS ============ */
+              <>
+                <p className="text-center text-gray-500 text-sm mb-8">
+                  Ad creatives, branding, social media, and product visuals. Tap a folder to open it.
+                </p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {designCategoryList.map((category, i) => {
+                    const items = designs.filter((d) => d.category === category)
+                    const cover = items[0]?.image
+                    const blurb =
+                      designCategoryBlurbs[category] ??
+                      `A curated set of ${items.length} ${items.length === 1 ? 'design' : 'designs'} exploring ${category.toLowerCase()}.`
+                    return (
+                      <button
+                        key={category}
+                        onClick={() => setActiveDesignCategory(category)}
+                        style={{ animationDelay: `${i * 90}ms` }}
+                        className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
+                      >
+                        {/* Cover Image */}
+                        <div className="aspect-video relative overflow-hidden bg-gray-100">
+                          {cover && (
+                            <Image
+                              src={cover}
+                              alt={category}
+                              fill
+                              className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                          {/* Shine sweep on hover */}
+                          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                            <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                          </div>
+
+                          {/* Folder icon badge */}
+                          <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                            <Folder size={16} className="text-purple-500 group-hover:hidden" />
+                            <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6 flex flex-col flex-1 justify-between">
+                          <div>
+                            <div className="flex items-start justify-between gap-3 mb-2">
+                              <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                                {category}
+                              </h3>
+                              <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
+                                {items.length} {items.length === 1 ? 'design' : 'designs'}
+                              </span>
+                            </div>
+
+                            <p className="text-gray-600 text-sm mb-6">
+                              {blurb}
+                            </p>
+                          </div>
+
+                          <div className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link">
+                            Browse Folder
+                            <ArrowLeft size={15} className="rotate-180 group-hover/link:translate-x-1 transition-transform duration-200" />
+                          </div>
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+              </>
+            ) : (() => {
+              // Sub-folders that exist inside the currently opened category
+              const itemsInCategory = designs.filter((d) => d.category === activeDesignCategory)
+              const subFolderList = itemsInCategory
+                .map((d) => d.subFolder)
+                .filter((s): s is string => Boolean(s))
+                .filter((s, idx, arr) => arr.indexOf(s) === idx)
+              const hasSubFolders = subFolderList.length > 1
+
+              if (hasSubFolders && activeSubFolder === null) {
+                /* ============ LEVEL 2: SUB-FOLDERS INSIDE THE CATEGORY ============ */
+                return (
+                  <div>
+                    <div className="flex items-center justify-between mb-8 animate-fade-in">
+                      <button
+                        onClick={() => setActiveDesignCategory(null)}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
+                      >
+                        <ArrowLeft size={16} />
+                        Back to categories
+                      </button>
+                      <div className="inline-flex items-center gap-2">
+                        <FolderOpen size={18} className="text-purple-500" />
+                        <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {subFolderList.map((sub, i) => {
+                        const subItems = itemsInCategory.filter((d) => d.subFolder === sub)
+                        const cover = subItems[0]?.image
+                        return (
+                          <button
+                            key={sub}
+                            onClick={() => setActiveSubFolder(sub)}
+                            style={{ animationDelay: `${i * 90}ms` }}
+                            className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
+                          >
+                            <div className="aspect-video relative overflow-hidden bg-gray-100">
+                              {cover && (
+                                <Image src={cover} alt={sub} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
+                              )}
+                              <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm">
+                                <Folder size={16} className="text-purple-500 group-hover:hidden" />
+                                <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
+                              </div>
+                            </div>
+                            <div className="p-6 flex items-center justify-between">
+                              <h4 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{sub}</h4>
+                              <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
+                                {subItems.length}
+                              </span>
+                            </div>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              }
+
+              /* ============ LEVEL 3 (or level 2 if no sub-folders): IMAGES ============ */
+              const imagesToShow = activeSubFolder
+                ? itemsInCategory.filter((d) => d.subFolder === activeSubFolder)
+                : itemsInCategory
+
+              return (
+                <div>
+                  <div className="flex items-center justify-between mb-8 animate-fade-in">
+                    <button
+                      onClick={() => {
+                        if (activeSubFolder) setActiveSubFolder(null)
+                        else setActiveDesignCategory(null)
+                      }}
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
+                    >
+                      <ArrowLeft size={16} />
+                      {activeSubFolder ? `Back to ${activeDesignCategory}` : 'Back to categories'}
+                    </button>
+                    <div className="inline-flex items-center gap-2">
+                      <FolderOpen size={18} className="text-purple-500" />
+                      <h3 className="text-lg font-bold text-gray-800">
+                        {activeDesignCategory}{activeSubFolder ? ` / ${activeSubFolder}` : ''}
+                      </h3>
+                      <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+                        {imagesToShow.length}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {imagesToShow.map((design, index) => (
+                      <div
+                        key={design.image + index}
+                        style={{ animationDelay: `${(index % 6) * 80}ms` }}
+                        className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
+                      >
+                        {/* Heart / like button */}
+                        <div className="absolute top-3 right-3 z-20">
+                          <HeartLikeButton
+                            itemKey={design.image}
+                            liked={likedDesigns.has(design.image)}
+                            onToggle={() => toggleDesignLike(design.image)}
+                            size="sm"
+                          />
+                        </div>
+
+                        <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={design.image}
+                            alt={`Creative design ${index + 1}`}
+                            width={1200}
+                            height={1200}
+                            className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                            <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        )}
+      </section>
+
+      {/* ================= 4. SKILLS SECTION ================= */}
+      <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
+
         <div className="max-w-6xl mx-auto px-6">
-      
+          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
+            <Sparkle
+              size={16}
+              fill="currentColor"
+              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
+            />
+            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+              Capabilities
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+              Technical Skills & Tools
+            </h2>
+            <p className="text-gray-500 text-sm">
+              My proficiency in various programming languages, frameworks, and design software tools.
+            </p>
+          </Reveal>
+
+          <div className="space-y-14">
+            {skillGroups.map((group, groupIndex) => (
+              <SkillGroupBlock key={group.category} group={group} groupIndex={groupIndex} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 5. EXPERIENCE SECTION ================= */}
+      <section id="experience" className="bg-white py-20 md:py-32">
+        <div className="max-w-6xl mx-auto px-6">
+
           {/* Section Header */}
           <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
             <Sparkle
@@ -1950,10 +2423,10 @@ const designs = [
               AI data annotation, and IT technical support.
             </p>
           </Reveal>
-      
+
           {/* Experience Timeline */}
           <div className="max-w-4xl mx-auto">
-      
+
             {/* ================= MALAMA ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm">
@@ -1992,7 +2465,8 @@ const designs = [
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
                         </span>
-                        Jul 2026 – Present · 2 mos
+                        {/* Auto-updates every month (July = month index 6) */}
+                        Jul 2026 – Present · {monthsSince(2026, 6)}
                       </span>
                     </div>
 
@@ -2006,41 +2480,41 @@ const designs = [
                         ensuring responsive, user-friendly, and visually consistent
                         web experiences.
                       </li>
-      
+
                       <li>
                         Design, build, and optimize service landing pages using Wix
                         Editor based on client and business requirements.
                       </li>
-      
+
                       <li>
                         Organize and manage website structures, content, and page
                         layouts to improve usability and overall site performance.
                       </li>
-      
+
                       <li>
                         Implement Wix CMS features, dynamic pages, collections, and
                         URL redirects to support scalable and well-structured websites.
                       </li>
-      
+
                       <li>
                         Update website content, layouts, booking systems, and
                         interactive elements while maintaining brand consistency
                         across client websites.
                       </li>
-      
+
                       <li>
                         Collaborate with the marketing team to develop and launch
                         new website features, pages, and digital experiences aligned
                         with campaign and business goals.
                       </li>
-      
+
                       <li>
                         Apply responsive web design principles to ensure websites
                         deliver a seamless experience across desktop, tablet, and
                         mobile devices.
                       </li>
                     </ul>
-      
+
                     <div className="flex flex-wrap gap-2 mt-6">
                       {[
                         "Wix Website Builder",
@@ -2059,21 +2533,21 @@ const designs = [
                         </span>
                       ))}
                     </div>
-      
+
                   </div>
                 </div>
               </div>
             </Reveal>
-      
-      
+
+
             {/* ================= OUTLIER ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
-      
+
               <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
-      
+
                 <div className="flex flex-col sm:flex-row gap-5">
-      
+
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/outlier-logo.png"
@@ -2083,57 +2557,57 @@ const designs = [
                       className="w-full h-full object-contain p-2"
                     />
                   </div>
-      
+
                   <div className="flex-1">
-      
+
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900">
                           AI Training Data Contributor
                         </h3>
-      
+
                         <p className="text-pink-500 font-semibold mt-1">
                           Outlier · Part-time
                         </p>
                       </div>
-      
+
                       <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
                         May 2026 – Jul 2026 · 3 mos
                       </span>
                     </div>
-      
+
                     <p className="text-sm text-gray-500 mt-2">
                       Remote
                     </p>
-      
+
                     <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
                       <li>
                         Contribute high-quality voice and video datasets used for AI
                         model training and evaluation.
                       </li>
-      
+
                       <li>
                         Follow project guidelines to record, review, and submit data
                         while maintaining accuracy and quality standards.
                       </li>
-      
+
                       <li>
                         Support the development of AI systems by providing diverse
                         and reliable training data.
                       </li>
-      
+
                       <li>
                         Participate in AI data collection and validation projects,
                         ensuring compliance with project requirements and quality
                         assurance processes.
                       </li>
-      
+
                       <li>
                         Collaborate with project teams and adapt to evolving AI
                         training workflows and data collection tasks.
                       </li>
                     </ul>
-      
+
                     <div className="flex flex-wrap gap-2 mt-6">
                       {[
                         "AI Training",
@@ -2152,21 +2626,21 @@ const designs = [
                         </span>
                       ))}
                     </div>
-      
+
                   </div>
                 </div>
               </div>
             </Reveal>
-      
-      
+
+
             {/* ================= TORRES TECHNOLOGY ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
-      
+
               <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
-      
+
                 <div className="flex flex-col sm:flex-row gap-5">
-      
+
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/torres-logo.png"
@@ -2176,69 +2650,69 @@ const designs = [
                       className="w-full h-full object-contain p-2"
                     />
                   </div>
-      
+
                   <div className="flex-1">
-      
+
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900">
                           Front-End Developer / IT Technical Support
                         </h3>
-      
+
                         <p className="text-purple-600 font-semibold mt-1">
                           Torres Technology Center Corp. · Internship
                         </p>
                       </div>
-      
+
                       <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
                         Feb 2026 – May 2026 · 4 mos
                       </span>
                     </div>
-      
+
                     <p className="text-sm text-gray-500 mt-2">
                       Calamba, Calabarzon, Philippines · On-site
                     </p>
-      
+
                     <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
                       <li>
                         Assisted in the development and maintenance of responsive web
                         applications using HTML, CSS, JavaScript, and modern web
                         development practices.
                       </li>
-      
+
                       <li>
                         Provided technical support to end-users by troubleshooting
                         hardware, software, network, and system-related issues.
                       </li>
-      
+
                       <li>
                         Installed, configured, and maintained computer systems,
                         software applications, and peripheral devices.
                       </li>
-      
+
                       <li>
                         Collaborated with team members to identify and resolve
                         technical problems, ensuring minimal downtime and improved
                         user experience.
                       </li>
-      
+
                       <li>
                         Participated in testing, debugging, and optimizing web
                         applications to enhance performance and usability.
                       </li>
-      
+
                       <li>
                         Documented technical procedures, support solutions, and system
                         configurations for future reference.
                       </li>
-      
+
                       <li>
                         Gained hands-on experience in frontend development, technical
                         troubleshooting, customer support, and IT operations within a
                         professional work environment.
                       </li>
                     </ul>
-      
+
                     <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:bg-purple-50/50 transition-colors duration-300">
                       <div className="w-12 h-12 shrink-0 rounded-lg bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                         <Image
@@ -2249,12 +2723,12 @@ const designs = [
                           className="w-full h-full object-cover"
                         />
                       </div>
-      
+
                       <div>
                         <p className="text-sm font-bold text-gray-900">
                           On-the-Job Training (OJT) Certificate
                         </p>
-      
+
                         <p className="text-xs text-gray-500 mt-1">
                           Certificate of Completion for successfully completing my
                           On-the-Job Training as part of my Bachelor of Science in
@@ -2262,7 +2736,7 @@ const designs = [
                         </p>
                       </div>
                     </div>
-      
+
                     <div className="flex flex-wrap gap-2 mt-6">
                       {[
                         "Front-End Development",
@@ -2281,21 +2755,21 @@ const designs = [
                         </span>
                       ))}
                     </div>
-      
+
                   </div>
                 </div>
               </div>
             </Reveal>
-      
-      
+
+
             {/* ================= CROWDGEN PRO ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 border-l-2 border-transparent">
               <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
-      
+
               <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
-      
+
                 <div className="flex flex-col sm:flex-row gap-5">
-      
+
                   <div className="w-16 h-16 shrink-0 rounded-xl border border-gray-100 bg-white shadow-sm flex items-center justify-center overflow-hidden hover:scale-110 hover:rotate-3 hover:shadow-md transition-all duration-300">
                     <Image
                       src="/crowdgen-logo.png"
@@ -2305,47 +2779,47 @@ const designs = [
                       className="w-full h-full object-contain p-2"
                     />
                   </div>
-      
+
                   <div className="flex-1">
-      
+
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                       <div>
                         <h3 className="text-xl font-bold text-gray-900">
                           Data Annotator / Data Labelling
                         </h3>
-      
+
                         <p className="text-pink-500 font-semibold mt-1">
                           CrowdGen Pro · Part-time
                         </p>
                       </div>
-      
+
                       <span className="text-xs font-semibold text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full self-start">
                         Sep 2025 – Nov 2025 · 3 mos
                       </span>
                     </div>
-      
+
                     <p className="text-sm text-gray-500 mt-2">
                       Remote
                     </p>
-      
+
                     <ul className="mt-5 space-y-2 text-sm text-gray-600 leading-relaxed list-disc pl-5">
                       <li>
                         Annotated and reviewed datasets for AI model training.
                       </li>
-      
+
                       <li>
                         Ensured accuracy and compliance with project guidelines.
                       </li>
-      
+
                       <li>
                         Performed quality checks and data validation.
                       </li>
-      
+
                       <li>
                         Worked with image, text, and AI-related annotation tasks.
                       </li>
                     </ul>
-      
+
                     <div className="flex flex-wrap gap-2 mt-6">
                       {[
                         "Data Annotation",
@@ -2362,454 +2836,18 @@ const designs = [
                         </span>
                       ))}
                     </div>
-      
+
                   </div>
                 </div>
               </div>
             </Reveal>
-      
-          </div>
-        </div>
-      </section>
-      {/* Skills Section */}
-      <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
-        <div className="max-w-6xl mx-auto px-6">
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
-            <Sparkle
-              size={16}
-              fill="currentColor"
-              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
-            />
-            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-              Capabilities
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-              Technical Skills & Tools
-            </h2>
-            <p className="text-gray-500 text-sm">
-              My proficiency in various programming languages, frameworks, and design software tools.
-            </p>
-          </Reveal>
-
-          <div className="space-y-14">
-            {skillGroups.map((group, groupIndex) => (
-              <SkillGroupBlock key={group.category} group={group} groupIndex={groupIndex} />
-            ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-3xl -z-10" />
-
-        <Reveal direction="up" className="text-center mb-12 relative">
-          <Sparkle
-            size={18}
-            fill="currentColor"
-            className="hidden md:block absolute -top-2 left-[32%] text-pink-300 animate-float"
-          />
-          <Star
-            size={14}
-            fill="currentColor"
-            className="hidden md:block absolute top-2 right-[32%] text-purple-300 animate-[spin_7s_linear_infinite]"
-          />
-
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
-            <Layers size={12} />
-            Portfolio
-          </span>
-
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-            Featured Projects
-          </h2>
-      
-          <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base">
-            Explore my selected work across web, mobile, and system design.
-          </p>
-        </Reveal>
-      
-        {/* Category Tabs */}
-        <div className="flex justify-center items-center gap-2 sm:gap-3 mb-12 flex-wrap">
-          {['All', 'Web', 'Mobile', 'System', 'Trial'].map((category) => {
-            const count =
-              category === 'All'
-                ? projects.length
-                : projects.filter((p) => p.category === category).length
-            return (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 active:scale-90 ${
-                  activeCategory === category
-                    ? 'bg-gray-900 text-white shadow-md scale-105'
-                    : 'bg-gray-100 text-gray-600 hover:bg-purple-100 hover:text-purple-600 hover:scale-105'
-                }`}
-              >
-                {category}
-                <span
-                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                    activeCategory === category ? 'bg-white/20' : 'bg-white text-gray-400'
-                  }`}
-                >
-                  {count}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-      
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects
-            .filter(
-              (project) =>
-                activeCategory === 'All' ||
-                project.category === activeCategory
-            )
-            .map((project, i) => (
-              <div
-                key={project.title}
-                style={{ animationDelay: `${(i % 6) * 90}ms` }}
-                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up relative"
-              >
-                {/* "Live" badge for projects with a deployed site */}
-                {'website' in project && (
-                  <span className="absolute top-3 left-3 z-20 inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-green-600 px-2 py-1 rounded-full shadow-sm">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
-                    </span>
-                    Live
-                  </span>
-                )}
-
-                {/* Heart / like button */}
-                <div className="absolute top-3 right-3 z-20">
-                  <HeartLikeButton
-                    itemKey={project.title}
-                    liked={likedProjects.has(project.title)}
-                    onToggle={() => toggleProjectLike(project.title)}
-                  />
-                </div>
-
-                {/* Project Image */}
-                <div className="aspect-video relative overflow-hidden bg-gray-100">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Shine sweep on hover */}
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                  </div>
-                </div>
-      
-                {/* Project Content */}
-                <div className="p-6 flex flex-col flex-1 justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
-                        {project.title}
-                      </h3>
-      
-                      <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
-                        {project.category}
-                      </span>
-                    </div>
-      
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-4">
-                      {project.description}
-                    </p>
-      
-                    {/* Tags */}
-                    <div className="flex gap-2 flex-wrap mb-6">
-                      {project.tags.map((tag, ti) => (
-                        <span
-                          key={tag}
-                          style={{ animationDelay: `${(i % 6) * 90 + ti * 60}ms` }}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-      
-                  {/* Project Link */}
-                  <div>
-                    {'website' in project ? (
-                      <div className="flex gap-4 border-t border-gray-100 pt-4">
-                        <a
-                          href={project.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
-                        >
-                          Live Site <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                        </a>
-      
-                        <a
-                          href={project.figma}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-pink-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline transition-all duration-200 group/link"
-                        >
-                          Figma <ExternalLink size={14} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                        </a>
-                      </div>
-                    ) : (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link"
-                      >
-                        View Project Design
-                        <ExternalLink size={15} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform duration-200" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-      </section>
-      {/* ================= DESIGNS SECTION ================= */}
-      <section
-        id="designs"
-        className="bg-gray-50 py-20 md:py-32 overflow-hidden"
-      >
-        <div className="max-w-6xl mx-auto px-6">
-      
-          {/* Section Header */}
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-12 space-y-4 relative">
-
-            <Sparkle
-              size={16}
-              fill="currentColor"
-              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
-            />
-
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-              <ImageIcon size={12} />
-              Creative Work
-            </span>
-      
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-              Designs & Creative Work
-            </h2>
-      
-            <p className="text-gray-500 text-sm md:text-base">
-              A collection of creative designs, digital advertising visuals,
-              branding, social media content, AI-generated imagery, and product
-              visual designs. Tap a folder to open it.
-            </p>
-      
-          </Reveal>
-
-          {activeDesignCategory === null ? (
-            /* ============ LEVEL 1: CATEGORY FOLDERS ============ */
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {designCategoryList.map((category, i) => {
-                const items = designs.filter((d) => d.category === category)
-                const cover = items[0]?.image
-                const blurb =
-                  designCategoryBlurbs[category] ??
-                  `A curated set of ${items.length} ${items.length === 1 ? 'design' : 'designs'} exploring ${category.toLowerCase()}.`
-                return (
-                  <button
-                    key={category}
-                    onClick={() => setActiveDesignCategory(category)}
-                    style={{ animationDelay: `${i * 90}ms` }}
-                    className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
-                  >
-                    {/* Cover Image */}
-                    <div className="aspect-video relative overflow-hidden bg-gray-100">
-                      {cover && (
-                        <Image
-                          src={cover}
-                          alt={category}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                      {/* Shine sweep on hover */}
-                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                      </div>
-
-                      {/* Folder icon badge */}
-                      <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                        <Folder size={16} className="text-purple-500 group-hover:hidden" />
-                        <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1 justify-between">
-                      <div>
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
-                            {category}
-                          </h3>
-                          <span className="shrink-0 text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full group-hover:bg-purple-100 transition-colors duration-300">
-                            {items.length} {items.length === 1 ? 'design' : 'designs'}
-                          </span>
-                        </div>
-
-                        <p className="text-gray-600 text-sm mb-6">
-                          {blurb}
-                        </p>
-                      </div>
-
-                      <div className="text-purple-600 font-semibold text-sm inline-flex items-center gap-2 hover:text-purple-700 border-t border-gray-100 pt-4 w-full transition-all duration-200 group/link">
-                        Browse Folder
-                        <ArrowLeft size={15} className="rotate-180 group-hover/link:translate-x-1 transition-transform duration-200" />
-                      </div>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
-          ) : (() => {
-            // Sub-folders that exist inside the currently opened category
-            const itemsInCategory = designs.filter((d) => d.category === activeDesignCategory)
-            const subFolderList = itemsInCategory
-              .map((d) => d.subFolder)
-              .filter((s): s is string => Boolean(s))
-              .filter((s, idx, arr) => arr.indexOf(s) === idx)
-            const hasSubFolders = subFolderList.length > 1
-
-            if (hasSubFolders && activeSubFolder === null) {
-              /* ============ LEVEL 2: SUB-FOLDERS INSIDE THE CATEGORY ============ */
-              return (
-                <div>
-                  <div className="flex items-center justify-between mb-8 animate-fade-in">
-                    <button
-                      onClick={() => setActiveDesignCategory(null)}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
-                    >
-                      <ArrowLeft size={16} />
-                      Back to categories
-                    </button>
-                    <div className="inline-flex items-center gap-2">
-                      <FolderOpen size={18} className="text-purple-500" />
-                      <h3 className="text-lg font-bold text-gray-800">{activeDesignCategory}</h3>
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {subFolderList.map((sub, i) => {
-                      const subItems = itemsInCategory.filter((d) => d.subFolder === sub)
-                      const cover = subItems[0]?.image
-                      return (
-                        <button
-                          key={sub}
-                          onClick={() => setActiveSubFolder(sub)}
-                          style={{ animationDelay: `${i * 90}ms` }}
-                          className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full animate-slide-in-up text-left"
-                        >
-                          <div className="aspect-video relative overflow-hidden bg-gray-100">
-                            {cover && (
-                              <Image src={cover} alt={sub} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                            )}
-                            <div className="absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-sm bg-white/90 shadow-sm">
-                              <Folder size={16} className="text-purple-500 group-hover:hidden" />
-                              <FolderOpen size={16} className="text-purple-600 hidden group-hover:block" />
-                            </div>
-                          </div>
-                          <div className="p-6 flex items-center justify-between">
-                            <h4 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{sub}</h4>
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-1 rounded-full">
-                              {subItems.length}
-                            </span>
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              )
-            }
-
-            /* ============ LEVEL 3 (or level 2 if no sub-folders): IMAGES ============ */
-            const imagesToShow = activeSubFolder
-              ? itemsInCategory.filter((d) => d.subFolder === activeSubFolder)
-              : itemsInCategory
-
-            return (
-              <div>
-                <div className="flex items-center justify-between mb-8 animate-fade-in">
-                  <button
-                    onClick={() => {
-                      if (activeSubFolder) setActiveSubFolder(null)
-                      else setActiveDesignCategory(null)
-                    }}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-purple-600 bg-white border border-gray-200 hover:border-purple-200 px-4 py-2 rounded-full shadow-sm hover:shadow-md active:scale-95 transition-all duration-200"
-                  >
-                    <ArrowLeft size={16} />
-                    {activeSubFolder ? `Back to ${activeDesignCategory}` : 'Back to categories'}
-                  </button>
-                  <div className="inline-flex items-center gap-2">
-                    <FolderOpen size={18} className="text-purple-500" />
-                    <h3 className="text-lg font-bold text-gray-800">
-                      {activeDesignCategory}{activeSubFolder ? ` / ${activeSubFolder}` : ''}
-                    </h3>
-                    <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
-                      {imagesToShow.length}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {imagesToShow.map((design, index) => (
-                    <div
-                      key={design.image + index}
-                      style={{ animationDelay: `${(index % 6) * 80}ms` }}
-                      className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-purple-300 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-slide-in-up relative"
-                    >
-                      {/* Heart / like button */}
-                      <div className="absolute top-3 right-3 z-20">
-                        <HeartLikeButton
-                          itemKey={design.image}
-                          liked={likedDesigns.has(design.image)}
-                          onToggle={() => toggleDesignLike(design.image)}
-                          size="sm"
-                        />
-                      </div>
-
-                      <div className="relative w-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                        <Image
-                          src={design.image}
-                          alt={`Creative design ${index + 1}`}
-                          width={1200}
-                          height={1200}
-                          className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                          <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/30 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )
-          })()}
-      
-        </div>
-      </section>
-      {/* Certificates Section */}
-      <section id="certificates" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
+      {/* ================= 6. CERTIFICATES SECTION ================= */}
+      <section id="certificates" className="bg-gradient-to-b from-gray-50 via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
         <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-100/30 rounded-full blur-3xl -z-0" />
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-100/30 rounded-full blur-3xl -z-0" />
 
@@ -2987,7 +3025,7 @@ const designs = [
           <div className="relative inline-block">
             {/* Glowing pulse ring behind the button */}
             <span className="absolute inset-0 rounded-full bg-white/40 blur-md animate-glow" />
-            <a 
+            <a
               href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
               className="relative px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-90 transition-all duration-300 inline-flex items-center gap-2 shadow-lg group"
             >
@@ -3001,7 +3039,6 @@ const designs = [
 
       {/* Footer */}
       <footer className="relative overflow-hidden bg-gray-900 text-white py-12 border-t border-gray-800">
-        {/* Floating playful decorations, echoing the GitHub trophies section vibe */}
         <Sparkle size={16} fill="currentColor" className="absolute top-6 left-[6%] text-purple-400/40 animate-float" style={{ animationDelay: '0.3s' }} />
         <Star size={14} fill="currentColor" className="absolute top-10 left-[20%] text-pink-400/30 animate-[spin_8s_linear_infinite]" />
         <Heart size={14} fill="currentColor" className="absolute bottom-10 left-[14%] text-pink-400/30 animate-float" style={{ animationDelay: '1.2s' }} />
@@ -3023,8 +3060,8 @@ const designs = [
               <ul className="space-y-2 text-sm text-gray-400">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    <a 
-                      href={link.href} 
+                    <a
+                      href={link.href}
                       onClick={(e) => handleScrollTo(e, link.href)}
                       className="hover:text-white hover:translate-x-1 transition-all duration-200 inline-block"
                     >
@@ -3036,7 +3073,6 @@ const designs = [
             </div>
             <div>
               <p className="font-bold text-sm uppercase tracking-wider text-gray-300 mb-3">Connect</p>
-              {/* UPDATED: Added TikTok, GitHub, and Discord icon integration inside footer as well */}
               <div className="flex gap-3">
                 {socialLinks.map((social) =>
                   (social as any).isDiscord ? (
@@ -3055,12 +3091,12 @@ const designs = [
                       )}
                     </button>
                   ) : (
-                    <a 
+                    <a
                       key={social.name}
-                      href={social.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center" 
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={social.name}
                     >
                       {social.icon}
