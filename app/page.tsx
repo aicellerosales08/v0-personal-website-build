@@ -1741,266 +1741,157 @@ const designs = [
         </div>
       </Reveal>
 
-      {/* ================= 2. ABOUT SECTION (bento layout) ================= */}
+      {/* ================= 2. ABOUT SECTION ================= */}
       <section id="about" className="relative max-w-6xl mx-auto px-6 py-20 md:py-28">
-        <style>{`
-          @keyframes about-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-          .about-marquee { animation: about-marquee 28s linear infinite; }
-          .about-marquee:hover { animation-play-state: paused; }
-          @media (prefers-reduced-motion: reduce) { .about-marquee { animation: none; } }
-        `}</style>
 
-        {/* Section label */}
-        <Reveal direction="up" className="flex items-center justify-between gap-4 mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-200 bg-white shadow-sm">
-            <Sparkles size={14} className="text-purple-500" fill="currentColor" />
-            <span className="text-xs font-bold tracking-widest text-purple-600">ABOUT ME</span>
-          </div>
-          <span className="hidden sm:block flex-1 h-px bg-gradient-to-r from-purple-200 via-pink-200 to-transparent" />
-        </Reveal>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-start">
 
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
+          {/* ---------- LEFT: STORY ---------- */}
+          <Reveal direction="left" className="lg:col-span-7 min-w-0">
 
-          {/* ===== 1. INTRO (big card) ===== */}
-          <Reveal direction="up" className="md:col-span-4 md:row-span-2 relative overflow-hidden rounded-[1.75rem] bg-white border border-gray-100 shadow-sm p-7 md:p-10 flex flex-col justify-between">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-gradient-to-br from-purple-200/50 to-pink-200/50 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative">
-              <h2 className="text-3xl md:text-[44px] font-extrabold text-gray-900 tracking-tight leading-[1.1]">
-                Hi, I&apos;m Aicelle <span className="inline-block animate-bounce">👋</span>
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500">
-                  I make digital things that look good and feel easy.
-                </span>
-              </h2>
-
-              <div className="mt-6 space-y-4 text-gray-600 text-base md:text-[17px] leading-relaxed max-w-2xl">
-                <p>
-                  I work right where <span className="font-semibold text-gray-900">design meets code</span>.
-                  I map out how people will use something, design it in Figma, and then build it into a
-                  responsive website that works on every screen.
-                </p>
-                <p>
-                  From client websites and app interfaces to ad creatives and video edits, I care about
-                  the small details — clear layouts, readable text, and flows that just make sense.
-                </p>
-              </div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-200 bg-white mb-6 shadow-sm">
+              <Sparkles size={14} className="text-purple-500" fill="currentColor" />
+              <span className="text-xs font-bold tracking-widest text-purple-600">ABOUT ME</span>
             </div>
 
-            <div className="relative flex flex-wrap gap-3 mt-8">
-              <a
-                href="mailto:aicellerosales08@gmail.com"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white bg-gray-900 hover:bg-gray-800 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
-              >
-                <Mail size={17} />
-                Let&apos;s work together
-              </a>
-              <a
-                href="#work"
-                onClick={(e) => handleScrollTo(e, '#work')}
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-gray-900 bg-white border border-gray-200 hover:border-purple-300 hover:text-purple-600 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
-              >
-                See my work
-                <ArrowRight size={17} className="group-hover:translate-x-1 transition-transform duration-300" />
-              </a>
-            </div>
-          </Reveal>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-[1.1]">
+              Hi, I&apos;m Aicelle.
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500">
+                I turn ideas into clean, easy-to-use digital experiences.
+              </span>
+            </h2>
 
-          {/* ===== 2. PROFILE CARD (gradient) ===== */}
-          <Reveal direction="up" delay={80} className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-purple-600 via-fuchsia-600 to-pink-500 p-7 text-white flex flex-col justify-between min-h-[300px]">
-            <div
-              className="absolute inset-0 opacity-20 pointer-events-none"
-              style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '18px 18px' }}
-            />
-            <Sparkle size={18} fill="currentColor" className="absolute top-6 right-6 text-white/60 animate-float" />
-
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-white/70 shadow-lg bg-white/20">
-                <Image src="/newphotoseiki.png" alt="Aicelle Rosales" width={80} height={80} className="w-full h-full object-cover object-top" />
-              </div>
-              <p className="mt-5 text-2xl font-extrabold leading-tight">Aicelle Rosales</p>
-              <p className="text-white/80 text-sm font-medium">Web Designer · UI/UX Designer</p>
+            <div className="mt-7 space-y-4 text-gray-600 text-base md:text-[17px] leading-relaxed max-w-2xl">
+              <p>
+                With a background in Information Technology, I work right where{' '}
+                <span className="font-semibold text-gray-900">design meets code</span>. I map out the
+                user flow, design the interface in Figma, then build it into a responsive website
+                that works on every screen.
+              </p>
+              <p>
+                I&apos;ve worked on client websites, UI/UX projects for web and mobile, and creative
+                work like ad visuals and video edits — always with the same goal:{' '}
+                <span className="font-semibold text-gray-900">make it look good, and make it easy to use.</span>
+              </p>
             </div>
 
-            <div className="relative space-y-2.5 mt-8">
+            {/* Quick facts */}
+            <div className="mt-9 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
               {[
-                { icon: MapPin, text: 'Philippines' },
-                { icon: Globe, text: 'Open to remote work' },
-                { icon: GraduationCap, text: 'BS Information Technology' },
-              ].map((row) => {
-                const RowIcon = row.icon
-                return (
-                  <div key={row.text} className="flex items-center gap-2.5 text-sm font-medium">
-                    <span className="w-7 h-7 rounded-lg bg-white/15 backdrop-blur flex items-center justify-center">
-                      <RowIcon size={14} />
-                    </span>
-                    {row.text}
-                  </div>
-                )
-              })}
-            </div>
-          </Reveal>
-
-          {/* ===== 3. TOOLBOX (dark card) ===== */}
-          <Reveal direction="up" delay={120} className="md:col-span-3 relative overflow-hidden rounded-[1.75rem] bg-gray-900 p-7 text-white">
-            <div className="absolute -bottom-20 -right-16 w-56 h-56 bg-purple-500/30 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative flex items-center justify-between mb-5">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-300">Toolbox</p>
-                <h3 className="text-lg font-bold mt-1">What I design &amp; build with</h3>
-              </div>
-              <Wrench size={20} className="text-white/40" />
-            </div>
-            <div className="relative grid grid-cols-4 gap-3">
-              {[
-                { src: '/figma.png', name: 'Figma' },
-                { src: '/xd.png', name: 'Adobe XD' },
-                { src: '/palette.png', name: 'Canva' },
-                { src: '/html-5.png', name: 'HTML' },
-                { src: '/css-3.png', name: 'CSS' },
-                { src: '/java-script.png', name: 'JavaScript' },
-                { src: '/python.png', name: 'Python' },
-                { src: '/php.png', name: 'PHP' },
-              ].map((tool) => (
-                <div key={tool.name} className="group flex flex-col items-center gap-1.5">
-                  <div className="w-full aspect-square max-w-[64px] rounded-2xl bg-white flex items-center justify-center p-3 group-hover:-translate-y-1 group-hover:rotate-3 transition-transform duration-300">
-                    <Image src={tool.src} alt={tool.name} width={36} height={36} className="object-contain" />
-                  </div>
-                  <span className="text-[11px] text-white/60 font-medium text-center leading-tight">{tool.name}</span>
-                </div>
-              ))}
-            </div>
-            <p className="relative text-xs text-white/50 mt-5">Plus Wix, React, Next.js, Tailwind, Photoshop &amp; Illustrator.</p>
-          </Reveal>
-
-          {/* ===== 4. CERTIFICATIONS ===== */}
-          <Reveal direction="up" delay={160} className="md:col-span-3 relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 p-7 flex flex-col justify-between">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-600">Certified</p>
-                <p className="mt-2 text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 leading-none">
-                  <CountUp end={certificates.length} />
-                </p>
-                <p className="mt-2 text-sm font-semibold text-gray-800">IT certifications from Cisco &amp; Pearson</p>
-              </div>
-              <div className="flex -space-x-3">
-                {certificates.slice(0, 3).map((cert) => (
-                  <div key={cert.title} className="w-12 h-12 rounded-full bg-white border-2 border-white shadow-md overflow-hidden p-1">
-                    <Image src={cert.badge} alt={cert.title} width={44} height={44} className="w-full h-full object-contain" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-5">
-              {['Cybersecurity', 'Linux', 'Operating Systems'].map((t) => (
-                <span key={t} className="px-3 py-1 rounded-full bg-white text-xs font-semibold text-purple-700 border border-purple-100">
-                  {t}
-                </span>
-              ))}
-              <a
-                href="#certificates"
-                onClick={(e) => handleScrollTo(e, '#certificates')}
-                className="ml-auto inline-flex items-center gap-1 text-xs font-bold text-purple-600 hover:text-pink-500 transition-colors"
-              >
-                View all <ArrowRight size={13} />
-              </a>
-            </div>
-          </Reveal>
-
-          {/* ===== 5. WHAT I DO ===== */}
-          <Reveal direction="up" delay={200} className="md:col-span-6 rounded-[1.75rem] bg-white border border-gray-100 shadow-sm p-7 md:p-8">
-            <div className="flex items-end justify-between gap-4 mb-6">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-600">Services</p>
-                <h3 className="text-2xl font-bold text-gray-900 mt-1">What I Do</h3>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-              {[
-                { icon: Code2, title: 'Web Design & Development', desc: 'Responsive websites built in code or Wix.' },
-                { icon: PenTool, title: 'UI/UX Design', desc: 'Clear, intuitive interfaces for web and mobile.' },
-                { icon: Workflow, title: 'Prototyping', desc: 'Interactive Figma prototypes to test ideas early.' },
-                { icon: Palette, title: 'Graphic Design', desc: 'Ad creatives, social posts, and brand visuals.' },
-                { icon: Film, title: 'Video Editing', desc: 'Short-form reels and ads that grab attention.' },
-              ].map((service, i) => {
-                const ServiceIcon = service.icon
-                const pink = i % 2 === 1
+                { icon: MapPin, label: 'Based in', value: 'Philippines · Open to remote' },
+                { icon: GraduationCap, label: 'Education', value: 'BS Information Technology' },
+                { icon: Layout, label: 'Focus', value: 'UI/UX & Web Design' },
+                { icon: Award, label: 'Certifications', value: `${certificates.length} from Cisco & Pearson` },
+              ].map((fact) => {
+                const FactIcon = fact.icon
                 return (
                   <div
-                    key={service.title}
-                    className={`group rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                      pink
-                        ? 'bg-pink-50/50 border-pink-100 hover:border-pink-300'
-                        : 'bg-purple-50/50 border-purple-100 hover:border-purple-300'
-                    }`}
+                    key={fact.label}
+                    className="group flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-purple-200 hover:shadow-md transition-all duration-300"
                   >
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 ${
-                        pink ? 'bg-pink-500 text-white' : 'bg-purple-600 text-white'
-                      }`}
-                    >
-                      <ServiceIcon size={20} />
+                    <div className="w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <FactIcon size={19} className="text-purple-600" />
                     </div>
-                    <h4 className="font-bold text-gray-900 text-[15px] leading-snug">{service.title}</h4>
-                    <p className="text-sm text-gray-500 leading-snug mt-1.5">{service.desc}</p>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">{fact.label}</p>
+                      <p className="text-sm font-semibold text-gray-900">{fact.value}</p>
+                    </div>
                   </div>
                 )
               })}
             </div>
+
+            <p className="mt-8 inline-flex items-center gap-2 text-sm font-semibold italic text-pink-500">
+              <Heart size={14} fill="currentColor" className="animate-pulse" />
+              Creating with purpose, designing with passion.
+            </p>
           </Reveal>
 
-          {/* ===== 6. HOW I WORK ===== */}
-          <Reveal direction="up" delay={240} className="md:col-span-6 rounded-[1.75rem] bg-gradient-to-br from-gray-50 to-purple-50/40 border border-gray-100 p-7 md:p-8">
-            <div className="mb-6">
-              <p className="text-xs font-bold uppercase tracking-widest text-purple-600">My Process</p>
-              <h3 className="text-2xl font-bold text-gray-900 mt-1">How I Work</h3>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[
-                { step: '01', title: 'Understand', desc: 'Learn the goals, the users, and the content first.' },
-                { step: '02', title: 'Design', desc: 'Wireframes and UI in Figma, then a clickable prototype.' },
-                { step: '03', title: 'Build', desc: 'Turn the design into a responsive, working website.' },
-                { step: '04', title: 'Refine', desc: 'Test, polish the details, launch — and keep improving.' },
-              ].map((item, i, arr) => (
-                <div key={item.step} className="relative">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span
-                      className={`w-11 h-11 shrink-0 rounded-full flex items-center justify-center text-sm font-extrabold text-white shadow-md ${
-                        i % 2 === 0 ? 'bg-gradient-to-br from-purple-600 to-purple-500' : 'bg-gradient-to-br from-pink-500 to-fuchsia-500'
-                      }`}
-                    >
-                      {item.step}
-                    </span>
-                    {i < arr.length - 1 && (
-                      <span className="hidden lg:block flex-1 h-0.5 rounded-full bg-gradient-to-r from-purple-200 to-pink-200" />
-                    )}
-                  </div>
-                  <h4 className="font-bold text-gray-900">{item.title}</h4>
-                  <p className="text-sm text-gray-500 leading-relaxed mt-1">{item.desc}</p>
+          {/* ---------- RIGHT: WHAT I DO ---------- */}
+          <Reveal direction="right" className="lg:col-span-5 min-w-0">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-br from-purple-100/60 to-pink-100/60 rounded-[2rem] blur-2xl -z-10" />
+
+              <div className="bg-white rounded-[1.75rem] border border-purple-100 shadow-sm p-6 md:p-7">
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="text-xl font-bold text-gray-900">What I Do</h3>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full">
+                    Services
+                  </span>
                 </div>
-              ))}
+
+                <div className="space-y-2">
+                  {[
+                    { icon: Code2, title: 'Web Design & Development', desc: 'Responsive, fast websites built in code or Wix.' },
+                    { icon: PenTool, title: 'UI/UX Design', desc: 'Clear, intuitive interfaces for web and mobile apps.' },
+                    { icon: Workflow, title: 'Wireframing & Prototyping', desc: 'Interactive Figma prototypes to test ideas early.' },
+                    { icon: Palette, title: 'Graphic Design', desc: 'Ad creatives, social media posts, and brand visuals.' },
+                    { icon: Film, title: 'Video Editing', desc: 'Short-form reels and ads that grab attention.' },
+                  ].map((service, i) => {
+                    const ServiceIcon = service.icon
+                    const pink = i % 2 === 1
+                    return (
+                      <div
+                        key={service.title}
+                        className={`group flex gap-4 items-start p-3 rounded-2xl transition-colors duration-300 ${
+                          pink ? 'hover:bg-pink-50/60' : 'hover:bg-purple-50/60'
+                        }`}
+                      >
+                        <div
+                          className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 ${
+                            pink ? 'bg-pink-50 text-pink-500' : 'bg-purple-50 text-purple-600'
+                          }`}
+                        >
+                          <ServiceIcon size={20} />
+                        </div>
+                        <div className="min-w-0 pt-0.5">
+                          <h4 className="font-bold text-gray-900 text-[15px]">{service.title}</h4>
+                          <p className="text-sm text-gray-500 leading-snug mt-0.5">{service.desc}</p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
 
-        {/* ===== Scrolling keyword strip ===== */}
-        <div className="mt-10 relative overflow-hidden rounded-full border border-purple-100 bg-white py-3.5 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-          <div className="about-marquee flex w-max gap-8 whitespace-nowrap">
-            {[0, 1].map((dup) => (
-              <div key={dup} className="flex gap-8" aria-hidden={dup === 1}>
-                {[
-                  'UI/UX Design', 'Web Design', 'Figma', 'Responsive Websites', 'Prototyping',
-                  'Wix', 'Next.js', 'Graphic Design', 'Ad Creatives', 'Video Editing', 'Design Systems',
-                ].map((word) => (
-                  <span key={word + dup} className="inline-flex items-center gap-8 text-sm font-semibold text-gray-500">
-                    {word}
-                    <Sparkle size={12} fill="currentColor" className="text-pink-400" />
-                  </span>
-                ))}
+        {/* ---------- HOW I WORK ---------- */}
+        <Reveal direction="up" className="mt-20">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-2">My Process</p>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">How I Work</h3>
+          </div>
+
+          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* connector line (desktop) */}
+            <div className="hidden lg:block absolute top-9 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200" />
+
+            {[
+              { step: '01', title: 'Understand', desc: 'Learn the goals, the users, and the content before designing anything.' },
+              { step: '02', title: 'Design', desc: 'Sketch wireframes and craft the UI in Figma, then prototype the flow.' },
+              { step: '03', title: 'Build', desc: 'Turn the design into a responsive website that works on every device.' },
+              { step: '04', title: 'Refine', desc: 'Test, polish the details, and launch — then keep improving.' },
+            ].map((item, i) => (
+              <div
+                key={item.step}
+                className="relative bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center hover:-translate-y-1.5 hover:shadow-lg hover:border-purple-200 transition-all duration-300"
+              >
+                <div
+                  className={`relative z-10 w-12 h-12 mx-auto -mt-1 mb-4 rounded-full flex items-center justify-center text-sm font-extrabold text-white shadow-md ${
+                    i % 2 === 0 ? 'bg-gradient-to-br from-purple-600 to-purple-500' : 'bg-gradient-to-br from-pink-500 to-fuchsia-500'
+                  }`}
+                >
+                  {item.step}
+                </div>
+                <h4 className="font-bold text-gray-900 mb-1.5">{item.title}</h4>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
       </section>
 
