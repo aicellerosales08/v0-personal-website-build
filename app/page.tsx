@@ -798,7 +798,7 @@ export default function Portfolio() {
   }, [])
   const [copiedDiscord, setCopiedDiscord] = useState(false)
 
-  const DISCORD_USERNAME = 'prettyyyyyyyyy_'
+  const DISCORD_USERNAME = 'seikiiiiii_'
 
   const handleCopyDiscord = async () => {
     try {
@@ -1243,11 +1243,11 @@ const designs = [
 
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/seikii08/', icon: <Facebook size={20} /> },
-    { name: 'Instagram', url: 'https://www.instagram.com/aicelleeeeee_/', icon: <Instagram size={20} /> },
+    { name: 'Instagram', url: 'https://www.instagram.com/seikiiiiii_/', icon: <Instagram size={20} /> },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/aicelle-r-66298537b/', icon: <Linkedin size={20} /> },
     {
       name: 'TikTok',
-      url: 'https://www.tiktok.com/@sunflowershoppp_',
+      url: 'https://www.tiktok.com/@aicelleeeee_',
       icon: (
         <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.15 2.25 1.96 3.69 2.32v3.9c-1.52-.13-3.01-.71-4.24-1.66-.46-.35-.88-.75-1.25-1.19v7.19c.04 2.22-.92 4.38-2.58 5.82-1.74 1.51-4.14 2.14-6.42 1.69-2.56-.51-4.71-2.43-5.55-4.89-.9-2.65-.18-5.7 1.83-7.65 1.66-1.61 4.07-2.31 6.34-1.84v3.9c-1.21-.33-2.53-.05-3.51.72-.94.75-1.42 1.96-1.3 3.16.14 1.34.99 2.51 2.24 3.03 1.25.53 2.73.32 3.77-.52.82-.67 1.25-1.7 1.23-2.76V0z"/>
@@ -1522,8 +1522,9 @@ const designs = [
 
             <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
               I design and build responsive websites and clean, user-friendly interfaces —
-              from Figma wireframes to live pages. Currently building client sites for
-              Australian businesses at <span className="font-semibold text-gray-900">Malama Co.</span>
+              taking ideas from <span className="font-semibold text-gray-900">Figma wireframes</span> all
+              the way to <span className="font-semibold text-gray-900">live pages</span>. I also create
+              graphics and edit videos that help brands stand out.
             </p>
 
             {/* CTAs */}
@@ -1628,18 +1629,18 @@ const designs = [
                 />
               </div>
 
-              {/* Floating card: current role */}
+              {/* Floating card: focus */}
               <div
                 className="absolute -left-4 sm:-left-10 bottom-10 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-gray-100 px-4 py-3 flex items-center gap-3 animate-float"
                 style={{ animationDelay: '0.6s' }}
               >
-                <div className="w-10 h-10 rounded-xl border border-gray-100 bg-white flex items-center justify-center overflow-hidden">
-                  <Image src="/malama-logo.png" alt="Malama Co." width={40} height={40} className="w-full h-full object-contain p-1.5" />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+                  <Sparkles size={18} className="text-white" fill="currentColor" />
                 </div>
                 <div className="leading-tight">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-green-600">Currently</p>
-                  <p className="text-sm font-bold text-gray-900">Web Designer</p>
-                  <p className="text-xs text-gray-500">Malama Co. · Remote</p>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-purple-600">Focus</p>
+                  <p className="text-sm font-bold text-gray-900">UI/UX &amp; Web Design</p>
+                  <p className="text-xs text-gray-500">Figma → Live websites</p>
                 </div>
               </div>
 
