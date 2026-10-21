@@ -1091,7 +1091,7 @@ const designs = [
       title: 'Saint Matthew System',
       description: 'A comprehensive educational management platform that enhances school operations by providing efficient student information management, academic monitoring, faculty coordination, and administrative support in a user-friendly environment.',
       tags: ['System Design', 'Education', 'UI/UX'],
-      image: '/saintmatthewnewbg.png',
+      image: '/newsainthdesigncover.png',
       link: 'https://www.figma.com/design/XmyRcz7gL3ekjjWBP5Qhh1/SAINT-MATTHEW-SYSTEM?node-id=0-1&p=f&t=gCr3fSVO0kAjYZ7p-0',
       category: 'System',
     },
