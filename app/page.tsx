@@ -94,6 +94,10 @@ type VideoItem = {
   orientation?: 'landscape' | 'portrait' // 'portrait' for Reels / TikTok / Shorts
 }
 
+// ================= PROJECT GROUPS =================
+// The sub-tabs inside the Projects tab
+type ProjectGroup = 'Advance' | 'Academic' | 'Trial'
+
 function getYouTubeId(url: string) {
   const m = url.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([A-Za-z0-9_-]{11})/)
   return m ? m[1] : null
@@ -378,7 +382,7 @@ const chatKnowledgeBase: Array<{ keywords: string[]; reply: string; action?: Cha
   },
   {
     keywords: ['project', 'portfolio', 'work sample', 'built', 'made'],
-    reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Work' section for live sites and Figma files! 🚀",
+    reply: "Aicelle has 20+ projects done — web apps, mobile app designs, and system designs! They're grouped into Advanced, Academic, and Trial work. Some highlights include Onlook (her thesis project), a Bank System, and a Travel Mobile App. Check the 'Work' section for live sites and Figma files! 🚀",
     action: { label: 'View Work', href: '#work' },
   },
   {
@@ -666,12 +670,14 @@ export default function Portfolio() {
   // ================= WORK TAB (Projects / Designs / Videos) =================
   type WorkTab = 'projects' | 'designs' | 'videos'
   const [workTab, setWorkTab] = useState<WorkTab>('projects')
+  const [activeProjectGroup, setActiveProjectGroup] = useState<ProjectGroup>('Advance')
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const switchWorkTab = (tab: WorkTab) => {
     setWorkTab(tab)
     setActiveCategory('All')
+    setActiveProjectGroup('Advance')
     setActiveDesignCategory(null)
     setActiveSubFolder(null)
     setLightboxIndex(null)
@@ -989,7 +995,21 @@ const designs = [
     'Meta': 'Ad and content designs tailored for Meta platforms like Facebook and Instagram.',
     'Product Design': 'Clean, detail-oriented visuals showcasing products in their best light.',
   }
-  const projects = [
+
+  // ================= PROJECTS =================
+  // `group` decides which sub-tab the project shows in: 'Advance' | 'Academic' | 'Trial'
+  // `category` is the project type: 'Web' | 'Mobile' | 'System'
+  const projects: Array<{
+    title: string
+    description: string
+    tags: string[]
+    image: string
+    category: string
+    group: ProjectGroup
+    link?: string
+    website?: string
+    figma?: string
+  }> = [
     {
       title: 'Onlook - Thesis Project',
       description: 'A web-based collaborative system designed to monitor, report, and assist missing and cognitively impaired individuals. Features include case management, incident mapping, real-time reporting, and data-driven analytics to support faster response and community collaboration.',
@@ -998,6 +1018,7 @@ const designs = [
       website: 'https://onlook-livid.vercel.app/',
       figma: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?t=9Y2YU2dMUX2gJL7T-0',
       category: 'Web',
+      group: 'Advance',
     },
     {
       title: 'Bank System',
@@ -1006,6 +1027,7 @@ const designs = [
       image: '/cbi-atm-cover.png',
       link: 'https://www.figma.com/design/8QRjN35QVqnhSKuUdcRgpn/BANK-SYSTEM?node-id=0-1&t=A3LZYwdV0pN0An9C-1',
       category: 'System',
+      group: 'Academic',
     },
     {
       title: 'Converter System',
@@ -1014,6 +1036,7 @@ const designs = [
       image: '/currency-converter-cover.png',
       link: 'https://www.figma.com/design/HTviG6YNluJ5W8Uc1N5QxL/CONVERTER-SYSTEM?node-id=0-1&p=f&t=4H0fPzfBfzBv1hOp-0',
       category: 'System',
+      group: 'Academic',
     },
     {
       title: 'Freshly Dropped',
@@ -1022,6 +1045,7 @@ const designs = [
       image: '/freshlydropnew.png',
       link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
       category: 'Mobile',
+      group: 'Advance',
     },
     {
       title: 'Flutter Mobile App',
@@ -1030,6 +1054,7 @@ const designs = [
       image: '/busybeenew.png',
       link: 'https://www.figma.com/design/PkV6mrlKLDxl1Ny3HPUZW1/Flutter-mobile-app?node-id=0-1&p=f&t=iSvAJasEP321GKaj-0',
       category: 'Mobile',
+      group: 'Academic',
     },
     {
       title: 'Aura Co. Website',
@@ -1038,6 +1063,7 @@ const designs = [
       image: '/aura&conewbg.png',
       link: 'https://www.figma.com/design/58HwSxAIXk6U9hnIUc4NFc/Aura---Co.-Website?node-id=0-1&p=f&t=jCM8KGTrnHvm9W19-0',
       category: 'Web',
+      group: 'Advance',
     },
     {
       title: 'LifeHaven iOS App',
@@ -1046,6 +1072,7 @@ const designs = [
       image: '/lifehavennew.png',
       link: 'https://www.figma.com/design/lcpe4JHUmionm4yfgHjnZ0/LIFEHAVEN-IOS-APP?node-id=0-1&p=f&t=JaCsUwDSOA9bcute-0',
       category: 'Mobile',
+      group: 'Advance',
     },
     {
       title: 'Pizza Mobile App',
@@ -1054,6 +1081,7 @@ const designs = [
       image: '/newpizza.png',
       link: 'https://www.figma.com/design/32TNLdaicalexwMrWKmWra/PIZZA-MOBILE-APP?node-id=0-1&p=f&t=RqTLXYmj0jULqNZZ-0',
       category: 'Mobile',
+      group: 'Academic',
     },
     {
       title: 'Digi Academia Website',
@@ -1062,6 +1090,7 @@ const designs = [
       image: '/loginpagenewbg.jpg',
       link: 'https://www.figma.com/design/9uQZnejw6o8yXbFgYxBLyU/DIGI-ACADEMIA-WEBSITE?node-id=0-1&p=f&t=MDYmfWXRw2fz8TBD-0',
       category: 'Web',
+      group: 'Academic',
     },
     {
       title: 'Skincare Mobile App',
@@ -1070,6 +1099,7 @@ const designs = [
       image: '/skincarenew.png',
       link: 'https://www.figma.com/design/HnbGL83GBrmEbUxXdlDTzY/SKINCARE-MOBILE-APP?node-id=0-1&p=f&t=ayOWQcWdiaMiR1C0-0',
       category: 'Mobile',
+      group: 'Academic',
     },
     {
       title: 'FilmTrack Website',
@@ -1078,6 +1108,7 @@ const designs = [
       image: '/filmtracknewbg.png',
       link: 'https://www.figma.com/design/bLes37eN9u3aa13n4X2n4b/FILMTRACK-WEBSITE-PHP?node-id=0-1&p=f&t=xNK21DHHM5u1Y183-0',
       category: 'Web',
+      group: 'Academic',
     },
     {
       title: 'Travel Mobile App',
@@ -1085,7 +1116,8 @@ const designs = [
       tags: ['Mobile', 'Travel', 'UI Design'],
       image: '/travelnew.png',
       link: 'https://www.figma.com/design/pPCwRmSdrq87AmdbtKWzv2/TRAVEL-MOBILE-APP?node-id=0-1&p=f&t=wP5c9EjzJ7jOpFxn-0',
-      category: 'Mobile'
+      category: 'Mobile',
+      group: 'Academic',
     },
     {
       title: 'Saint Matthew System',
@@ -1094,6 +1126,7 @@ const designs = [
       image: '/newsainthdesigncover.png',
       link: 'https://www.figma.com/design/XmyRcz7gL3ekjjWBP5Qhh1/SAINT-MATTHEW-SYSTEM?node-id=0-1&p=f&t=gCr3fSVO0kAjYZ7p-0',
       category: 'System',
+      group: 'Academic',
     },
     {
       title: 'Book E-Commerce',
@@ -1102,6 +1135,7 @@ const designs = [
       image: '/book-ecom.png',
       link: 'https://www.figma.com/design/ncu16eexK4XUHavfcXDfcx/BOOK-ECOM?node-id=0-1&p=f&t=xxif6hGaBjYqnyjQ-0',
       category: 'Web',
+      group: 'Advance',
     },
     {
       title: 'Aicelle Naomi',
@@ -1110,6 +1144,7 @@ const designs = [
       image: '/aicelle-naomi.png',
       link: 'https://www.figma.com/design/VqQnqxrZGLtEoaihetBCXC/Aicelle-Naomi?node-id=0-1&p=f&t=AC86TVrVxcMeEeG4-0',
       category: 'Web',
+      group: 'Advance',
     },
     {
       title: 'E-Commerce Website',
@@ -1118,6 +1153,7 @@ const designs = [
       image: '/ecommerce-website.png',
       link: 'https://www.figma.com/design/qdXZXMKLUHG7Aslk3HliK0/E-COMMERCE-WEBSITE?node-id=0-1&p=f&t=US3ria2yltkMHbLp-0',
       category: 'Web',
+      group: 'Advance',
     },
     {
       title: 'Codekeeper - About Us Redesign',
@@ -1125,7 +1161,8 @@ const designs = [
       tags: ['Web Design', 'UI/UX', 'Website Redesign'],
       image: '/1786219645455.jpg',
       link: 'https://www.figma.com/design/8ozBiDxdouvCTCwCs07Nr7/CODEKEEPER-ABOUT-US-REDESIGN-TRIAL?node-id=0-1&p=f&t=2XmRObcCFuYf0EkN-0',
-      category: 'Trial',
+      category: 'Web',
+      group: 'Trial',
     },
     {
       title: 'BusyBee',
@@ -1133,7 +1170,8 @@ const designs = [
       tags: ['Web Design', 'UI/UX', 'Website Design'],
       image: '/1786220439506.jpg',
       link: 'https://www.figma.com/design/upS0KtTGWiYRcYSo2nA4AA/BusyBee?t=2XmRObcCFuYf0EkN-0',
-      category: 'Trial',
+      category: 'Web',
+      group: 'Trial',
     },
 
   ]
@@ -1224,28 +1262,40 @@ const designs = [
   ]
 
   // ================= WORK SECTION: derived data =================
-  const projectFilters = [
-    { key: 'All', label: 'All' },
-    { key: 'Web', label: 'Websites' },
-    { key: 'Mobile', label: 'Mobile apps' },
-    { key: 'System', label: 'Systems' },
-    { key: 'Trial', label: 'Design tests' },
-  ]
+  const projectGroupList: ProjectGroup[] = ['Advance', 'Academic', 'Trial']
+  const projectGroupLabel: Record<ProjectGroup, string> = {
+    Advance: 'Advanced',
+    Academic: 'Academic',
+    Trial: 'Trial',
+  }
+  const projectGroupBlurbs: Record<ProjectGroup, string> = {
+    Advance: 'My strongest work, including live sites and full product designs built end to end.',
+    Academic: 'Projects built during my BS Information Technology studies, from systems to mobile apps.',
+    Trial: 'Design tests and trial tasks completed for companies during the hiring process.',
+  }
   const projectTypeLabel: Record<string, string> = {
     Web: 'Website',
     Mobile: 'Mobile app',
     System: 'System',
-    Trial: 'Design test',
+  }
+  const projectTypePlural: Record<string, string> = {
+    Web: 'Websites',
+    Mobile: 'Mobile apps',
+    System: 'Systems',
   }
   // "Onlook - Thesis Project" → name "Onlook", note "Thesis Project"
   const splitProjectTitle = (title: string) => {
     const [name, ...rest] = title.split(' - ')
     return { name, note: rest.join(' - ') }
   }
-  const featuredProject = projects.find((p) => 'website' in p)
-  const filteredProjects = projects.filter(
+  const projectsInGroup = projects.filter((p) => p.group === activeProjectGroup)
+  const projectTypes = projectsInGroup
+    .map((p) => p.category)
+    .filter((c, idx, arr) => arr.indexOf(c) === idx)
+  const filteredProjects = projectsInGroup.filter(
     (p) => activeCategory === 'All' || p.category === activeCategory
   )
+  const featuredProject = projectsInGroup.find((p) => Boolean(p.website))
   const showFeatured = activeCategory === 'All' && Boolean(featuredProject)
   const gridProjects = showFeatured
     ? filteredProjects.filter((p) => p !== featuredProject)
@@ -1902,143 +1952,181 @@ const designs = [
 
         {/* ==================== PROJECTS ==================== */}
         {workTab === 'projects' && (
-          <div key="projects" className="animate-fade-in">
-            {/* Filters */}
-            <div className="flex flex-wrap gap-1.5 mb-12">
-              {projectFilters.map((filter) => {
-                const count =
-                  filter.key === 'All'
-                    ? projects.length
-                    : projects.filter((p) => p.category === filter.key).length
-                const isActive = activeCategory === filter.key
-                return (
-                  <button
-                    key={filter.key}
-                    onClick={() => setActiveCategory(filter.key)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                      isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'
-                    }`}
-                  >
-                    {filter.label}
-                    <span className={`ml-1.5 tabular-nums ${isActive ? 'text-white/60' : 'text-gray-400'}`}>{count}</span>
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* Featured project (the one with a live site) */}
-            {showFeatured && featuredProject && 'website' in featuredProject && (() => {
-              const { name, note } = splitProjectTitle(featuredProject.title)
-              return (
-                <article className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-20 md:mb-24">
-                  <a
-                    href={featuredProject.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group lg:col-span-7 block relative aspect-[16/10] rounded-3xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
-                  >
-                    <Image
-                      src={featuredProject.image}
-                      alt={`${name} preview`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 640px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                    />
-                  </a>
-
-                  <div className="lg:col-span-5">
-                    <p className="text-sm font-semibold text-purple-600 mb-3">
-                      Featured{note ? `, ${note.toLowerCase()}` : ''}
-                    </p>
-                    <h3 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-5">{name}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-7 max-w-[55ch]">{featuredProject.description}</p>
-
-                    <dl className="grid grid-cols-3 gap-4 text-sm border-t border-gray-200 pt-5 mb-8">
-                      <div>
-                        <dt className="text-gray-400">Type</dt>
-                        <dd className="font-medium text-gray-900 mt-0.5">{projectTypeLabel[featuredProject.category] ?? featuredProject.category}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-gray-400">Made with</dt>
-                        <dd className="font-medium text-gray-900 mt-0.5">{featuredProject.tags[0]}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-gray-400">Status</dt>
-                        <dd className="font-medium text-gray-900 mt-0.5 inline-flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-green-500" />
-                          Live
-                        </dd>
-                      </div>
-                    </dl>
-
-                    <div className="flex flex-wrap gap-3">
-                      <a
-                        href={featuredProject.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-purple-700 transition-colors duration-200"
+          <div key="projects" className="animate-fade-in grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+            {/* Category list (Advanced / Academic / Trial) */}
+            <nav aria-label="Project categories" className="lg:col-span-3 min-w-0">
+              <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
+                {projectGroupList.map((group) => {
+                  const isActive = activeProjectGroup === group
+                  const count = projects.filter((p) => p.group === group).length
+                  return (
+                    <li key={group} className="shrink-0">
+                      <button
+                        onClick={() => {
+                          setActiveProjectGroup(group)
+                          setActiveCategory('All')
+                        }}
+                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                          isActive ? 'bg-purple-50 text-purple-700 font-semibold' : 'text-gray-600 hover:bg-gray-50'
+                        }`}
                       >
-                        Visit live site
-                        <ArrowUpRight size={16} />
-                      </a>
-                      <a
-                        href={featuredProject.figma}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gray-300 text-gray-900 text-sm font-semibold hover:border-gray-900 transition-colors duration-200"
-                      >
-                        Open Figma file
-                      </a>
-                    </div>
+                        <span>{projectGroupLabel[group]}</span>
+                        <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            {/* Projects in the selected category */}
+            <div className="lg:col-span-9 min-w-0">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+                <p className="text-gray-600 max-w-[55ch]">{projectGroupBlurbs[activeProjectGroup]}</p>
+
+                {projectTypes.length > 1 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {['All', ...projectTypes].map((type) => {
+                      const isActive = activeCategory === type
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => setActiveCategory(type)}
+                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                            isActive ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'
+                          }`}
+                        >
+                          {type === 'All' ? 'All types' : projectTypePlural[type] ?? type}
+                        </button>
+                      )
+                    })}
                   </div>
-                </article>
-              )
-            })()}
+                )}
+              </div>
 
-            {/* Project grid */}
-            <div className="grid md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-16">
-              {gridProjects.map((project) => {
-                const { name, note } = splitProjectTitle(project.title)
-                const href = 'website' in project ? project.website : project.link
-                const isLive = 'website' in project
+              {/* Featured project (the one with a live site) */}
+              {showFeatured && featuredProject && featuredProject.website && (() => {
+                const { name, note } = splitProjectTitle(featuredProject.title)
                 return (
-                  <article key={project.title} className="group">
+                  <article className="grid xl:grid-cols-12 gap-8 xl:gap-10 items-center mb-16 md:mb-20">
                     <a
-                      href={href}
+                      href={featuredProject.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Open ${name}`}
-                      className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                      className="group xl:col-span-7 block relative aspect-[16/10] rounded-3xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
                     >
                       <Image
-                        src={project.image}
+                        src={featuredProject.image}
                         alt={`${name} preview`}
                         fill
-                        sizes="(max-width: 768px) 100vw, 540px"
+                        sizes="(max-width: 1024px) 100vw, 560px"
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
-                      <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                        {isLive ? 'Visit site' : 'Open in Figma'}
-                        <ArrowUpRight size={15} />
-                      </span>
                     </a>
 
-                    <div className="mt-5 flex items-baseline justify-between gap-4">
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
-                        <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
-                          {name}
+                    <div className="xl:col-span-5">
+                      <p className="text-sm font-semibold text-purple-600 mb-3">
+                        Featured{note ? `, ${note.toLowerCase()}` : ''}
+                      </p>
+                      <h3 className="text-4xl font-extrabold tracking-tight text-gray-900 mb-5">{name}</h3>
+                      <p className="text-gray-600 leading-relaxed mb-7 max-w-[55ch]">{featuredProject.description}</p>
+
+                      <dl className="grid grid-cols-3 gap-4 text-sm border-t border-gray-200 pt-5 mb-8">
+                        <div>
+                          <dt className="text-gray-400">Type</dt>
+                          <dd className="font-medium text-gray-900 mt-0.5">{projectTypeLabel[featuredProject.category] ?? featuredProject.category}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-gray-400">Made with</dt>
+                          <dd className="font-medium text-gray-900 mt-0.5">{featuredProject.tags[0]}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-gray-400">Status</dt>
+                          <dd className="font-medium text-gray-900 mt-0.5 inline-flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-green-500" />
+                            Live
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <div className="flex flex-wrap gap-3">
+                        <a
+                          href={featuredProject.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-purple-700 transition-colors duration-200"
+                        >
+                          Visit live site
+                          <ArrowUpRight size={16} />
                         </a>
-                      </h3>
-                      <span className="shrink-0 text-sm text-gray-400">
-                        {note || projectTypeLabel[project.category] || project.category}
-                      </span>
+                        {featuredProject.figma && (
+                          <a
+                            href={featuredProject.figma}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gray-300 text-gray-900 text-sm font-semibold hover:border-gray-900 transition-colors duration-200"
+                          >
+                            Open Figma file
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <p className="mt-2 text-[15px] text-gray-600 leading-relaxed line-clamp-2 max-w-[60ch]">
-                      {project.description}
-                    </p>
                   </article>
                 )
-              })}
+              })()}
+
+              {/* Project grid */}
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-16">
+                {gridProjects.map((project) => {
+                  const { name, note } = splitProjectTitle(project.title)
+                  const href = project.website ?? project.link
+                  const isLive = Boolean(project.website)
+                  return (
+                    <article key={project.title} className="group">
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${name}`}
+                        className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                      >
+                        <Image
+                          src={project.image}
+                          alt={`${name} preview`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 420px"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                        <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                          {isLive ? 'Visit site' : 'Open in Figma'}
+                          <ArrowUpRight size={15} />
+                        </span>
+                      </a>
+
+                      <div className="mt-5 flex items-baseline justify-between gap-4">
+                        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
+                          <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                            {name}
+                          </a>
+                        </h3>
+                        <span className="shrink-0 text-sm text-gray-400">
+                          {note || projectTypeLabel[project.category] || project.category}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-[15px] text-gray-600 leading-relaxed line-clamp-2 max-w-[60ch]">
+                        {project.description}
+                      </p>
+                    </article>
+                  )
+                })}
+              </div>
+
+              {filteredProjects.length === 0 && (
+                <div className="rounded-3xl border-2 border-dashed border-gray-200 px-8 py-16 text-center">
+                  <p className="text-xl font-bold text-gray-900">No projects here yet</p>
+                  <p className="text-gray-500 mt-2">New work for this category will show up soon.</p>
+                </div>
+              )}
             </div>
           </div>
         )}
