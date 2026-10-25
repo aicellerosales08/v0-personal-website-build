@@ -1018,7 +1018,7 @@ const designs = [
       website: 'https://onlook-livid.vercel.app/',
       figma: 'https://www.figma.com/design/1j21q7Ymp2J8F1kNFUiET7/Onlook?t=9Y2YU2dMUX2gJL7T-0',
       category: 'Web',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'Bank System',
@@ -1045,7 +1045,7 @@ const designs = [
       image: '/freshlydropnew.png',
       link: 'https://www.figma.com/design/RJqXQCecjVqomkvtOgvUfx/Freshly-Dropped?t=jLGr8ymNClQSHL72-0',
       category: 'Mobile',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'Flutter Mobile App',
@@ -1063,7 +1063,7 @@ const designs = [
       image: '/aura&conewbg.png',
       link: 'https://www.figma.com/design/58HwSxAIXk6U9hnIUc4NFc/Aura---Co.-Website?node-id=0-1&p=f&t=jCM8KGTrnHvm9W19-0',
       category: 'Web',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'LifeHaven iOS App',
@@ -1072,7 +1072,7 @@ const designs = [
       image: '/lifehavennew.png',
       link: 'https://www.figma.com/design/lcpe4JHUmionm4yfgHjnZ0/LIFEHAVEN-IOS-APP?node-id=0-1&p=f&t=JaCsUwDSOA9bcute-0',
       category: 'Mobile',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'Pizza Mobile App',
@@ -1135,7 +1135,7 @@ const designs = [
       image: '/book-ecom.png',
       link: 'https://www.figma.com/design/ncu16eexK4XUHavfcXDfcx/BOOK-ECOM?node-id=0-1&p=f&t=xxif6hGaBjYqnyjQ-0',
       category: 'Web',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'Aicelle Naomi',
@@ -1144,7 +1144,7 @@ const designs = [
       image: '/aicelle-naomi.png',
       link: 'https://www.figma.com/design/VqQnqxrZGLtEoaihetBCXC/Aicelle-Naomi?node-id=0-1&p=f&t=AC86TVrVxcMeEeG4-0',
       category: 'Web',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'E-Commerce Website',
@@ -1153,7 +1153,7 @@ const designs = [
       image: '/ecommerce-website.png',
       link: 'https://www.figma.com/design/qdXZXMKLUHG7Aslk3HliK0/E-COMMERCE-WEBSITE?node-id=0-1&p=f&t=US3ria2yltkMHbLp-0',
       category: 'Web',
-      group: 'Advance',
+      group: 'Academic',
     },
     {
       title: 'Codekeeper - About Us Redesign',
