@@ -1206,29 +1206,18 @@ const designs = [
   // Add your edited videos here. The tab shows a "coming soon" card until this list has items.
   // Copy one of the examples below, remove the // at the start of each line, and paste your link.
   const videos: VideoItem[] = [
-    // {
-    //   title: 'Product Promo Reel',
-    //   description: 'Short-form promo edited for Instagram Reels with motion text and transitions.',
-    //   tags: ['CapCut', 'Reels', 'Motion Text'],
-    //   source: 'youtube',
-    //   url: 'https://youtube.com/shorts/XXXXXXXXXXX',
-    //   orientation: 'portrait',
-    // },
-    // {
-    //   title: 'Brand Highlight Video',
-    //   description: 'Landscape brand video with color grading, music sync, and captions.',
-    //   tags: ['Premiere Pro', 'Color Grading'],
-    //   source: 'drive',
-    //   url: 'https://drive.google.com/file/d/XXXXXXXXXXXX/view',
-    //   thumbnail: '/video-thumb-brand.png',
-    // },
-    // {
-    //   title: 'TikTok Ad',
-    //   source: 'file',
-    //   url: '/videos/tiktok-ad.mp4',
-    //   orientation: 'portrait',
-    // },
+    {
+      title: 'KairOS App Promo',
+      description: 'Vertical product promo for a productivity app, with kinetic typography, UI showcase, and smooth light/dark transitions.',
+      tags: ['Motion Graphics', 'Product Promo', 'UI Showcase'],
+      source: 'file',
+      url: '/kairos-promo.mp4',
+      thumbnail: '/kairos-promo.png',
+      orientation: 'portrait',
+    },
   ]
+
+
 
   const certificates = [
     {
