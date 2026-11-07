@@ -1451,7 +1451,7 @@ const designs = [
           {/* Photo: transparent PNG, nasa harap ng text */}
           <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[88%] xl:aspect-auto">
             <Image
-              src="/newphotoseiki.png"
+              src="/PICTURE(HOME).png"
               alt="Aicelle Rosales"
               fill
               priority
