@@ -1453,7 +1453,7 @@ const designs = [
           }}
         />
 
-        <div className="relative flex flex-col pt-28 xl:pt-[140px] xl:min-h-screen">
+        <div className="relative flex flex-col pt-28 xl:pt-[104px] xl:min-h-screen">
 
           {/* ---------- BIG MOVING TEXT: CREATIVE ✦ DESIGN ✦ ... ---------- */}
           <div aria-hidden="true" className="hero-marquee-wrap relative z-[1] w-full overflow-hidden select-none h-text-in" style={{ animationDelay: '0.05s' }}>
@@ -1463,7 +1463,7 @@ const designs = [
                   {['CREATIVE', 'DESIGN', 'CREATIVE', 'DESIGN'].map((word, i) => (
                     <span key={i} className="flex items-center">
                       <span
-                        className="whitespace-nowrap font-black leading-none tracking-[-0.03em] text-transparent text-[22vw] xl:text-[18vw]"
+                        className="whitespace-nowrap font-black leading-none tracking-[-0.03em] text-transparent text-[22vw] xl:text-[min(17vw,27vh)]"
                         style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
                       >
                         {word}
@@ -1471,7 +1471,7 @@ const designs = [
                       <Sparkle
                         fill="currentColor"
                         strokeWidth={0}
-                        className={`mx-[3vw] w-[6vw] h-[6vw] xl:w-[4.5vw] xl:h-[4.5vw] shrink-0 ${
+                        className={`mx-[3vw] w-[6vw] h-[6vw] xl:w-[min(4.5vw,7vh)] xl:h-[min(4.5vw,7vh)] shrink-0 ${
                           i % 2 === 0 ? 'text-purple-500' : 'text-pink-500'
                         }`}
                       />
@@ -1504,7 +1504,7 @@ const designs = [
 
           {/* ---------- FLOATING CHIPS around the photo (desktop) ---------- */}
           <div className="hidden xl:block absolute inset-0 z-[3] pointer-events-none">
-            <div className="h-up absolute right-[calc(50%+14vw)] top-[56%]" style={{ animationDelay: '0.9s' }}>
+            <div className="h-up absolute right-[calc(50%+14vw)] top-[50%]" style={{ animationDelay: '0.9s' }}>
               <div
                 className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
                   isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
@@ -1520,7 +1520,7 @@ const designs = [
               </div>
             </div>
 
-            <div className="h-up absolute left-[calc(50%+14vw)] top-[72%]" style={{ animationDelay: '1.1s' }}>
+            <div className="h-up absolute left-[calc(50%+14vw)] top-[68%]" style={{ animationDelay: '1.1s' }}>
               <div
                 className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
                   isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
@@ -1563,7 +1563,7 @@ const designs = [
           </div>
 
           {/* ---------- Intro (left) + space for photo (middle) + tagline (right) ---------- */}
-          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-[56px] xl:pb-[120px] xl:flex-1">
+          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-4 xl:pb-[48px] xl:flex-1">
 
             {/* ---------- LEFT: intro ---------- */}
             <div className="w-full max-w-md xl:max-w-[380px]">
@@ -1586,7 +1586,7 @@ const designs = [
               </p>
 
               <h2
-                className="h-up text-[clamp(32px,2.9vw,44px)] font-bold tracking-tight leading-[1.05] mt-2 mb-4"
+                className="h-up text-[clamp(32px,2.6vw,42px)] font-bold tracking-tight leading-[1.05] mt-2 mb-4"
                 style={{ animationDelay: '0.55s' }}
               >
                 Web Designer
@@ -1673,7 +1673,7 @@ const designs = [
                 <span className="w-8 h-px bg-current" />
                 CREATIVITY WITH PURPOSE
               </p>
-              <h2 className="h-up text-[clamp(28px,2.4vw,38px)] font-bold leading-[1.1] tracking-tight" style={{ animationDelay: '0.7s' }}>
+              <h2 className="h-up text-[clamp(28px,2.2vw,34px)] font-bold leading-[1.1] tracking-tight" style={{ animationDelay: '0.7s' }}>
                 Thoughtful design.
                 <br />
                 <span className="text-gray-400">Seamless experiences.</span>
@@ -1683,7 +1683,7 @@ const designs = [
               </p>
 
               {/* mini stats */}
-              <div className="h-up flex gap-8 mt-8" style={{ animationDelay: '0.9s' }}>
+              <div className="h-up flex gap-8 mt-6" style={{ animationDelay: '0.9s' }}>
                 {[
                   { value: `${projects.length}+`, label: 'Projects' },
                   { value: `${designs.length}+`, label: 'Designs' },
@@ -1703,7 +1703,7 @@ const designs = [
             href="#about"
             onClick={(e) => handleScrollTo(e, '#about')}
             aria-label="Scroll to About"
-            className="h-up hidden xl:flex absolute z-[3] right-[40px] bottom-[110px] flex-col items-center gap-3 text-gray-500 hover:text-current transition-colors"
+            className="h-up hidden xl:flex absolute z-[3] right-[40px] bottom-[60px] flex-col items-center gap-3 text-gray-500 hover:text-current transition-colors"
             style={{ animationDelay: '1.2s' }}
           >
             <span className="text-xs font-semibold tracking-[0.2em] [writing-mode:vertical-rl]">SCROLL</span>
