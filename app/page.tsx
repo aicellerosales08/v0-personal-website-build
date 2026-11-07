@@ -1453,7 +1453,7 @@ const designs = [
           }}
         />
 
-        <div className="relative flex flex-col pt-28 xl:pt-[104px] xl:min-h-screen">
+        <div className="relative flex flex-col pt-28 xl:pt-[140px] xl:min-h-screen">
 
           {/* ---------- BIG MOVING TEXT: CREATIVE ✦ DESIGN ✦ ... ---------- */}
           <div aria-hidden="true" className="hero-marquee-wrap relative z-[1] w-full overflow-hidden select-none h-text-in" style={{ animationDelay: '0.05s' }}>
@@ -1463,7 +1463,7 @@ const designs = [
                   {['CREATIVE', 'DESIGN', 'CREATIVE', 'DESIGN'].map((word, i) => (
                     <span key={i} className="flex items-center">
                       <span
-                        className="whitespace-nowrap font-black leading-none tracking-[-0.03em] text-transparent text-[22vw] xl:text-[min(17vw,27vh)]"
+                        className="whitespace-nowrap font-black leading-none tracking-[-0.03em] text-transparent text-[24vw] xl:text-[20vw]"
                         style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
                       >
                         {word}
@@ -1471,7 +1471,7 @@ const designs = [
                       <Sparkle
                         fill="currentColor"
                         strokeWidth={0}
-                        className={`mx-[3vw] w-[6vw] h-[6vw] xl:w-[min(4.5vw,7vh)] xl:h-[min(4.5vw,7vh)] shrink-0 ${
+                        className={`mx-[3vw] w-[7vw] h-[7vw] xl:w-[5vw] xl:h-[5vw] shrink-0 ${
                           i % 2 === 0 ? 'text-purple-500' : 'text-pink-500'
                         }`}
                       />
