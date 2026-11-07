@@ -1415,11 +1415,10 @@ const designs = [
         )}
       </nav>
 
-      {/* ================= 1. HOME / HERO ================= */}
+    {/* ================= 1. HOME / HERO ================= */}
       <style>{`
         @keyframes hero-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .hero-marquee { animation: hero-marquee 30s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .hero-marquee { animation: none; } }
       `}</style>
       <section
         id="home"
@@ -1429,12 +1428,12 @@ const designs = [
       >
         <div className="relative flex flex-col pt-28 xl:pt-[150px] xl:min-h-screen">
 
-          {/* Big outlined moving text: CREATIVE DESIGNER CREATIVE DESIGNER ... */}
+          {/* Big outlined moving text: CREATIVE DESIGN CREATIVE DESIGN ... */}
           <div aria-hidden="true" className="relative z-[1] w-full overflow-hidden select-none">
-            <div className="hero-marquee flex w-max">
+            <div className="hero-marquee flex w-max" style={{ animation: 'hero-marquee 30s linear infinite' }}>
               {[0, 1].map((copy) => (
                 <div key={copy} className="flex shrink-0">
-                  {['CREATIVE', 'DESIGNER', 'CREATIVE', 'DESIGNER'].map((word, i) => (
+                  {['CREATIVE', 'DESIGN', 'CREATIVE', 'DESIGN'].map((word, i) => (
                     <span
                       key={i}
                       className="pr-[0.25em] whitespace-nowrap font-black leading-none tracking-[-0.02em] text-transparent text-[22vw] xl:text-[19vw]"
@@ -1451,7 +1450,7 @@ const designs = [
           {/* Photo: transparent PNG, nasa harap ng text */}
           <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[88%] xl:aspect-auto">
             <Image
-              src="/PICTURE(HOME).png"
+              src="/newphotoseiki.png"
               alt="Aicelle Rosales"
               fill
               priority
