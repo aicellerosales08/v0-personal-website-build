@@ -1563,7 +1563,7 @@ const designs = [
           </div>
 
           {/* ---------- Intro (left) + space for photo (middle) + tagline (right) ---------- */}
-          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-4 xl:pb-[48px] xl:flex-1">
+          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-0 xl:-mt-[3.5vw] xl:pb-[48px] xl:flex-1">
 
             {/* ---------- LEFT: intro ---------- */}
             <div className="w-full max-w-md xl:max-w-[380px]">
