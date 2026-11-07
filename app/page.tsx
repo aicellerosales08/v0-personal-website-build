@@ -1483,7 +1483,7 @@ const designs = [
           </div>
 
           {/* ---------- PHOTO with glow ---------- */}
-          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[36vw] xl:h-[88%] xl:aspect-auto">
+          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[3/4] -mt-[6vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[97%] xl:aspect-auto">
             {/* glow behind */}
             <div
               aria-hidden="true"
@@ -1497,14 +1497,14 @@ const designs = [
                 fill
                 priority
                 sizes="(max-width: 1280px) 88vw, 36vw"
-                className="object-contain object-bottom"
+                className="object-contain object-[center_bottom]"
               />
             </div>
           </div>
 
           {/* ---------- FLOATING CHIPS around the photo (desktop) ---------- */}
           <div className="hidden xl:block absolute inset-0 z-[3] pointer-events-none">
-            <div className="h-up absolute left-[calc(50%-17vw)] top-[42%]" style={{ animationDelay: '0.9s' }}>
+            <div className="h-up absolute right-[calc(50%+14vw)] top-[56%]" style={{ animationDelay: '0.9s' }}>
               <div
                 className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
                   isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
@@ -1520,7 +1520,7 @@ const designs = [
               </div>
             </div>
 
-            <div className="h-up absolute left-[calc(50%+9vw)] top-[58%]" style={{ animationDelay: '1.1s' }}>
+            <div className="h-up absolute left-[calc(50%+14vw)] top-[72%]" style={{ animationDelay: '1.1s' }}>
               <div
                 className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
                   isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
@@ -1541,7 +1541,7 @@ const designs = [
             <a
               href="mailto:aicellerosales08@gmail.com"
               aria-label="Email Aicelle"
-              className="h-up pointer-events-auto group absolute left-[calc(50%+11vw)] top-[30%] w-[118px] h-[118px]"
+              className="h-up pointer-events-auto group absolute left-[calc(50%+15vw)] top-[24%] w-[118px] h-[118px]"
               style={{ animationDelay: '1.3s' }}
             >
               <svg viewBox="0 0 120 120" className="h-spin absolute inset-0 w-full h-full">
