@@ -1416,128 +1416,142 @@ const designs = [
       </nav>
 
       {/* ================= 1. HOME / HERO ================= */}
+      <style>{`
+        @keyframes hero-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .hero-marquee { animation: hero-marquee 30s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .hero-marquee { animation: none; } }
+      `}</style>
       <section
         id="home"
         className={`relative overflow-hidden transition-colors duration-300 ${
           isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
         }`}
       >
-        <div className="relative w-full flex flex-col items-center pt-28 lg:block lg:pt-0 lg:h-screen lg:min-h-[760px] lg:max-h-[980px]">
+        <div className="relative flex flex-col pt-28 xl:pt-[150px] xl:min-h-screen">
 
-          {/* Big outlined word — full width, nasa likod ng photo */}
-          <h1
-            aria-hidden="true"
-            className="select-none whitespace-nowrap font-black leading-none tracking-[-0.02em] text-transparent text-[20.5vw] lg:absolute lg:top-[150px] lg:left-1/2 lg:-translate-x-1/2 z-[1]"
-            style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
-          >
-            CREATIVE
-          </h1>
+          {/* Big outlined moving text: CREATIVE DESIGNER CREATIVE DESIGNER ... */}
+          <div aria-hidden="true" className="relative z-[1] w-full overflow-hidden select-none">
+            <div className="hero-marquee flex w-max">
+              {[0, 1].map((copy) => (
+                <div key={copy} className="flex shrink-0">
+                  {['CREATIVE', 'DESIGNER', 'CREATIVE', 'DESIGNER'].map((word, i) => (
+                    <span
+                      key={i}
+                      className="pr-[0.25em] whitespace-nowrap font-black leading-none tracking-[-0.02em] text-transparent text-[22vw] xl:text-[19vw]"
+                      style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
+                    >
+                      {word}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
 
-          {/* Photo — kailangang transparent PNG (walang background) */}
-          <div className="relative z-[2] w-[min(420px,88vw)] -mt-[10vw] lg:mt-0 lg:w-auto lg:absolute lg:bottom-0 lg:left-[52%] lg:-translate-x-1/2 lg:h-[88%] pointer-events-none">
+          {/* Photo: transparent PNG, nasa harap ng text */}
+          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[88%] xl:aspect-auto">
             <Image
               src="/newphotoseiki.png"
               alt="Aicelle Rosales"
-              width={900}
-              height={1100}
+              fill
               priority
-              className="w-full h-auto lg:h-full lg:w-auto object-contain object-bottom"
+              sizes="(max-width: 1280px) 88vw, 38vw"
+              className="object-contain object-bottom"
             />
           </div>
 
-          {/* ---------- LEFT: intro ---------- */}
-          <div
-            className={`relative z-[3] w-full max-w-md px-6 mt-10 lg:mt-0 lg:px-0 lg:absolute lg:left-[5.8%] lg:top-[50.5%] lg:max-w-[340px] ${
-              heroLoaded ? 'animate-slide-in-left' : 'opacity-0'
-            }`}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border-[1.5px] border-current mb-3">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
-              </span>
-              <span className="text-[9px] font-medium">Available for freelance</span>
+          {/* Intro (kaliwa) + gap para sa photo (gitna) + tagline (kanan) */}
+          <div className="relative z-[3] w-full flex flex-col items-center gap-10 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_38vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-[70px] xl:pb-[140px] xl:flex-1">
+
+            {/* ---------- LEFT: intro ---------- */}
+            <div className={`w-full max-w-md xl:max-w-[340px] ${heroLoaded ? 'animate-slide-in-left' : 'opacity-0'}`}>
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border-[1.5px] border-current mb-3">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
+                </span>
+                <span className="text-[9px] font-medium">Available for freelance</span>
+              </div>
+
+              <p className="text-[15px] font-light text-gray-500">Hi I&apos;m Aicelle</p>
+              <h2 className="text-[23px] font-medium tracking-tight mt-1.5 mb-2.5">Web Designer &amp; Developer</h2>
+              <p className="text-[15px] font-light text-gray-500 leading-snug">
+                I build thoughtful digital experiences that combine design, code and creativity.
+              </p>
+
+              <div className="flex gap-4 sm:gap-5 mt-8 xl:-ml-5">
+                <a
+                  href="#work"
+                  onClick={(e) => handleScrollTo(e, '#work')}
+                  className={`flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium hover:-translate-y-0.5 transition-all duration-200 ${
+                    isDark ? 'bg-white text-gray-900' : 'bg-[#262626] text-white'
+                  }`}
+                >
+                  My Work
+                </a>
+                <a
+                  href="/rosales_aicelle_resume.pdf"
+                  download="rosales_aicelle_resume.pdf"
+                  className="flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium border border-gray-400/60 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  Download CV
+                </a>
+              </div>
+
+              <div className="flex gap-1.5 mt-8 xl:-ml-5">
+                {socialLinks.map((social) =>
+                  (social as any).isDiscord ? (
+                    <button
+                      key={social.name}
+                      type="button"
+                      onClick={handleCopyDiscord}
+                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                      aria-label="Copy Discord username"
+                      className={`relative w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
+                        isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                      }`}
+                    >
+                      {copiedDiscord ? <Check size={14} className="text-green-500" /> : social.icon}
+                      {copiedDiscord && (
+                        <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                          Copied!
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={social.name}
+                      aria-label={social.name}
+                      className={`w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
+                        isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                      }`}
+                    >
+                      {social.icon}
+                    </a>
+                  )
+                )}
+              </div>
             </div>
 
-            <p className="text-[15px] font-light text-gray-500">Hi I&apos;m Aicelle</p>
-            <h2 className="text-[23px] font-medium tracking-tight mt-1.5 mb-2.5">Web Designer &amp; Developer</h2>
-            <p className="text-[15px] font-light text-gray-500 leading-snug">
-              I build thoughtful digital experiences that combine design, code and creativity.
-            </p>
+            {/* Middle column: bakante, dito nakapuwesto ang photo */}
+            <div className="hidden xl:block" />
 
-            <div className="flex gap-4 sm:gap-5 mt-8 lg:-ml-5">
-              <a
-                href="#work"
-                onClick={(e) => handleScrollTo(e, '#work')}
-                className={`flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium hover:-translate-y-0.5 transition-all duration-200 ${
-                  isDark ? 'bg-white text-gray-900' : 'bg-[#262626] text-white'
-                }`}
-              >
-                My Work
-              </a>
-              <a
-                href="/rosales_aicelle_resume.pdf"
-                download="rosales_aicelle_resume.pdf"
-                className="flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium border border-gray-400/60 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Download CV
-              </a>
+            {/* ---------- RIGHT: tagline ---------- */}
+            <div className={`w-full max-w-md xl:w-[300px] xl:justify-self-end ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
+              <p className="text-[11px] tracking-[0.35em] text-gray-500 mb-3">CREATIVITY WITH PURPOSE</p>
+              <h2 className="text-[21px] font-medium leading-tight tracking-tight">
+                Thoughtful design.
+                <br />
+                Seamless experiences.
+              </h2>
+              <p className="text-[15px] font-light text-gray-500 leading-snug mt-3">
+                I turn ideas into intuitive websites that connect brands with people.
+              </p>
             </div>
-
-            <div className="flex gap-1.5 mt-8 lg:-ml-5">
-              {socialLinks.map((social) =>
-                (social as any).isDiscord ? (
-                  <button
-                    key={social.name}
-                    type="button"
-                    onClick={handleCopyDiscord}
-                    title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                    aria-label="Copy Discord username"
-                    className={`relative w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
-                      isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
-                    }`}
-                  >
-                    {copiedDiscord ? <Check size={14} className="text-green-500" /> : social.icon}
-                    {copiedDiscord && (
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
-                        Copied!
-                      </span>
-                    )}
-                  </button>
-                ) : (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={social.name}
-                    aria-label={social.name}
-                    className={`w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
-                      isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
-                    }`}
-                  >
-                    {social.icon}
-                  </a>
-                )
-              )}
-            </div>
-          </div>
-
-          {/* ---------- RIGHT: tagline ---------- */}
-          <div
-            className={`relative z-[3] w-full max-w-md px-6 mt-10 mb-16 lg:m-0 lg:px-0 lg:absolute lg:left-[75.7%] lg:top-[49%] lg:w-[300px] ${
-              heroLoaded ? 'animate-slide-in-right' : 'opacity-0'
-            }`}
-          >
-            <p className="text-[11px] tracking-[0.35em] text-gray-500 mb-3">CREATIVITY WITH PURPOSE</p>
-            <h2 className="text-[21px] font-medium leading-tight tracking-tight">
-              Thoughtful design.
-              <br />
-              Seamless experiences.
-            </h2>
-            <p className="text-[15px] font-light text-gray-500 leading-snug mt-3">
-              I turn ideas into intuitive websites that connect brands with people.
-            </p>
           </div>
 
           {/* Scroll indicator */}
@@ -1545,7 +1559,7 @@ const designs = [
             href="#about"
             onClick={(e) => handleScrollTo(e, '#about')}
             aria-label="Scroll to About"
-            className="hidden lg:flex absolute z-[3] right-[42px] bottom-[150px] flex-col items-center gap-2.5 text-gray-500 hover:text-current transition-colors"
+            className="hidden xl:flex absolute z-[3] right-[42px] bottom-[120px] flex-col items-center gap-2.5 text-gray-500 hover:text-current transition-colors"
           >
             <span className="text-[11px] tracking-[0.1em] [writing-mode:vertical-rl]">SCROLL</span>
             <span className="relative w-px h-[52px] bg-current">
