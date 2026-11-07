@@ -1453,7 +1453,7 @@ const designs = [
           }}
         />
 
-        <div className="relative flex flex-col pt-28 xl:pt-[90px] xl:min-h-screen">
+        <div className="relative flex flex-col pt-24 xl:pt-[40px] xl:min-h-screen">
 
           {/* ---------- BIG MOVING TEXT: CREATIVE ✦ DESIGN ✦ ... ---------- */}
           <div aria-hidden="true" className="hero-marquee-wrap relative z-[1] w-full overflow-hidden select-none h-text-in" style={{ animationDelay: '0.05s' }}>
@@ -1563,7 +1563,7 @@ const designs = [
           </div>
 
           {/* ---------- Intro (left) + space for photo (middle) + tagline (right) ---------- */}
-          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-0 xl:mt-[calc(50px-3.5vw)] xl:pb-[48px] xl:flex-1">
+          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-0 xl:mt-[calc(100px-3.5vw)] xl:pb-[48px] xl:flex-1">
 
             {/* ---------- LEFT: intro ---------- */}
             <div className="w-full max-w-md xl:max-w-[380px]">
