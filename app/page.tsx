@@ -1483,7 +1483,7 @@ const designs = [
           </div>
 
           {/* ---------- PHOTO with glow ---------- */}
-          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[3/4] -mt-[6vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[97%] xl:aspect-auto">
+          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[3/4] -mt-[6vw] pointer-events-none xl:absolute xl:mt-0 xl:top-[118px] xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[52vw] xl:aspect-auto">
             {/* glow behind */}
             <div
               aria-hidden="true"
@@ -1496,7 +1496,7 @@ const designs = [
                 alt="Aicelle Rosales"
                 fill
                 priority
-                sizes="(max-width: 1280px) 88vw, 36vw"
+                sizes="(max-width: 1280px) 88vw, 52vw"
                 className="object-contain object-[center_bottom]"
               />
             </div>
