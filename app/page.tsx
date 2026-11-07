@@ -1415,10 +1415,25 @@ const designs = [
         )}
       </nav>
 
-    {/* ================= 1. HOME / HERO ================= */}
+{/* ================= 1. HOME / HERO ================= */}
       <style>{`
         @keyframes hero-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .hero-marquee { animation: hero-marquee 30s linear infinite; }
+        @keyframes hero-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes hero-photo { from { opacity: 0; transform: translateY(70px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes hero-text-in { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes hero-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes hero-spin { to { transform: rotate(360deg); } }
+        @keyframes hero-glow { 0%,100% { opacity: .55; transform: translate(-50%,0) scale(1); } 50% { opacity: .85; transform: translate(-50%,0) scale(1.08); } }
+        @keyframes hero-drop { 0% { top: 0; opacity: 1; } 80% { top: 46px; opacity: 0; } 100% { top: 0; opacity: 0; } }
+        .h-up { animation: hero-up .9s cubic-bezier(.2,.7,.2,1) both; }
+        .h-photo { animation: hero-photo 1.2s cubic-bezier(.2,.7,.2,1) .15s both; }
+        .h-text-in { animation: hero-text-in 1.1s cubic-bezier(.2,.7,.2,1) both; }
+        .h-float { animation: hero-float 5s ease-in-out infinite; }
+        .h-spin { animation: hero-spin 14s linear infinite; }
+        .h-glow { animation: hero-glow 6s ease-in-out infinite; }
+        .h-drop { animation: hero-drop 2s ease-in-out infinite; }
+        .hero-marquee { animation: hero-marquee 32s linear infinite; }
+        .hero-marquee-wrap:hover .hero-marquee { animation-play-state: paused; }
       `}</style>
       <section
         id="home"
@@ -1426,20 +1441,40 @@ const designs = [
           isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
         }`}
       >
-        <div className="relative flex flex-col pt-28 xl:pt-[150px] xl:min-h-screen">
+        {/* Soft background texture: faint grid fading out at the edges */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none opacity-[0.5]"
+          style={{
+            backgroundImage: `linear-gradient(${isDark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.035)'} 1px, transparent 1px), linear-gradient(90deg, ${isDark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.035)'} 1px, transparent 1px)`,
+            backgroundSize: '64px 64px',
+            maskImage: 'radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%)',
+          }}
+        />
 
-          {/* Big outlined moving text: CREATIVE DESIGN CREATIVE DESIGN ... */}
-          <div aria-hidden="true" className="relative z-[1] w-full overflow-hidden select-none">
-            <div className="hero-marquee flex w-max" style={{ animation: 'hero-marquee 30s linear infinite' }}>
+        <div className="relative flex flex-col pt-28 xl:pt-[140px] xl:min-h-screen">
+
+          {/* ---------- BIG MOVING TEXT: CREATIVE ✦ DESIGN ✦ ... ---------- */}
+          <div aria-hidden="true" className="hero-marquee-wrap relative z-[1] w-full overflow-hidden select-none h-text-in" style={{ animationDelay: '0.05s' }}>
+            <div className="hero-marquee flex w-max items-center" style={{ animation: 'hero-marquee 32s linear infinite' }}>
               {[0, 1].map((copy) => (
-                <div key={copy} className="flex shrink-0">
+                <div key={copy} className="flex shrink-0 items-center">
                   {['CREATIVE', 'DESIGN', 'CREATIVE', 'DESIGN'].map((word, i) => (
-                    <span
-                      key={i}
-                      className="pr-[0.25em] whitespace-nowrap font-black leading-none tracking-[-0.02em] text-transparent text-[22vw] xl:text-[19vw]"
-                      style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
-                    >
-                      {word}
+                    <span key={i} className="flex items-center">
+                      <span
+                        className="whitespace-nowrap font-black leading-none tracking-[-0.03em] text-transparent text-[22vw] xl:text-[18vw]"
+                        style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
+                      >
+                        {word}
+                      </span>
+                      <Sparkle
+                        fill="currentColor"
+                        strokeWidth={0}
+                        className={`mx-[3vw] w-[6vw] h-[6vw] xl:w-[4.5vw] xl:h-[4.5vw] shrink-0 ${
+                          i % 2 === 0 ? 'text-purple-500' : 'text-pink-500'
+                        }`}
+                      />
                     </span>
                   ))}
                 </div>
@@ -1447,57 +1482,146 @@ const designs = [
             </div>
           </div>
 
-          {/* Photo: transparent PNG, nasa harap ng text */}
-          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[38vw] xl:h-[88%] xl:aspect-auto">
-            <Image
-              src="/PICTURE(HOME).png"
-              alt="Aicelle Rosales"
-              fill
-              priority
-              sizes="(max-width: 1280px) 88vw, 38vw"
-              className="object-contain object-bottom"
+          {/* ---------- PHOTO with glow ---------- */}
+          <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[4/5] -mt-[12vw] pointer-events-none xl:absolute xl:mt-0 xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[36vw] xl:h-[88%] xl:aspect-auto">
+            {/* glow behind */}
+            <div
+              aria-hidden="true"
+              className="h-glow absolute left-1/2 bottom-[8%] w-[85%] aspect-square rounded-full blur-3xl -z-10"
+              style={{ background: 'radial-gradient(circle, rgba(168,85,247,.45) 0%, rgba(236,72,153,.30) 45%, transparent 70%)' }}
             />
+            <div className="h-photo relative w-full h-full">
+              <Image
+                src="/PICTURE(HOME).png"
+                alt="Aicelle Rosales"
+                fill
+                priority
+                sizes="(max-width: 1280px) 88vw, 36vw"
+                className="object-contain object-bottom"
+              />
+            </div>
           </div>
 
-          {/* Intro (kaliwa) + gap para sa photo (gitna) + tagline (kanan) */}
-          <div className="relative z-[3] w-full flex flex-col items-center gap-10 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_38vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-[70px] xl:pb-[140px] xl:flex-1">
+          {/* ---------- FLOATING CHIPS around the photo (desktop) ---------- */}
+          <div className="hidden xl:block absolute inset-0 z-[3] pointer-events-none">
+            <div className="h-up absolute left-[calc(50%-17vw)] top-[42%]" style={{ animationDelay: '0.9s' }}>
+              <div
+                className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
+                  isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
+                }`}
+              >
+                <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 grid place-items-center text-white">
+                  <PenTool size={18} />
+                </span>
+                <span className="leading-tight">
+                  <span className="block text-[11px] uppercase tracking-wider text-gray-500">Design</span>
+                  <span className="block text-sm font-semibold">UI/UX &amp; Figma</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="h-up absolute left-[calc(50%+9vw)] top-[58%]" style={{ animationDelay: '1.1s' }}>
+              <div
+                className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
+                  isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
+                }`}
+                style={{ animationDelay: '1.5s' }}
+              >
+                <span className="w-9 h-9 rounded-xl bg-gray-900 grid place-items-center text-white">
+                  <Code2 size={18} />
+                </span>
+                <span className="leading-tight">
+                  <span className="block text-[11px] uppercase tracking-wider text-gray-500">Build</span>
+                  <span className="block text-sm font-semibold">Responsive websites</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Rotating "open to work" seal */}
+            <a
+              href="mailto:aicellerosales08@gmail.com"
+              aria-label="Email Aicelle"
+              className="h-up pointer-events-auto group absolute left-[calc(50%+11vw)] top-[30%] w-[118px] h-[118px]"
+              style={{ animationDelay: '1.3s' }}
+            >
+              <svg viewBox="0 0 120 120" className="h-spin absolute inset-0 w-full h-full">
+                <defs>
+                  <path id="hero-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
+                </defs>
+                <text className="fill-current text-[10.5px] font-semibold tracking-[0.28em] uppercase">
+                  <textPath href="#hero-circle">Open to work • Let&apos;s talk • </textPath>
+                </text>
+              </svg>
+              <span
+                className={`absolute inset-[30px] rounded-full grid place-items-center transition-transform duration-300 group-hover:scale-110 ${
+                  isDark ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'
+                }`}
+              >
+                <ArrowUpRight size={24} className="transition-transform duration-300 group-hover:rotate-45" />
+              </span>
+            </a>
+          </div>
+
+          {/* ---------- Intro (left) + space for photo (middle) + tagline (right) ---------- */}
+          <div className="relative z-[3] w-full flex flex-col items-center gap-12 px-6 pt-10 pb-16 xl:grid xl:grid-cols-[1fr_36vw_1fr] xl:items-start xl:gap-0 xl:px-[5%] xl:pt-[56px] xl:pb-[120px] xl:flex-1">
 
             {/* ---------- LEFT: intro ---------- */}
-            <div className={`w-full max-w-md xl:max-w-[340px] ${heroLoaded ? 'animate-slide-in-left' : 'opacity-0'}`}>
-              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border-[1.5px] border-current mb-3">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
-                </span>
-                <span className="text-[9px] font-medium">Available for freelance</span>
+            <div className="w-full max-w-md xl:max-w-[380px]">
+              <div className="h-up" style={{ animationDelay: '0.35s' }}>
+                <div
+                  className={`inline-flex items-center gap-2.5 pl-3 pr-4 py-1.5 rounded-full border mb-5 ${
+                    isDark ? 'border-white/20 bg-white/5' : 'border-gray-900/15 bg-white/70'
+                  }`}
+                >
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                  </span>
+                  <span className="text-xs sm:text-[13px] font-semibold">Available for freelance</span>
+                </div>
               </div>
 
-              <p className="text-[15px] font-light text-gray-500">Hi I&apos;m Aicelle</p>
-              <h2 className="text-[23px] font-medium tracking-tight mt-1.5 mb-2.5">Web Designer &amp; Developer</h2>
-              <p className="text-[15px] font-light text-gray-500 leading-snug">
+              <p className="h-up text-lg text-gray-500" style={{ animationDelay: '0.45s' }}>
+                Hi, I&apos;m <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Aicelle</span> 👋
+              </p>
+
+              <h2
+                className="h-up text-[clamp(32px,2.9vw,44px)] font-bold tracking-tight leading-[1.05] mt-2 mb-4"
+                style={{ animationDelay: '0.55s' }}
+              >
+                Web Designer
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">&amp; Developer</span>
+              </h2>
+
+              <p className="h-up text-base sm:text-[17px] text-gray-500 leading-relaxed" style={{ animationDelay: '0.65s' }}>
                 I build thoughtful digital experiences that combine design, code and creativity.
               </p>
 
-              <div className="flex gap-4 sm:gap-5 mt-8 xl:-ml-5">
+              <div className="h-up flex gap-3 sm:gap-4 mt-8" style={{ animationDelay: '0.75s' }}>
                 <a
                   href="#work"
                   onClick={(e) => handleScrollTo(e, '#work')}
-                  className={`flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium hover:-translate-y-0.5 transition-all duration-200 ${
-                    isDark ? 'bg-white text-gray-900' : 'bg-[#262626] text-white'
+                  className={`group flex-1 sm:flex-none sm:px-7 h-14 rounded-full inline-flex items-center justify-center gap-2 text-[15px] font-semibold shadow-lg hover:-translate-y-1 hover:shadow-xl active:scale-95 transition-all duration-300 ${
+                    isDark ? 'bg-white text-gray-900' : 'bg-[#1c1c1c] text-white'
                   }`}
                 >
                   My Work
+                  <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
                 <a
                   href="/rosales_aicelle_resume.pdf"
                   download="rosales_aicelle_resume.pdf"
-                  className="flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium border border-gray-400/60 hover:-translate-y-0.5 transition-all duration-200"
+                  className={`group flex-1 sm:flex-none sm:px-7 h-14 rounded-full inline-flex items-center justify-center gap-2 text-[15px] font-semibold border-[1.5px] hover:-translate-y-1 active:scale-95 transition-all duration-300 ${
+                    isDark ? 'border-white/30 hover:border-white' : 'border-gray-900/20 hover:border-gray-900 bg-white/60'
+                  }`}
                 >
                   Download CV
+                  <Download size={18} className="transition-transform duration-300 group-hover:translate-y-0.5" />
                 </a>
               </div>
 
-              <div className="flex gap-1.5 mt-8 xl:-ml-5">
+              <div className="h-up flex flex-wrap gap-2.5 mt-8" style={{ animationDelay: '0.85s' }}>
                 {socialLinks.map((social) =>
                   (social as any).isDiscord ? (
                     <button
@@ -1506,13 +1630,15 @@ const designs = [
                       onClick={handleCopyDiscord}
                       title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
                       aria-label="Copy Discord username"
-                      className={`relative w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
-                        isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                      className={`relative w-11 h-11 rounded-full border flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px] hover:-translate-y-1 transition-all duration-300 ${
+                        isDark
+                          ? 'border-white/25 hover:bg-white hover:text-gray-900'
+                          : 'border-gray-900/20 bg-white/60 hover:bg-gray-900 hover:text-white hover:border-gray-900'
                       }`}
                     >
-                      {copiedDiscord ? <Check size={14} className="text-green-500" /> : social.icon}
+                      {copiedDiscord ? <Check size={18} className="text-green-500" /> : social.icon}
                       {copiedDiscord && (
-                        <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[11px] font-semibold px-2 py-1 rounded-md animate-fade-in">
                           Copied!
                         </span>
                       )}
@@ -1525,8 +1651,10 @@ const designs = [
                       rel="noopener noreferrer"
                       title={social.name}
                       aria-label={social.name}
-                      className={`w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
-                        isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                      className={`w-11 h-11 rounded-full border flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px] hover:-translate-y-1 transition-all duration-300 ${
+                        isDark
+                          ? 'border-white/25 hover:bg-white hover:text-gray-900'
+                          : 'border-gray-900/20 bg-white/60 hover:bg-gray-900 hover:text-white hover:border-gray-900'
                       }`}
                     >
                       {social.icon}
@@ -1536,33 +1664,51 @@ const designs = [
               </div>
             </div>
 
-            {/* Middle column: bakante, dito nakapuwesto ang photo */}
+            {/* Middle column: empty, the photo sits here */}
             <div className="hidden xl:block" />
 
             {/* ---------- RIGHT: tagline ---------- */}
-            <div className={`w-full max-w-md xl:w-[300px] xl:justify-self-end ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
-              <p className="text-[11px] tracking-[0.35em] text-gray-500 mb-3">CREATIVITY WITH PURPOSE</p>
-              <h2 className="text-[21px] font-medium leading-tight tracking-tight">
+            <div className="w-full max-w-md xl:w-[330px] xl:justify-self-end">
+              <p className="h-up flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-gray-500 mb-4" style={{ animationDelay: '0.6s' }}>
+                <span className="w-8 h-px bg-current" />
+                CREATIVITY WITH PURPOSE
+              </p>
+              <h2 className="h-up text-[clamp(28px,2.4vw,38px)] font-bold leading-[1.1] tracking-tight" style={{ animationDelay: '0.7s' }}>
                 Thoughtful design.
                 <br />
-                Seamless experiences.
+                <span className="text-gray-400">Seamless experiences.</span>
               </h2>
-              <p className="text-[15px] font-light text-gray-500 leading-snug mt-3">
+              <p className="h-up text-base sm:text-[17px] text-gray-500 leading-relaxed mt-4" style={{ animationDelay: '0.8s' }}>
                 I turn ideas into intuitive websites that connect brands with people.
               </p>
+
+              {/* mini stats */}
+              <div className="h-up flex gap-8 mt-8" style={{ animationDelay: '0.9s' }}>
+                {[
+                  { value: `${projects.length}+`, label: 'Projects' },
+                  { value: `${designs.length}+`, label: 'Designs' },
+                  { value: '4+', label: 'Roles' },
+                ].map((stat) => (
+                  <div key={stat.label}>
+                    <p className="text-3xl font-bold tracking-tight">{stat.value}</p>
+                    <p className="text-xs uppercase tracking-wider text-gray-500 mt-1">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Scroll indicator */}
+          {/* ---------- Scroll indicator ---------- */}
           <a
             href="#about"
             onClick={(e) => handleScrollTo(e, '#about')}
             aria-label="Scroll to About"
-            className="hidden xl:flex absolute z-[3] right-[42px] bottom-[120px] flex-col items-center gap-2.5 text-gray-500 hover:text-current transition-colors"
+            className="h-up hidden xl:flex absolute z-[3] right-[40px] bottom-[110px] flex-col items-center gap-3 text-gray-500 hover:text-current transition-colors"
+            style={{ animationDelay: '1.2s' }}
           >
-            <span className="text-[11px] tracking-[0.1em] [writing-mode:vertical-rl]">SCROLL</span>
-            <span className="relative w-px h-[52px] bg-current">
-              <span className="absolute left-1/2 -translate-x-1/2 top-0 w-[7px] h-[7px] rounded-full bg-current animate-bounce" />
+            <span className="text-xs font-semibold tracking-[0.2em] [writing-mode:vertical-rl]">SCROLL</span>
+            <span className="relative w-px h-[56px] bg-gray-400/60">
+              <span className="h-drop absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-current" />
             </span>
           </a>
         </div>
