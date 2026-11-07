@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { Pacifico } from 'next/font/google'
 import {
   Menu,
   X,
@@ -18,7 +19,6 @@ import {
   Sparkle,
   Github,
   Check,
-  Quote,
   Briefcase,
   GitBranch,
   Triangle,
@@ -63,20 +63,20 @@ import {
   Package,
   Lightbulb,
   Code2,
-  Folder,
-  FolderOpen,
-  ArrowLeft,
   GraduationCap,
   MessageCircle,
   Send,
   MapPin,
-  ArrowRight,
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
   Film,
-  Play
+  Play,
+  Sun,
+  Moon,
 } from 'lucide-react'
+
+const pacifico = Pacifico({ weight: '400', subsets: ['latin'] })
 
 // ================= VIDEO HELPERS =================
 // Supported sources:
@@ -660,12 +660,12 @@ function ChatWidget() {
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDark, setIsDark] = useState(false)
   const [selectedCert, setSelectedCert] = useState<typeof certificates[number] | null>(null)
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDesignCategory, setActiveDesignCategory] = useState<string | null>(null)
   const [activeSubFolder, setActiveSubFolder] = useState<string | null>(null)
   const [heroLoaded, setHeroLoaded] = useState(false)
-  const [quoteIndex, setQuoteIndex] = useState(0)
 
   // ================= WORK TAB (Projects / Designs / Videos) =================
   type WorkTab = 'projects' | 'designs' | 'videos'
@@ -693,12 +693,6 @@ export default function Portfolio() {
     return () => window.removeEventListener('keydown', onKey)
   }, [selectedVideo])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setQuoteIndex((prev) => (prev + 1) % aboutQuotes.length)
-    }, 2600)
-    return () => clearInterval(interval)
-  }, [])
   const [copiedDiscord, setCopiedDiscord] = useState(false)
 
   const DISCORD_USERNAME = 'seikiiiiii_'
@@ -721,7 +715,6 @@ export default function Portfolio() {
 
   // ================= ACTIVE SECTION (scroll-spy) =================
   const [activeSection, setActiveSection] = useState('home')
-  const [pressedLink, setPressedLink] = useState<string | null>(null)
 
   useEffect(() => {
     const sectionIds = ['home', 'about', 'work', 'skills', 'experience', 'certificates']
@@ -888,13 +881,6 @@ export default function Portfolio() {
         { name: 'Documentation', level: '80%', lucideIcon: FileText },
       ],
     },
-  ]
-  const aboutQuotes = [
-  'Design with purpose.',
-  'Create. Design. Inspire.',
-  'Turning ideas into experiences.',
-  'Where creativity meets technology.',
-  'Building meaningful digital experiences.',
   ]
 
 
@@ -1324,418 +1310,250 @@ const designs = [
 
   return (
     <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      {/* ================= NAVIGATION (pill) ================= */}
+      <nav className="fixed top-4 lg:top-9 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-32px)] max-w-[1100px]">
+        <div
+          className={`h-[54px] pl-5 pr-2 md:px-[18px] rounded-full flex items-center justify-between backdrop-blur-md transition-colors duration-300 ${
+            isDark ? 'bg-[#1c1c1c]/90' : 'bg-[#f1f2f2]/90'
+          }`}
+        >
           <a
             href="#home"
             onClick={(e) => handleScrollTo(e, '#home')}
-            className="flex items-center gap-3 active:scale-90 transition-transform duration-150 ease-out"
+            className={`${pacifico.className} text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm hover:shadow-md hover:rotate-6 transition-all duration-300">
-              <span className="text-white font-bold text-lg">A</span>
-            </div>
-
-            <div className="hidden sm:block">
-              <p className="font-semibold text-sm">Aicelle</p>
-              <p className="text-xs text-gray-500">
-                UI/UX · Web Dev · Creative Design
-              </p>
-            </div>
+            Aicelle
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-7 lg:gap-10">
             {navLinks.map((link) => {
-              const sectionId = link.href.replace('#', '')
-              const isActive = activeSection === sectionId
+              const isActive = activeSection === link.href.replace('#', '')
               return (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  onPointerDown={() => setPressedLink(link.name)}
-                  onPointerUp={() => setPressedLink(null)}
-                  onPointerLeave={() => setPressedLink(null)}
-                  className={`relative px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-out group
-                    ${pressedLink === link.name ? 'scale-90' : 'scale-100'}
-                  `}
+                  className={`text-sm transition-colors duration-200 ${
+                    isActive
+                      ? isDark ? 'text-white' : 'text-gray-900'
+                      : isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
+                  }`}
                 >
                   {link.name}
-                  <span
-                    className={`absolute left-4 right-4 -bottom-0.5 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-transform duration-300 origin-left ${
-                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                    }`}
-                  />
                 </a>
               )
             })}
-            <a
-              href="mailto:aicellerosales08@gmail.com"
-              onPointerDown={() => setPressedLink('contact-desktop')}
-              onPointerUp={() => setPressedLink(null)}
-              onPointerLeave={() => setPressedLink(null)}
-              className={`ml-2 px-6 py-2 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-200 ease-out ${
-                pressedLink === 'contact-desktop' ? 'scale-90' : 'hover:scale-105 scale-100'
-              }`}
-            >
-              Contact Me
-            </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden relative p-2.5 rounded-full hover:bg-gray-100 active:bg-purple-100 active:scale-90 transition-all duration-150 ease-out"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span className="relative w-6 h-6 block">
-              <X
-                size={24}
-                className={`absolute inset-0 text-purple-600 transition-all duration-300 ease-out ${
-                  isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'
-                }`}
-              />
-              <Menu
-                size={24}
-                className={`absolute inset-0 text-gray-700 transition-all duration-300 ease-out ${
-                  isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'
-                }`}
-              />
-            </span>
-          </button>
+          <div className="flex items-center gap-2 md:contents">
+            {/* Light / dark toggle */}
+            <button
+              type="button"
+              onClick={() => setIsDark((d) => !d)}
+              aria-label="Toggle theme"
+              className={`w-10 h-8 rounded-lg border flex items-center justify-center transition-colors duration-300 ${
+                isDark ? 'bg-[#111] border-white/10 text-white' : 'bg-[#fbf8f7] border-gray-200 text-gray-900'
+              }`}
+            >
+              {isDark ? <Moon size={14} /> : <Sun size={14} />}
+            </button>
+
+            {/* Hire me */}
+            <a
+              href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
+              className={`hidden md:inline-flex px-6 py-2.5 rounded-full border-[1.5px] text-sm font-medium transition-colors duration-200 ${
+                isDark
+                  ? 'border-white text-white hover:bg-white hover:text-gray-900'
+                  : 'border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white'
+              }`}
+            >
+              Hire me
+            </a>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`md:hidden w-10 h-10 rounded-full flex items-center justify-center ${isDark ? 'text-white' : 'text-gray-900'}`}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu Popdown */}
+        {/* Mobile dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1 animate-slide-in-up">
-            {navLinks.map((link, i) => {
-              const sectionId = link.href.replace('#', '')
-              const isActive = activeSection === sectionId
+          <div
+            className={`md:hidden mt-2 rounded-3xl px-4 py-4 space-y-1 shadow-lg animate-slide-in-up ${
+              isDark ? 'bg-[#1c1c1c] text-white' : 'bg-[#f1f2f2] text-gray-900'
+            }`}
+          >
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.replace('#', '')
               return (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  onPointerDown={() => setPressedLink(link.name)}
-                  onPointerUp={() => setPressedLink(null)}
-                  onPointerLeave={() => setPressedLink(null)}
-                  style={{ animationDelay: `${i * 40}ms` }}
-                  className={`flex items-center justify-between text-sm font-medium rounded-xl px-3 py-2.5 transition-all duration-150 ease-out animate-slide-in-up origin-left
-                    ${isActive ? 'text-purple-600 bg-purple-50' : 'text-gray-600'}
-                    ${pressedLink === link.name ? 'scale-95 bg-purple-100' : 'scale-100'}
-                  `}
+                  className={`block rounded-xl px-3 py-2.5 text-sm ${isActive ? 'font-semibold' : 'opacity-60'}`}
                 >
                   {link.name}
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />}
                 </a>
               )
             })}
             <a
               href="mailto:aicellerosales08@gmail.com"
-              onPointerDown={() => setPressedLink('contact-mobile')}
-              onPointerUp={() => setPressedLink(null)}
-              onPointerLeave={() => setPressedLink(null)}
-              className={`block text-center w-full px-6 py-2.5 mt-2 bg-gray-900 text-white rounded-full text-sm font-medium transition-all duration-150 ease-out ${
-                pressedLink === 'contact-mobile' ? 'scale-95 bg-gray-800' : 'scale-100'
+              className={`block text-center mt-2 px-6 py-2.5 rounded-full border-[1.5px] text-sm font-medium ${
+                isDark ? 'border-white' : 'border-gray-900'
               }`}
             >
-              Contact Me
+              Hire me
             </a>
           </div>
         )}
       </nav>
 
       {/* ================= 1. HOME / HERO ================= */}
-      <section id="home" className="relative overflow-hidden">
-        {/* Background: soft dot grid + gradient glows */}
-        <div
-          className="absolute inset-0 -z-10 opacity-[0.35]"
-          style={{
-            backgroundImage: 'radial-gradient(circle, rgb(196 181 253 / 0.6) 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-            maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 75%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 75%)',
-          }}
-        />
-        <div className="absolute -top-32 -right-32 w-[520px] h-[520px] bg-purple-300/30 rounded-full blur-3xl -z-10" />
-        <div className="absolute -bottom-40 -left-32 w-[480px] h-[480px] bg-pink-300/30 rounded-full blur-3xl -z-10" />
+      <section
+        id="home"
+        className={`relative overflow-hidden transition-colors duration-300 ${
+          isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
+        }`}
+      >
+        <div className="relative w-full flex flex-col items-center pt-28 lg:block lg:pt-0 lg:h-screen lg:min-h-[760px] lg:max-h-[980px]">
 
-        <div className="max-w-6xl mx-auto px-6 pt-10 pb-12 md:pt-16 md:pb-20 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 lg:gap-10 items-center">
+          {/* Big outlined word — full width, nasa likod ng photo */}
+          <h1
+            aria-hidden="true"
+            className="select-none whitespace-nowrap font-black leading-none tracking-[-0.02em] text-transparent text-[20.5vw] lg:absolute lg:top-[150px] lg:left-1/2 lg:-translate-x-1/2 z-[1]"
+            style={{ WebkitTextStroke: `1.5px ${isDark ? '#f4f4f4' : '#111'}` }}
+          >
+            CREATIVE
+          </h1>
 
-          {/* ---------- LEFT: TEXT ---------- */}
-          <div className={`space-y-7 ${heroLoaded ? 'animate-slide-in-left' : 'opacity-0'}`}>
+          {/* Photo — kailangang transparent PNG (walang background) */}
+          <div className="relative z-[2] w-[min(420px,88vw)] -mt-[10vw] lg:mt-0 lg:w-auto lg:absolute lg:bottom-0 lg:left-[52%] lg:-translate-x-1/2 lg:h-[88%] pointer-events-none">
+            <Image
+              src="/newphotoseiki.png"
+              alt="Aicelle Rosales"
+              width={900}
+              height={1100}
+              priority
+              className="w-full h-auto lg:h-full lg:w-auto object-contain object-bottom"
+            />
+          </div>
 
-            {/* Availability badge */}
-            <div className="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-white/80 backdrop-blur border border-purple-100 shadow-sm">
-              <span className="relative flex h-2.5 w-2.5 ml-1">
+          {/* ---------- LEFT: intro ---------- */}
+          <div
+            className={`relative z-[3] w-full max-w-md px-6 mt-10 lg:mt-0 lg:px-0 lg:absolute lg:left-[5.8%] lg:top-[50.5%] lg:max-w-[340px] ${
+              heroLoaded ? 'animate-slide-in-left' : 'opacity-0'
+            }`}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border-[1.5px] border-current mb-3">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
               </span>
-              <span className="text-xs font-semibold text-gray-700">Open to remote &amp; freelance work</span>
+              <span className="text-[9px] font-medium">Available for freelance</span>
             </div>
 
-            <div className="space-y-4">
-              <p className="text-pink-500 font-semibold text-sm tracking-wide flex items-center gap-1.5">
-                <span className="inline-block animate-bounce">👋</span>
-                Hello, I&apos;m
-              </p>
-
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-gray-900">
-                Aicelle
-                <br />
-                <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500">
-                  Rosales
-                  {/* hand-drawn style underline */}
-                  <svg
-                    className="absolute -bottom-3 left-0 w-full h-4 text-pink-300"
-                    viewBox="0 0 300 16"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <path d="M2 11 C 60 2, 140 2, 298 9" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </h1>
-
-              <p className="text-lg md:text-xl font-semibold text-gray-800 pt-3">
-                Web Designer &amp; Developer
-                <span className="text-gray-300 mx-2">/</span>
-                UI/UX Designer
-              </p>
-
-              {/* Rotating tagline */}
-              <div className="h-6 overflow-hidden">
-                <p
-                  key={quoteIndex}
-                  className="text-sm font-semibold text-purple-500 flex items-center gap-1.5 animate-slide-in-up"
-                >
-                  <Sparkles size={14} className="text-pink-400" fill="currentColor" />
-                  {aboutQuotes[quoteIndex]}
-                </p>
-              </div>
-            </div>
-
-            <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
-              I design and build responsive websites and clean, user-friendly interfaces —
-              taking ideas from <span className="font-semibold text-gray-900">Figma wireframes</span> all
-              the way to <span className="font-semibold text-gray-900">live pages</span>. I also create
-              graphics and edit videos that help brands stand out.
+            <p className="text-[15px] font-light text-gray-500">Hi I&apos;m Aicelle</p>
+            <h2 className="text-[23px] font-medium tracking-tight mt-1.5 mb-2.5">Web Designer &amp; Developer</h2>
+            <p className="text-[15px] font-light text-gray-500 leading-snug">
+              I build thoughtful digital experiences that combine design, code and creativity.
             </p>
 
-            {/* CTAs */}
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex gap-4 sm:gap-5 mt-8 lg:-ml-5">
               <a
                 href="#work"
                 onClick={(e) => handleScrollTo(e, '#work')}
-                className="group px-7 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-pink-500/30 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 inline-flex items-center gap-2"
+                className={`flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium hover:-translate-y-0.5 transition-all duration-200 ${
+                  isDark ? 'bg-white text-gray-900' : 'bg-[#262626] text-white'
+                }`}
               >
-                View My Work
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+                My Work
               </a>
               <a
                 href="/rosales_aicelle_resume.pdf"
                 download="rosales_aicelle_resume.pdf"
-                className="group px-7 py-3.5 rounded-full font-semibold text-gray-900 bg-white border border-gray-200 hover:border-purple-300 hover:text-purple-600 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 inline-flex items-center gap-2 shadow-sm"
+                className="flex-1 sm:flex-none sm:w-[165px] h-[52px] rounded-full grid place-items-center text-sm font-medium border border-gray-400/60 hover:-translate-y-0.5 transition-all duration-200"
               >
                 Download CV
-                <Download size={18} className="group-hover:translate-y-0.5 transition-transform duration-300" />
               </a>
             </div>
 
-            {/* Stats (auto-counted from your data) */}
-            <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl pt-2">
-              {[
-                { value: 4, suffix: '+', label: 'Roles' },
-                { value: projects.length, suffix: '', label: 'Projects' },
-                { value: designs.length, suffix: '+', label: 'Designs' },
-                { value: certificates.length, suffix: '', label: 'Certificates' },
-              ].map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`text-center sm:text-left ${i > 0 ? 'sm:border-l sm:border-gray-200 sm:pl-4' : ''}`}
-                >
-                  <p className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 leading-none">
-                    <CountUp end={stat.value} suffix={stat.suffix} />
-                  </p>
-                  <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1.5">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Socials */}
-            <div className="flex items-center gap-4 pt-1">
-              <span className="text-xs text-gray-400 font-semibold tracking-widest">FIND ME ON</span>
-              <span className="h-px w-8 bg-gray-200" />
-              <div className="flex gap-2">
-                {socialLinks.map((social) =>
-                  (social as any).isDiscord ? (
-                    <button
-                      key={social.name}
-                      type="button"
-                      onClick={handleCopyDiscord}
-                      className="relative w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-purple-600 hover:border-purple-300 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px]"
-                      title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
-                      aria-label="Copy Discord username"
-                    >
-                      {copiedDiscord ? <Check size={18} className="text-green-500" /> : social.icon}
-                      {copiedDiscord && (
-                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
-                          Copied!
-                        </span>
-                      )}
-                    </button>
-                  ) : (
-                    <a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-purple-600 hover:border-purple-300 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center [&_svg]:w-[18px] [&_svg]:h-[18px]"
-                      title={social.name}
-                      aria-label={social.name}
-                    >
-                      {social.icon}
-                    </a>
-                  )
-                )}
-              </div>
+            <div className="flex gap-1.5 mt-8 lg:-ml-5">
+              {socialLinks.map((social) =>
+                (social as any).isDiscord ? (
+                  <button
+                    key={social.name}
+                    type="button"
+                    onClick={handleCopyDiscord}
+                    title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
+                    aria-label="Copy Discord username"
+                    className={`relative w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
+                      isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                    }`}
+                  >
+                    {copiedDiscord ? <Check size={14} className="text-green-500" /> : social.icon}
+                    {copiedDiscord && (
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                        Copied!
+                      </span>
+                    )}
+                  </button>
+                ) : (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={social.name}
+                    aria-label={social.name}
+                    className={`w-[27px] h-[27px] rounded-full border border-current flex items-center justify-center [&_svg]:w-3.5 [&_svg]:h-3.5 transition-colors duration-200 ${
+                      isDark ? 'hover:bg-white hover:text-gray-900' : 'hover:bg-gray-900 hover:text-white'
+                    }`}
+                  >
+                    {social.icon}
+                  </a>
+                )
+              )}
             </div>
           </div>
 
-          {/* ---------- RIGHT: PHOTO ---------- */}
-          <div className={`relative ${heroLoaded ? 'animate-slide-in-right' : 'opacity-0'}`}>
-            <div className="relative w-full max-w-[420px] mx-auto">
-
-              {/* Gradient backdrop card, tilted */}
-              <div className="absolute inset-0 translate-x-4 translate-y-4 rotate-3 rounded-[2.5rem] bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 opacity-90" />
-              <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-purple-400/30 to-pink-400/30 blur-2xl -z-10 animate-glow" />
-
-              {/* Photo */}
-              <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-b from-purple-50 to-pink-50">
-                <Image
-                  src="/newphotoseiki.png"
-                  alt="Aicelle Rosales"
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 420px"
-                  className="object-cover object-top hover:scale-[1.03] transition-transform duration-700"
-                  priority
-                />
-              </div>
-
-              {/* Floating card: focus */}
-              <div
-                className="absolute -left-4 sm:-left-10 bottom-10 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-gray-100 px-4 py-3 flex items-center gap-3 animate-float"
-                style={{ animationDelay: '0.6s' }}
-              >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
-                  <Sparkles size={18} className="text-white" fill="currentColor" />
-                </div>
-                <div className="leading-tight">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-purple-600">Focus</p>
-                  <p className="text-sm font-bold text-gray-900">UI/UX &amp; Web Design</p>
-                  <p className="text-xs text-gray-500">Figma → Live websites</p>
-                </div>
-              </div>
-
-              {/* Floating card: tools */}
-              <div
-                className="absolute -right-3 sm:-right-8 top-10 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-gray-100 px-3.5 py-3 animate-float"
-                style={{ animationDelay: '1.4s' }}
-              >
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Daily tools</p>
-                <div className="flex items-center gap-1.5">
-                  {[
-                    { src: '/figma.png', alt: 'Figma' },
-                    { src: '/html-5.png', alt: 'HTML' },
-                    { src: '/css-3.png', alt: 'CSS' },
-                    { src: '/java-script.png', alt: 'JavaScript' },
-                  ].map((tool) => (
-                    <div key={tool.alt} title={tool.alt} className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5">
-                      <Image src={tool.src} alt={tool.alt} width={20} height={20} className="object-contain" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Location chip */}
-              <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 bg-gray-900 text-white rounded-full px-4 py-2 shadow-lg inline-flex items-center gap-1.5 whitespace-nowrap">
-                <MapPin size={14} className="text-pink-400" />
-                <span className="text-xs font-semibold">Based in the Philippines</span>
-              </div>
-
-              {/* A couple of subtle accents (kept minimal) */}
-              <Sparkle size={22} fill="currentColor" className="absolute -top-4 left-8 text-pink-400 animate-float" />
-              <Heart size={18} fill="currentColor" className="absolute top-1/2 -right-6 text-purple-300 animate-float hidden sm:block" style={{ animationDelay: '1s' }} />
-            </div>
+          {/* ---------- RIGHT: tagline ---------- */}
+          <div
+            className={`relative z-[3] w-full max-w-md px-6 mt-10 mb-16 lg:m-0 lg:px-0 lg:absolute lg:left-[75.7%] lg:top-[49%] lg:w-[300px] ${
+              heroLoaded ? 'animate-slide-in-right' : 'opacity-0'
+            }`}
+          >
+            <p className="text-[11px] tracking-[0.35em] text-gray-500 mb-3">CREATIVITY WITH PURPOSE</p>
+            <h2 className="text-[21px] font-medium leading-tight tracking-tight">
+              Thoughtful design.
+              <br />
+              Seamless experiences.
+            </h2>
+            <p className="text-[15px] font-light text-gray-500 leading-snug mt-3">
+              I turn ideas into intuitive websites that connect brands with people.
+            </p>
           </div>
+
+          {/* Scroll indicator */}
+          <a
+            href="#about"
+            onClick={(e) => handleScrollTo(e, '#about')}
+            aria-label="Scroll to About"
+            className="hidden lg:flex absolute z-[3] right-[42px] bottom-[150px] flex-col items-center gap-2.5 text-gray-500 hover:text-current transition-colors"
+          >
+            <span className="text-[11px] tracking-[0.1em] [writing-mode:vertical-rl]">SCROLL</span>
+            <span className="relative w-px h-[52px] bg-current">
+              <span className="absolute left-1/2 -translate-x-1/2 top-0 w-[7px] h-[7px] rounded-full bg-current animate-bounce" />
+            </span>
+          </a>
         </div>
       </section>
-
-      {/* Scroll Indicator */}
-      <div className="flex justify-center pb-10">
-        <a
-          href="#about"
-          onClick={(e) => handleScrollTo(e, '#about')}
-          className="flex flex-col items-center gap-2 text-gray-400 hover:text-purple-500 transition-colors"
-          aria-label="Scroll to About"
-        >
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Scroll</span>
-          <span className="w-6 h-10 rounded-full border-2 border-current flex justify-center pt-2">
-            <span className="w-1 h-2 rounded-full bg-current animate-bounce" />
-          </span>
-        </a>
-      </div>
-      {/* Quote Section */}
-      <Reveal as="section" direction="fade" className="relative bg-gradient-to-r from-purple-50 to-pink-50 py-16 md:py-24 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-pink-200/30 rounded-full blur-3xl -z-0 animate-glow" />
-
-        <Sparkles
-          size={26}
-          className="absolute top-8 left-[15%] text-purple-300 animate-float"
-          style={{ animationDelay: '0.4s' }}
-        />
-        <Sparkle
-          size={18}
-          fill="currentColor"
-          className="absolute bottom-10 right-[18%] text-pink-300 animate-float"
-          style={{ animationDelay: '1.6s' }}
-        />
-        <Star
-          size={16}
-          fill="currentColor"
-          className="absolute top-12 right-[20%] text-pink-300 animate-[spin_9s_linear_infinite]"
-        />
-        <Heart
-          size={16}
-          fill="currentColor"
-          className="absolute bottom-8 left-[18%] text-purple-300 animate-float"
-          style={{ animationDelay: '1s' }}
-        />
-
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
-          <Quote
-            size={64}
-            fill="currentColor"
-            className="mx-auto mb-2 text-purple-200 animate-float"
-            strokeWidth={0}
-          />
-
-          <p className="text-2xl md:text-3xl font-serif text-gray-800 italic mb-6">
-            &ldquo;Design is not just what it looks like and feels like. Design is how it works.&rdquo;
-          </p>
-
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-gradient-to-r from-transparent to-pink-400 animate-fade-in" style={{ animationDelay: '0.3s' }} />
-            <p className="text-gray-600 font-medium animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              Steve Jobs
-            </p>
-            <span className="h-px w-10 bg-gradient-to-l from-transparent to-purple-400 animate-fade-in" style={{ animationDelay: '0.3s' }} />
-          </div>
-        </div>
-      </Reveal>
 
       {/* ================= 2. ABOUT SECTION ================= */}
       <section id="about" className="relative max-w-6xl mx-auto px-6 py-20 md:py-28">
