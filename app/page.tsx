@@ -1820,13 +1820,14 @@ const designs = [
             </span>
 
             {/* Photo — swap the src for your new black & white photo */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full lg:w-[115%] h-[92%]">
+            {/* mix-blend-multiply hides the photo's white background so the grid shows through */}
+            <div className="absolute bottom-0 top-[4%] left-1/2 -translate-x-1/2 w-full lg:w-[120%]">
               <Image
                 src="/aicellewchair.png"
                 alt="Aicelle Rosales"
                 fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-contain object-bottom grayscale scale-[1.3] origin-bottom"
+                sizes="(max-width: 1024px) 100vw, 65vw"
+                className={`object-contain object-bottom grayscale ${isDark ? '' : 'mix-blend-multiply'}`}
               />
             </div>
 
@@ -1837,10 +1838,10 @@ const designs = [
                 { label: ['Web', 'Development'], pos: 'right-[2%] top-[38%]', side: 'right' },
                 { label: ['Graphic', 'Design'], pos: 'left-0 top-[72%]', side: 'left' },
                 { label: ['Video', 'Editing'], pos: 'right-[4%] top-[68%]', side: 'right' },
-                { label: ['Content Planning', '& Copywriting'], pos: '-right-4 top-[90%]', side: 'right' },
+                { label: ['Content Planning', '& Copywriting'], pos: 'right-0 top-[88%]', side: 'right' },
               ].map((c) => (
                 <div key={c.label.join(' ')} className={`absolute flex items-center gap-1 ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}>
-                  <span className={`px-1 rounded ${isDark ? 'bg-[#111]/70' : 'bg-[#fbf8f7]/80'}`}>
+                  <span>
                     {c.label[0]}
                     <br />
                     {c.label[1]}
