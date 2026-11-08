@@ -1715,157 +1715,165 @@ const designs = [
       </section>
 
       {/* ================= 2. ABOUT SECTION ================= */}
-      <section id="about" className="relative max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <section
+        id="about"
+        className={`relative overflow-hidden transition-colors duration-300 ${
+          isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
+        }`}
+      >
+        {/* ---------- TOOLS STRIP ---------- */}
+        <div className={`relative z-[3] overflow-hidden ${isDark ? 'bg-[#1c1c1c]' : 'bg-[#2b2b2b]'} text-white`}>
+          <div className="hero-marquee-wrap">
+            <div className="hero-marquee flex w-max items-center py-3" style={{ animationDuration: '40s' }}>
+              {[0, 1].map((copy) => (
+                <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
+                  {['Figma', 'Adobe XD', 'Canva', 'Wix', 'Shopify', 'HTML', 'CSS', 'JavaScript', 'Next.js', 'Tailwind CSS'].map((tool) => (
+                    <span key={tool} className="flex items-center">
+                      <span className="px-8 text-base md:text-lg whitespace-nowrap">{tool}</span>
+                      <span className="text-white/60">·</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        {/* Faint grid background */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 top-12 pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(${isDark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.04)'} 1px, transparent 1px), linear-gradient(90deg, ${isDark ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.04)'} 1px, transparent 1px)`,
+            backgroundSize: '40px 40px',
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch">
 
           {/* ---------- LEFT: STORY ---------- */}
-          <Reveal direction="left" className="lg:col-span-7 min-w-0">
+          <Reveal direction="left" className="min-w-0 pt-16 md:pt-24 lg:pb-24">
+            <p className="text-sm md:text-base font-semibold tracking-wide mb-8">
+              <span className="text-[#c8316f] font-bold">01 /</span>{' '}
+              <span className={isDark ? 'text-gray-200' : 'text-gray-900'}>ABOUT ME</span>
+            </p>
 
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-200 bg-white mb-6 shadow-sm">
-              <Sparkles size={14} className="text-purple-500" fill="currentColor" />
-              <span className="text-xs font-bold tracking-widest text-purple-600">ABOUT ME</span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-[1.1]">
-              Hi, I&apos;m Aicelle.
+            <h2 className="font-extrabold tracking-tight leading-[1.08] text-4xl sm:text-5xl xl:text-[58px]">
+              <span className={isDark ? 'text-white' : 'text-gray-900'}>Hi, I&apos;m Aicelle.</span>
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500">
-                I turn ideas into clean, easy-to-use digital experiences.
-              </span>
+              <span className="text-[#c8316f]">I turn ideas into clean, easy-to-use digital experiences.</span>
             </h2>
 
-            <div className="mt-7 space-y-4 text-gray-600 text-base md:text-[17px] leading-relaxed max-w-2xl">
+            <div className={`mt-10 space-y-5 text-base md:text-[17px] leading-snug max-w-xl ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
               <p>
-                With a background in Information Technology, I work right where{' '}
-                <span className="font-semibold text-gray-900">design meets code</span>. I map out the
-                user flow, design the interface in Figma, then build it into a responsive website
-                that works on every screen.
+                With a background in Information Technology, I bring design and development together
+                to create intuitive, responsive websites that work on every screen.
               </p>
               <p>
-                I&apos;ve worked on client websites, UI/UX projects for web and mobile, and creative
-                work like ad visuals and video edits — always with the same goal:{' '}
-                <span className="font-semibold text-gray-900">make it look good, and make it easy to use.</span>
+                I work on client websites, web and mobile interfaces, and social media content—from
+                planning and copywriting to design, video editing, and scheduling. My goal is to make
+                every brand&apos;s digital presence clear, consistent, and engaging.
               </p>
             </div>
 
-            {/* Quick facts */}
-            <div className="mt-9 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
+            {/* Quick facts card */}
+            <div
+              className={`mt-12 max-w-xl rounded-[1.75rem] px-6 sm:px-14 py-6 text-white grid grid-cols-1 sm:grid-cols-2 ${
+                isDark ? 'bg-[#1c1c1c] border border-white/10' : 'bg-[#2b2b2b]'
+              }`}
+            >
               {[
                 { icon: MapPin, label: 'Based in', value: 'Philippines · Open to remote' },
                 { icon: GraduationCap, label: 'Education', value: 'BS Information Technology' },
-                { icon: Layout, label: 'Focus', value: 'UI/UX & Web Design' },
+                { icon: Layout, label: 'Focus', value: 'UI/UX · Web · Creative' },
                 { icon: Award, label: 'Certifications', value: `${certificates.length} from Cisco & Pearson` },
-              ].map((fact) => {
+              ].map((fact, i) => {
                 const FactIcon = fact.icon
                 return (
                   <div
                     key={fact.label}
-                    className="group flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-purple-200 hover:shadow-md transition-all duration-300"
+                    className={`flex items-center gap-3 py-6 sm:px-6 border-white/15 ${i < 3 ? 'border-b' : ''} ${
+                      i >= 2 ? 'sm:border-b-0' : ''
+                    } ${i % 2 === 0 ? 'sm:border-r' : ''}`}
                   >
-                    <div className="w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <FactIcon size={19} className="text-purple-600" />
-                    </div>
+                    <FactIcon size={20} className="shrink-0" />
                     <div className="min-w-0">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400">{fact.label}</p>
-                      <p className="text-sm font-semibold text-gray-900">{fact.value}</p>
+                      <p className="text-[9px] font-semibold uppercase tracking-wider text-white/70">{fact.label}</p>
+                      <p className="text-sm font-semibold">{fact.value}</p>
                     </div>
                   </div>
                 )
               })}
             </div>
-
-            <p className="mt-8 inline-flex items-center gap-2 text-sm font-semibold italic text-pink-500">
-              <Heart size={14} fill="currentColor" className="animate-pulse" />
-              Creating with purpose, designing with passion.
-            </p>
           </Reveal>
 
-          {/* ---------- RIGHT: WHAT I DO ---------- */}
-          <Reveal direction="right" className="lg:col-span-5 min-w-0">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-purple-100/60 to-pink-100/60 rounded-[2rem] blur-2xl -z-10" />
+          {/* ---------- RIGHT: PHOTO + CALLOUTS ---------- */}
+          <Reveal direction="right" className="relative min-w-0 min-h-[520px] sm:min-h-[640px] lg:min-h-0">
+            {/* Big "CREATE." behind the photo */}
+            <span
+              aria-hidden="true"
+              className={`absolute top-8 md:top-12 right-0 select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
+                isDark ? 'text-white/10' : 'text-[#dcdcdc]'
+              }`}
+            >
+              CREATE.
+            </span>
 
-              <div className="bg-white rounded-[1.75rem] border border-purple-100 shadow-sm p-6 md:p-7">
-                <div className="flex items-center justify-between mb-5">
-                  <h3 className="text-xl font-bold text-gray-900">What I Do</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full">
-                    Services
+            {/* Photo — swap the src for your new black & white photo */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[82%] sm:w-[70%] lg:w-[78%] h-[88%]">
+              <Image
+                src="/PICTURE(HOME).png"
+                alt="Aicelle Rosales"
+                fill
+                sizes="(max-width: 1024px) 80vw, 40vw"
+                className="object-contain object-bottom grayscale"
+              />
+            </div>
+
+            {/* Callout labels (desktop / tablet) */}
+            <div className="hidden sm:block absolute inset-0 pointer-events-none text-[#c8316f] text-xs md:text-[13px] font-semibold uppercase tracking-wide leading-tight">
+              {[
+                { label: ['UX/UI', 'Design'], pos: 'left-[4%] top-[44%]', side: 'left' },
+                { label: ['Web', 'Development'], pos: 'right-[2%] top-[38%]', side: 'right' },
+                { label: ['Graphic', 'Design'], pos: 'left-0 top-[72%]', side: 'left' },
+                { label: ['Video', 'Editing'], pos: 'right-[4%] top-[68%]', side: 'right' },
+                { label: ['Content Planning', '& Copywriting'], pos: 'right-0 top-[88%]', side: 'right' },
+              ].map((c) => (
+                <div key={c.label.join(' ')} className={`absolute flex items-center gap-1 ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}>
+                  <span>
+                    {c.label[0]}
+                    <br />
+                    {c.label[1]}
                   </span>
+                  <svg
+                    width="48"
+                    height="22"
+                    viewBox="0 0 48 22"
+                    aria-hidden="true"
+                    className={`shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-800'} ${c.side === 'right' ? '-scale-x-100' : ''}`}
+                  >
+                    <path d="M0 6 H26 L42 16" fill="none" stroke="currentColor" strokeWidth="1" />
+                    <circle cx="44" cy="17" r="2.5" fill="none" stroke="currentColor" strokeWidth="1" />
+                  </svg>
                 </div>
+              ))}
+            </div>
 
-                <div className="space-y-2">
-                  {[
-                    { icon: Code2, title: 'Web Design & Development', desc: 'Responsive, fast websites built in code or Wix.' },
-                    { icon: PenTool, title: 'UI/UX Design', desc: 'Clear, intuitive interfaces for web and mobile apps.' },
-                    { icon: Workflow, title: 'Wireframing & Prototyping', desc: 'Interactive Figma prototypes to test ideas early.' },
-                    { icon: Palette, title: 'Graphic Design', desc: 'Ad creatives, social media posts, and brand visuals.' },
-                    { icon: Film, title: 'Video Editing', desc: 'Short-form reels and ads that grab attention.' },
-                  ].map((service, i) => {
-                    const ServiceIcon = service.icon
-                    const pink = i % 2 === 1
-                    return (
-                      <div
-                        key={service.title}
-                        className={`group flex gap-4 items-start p-3 rounded-2xl transition-colors duration-300 ${
-                          pink ? 'hover:bg-pink-50/60' : 'hover:bg-purple-50/60'
-                        }`}
-                      >
-                        <div
-                          className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 ${
-                            pink ? 'bg-pink-50 text-pink-500' : 'bg-purple-50 text-purple-600'
-                          }`}
-                        >
-                          <ServiceIcon size={20} />
-                        </div>
-                        <div className="min-w-0 pt-0.5">
-                          <h4 className="font-bold text-gray-900 text-[15px]">{service.title}</h4>
-                          <p className="text-sm text-gray-500 leading-snug mt-0.5">{service.desc}</p>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
+            {/* Mobile: skills as chips */}
+            <div className="sm:hidden absolute left-0 right-0 top-[22%] flex flex-wrap justify-center gap-2 px-2 z-[1]">
+              {['UX/UI Design', 'Web Development', 'Graphic Design', 'Video Editing', 'Content & Copywriting'].map((s) => (
+                <span
+                  key={s}
+                  className={`text-[10px] font-semibold uppercase tracking-wide text-[#c8316f] px-2.5 py-1 rounded-full border ${
+                    isDark ? 'border-white/15 bg-white/5' : 'border-[#c8316f]/25 bg-white/80'
+                  }`}
+                >
+                  {s}
+                </span>
+              ))}
             </div>
           </Reveal>
         </div>
-
-        {/* ---------- HOW I WORK ---------- */}
-        <Reveal direction="up" className="mt-20">
-          <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-2">My Process</p>
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">How I Work</h3>
-          </div>
-
-          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* connector line (desktop) */}
-            <div className="hidden lg:block absolute top-9 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-purple-200 via-pink-200 to-purple-200" />
-
-            {[
-              { step: '01', title: 'Understand', desc: 'Learn the goals, the users, and the content before designing anything.' },
-              { step: '02', title: 'Design', desc: 'Sketch wireframes and craft the UI in Figma, then prototype the flow.' },
-              { step: '03', title: 'Build', desc: 'Turn the design into a responsive website that works on every device.' },
-              { step: '04', title: 'Refine', desc: 'Test, polish the details, and launch — then keep improving.' },
-            ].map((item, i) => (
-              <div
-                key={item.step}
-                className="relative bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center hover:-translate-y-1.5 hover:shadow-lg hover:border-purple-200 transition-all duration-300"
-              >
-                <div
-                  className={`relative z-10 w-12 h-12 mx-auto -mt-1 mb-4 rounded-full flex items-center justify-center text-sm font-extrabold text-white shadow-md ${
-                    i % 2 === 0 ? 'bg-gradient-to-br from-purple-600 to-purple-500' : 'bg-gradient-to-br from-pink-500 to-fuchsia-500'
-                  }`}
-                >
-                  {item.step}
-                </div>
-                <h4 className="font-bold text-gray-900 mb-1.5">{item.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
       </section>
 
       {/* ================= 3. WORK SECTION (Projects + Designs + Videos) ================= */}
