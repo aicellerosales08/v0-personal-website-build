@@ -760,9 +760,6 @@ function WelcomeGate() {
         .gate-btn:hover .gate-btn-shine { animation: gate-shine .9s ease; }
         .gate-btn { animation: gate-ring 2.4s ease-out 1.6s infinite; }
         .eq-bar { transform-origin: bottom; animation: eq .9s ease-in-out infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .gate-bg, .gate-card, .gate-item, .gate-btn, .eq-bar { animation: none !important; }
-        }
       `}</style>
 
       {/* ---------- WELCOME POPUP ---------- */}
@@ -895,10 +892,10 @@ const PAGE_STYLES = String.raw`
 @keyframes pf-blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-20px) scale(1.12); } }
 @keyframes pf-twinkle { 0%,100% { opacity: .15; transform: scale(.6) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(90deg); } }
 @keyframes pf-shimmer { to { background-position: 200% center; } }
-@keyframes pf-wave { 0%,100% { transform: translateY(0); } 20% { transform: translateY(-7%); color: rgba(200,49,111,.28); } 40% { transform: translateY(0); } }
-@keyframes pf-float-photo { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-10px) scale(1.012); } }
-@keyframes pf-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes pf-bob-sm { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes pf-wave { 0%,100% { transform: translateY(0); } 20% { transform: translateY(-12%); color: rgba(200,49,111,.35); } 40% { transform: translateY(0); } }
+@keyframes pf-float-photo { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(.4deg); } }
+@keyframes pf-bob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(4px,-14px); } }
+@keyframes pf-bob-sm { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
 /* ---------- HOME extras ---------- */
 .h-shimmer { background-size: 200% auto; animation: pf-shimmer 4s linear infinite; }
@@ -915,12 +912,12 @@ const PAGE_STYLES = String.raw`
 .ab.in .ab-word { animation: pf-word .8s cubic-bezier(.2,.7,.2,1) both; }
 .ab.in .ab-fade { animation: pf-rise .8s cubic-bezier(.2,.7,.2,1) both; }
 .ab.in .ab-letter {
-  animation: pf-letter .9s cubic-bezier(.2,.7,.2,1) both, pf-wave 4.5s ease-in-out infinite;
+  animation: pf-letter .9s cubic-bezier(.2,.7,.2,1) both, pf-wave 3.5s ease-in-out infinite;
   animation-delay: var(--d, 0s), calc(1.6s + var(--w, 0s));
 }
 .ab.in .ab-photo { animation: pf-photo 1.3s cubic-bezier(.2,.7,.2,1) both; }
-.ab.in .ab-breathe { animation: pf-float-photo 6s ease-in-out 1.6s infinite; }
-.ab.in .ab-callout { animation: pf-bob 4.5s ease-in-out infinite; animation-delay: var(--b, 2s); }
+.ab.in .ab-breathe { animation: pf-float-photo 5s ease-in-out 1.6s infinite; }
+.ab.in .ab-callout { animation: pf-bob 3.8s ease-in-out infinite; animation-delay: var(--b, 2s); }
 .ab-icon { animation: pf-bob-sm 3.6s ease-in-out infinite; }
 .group\/fact:hover .ab-icon { animation: none; }
 .ab.in .ab-callout:hover .ab-fade { animation: none; opacity: 1; }
@@ -950,13 +947,6 @@ button:hover > .work-tab-count { transform: translateY(-3px); }
 /* ---------- generic section heading reveal ---------- */
 .pf-rise { animation: pf-rise .7s cubic-bezier(.2,.7,.2,1) both; }
 
-@media (prefers-reduced-motion: reduce) {
-  .ab *, .ab-icon, .work-swap, .work-card, .work-blurb, .h-shimmer, .h-twinkle, .ab-blob, .pf-rise { animation: none !important; opacity: 1 !important; transition: none !important; }
-  .ab .ab-draw { stroke-dashoffset: 0; }
-  .ab .ab-line { transform: none; }
-  .ab .ab-photo { transform: translateX(-50%); }
-  .h-parallax { transform: none !important; }
-}
 
 /* ---------- DARK MODE for lower sections (.dm) ---------- */
 [data-theme=dark] .dm .bg-white { background-color: #1a1a1a; }
@@ -1121,8 +1111,6 @@ export default function Portfolio() {
   // Hides the section while scrolling, then plays its entrance animation once you arrive.
   const [heroKey, setHeroKey] = useState(0)
   const animateOnArrival = (elem: HTMLElement, targetId: string) => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
     // 1) hide right away
     if (targetId === 'about') elem.classList.remove('in')
     else if (targetId !== 'home') {
