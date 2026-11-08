@@ -895,6 +895,10 @@ const PAGE_STYLES = String.raw`
 @keyframes pf-blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-20px) scale(1.12); } }
 @keyframes pf-twinkle { 0%,100% { opacity: .15; transform: scale(.6) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(90deg); } }
 @keyframes pf-shimmer { to { background-position: 200% center; } }
+@keyframes pf-wave { 0%,100% { transform: translateY(0); } 20% { transform: translateY(-7%); color: rgba(200,49,111,.28); } 40% { transform: translateY(0); } }
+@keyframes pf-float-photo { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-10px) scale(1.012); } }
+@keyframes pf-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pf-bob-sm { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
 /* ---------- HOME extras ---------- */
 .h-shimmer { background-size: 200% auto; animation: pf-shimmer 4s linear infinite; }
@@ -910,9 +914,16 @@ const PAGE_STYLES = String.raw`
 .ab mark.ab-hl { color: inherit; background: linear-gradient(transparent 62%, rgba(200,49,111,.28) 62%) no-repeat 0 100% / 0% 100%; padding: 0 2px; }
 .ab.in .ab-word { animation: pf-word .8s cubic-bezier(.2,.7,.2,1) both; }
 .ab.in .ab-fade { animation: pf-rise .8s cubic-bezier(.2,.7,.2,1) both; }
-.ab.in .ab-letter { animation: pf-letter .9s cubic-bezier(.2,.7,.2,1) both; }
+.ab.in .ab-letter {
+  animation: pf-letter .9s cubic-bezier(.2,.7,.2,1) both, pf-wave 4.5s ease-in-out infinite;
+  animation-delay: var(--d, 0s), calc(1.6s + var(--w, 0s));
+}
 .ab.in .ab-photo { animation: pf-photo 1.3s cubic-bezier(.2,.7,.2,1) both; }
-.ab.in .ab-breathe { animation: pf-breathe 7s ease-in-out 2s infinite; }
+.ab.in .ab-breathe { animation: pf-float-photo 6s ease-in-out 1.6s infinite; }
+.ab.in .ab-callout { animation: pf-bob 4.5s ease-in-out infinite; animation-delay: var(--b, 2s); }
+.ab-icon { animation: pf-bob-sm 3.6s ease-in-out infinite; }
+.group\/fact:hover .ab-icon { animation: none; }
+.ab.in .ab-callout:hover .ab-fade { animation: none; opacity: 1; }
 .ab.in .ab-line { animation: pf-line .7s cubic-bezier(.2,.7,.2,1) .1s both; }
 .ab.in .ab-draw { animation: pf-draw .7s ease-out both; }
 .ab.in .ab-dot { animation: pf-dot .35s ease-out both; }
@@ -940,7 +951,7 @@ button:hover > .work-tab-count { transform: translateY(-3px); }
 .pf-rise { animation: pf-rise .7s cubic-bezier(.2,.7,.2,1) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ab *, .work-swap, .work-card, .work-blurb, .h-shimmer, .h-twinkle, .ab-blob, .pf-rise { animation: none !important; opacity: 1 !important; transition: none !important; }
+  .ab *, .ab-icon, .work-swap, .work-card, .work-blurb, .h-shimmer, .h-twinkle, .ab-blob, .pf-rise { animation: none !important; opacity: 1 !important; transition: none !important; }
   .ab .ab-draw { stroke-dashoffset: 0; }
   .ab .ab-line { transform: none; }
   .ab .ab-photo { transform: translateX(-50%); }
@@ -2190,6 +2201,16 @@ const designs = [
         <div
           id="about"
           ref={aboutReveal.ref}
+          onMouseMove={(e) => {
+            const el = e.currentTarget
+            const r = el.getBoundingClientRect()
+            el.style.setProperty('--mx', `${((e.clientX - r.left) / r.width - 0.5) * 2}`)
+            el.style.setProperty('--my', `${((e.clientY - r.top) / r.height - 0.5) * 2}`)
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.setProperty('--mx', '0')
+            e.currentTarget.style.setProperty('--my', '0')
+          }}
           className={`ab ${aboutReveal.isVisible ? 'in' : ''} relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch`}
         >
           {/* soft color blobs */}
@@ -2262,7 +2283,10 @@ const designs = [
                     } ${i % 2 === 0 ? 'sm:border-r' : ''}`}
                     style={{ animationDelay: `${1.35 + i * 0.1}s` }}
                   >
-                    <span className="w-9 h-9 shrink-0 rounded-xl bg-white/5 grid place-items-center transition-all duration-300 group-hover/fact:bg-[#c8316f] group-hover/fact:-rotate-6 group-hover/fact:scale-110">
+                    <span
+                      className="ab-icon w-9 h-9 shrink-0 rounded-xl bg-white/5 grid place-items-center transition-all duration-300 group-hover/fact:bg-[#c8316f] group-hover/fact:-rotate-6 group-hover/fact:scale-110"
+                      style={{ animationDelay: `${i * 0.5}s` }}
+                    >
                       <FactIcon size={18} />
                     </span>
                     <div className="min-w-0">
@@ -2280,12 +2304,13 @@ const designs = [
             {/* Big "CREATE." behind the photo — letters drop in */}
             <span
               aria-hidden="true"
-              className={`absolute top-8 md:top-12 right-0 whitespace-nowrap select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
+              style={{ transform: 'translate3d(calc(var(--mx, 0) * 22px), calc(var(--my, 0) * 10px), 0)' }}
+              className={`h-parallax absolute top-8 md:top-12 right-0 whitespace-nowrap select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
                 isDark ? 'text-white/10' : 'text-[#dcdcdc]'
               }`}
             >
               {'CREATE.'.split('').map((ch, i) => (
-                <span key={i} className="ab-letter inline-block" style={{ animationDelay: `${0.1 + i * 0.07}s` }}>
+                <span key={i} className="ab-letter inline-block" style={{ ['--d' as string]: `${0.1 + i * 0.07}s`, ['--w' as string]: `${i * 0.18}s` } as React.CSSProperties}>
                   {ch}
                 </span>
               ))}
@@ -2293,6 +2318,7 @@ const designs = [
 
             {/* Photo — mix-blend-multiply hides the white background in light mode */}
             <div className="ab-photo absolute bottom-0 top-[4%] left-1/2 w-full lg:w-[120%]" style={{ animationDelay: '.3s' }}>
+              <div className="h-parallax relative w-full h-full" style={{ transform: 'translate3d(calc(var(--mx, 0) * -10px), calc(var(--my, 0) * -6px), 0)' }}>
               <div className="ab-breathe relative w-full h-full">
                 <Image
                   src="/aicellewchair.png"
@@ -2302,10 +2328,26 @@ const designs = [
                   className={`object-contain object-bottom grayscale ${isDark ? '' : 'mix-blend-multiply'}`}
                 />
               </div>
+              </div>
+            </div>
+
+            {/* twinkling sparkles around the photo */}
+            <div aria-hidden="true" className="hidden sm:block absolute inset-0 pointer-events-none">
+              {[
+                { pos: 'left-[18%] top-[30%]', size: 14, color: 'text-pink-400', delay: '0s' },
+                { pos: 'right-[16%] top-[24%]', size: 10, color: 'text-purple-400', delay: '1.2s' },
+                { pos: 'left-[12%] top-[60%]', size: 9, color: 'text-purple-400', delay: '2s' },
+                { pos: 'right-[10%] top-[55%]', size: 13, color: 'text-pink-400', delay: '.7s' },
+              ].map((sp, i) => (
+                <Sparkle key={i} size={sp.size} fill="currentColor" strokeWidth={0} className={`h-twinkle absolute ${sp.pos} ${sp.color}`} style={{ animationDelay: sp.delay }} />
+              ))}
             </div>
 
             {/* Callout labels (desktop / tablet) — line draws in, dot pulses */}
-            <div className="hidden sm:block absolute inset-0 pointer-events-none text-[#c8316f] text-xs md:text-[13px] font-semibold uppercase tracking-wide leading-tight">
+            <div
+              className="h-parallax hidden sm:block absolute inset-0 pointer-events-none text-[#c8316f] text-xs md:text-[13px] font-semibold uppercase tracking-wide leading-tight"
+              style={{ transform: 'translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 10px), 0)' }}
+            >
               {[
                 { label: ['UX/UI', 'Design'], pos: 'left-[4%] top-[44%]', side: 'left' },
                 { label: ['Web', 'Development'], pos: 'right-[2%] top-[38%]', side: 'right' },
@@ -2318,6 +2360,7 @@ const designs = [
                   <div
                     key={c.label.join(' ')}
                     className={`ab-callout pointer-events-auto group/cl absolute flex items-center gap-1 cursor-default ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}
+                    style={{ ['--b' as string]: `${2 + i * 0.6}s` } as React.CSSProperties}
                   >
                     <span className="ab-fade transition-transform duration-300 group-hover/cl:scale-110" style={{ animationDelay: `${d + 0.35}s` }}>
                       {c.label[0]}
