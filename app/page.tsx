@@ -1922,7 +1922,7 @@ const designs = [
             />
             <div className="h-photo relative w-full h-full">
               <Image
-                src="/PICTURE(HOME).png"
+                src="/meeeeeee.png"
                 alt="Aicelle Rosales"
                 fill
                 priority
