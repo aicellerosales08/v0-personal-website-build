@@ -244,118 +244,186 @@ const categoryIcons: Record<string, any> = {
   'Tools & Workflow': Wrench,
 }
 
-function SkillGroupBlock({
-  group,
-  groupIndex,
-}: {
-  group: { category: string; accent: string; skills: Array<{ name: string; level: string; icon?: string; lucideIcon?: any }> }
-  groupIndex: number
-}) {
-  const { ref, isVisible } = useScrollReveal<HTMLDivElement>(0.15)
-  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal<HTMLDivElement>(0.5)
-  const isPink = group.accent === 'pink'
-  const CategoryIcon = categoryIcons[group.category] ?? Sparkle
+// ================= SKILLS SECTION (compact + tabbed) =================
+// One category at a time + small skill chips, so the section stays short.
+type SkillItem = { name: string; level: string; icon?: string; lucideIcon?: any }
+type SkillGroupData = { category: string; accent: string; skills: SkillItem[] }
+
+// Percent → simpleng label + ilang bars (mas madaling basahin kaysa 14 progress bars)
+function skillTier(levelNum: number) {
+  if (levelNum >= 90) return { label: 'Expert', bars: 4 }
+  if (levelNum >= 75) return { label: 'Advanced', bars: 3 }
+  if (levelNum >= 60) return { label: 'Proficient', bars: 2 }
+  return { label: 'Familiar', bars: 1 }
+}
+
+function SkillsSection({ groups, isDark }: { groups: SkillGroupData[]; isDark: boolean }) {
+  const [activeCategory, setActiveCategory] = useState(groups[0]?.category ?? '')
+  const current = groups.find((g) => g.category === activeCategory) ?? groups[0]
+  const sortedSkills = [...current.skills].sort(
+    (a, b) => (parseInt(b.level, 10) || 0) - (parseInt(a.level, 10) || 0)
+  )
+  const totalSkills = groups.reduce((sum, g) => sum + g.skills.length, 0)
+  const CurrentIcon = categoryIcons[current.category] ?? Sparkle
+  const isPink = current.accent === 'pink'
 
   return (
-    <div className="relative">
-      <Sparkle
-        size={14}
-        fill="currentColor"
-        className={`hidden lg:block absolute -top-4 right-4 animate-float ${isPink ? 'text-pink-300' : 'text-purple-300'}`}
-        style={{ animationDelay: `${groupIndex * 0.4}s` }}
+    <section
+      id="skills"
+      className={`dm py-20 md:py-28 relative overflow-hidden transition-colors duration-500 ${
+        isDark ? 'bg-[#141414]' : 'bg-gray-50'
+      }`}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl pointer-events-none"
       />
 
-      <div
-        ref={headerRef}
-        className={`flex items-center gap-3 mb-6 ${headerVisible ? 'animate-slide-in-left' : 'opacity-0'}`}
-      >
-        <div
-          className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition-transform duration-300 hover:rotate-12 hover:scale-110 ${
-            isPink ? 'bg-pink-50 text-pink-500' : 'bg-purple-50 text-purple-600'
-          }`}
-        >
-          <CategoryIcon size={18} />
+      <div className="relative max-w-6xl mx-auto px-6">
+        {/* ---------- Header (same style as the Work section) ---------- */}
+        <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-end mb-10 md:mb-14">
+          <Reveal direction="left" className="md:col-span-7">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
+              Skills
+              <br />
+              <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">
+                &amp; tools
+              </span>
+            </h2>
+          </Reveal>
+          <Reveal direction="right" delay={150} className="md:col-span-5">
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-md">
+              {totalSkills} skills across {groups.length} areas, from code and design to AI workflows.
+              Pick an area to see what I work with.
+            </p>
+          </Reveal>
         </div>
-        <h3 className="text-lg font-bold text-gray-800">{group.category}</h3>
-        <span
-          className={`w-1.5 h-1.5 rounded-full animate-pulse ${isPink ? 'bg-pink-500' : 'bg-purple-500'}`}
-        />
-        <span className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
-      </div>
 
-      <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {group.skills.map((skill, i) => {
-          const LucideIcon = skill.lucideIcon
-          const levelNum = parseInt(skill.level, 10) || 0
-          const isExpert = levelNum >= 90
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+          {/* ---------- Category list (side on desktop, swipe row on mobile) ---------- */}
+          <nav aria-label="Skill categories" className="lg:col-span-4 min-w-0">
+            <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
+              {groups.map((group) => {
+                const isActive = group.category === current.category
+                const Icon = categoryIcons[group.category] ?? Sparkle
+                return (
+                  <li key={group.category} className="shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setActiveCategory(group.category)}
+                      aria-pressed={isActive}
+                      className={`w-full flex items-center gap-3 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                        isActive
+                          ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5'
+                          : 'text-gray-600 hover:bg-gray-100 lg:hover:translate-x-1'
+                      }`}
+                    >
+                      <Icon size={16} className="shrink-0" />
+                      <span className="flex-1">{group.category}</span>
+                      <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>
+                        {group.skills.length}
+                      </span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
 
-          return (
-            <div
-              key={skill.name}
-              style={isVisible ? { animationDelay: `${i * 90}ms` } : undefined}
-              className={`group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 hover:border-purple-200 transition-all duration-300 relative overflow-hidden ${
-                isVisible ? 'animate-slide-in-up' : 'opacity-0'
-              }`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -inset-y-4 -left-1/2 w-1/3 bg-white/40 rotate-12 -translate-x-[200%] group-hover:translate-x-[500%] transition-transform duration-[1200ms] ease-out" />
-              </div>
-
-              {isExpert && (
-                <Sparkle
-                  size={14}
-                  fill="currentColor"
-                  className={`absolute top-3 right-3 animate-pulse ${isPink ? 'text-pink-400' : 'text-purple-400'}`}
-                />
-              )}
-
-              <div className="flex justify-between items-center mb-4 relative z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center p-2 border border-gray-100 group-hover:scale-110 group-hover:-rotate-6 group-hover:bg-white transition-all duration-300 relative">
-                    {LucideIcon ? (
-                      <LucideIcon size={20} className={isPink ? 'text-pink-500' : 'text-purple-600'} />
-                    ) : (
-                      <Image
-                        src={skill.icon as string}
-                        alt={`${skill.name} logo`}
-                        width={28}
-                        height={28}
-                        className="object-contain"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none'
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-200">
-                      {skill.name}
-                    </p>
-                    <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400">
-                      {group.category}
-                    </span>
-                  </div>
-                </div>
-                <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                  <CountUp end={levelNum} suffix="%" duration={1000} />
-                </span>
-              </div>
-
-              <div className="w-full bg-gray-100 rounded-full h-2 p-[2px] overflow-hidden">
-                <div
-                  className="bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 h-full rounded-full transition-all duration-1000 ease-out relative"
-                  style={{ width: isVisible ? skill.level : '0%', transitionDelay: `${i * 90 + 200}ms` }}
+          {/* ---------- Skills in the selected category ---------- */}
+          <div key={current.category} className="work-swap lg:col-span-8 min-w-0">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <span
+                  className={`w-10 h-10 rounded-xl bg-white border border-gray-100 shadow-sm grid place-items-center ${
+                    isPink ? 'text-pink-500' : 'text-purple-600'
+                  }`}
                 >
-                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                  <CurrentIcon size={18} />
+                </span>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 leading-tight">{current.category}</h3>
+                  <p className="text-xs text-gray-500">{current.skills.length} skills · strongest first</p>
                 </div>
+              </div>
+
+              {/* Legend */}
+              <div className="hidden sm:flex items-center gap-4 text-[11px] text-gray-500">
+                {[4, 3, 2, 1].map((n) => (
+                  <span key={n} className="inline-flex items-center gap-1.5">
+                    <span className="flex gap-0.5">
+                      {[0, 1, 2, 3].map((d) => (
+                        <span
+                          key={d}
+                          className={`h-1 w-2 rounded-full ${
+                            d < n ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gray-100'
+                          }`}
+                        />
+                      ))}
+                    </span>
+                    {skillTier(n === 4 ? 90 : n === 3 ? 75 : n === 2 ? 60 : 0).label}
+                  </span>
+                ))}
               </div>
             </div>
-          )
-        })}
+
+            <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+              {sortedSkills.map((skill, i) => {
+                const LucideIcon = skill.lucideIcon
+                const levelNum = parseInt(skill.level, 10) || 0
+                const tier = skillTier(levelNum)
+                return (
+                  <li
+                    key={skill.name}
+                    title={`${skill.name} · ${skill.level}`}
+                    style={{ animationDelay: `${Math.min(i, 12) * 40}ms` }}
+                    className="work-card group flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-3.5 py-3 shadow-sm hover:shadow-md hover:border-purple-200 transition-[box-shadow,border-color] duration-300"
+                  >
+                    <span className="w-9 h-9 shrink-0 rounded-lg bg-gray-50 border border-gray-100 grid place-items-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                      {LucideIcon ? (
+                        <LucideIcon size={17} className={isPink ? 'text-pink-500' : 'text-purple-600'} />
+                      ) : (
+                        <Image
+                          src={skill.icon as string}
+                          alt=""
+                          width={20}
+                          height={20}
+                          className="object-contain"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none'
+                          }}
+                        />
+                      )}
+                    </span>
+
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-gray-900 truncate group-hover:text-purple-600 transition-colors duration-200">
+                        {skill.name}
+                      </span>
+                      <span className="mt-1.5 flex items-center gap-2">
+                        <span className="flex gap-1" aria-hidden="true">
+                          {[0, 1, 2, 3].map((d) => (
+                            <span
+                              key={d}
+                              className={`h-1.5 w-4 rounded-full ${
+                                d < tier.bars ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gray-100'
+                              }`}
+                            />
+                          ))}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                          {tier.label}
+                        </span>
+                      </span>
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -2759,35 +2827,8 @@ const designs = [
         )}
       </section>
 
-      {/* ================= 4. SKILLS SECTION ================= */}
-      <section id="skills" className={`dm py-20 md:py-32 overflow-hidden relative transition-colors duration-500 ${isDark ? 'bg-[#141414]' : 'bg-gray-50'}`}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <Reveal direction="up" className="text-center max-w-2xl mx-auto mb-16 space-y-3 relative">
-            <Sparkle
-              size={16}
-              fill="currentColor"
-              className="hidden md:block absolute -top-1 left-[30%] text-pink-300 animate-float"
-            />
-            <span className="text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-              Capabilities
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-              Technical Skills & Tools
-            </h2>
-            <p className="text-gray-500 text-sm">
-              My proficiency in various programming languages, frameworks, and design software tools.
-            </p>
-          </Reveal>
-
-          <div className="space-y-14">
-            {skillGroups.map((group, groupIndex) => (
-              <SkillGroupBlock key={group.category} group={group} groupIndex={groupIndex} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ================= 4. SKILLS SECTION (new compact design) ================= */}
+      <SkillsSection groups={skillGroups} isDark={isDark} />
 
       {/* ================= 5. EXPERIENCE SECTION ================= */}
       <section id="experience" className={`dm py-20 md:py-32 transition-colors duration-500 ${isDark ? 'bg-[#111]' : 'bg-white'}`}>
