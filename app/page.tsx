@@ -246,10 +246,11 @@ const categoryIcons: Record<string, any> = {
 
 // ================= SKILLS SECTION (compact + tabbed) =================
 // One category at a time + small skill chips, so the section stays short.
+// Color: solid brand pink #c8316f (same as the About section), no gradients.
 type SkillItem = { name: string; level: string; icon?: string; lucideIcon?: any }
 type SkillGroupData = { category: string; accent: string; skills: SkillItem[] }
 
-// Percent → simpleng label + ilang bars (mas madaling basahin kaysa 14 progress bars)
+// Percent → simple label + number of bars
 function skillTier(levelNum: number) {
   if (levelNum >= 90) return { label: 'Expert', bars: 4 }
   if (levelNum >= 75) return { label: 'Advanced', bars: 3 }
@@ -259,68 +260,97 @@ function skillTier(levelNum: number) {
 
 function SkillsSection({ groups, isDark }: { groups: SkillGroupData[]; isDark: boolean }) {
   const [activeCategory, setActiveCategory] = useState(groups[0]?.category ?? '')
+  const { ref: panelRef, isVisible } = useScrollReveal<HTMLDivElement>(0.15)
   const current = groups.find((g) => g.category === activeCategory) ?? groups[0]
   const sortedSkills = [...current.skills].sort(
     (a, b) => (parseInt(b.level, 10) || 0) - (parseInt(a.level, 10) || 0)
   )
   const totalSkills = groups.reduce((sum, g) => sum + g.skills.length, 0)
   const CurrentIcon = categoryIcons[current.category] ?? Sparkle
-  const isPink = current.accent === 'pink'
 
   return (
     <section
       id="skills"
       className={`dm py-20 md:py-28 relative overflow-hidden transition-colors duration-500 ${
-        isDark ? 'bg-[#141414]' : 'bg-gray-50'
+        isDark ? 'bg-[#141414]' : 'bg-[#fbf8f7]'
       }`}
     >
+      {/* soft pink blobs (same feel as About) */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl pointer-events-none"
+        className="ab-blob absolute -left-24 top-24 w-80 h-80 rounded-full blur-3xl opacity-40 pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(200,49,111,.30), transparent 70%)' }}
+      />
+      <div
+        aria-hidden="true"
+        className="ab-blob absolute -right-20 bottom-10 w-80 h-80 rounded-full blur-3xl opacity-30 pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(200,49,111,.25), transparent 70%)', animationDelay: '-5s' }}
       />
 
       <div className="relative max-w-6xl mx-auto px-6">
-        {/* ---------- Header (same style as the Work section) ---------- */}
+        {/* ---------- Header ---------- */}
         <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-end mb-10 md:mb-14">
           <Reveal direction="left" className="md:col-span-7">
+            <p className="text-sm md:text-base font-semibold tracking-wide mb-6 inline-flex items-center gap-3">
+              <span className="h-px w-10 bg-[#c8316f]" />
+              <span>
+                <span className="text-[#c8316f] font-bold">03 /</span>{' '}
+                <span className="text-gray-900">SKILLS</span>
+              </span>
+            </p>
             <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
               Skills
               <br />
-              <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">
-                &amp; tools
-              </span>
+              <span className="text-[#c8316f]">&amp; tools.</span>
             </h2>
           </Reveal>
           <Reveal direction="right" delay={150} className="md:col-span-5">
             <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-md">
-              {totalSkills} skills across {groups.length} areas, from code and design to AI workflows.
-              Pick an area to see what I work with.
+              <span className="font-bold text-[#c8316f]">
+                <CountUp end={totalSkills} duration={1200} />
+              </span>{' '}
+              skills across {groups.length} areas, from code and design to AI workflows. Pick an area to
+              see what I work with.
             </p>
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
-          {/* ---------- Category list (side on desktop, swipe row on mobile) ---------- */}
+        <div ref={panelRef} className={`sk ${isVisible ? 'sk-in' : ''} grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12`}>
+          {/* ---------- Category list ---------- */}
           <nav aria-label="Skill categories" className="lg:col-span-4 min-w-0">
             <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
-              {groups.map((group) => {
+              {groups.map((group, gi) => {
                 const isActive = group.category === current.category
                 const Icon = categoryIcons[group.category] ?? Sparkle
                 return (
-                  <li key={group.category} className="shrink-0">
+                  <li key={group.category} className="sk-cat shrink-0" style={{ animationDelay: `${gi * 70}ms` }}>
                     <button
                       type="button"
                       onClick={() => setActiveCategory(group.category)}
                       aria-pressed={isActive}
-                      className={`w-full flex items-center gap-3 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                      className={`group/cat relative w-full flex items-center gap-3 whitespace-nowrap text-left pl-5 pr-4 py-2.5 rounded-xl overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/50 ${
                         isActive
-                          ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5'
-                          : 'text-gray-600 hover:bg-gray-100 lg:hover:translate-x-1'
+                          ? 'bg-[#c8316f]/10 text-[#c8316f] font-semibold lg:translate-x-1.5'
+                          : 'text-gray-600 hover:text-[#c8316f] hover:bg-[#c8316f]/5 lg:hover:translate-x-1'
                       }`}
                     >
-                      <Icon size={16} className="shrink-0" />
+                      {/* sliding indicator */}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute left-0 top-2 bottom-2 w-[3px] rounded-full bg-[#c8316f] origin-center transition-transform duration-300 ${
+                          isActive ? 'scale-y-100' : 'scale-y-0 group-hover/cat:scale-y-50'
+                        }`}
+                      />
+                      <Icon
+                        size={16}
+                        className={`shrink-0 transition-transform duration-300 ${isActive ? 'rotate-0 scale-110' : 'group-hover/cat:-rotate-12'}`}
+                      />
                       <span className="flex-1">{group.category}</span>
-                      <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>
+                      <span
+                        className={`text-xs tabular-nums min-w-[1.75rem] text-center rounded-full px-1.5 py-0.5 transition-colors duration-300 ${
+                          isActive ? 'bg-[#c8316f] text-white' : 'text-gray-400'
+                        }`}
+                      >
                         {group.skills.length}
                       </span>
                     </button>
@@ -331,15 +361,11 @@ function SkillsSection({ groups, isDark }: { groups: SkillGroupData[]; isDark: b
           </nav>
 
           {/* ---------- Skills in the selected category ---------- */}
-          <div key={current.category} className="work-swap lg:col-span-8 min-w-0">
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div key={current.category} className="lg:col-span-8 min-w-0">
+            <div className="sk-head flex flex-wrap items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-3">
-                <span
-                  className={`w-10 h-10 rounded-xl bg-white border border-gray-100 shadow-sm grid place-items-center ${
-                    isPink ? 'text-pink-500' : 'text-purple-600'
-                  }`}
-                >
-                  <CurrentIcon size={18} />
+                <span className="sk-icon w-11 h-11 rounded-xl bg-[#c8316f] text-white grid place-items-center shadow-[0_10px_25px_-10px_rgba(200,49,111,.7)]">
+                  <CurrentIcon size={20} />
                 </span>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 leading-tight">{current.category}</h3>
@@ -349,21 +375,22 @@ function SkillsSection({ groups, isDark }: { groups: SkillGroupData[]; isDark: b
 
               {/* Legend */}
               <div className="hidden sm:flex items-center gap-4 text-[11px] text-gray-500">
-                {[4, 3, 2, 1].map((n) => (
-                  <span key={n} className="inline-flex items-center gap-1.5">
-                    <span className="flex gap-0.5">
-                      {[0, 1, 2, 3].map((d) => (
-                        <span
-                          key={d}
-                          className={`h-1 w-2 rounded-full ${
-                            d < n ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gray-100'
-                          }`}
-                        />
-                      ))}
+                {[90, 75, 60, 0].map((lvl) => {
+                  const t = skillTier(lvl)
+                  return (
+                    <span key={lvl} className="inline-flex items-center gap-1.5">
+                      <span className="flex gap-0.5">
+                        {[0, 1, 2, 3].map((d) => (
+                          <span
+                            key={d}
+                            className={`h-1 w-2 rounded-full ${d < t.bars ? 'bg-[#c8316f]' : 'bg-[#c8316f]/15'}`}
+                          />
+                        ))}
+                      </span>
+                      {t.label}
                     </span>
-                    {skillTier(n === 4 ? 90 : n === 3 ? 75 : n === 2 ? 60 : 0).label}
-                  </span>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -372,50 +399,61 @@ function SkillsSection({ groups, isDark }: { groups: SkillGroupData[]; isDark: b
                 const LucideIcon = skill.lucideIcon
                 const levelNum = parseInt(skill.level, 10) || 0
                 const tier = skillTier(levelNum)
+                const delay = Math.min(i, 14) * 55
                 return (
                   <li
                     key={skill.name}
                     title={`${skill.name} · ${skill.level}`}
-                    style={{ animationDelay: `${Math.min(i, 12) * 40}ms` }}
-                    className="work-card group flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-3.5 py-3 shadow-sm hover:shadow-md hover:border-purple-200 transition-[box-shadow,border-color] duration-300"
+                    className="sk-chip"
+                    style={{ animationDelay: `${delay}ms` }}
                   >
-                    <span className="w-9 h-9 shrink-0 rounded-lg bg-gray-50 border border-gray-100 grid place-items-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
-                      {LucideIcon ? (
-                        <LucideIcon size={17} className={isPink ? 'text-pink-500' : 'text-purple-600'} />
-                      ) : (
-                        <Image
-                          src={skill.icon as string}
-                          alt=""
-                          width={20}
-                          height={20}
-                          className="object-contain"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none'
-                          }}
-                        />
-                      )}
-                    </span>
+                    <div className="group relative h-full flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-3.5 py-3 shadow-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[#c8316f]/40 hover:shadow-[0_14px_30px_-14px_rgba(200,49,111,.45)]">
+                      {/* shine sweep on hover */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-[#c8316f]/10 to-transparent skew-x-[-20deg] -translate-x-full group-hover:translate-x-[450%] transition-transform duration-700 ease-out"
+                      />
 
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-gray-900 truncate group-hover:text-purple-600 transition-colors duration-200">
-                        {skill.name}
+                      <span className="relative w-9 h-9 shrink-0 rounded-lg bg-[#c8316f]/10 text-[#c8316f] grid place-items-center transition-all duration-300 group-hover:bg-[#c8316f] group-hover:text-white group-hover:scale-110 group-hover:-rotate-6">
+                        {LucideIcon ? (
+                          <LucideIcon size={17} />
+                        ) : (
+                          <Image
+                            src={skill.icon as string}
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="object-contain"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        )}
                       </span>
-                      <span className="mt-1.5 flex items-center gap-2">
-                        <span className="flex gap-1" aria-hidden="true">
-                          {[0, 1, 2, 3].map((d) => (
-                            <span
-                              key={d}
-                              className={`h-1.5 w-4 rounded-full ${
-                                d < tier.bars ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gray-100'
-                              }`}
-                            />
-                          ))}
+
+                      <span className="relative min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-gray-900 truncate transition-colors duration-200 group-hover:text-[#c8316f]">
+                          {skill.name}
                         </span>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-                          {tier.label}
+                        <span className="mt-1.5 flex items-center gap-2">
+                          <span className="flex gap-1" aria-hidden="true">
+                            {[0, 1, 2, 3].map((d) => (
+                              <span key={d} className="h-1.5 w-4 rounded-full bg-[#c8316f]/15 overflow-hidden">
+                                {d < tier.bars && (
+                                  <span
+                                    className="sk-bar block h-full w-full rounded-full bg-[#c8316f]"
+                                    style={{ animationDelay: `${delay + 250 + d * 110}ms` }}
+                                  />
+                                )}
+                              </span>
+                            ))}
+                          </span>
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 transition-colors duration-200 group-hover:text-[#c8316f]">
+                            {tier.label}
+                          </span>
                         </span>
                       </span>
-                    </span>
+                    </div>
                   </li>
                 )
               })}
@@ -1015,6 +1053,23 @@ button:hover > .work-tab-count { transform: translateY(-3px); }
 /* ---------- generic section heading reveal ---------- */
 .pf-rise { animation: pf-rise .7s cubic-bezier(.2,.7,.2,1) both; }
 
+
+/* ---------- SKILLS: plays when scrolled into view + on every category switch ---------- */
+@keyframes sk-pop { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes sk-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sk-slide { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes sk-spin-in { from { opacity: 0; transform: rotate(-90deg) scale(.4); } to { opacity: 1; transform: none; } }
+.sk .sk-chip, .sk .sk-cat, .sk .sk-head { opacity: 0; }
+.sk .sk-bar { transform: scaleX(0); transform-origin: left; }
+.sk.sk-in .sk-cat { animation: sk-slide .55s cubic-bezier(.2,.7,.2,1) both; }
+.sk.sk-in .sk-head { animation: pf-rise .5s cubic-bezier(.2,.7,.2,1) both; }
+.sk.sk-in .sk-icon { animation: sk-spin-in .6s cubic-bezier(.2,.7,.2,1) both; }
+.sk.sk-in .sk-chip { animation: sk-pop .55s cubic-bezier(.2,.7,.2,1) both; }
+.sk.sk-in .sk-bar { animation: sk-fill .5s cubic-bezier(.2,.7,.2,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .sk .sk-chip, .sk .sk-cat, .sk .sk-head { opacity: 1 !important; animation: none !important; }
+  .sk .sk-bar { transform: none !important; animation: none !important; }
+}
 
 /* ---------- DARK MODE for lower sections (.dm) ---------- */
 [data-theme=dark] .dm .bg-white { background-color: #1a1a1a; }
