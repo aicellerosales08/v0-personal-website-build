@@ -662,9 +662,9 @@ function ChatWidget() {
 }
 
 // ================= WELCOME GATE + BACKGROUND MUSIC =================
-// 1. Put your song directly inside /public (e.g. /public/bg-music.mp3)
+// 1. Song file is in /public (public/redbone-gloopy.mp3)
 // 2. Change BG_MUSIC_SRC below if you use a different file name.
-const BG_MUSIC_SRC = '/bg-music.mp3'
+const BG_MUSIC_SRC = '/redbone-gloopy.mp3'
 const BG_MUSIC_VOLUME = 0.35 // 0 = silent, 1 = full volume
 
 function WelcomeGate() {
