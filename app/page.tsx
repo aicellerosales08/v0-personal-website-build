@@ -508,7 +508,7 @@ function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
+    <div className="dm fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
       {isOpen && (
         <div className="w-[92vw] max-w-sm h-[70vh] max-h-[520px] bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden animate-slide-in-up">
           <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 px-5 py-4 flex items-center justify-between overflow-hidden">
@@ -874,6 +874,113 @@ function WelcomeGate() {
   )
 }
 
+// ================= GLOBAL ANIMATIONS + DARK MODE STYLES =================
+// Dark mode for the lower sections works by re-coloring the common Tailwind
+// classes inside any element marked with the `dm` class while the page is in
+// dark mode (data-theme="dark" on the page wrapper).
+const PAGE_STYLES = String.raw`
+/* ---------- shared keyframes ---------- */
+@keyframes pf-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes pf-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pf-pop { from { opacity: 0; transform: translateY(26px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes pf-word { from { opacity: 0; transform: translateY(105%) rotate(4deg); } to { opacity: 1; transform: none; } }
+@keyframes pf-letter { from { opacity: 0; transform: translateY(-40%) scale(1.15); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes pf-photo { from { opacity: 0; transform: translateX(-50%) translateY(60px) scale(.97); } to { opacity: 1; transform: translateX(-50%); } }
+@keyframes pf-breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.012); } }
+@keyframes pf-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pf-dot { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+@keyframes pf-ping { 0% { opacity: .8; transform: scale(1); } 80%,100% { opacity: 0; transform: scale(3.2); } }
+@keyframes pf-hl { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+@keyframes pf-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes pf-blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-20px) scale(1.12); } }
+@keyframes pf-twinkle { 0%,100% { opacity: .15; transform: scale(.6) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(90deg); } }
+@keyframes pf-shimmer { to { background-position: 200% center; } }
+
+/* ---------- HOME extras ---------- */
+.h-shimmer { background-size: 200% auto; animation: pf-shimmer 4s linear infinite; }
+.h-twinkle { animation: pf-twinkle 3.2s ease-in-out infinite; }
+.h-parallax { transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+
+/* ---------- ABOUT (plays when the section scrolls into view) ---------- */
+.ab .ab-word, .ab .ab-fade, .ab .ab-letter, .ab .ab-photo, .ab .ab-dot, .ab .ab-ping { opacity: 0; }
+.ab .ab-line { transform: scaleX(0); transform-origin: left; }
+.ab .ab-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ab .ab-dot, .ab .ab-ping { transform-box: fill-box; transform-origin: center; }
+.ab .ab-photo { transform: translateX(-50%); }
+.ab mark.ab-hl { color: inherit; background: linear-gradient(transparent 62%, rgba(200,49,111,.28) 62%) no-repeat 0 100% / 0% 100%; padding: 0 2px; }
+.ab.in .ab-word { animation: pf-word .8s cubic-bezier(.2,.7,.2,1) both; }
+.ab.in .ab-fade { animation: pf-rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.ab.in .ab-letter { animation: pf-letter .9s cubic-bezier(.2,.7,.2,1) both; }
+.ab.in .ab-photo { animation: pf-photo 1.3s cubic-bezier(.2,.7,.2,1) both; }
+.ab.in .ab-breathe { animation: pf-breathe 7s ease-in-out 2s infinite; }
+.ab.in .ab-line { animation: pf-line .7s cubic-bezier(.2,.7,.2,1) .1s both; }
+.ab.in .ab-draw { animation: pf-draw .7s ease-out both; }
+.ab.in .ab-dot { animation: pf-dot .35s ease-out both; }
+.ab.in .ab-ping { animation: pf-ping 2.4s ease-out infinite; }
+.ab.in mark.ab-hl { animation: pf-hl .9s cubic-bezier(.2,.7,.2,1) both; }
+.ab-blob { animation: pf-blob 12s ease-in-out infinite; }
+.ab-callout:hover .ab-ping { animation-duration: 1s; }
+
+/* ---------- WORK: content animates every time you switch ---------- */
+.work-swap { animation: pf-fade .45s ease both; }
+.work-card { animation: pf-pop .6s cubic-bezier(.2,.7,.2,1) both; }
+.work-blurb { animation: pf-rise .5s cubic-bezier(.2,.7,.2,1) both; }
+.work-tab-count { display: inline-block; transition: transform .3s; }
+button:hover > .work-tab-count { transform: translateY(-3px); }
+
+/* ---------- generic section heading reveal ---------- */
+.pf-rise { animation: pf-rise .7s cubic-bezier(.2,.7,.2,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ab *, .work-swap, .work-card, .work-blurb, .h-shimmer, .h-twinkle, .ab-blob, .pf-rise { animation: none !important; opacity: 1 !important; transition: none !important; }
+  .ab .ab-draw { stroke-dashoffset: 0; }
+  .ab .ab-line { transform: none; }
+  .ab .ab-photo { transform: translateX(-50%); }
+  .h-parallax { transform: none !important; }
+}
+
+/* ---------- DARK MODE for lower sections (.dm) ---------- */
+[data-theme=dark] .dm .bg-white { background-color: #1a1a1a; }
+[data-theme=dark] .dm .bg-white\/90 { background-color: rgba(26,26,26,.9); }
+[data-theme=dark] .dm .bg-gray-50 { background-color: #161616; }
+[data-theme=dark] .dm .bg-gray-100 { background-color: #232323; }
+[data-theme=dark] .dm .bg-purple-50 { background-color: rgba(168,85,247,.14); }
+[data-theme=dark] .dm .bg-pink-50 { background-color: rgba(236,72,153,.14); }
+[data-theme=dark] .dm .bg-gray-900 { background-color: #f4f4f4; }
+[data-theme=dark] .dm .bg-gray-900.text-white { color: #111; }
+[data-theme=dark] .dm .hover\:bg-gray-50:hover { background-color: #1f1f1f; }
+[data-theme=dark] .dm .hover\:bg-gray-100:hover { background-color: #262626; }
+[data-theme=dark] .dm .hover\:bg-gray-200:hover { background-color: #2e2e2e; }
+[data-theme=dark] .dm .hover\:bg-purple-50\/50:hover,
+[data-theme=dark] .dm .hover\:bg-purple-100:hover,
+[data-theme=dark] .dm .group:hover .group-hover\:bg-purple-100 { background-color: rgba(168,85,247,.22); }
+[data-theme=dark] .dm .hover\:bg-pink-100:hover { background-color: rgba(236,72,153,.22); }
+[data-theme=dark] .dm .group:hover .group-hover\:bg-white { background-color: #262626; }
+
+[data-theme=dark] .dm .text-gray-900 { color: #f5f5f5; }
+[data-theme=dark] .dm .text-gray-800 { color: #e6e6e6; }
+[data-theme=dark] .dm .text-gray-700 { color: #d4d4d4; }
+[data-theme=dark] .dm .text-gray-600 { color: #b5b5b5; }
+[data-theme=dark] .dm .text-gray-500 { color: #9b9b9b; }
+[data-theme=dark] .dm .text-gray-400 { color: #7c7c7c; }
+[data-theme=dark] .dm .text-gray-300 { color: #4f4f4f; }
+[data-theme=dark] .dm .hover\:text-gray-500:hover { color: #9b9b9b; }
+[data-theme=dark] .dm .hover\:text-gray-600:hover { color: #b5b5b5; }
+[data-theme=dark] .dm .text-purple-600,
+[data-theme=dark] .dm .hover\:text-purple-600:hover,
+[data-theme=dark] .dm .group:hover .group-hover\:text-purple-600 { color: #c084fc; }
+[data-theme=dark] .dm .text-purple-700 { color: #d8b4fe; }
+
+[data-theme=dark] .dm .border-gray-50,
+[data-theme=dark] .dm .border-gray-100,
+[data-theme=dark] .dm .border-gray-200 { border-color: rgba(255,255,255,.09); }
+[data-theme=dark] .dm .border-gray-300 { border-color: rgba(255,255,255,.2); }
+[data-theme=dark] .dm .border-purple-200,
+[data-theme=dark] .dm .hover\:border-purple-200:hover { border-color: rgba(192,132,252,.4); }
+[data-theme=dark] .dm .hover\:border-gray-900:hover { border-color: #f5f5f5; }
+[data-theme=dark] .dm .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,.4); }
+`
+
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDark, setIsDark] = useState(false)
@@ -882,6 +989,25 @@ export default function Portfolio() {
   const [activeDesignCategory, setActiveDesignCategory] = useState<string | null>(null)
   const [activeSubFolder, setActiveSubFolder] = useState<string | null>(null)
   const [heroLoaded, setHeroLoaded] = useState(false)
+  const aboutReveal = useScrollReveal<HTMLDivElement>(0.2)
+  const heroRef = useRef<HTMLElement>(null)
+
+  // Hero: photo, chips and glow follow the mouse a little (parallax)
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = heroRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const x = e.clientX - r.left
+    const y = e.clientY - r.top
+    el.style.setProperty('--px', `${x}px`)
+    el.style.setProperty('--py', `${y}px`)
+    el.style.setProperty('--mx', `${(x / r.width - 0.5) * 2}`)
+    el.style.setProperty('--my', `${(y / r.height - 0.5) * 2}`)
+  }
+  const handleHeroMouseLeave = () => {
+    heroRef.current?.style.setProperty('--mx', '0')
+    heroRef.current?.style.setProperty('--my', '0')
+  }
 
   // ================= WORK TAB (Projects / Designs / Videos) =================
   type WorkTab = 'projects' | 'designs' | 'videos'
@@ -1525,7 +1651,11 @@ const designs = [
   }, [lightboxIndex, designsShown.length])
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 scroll-smooth">
+    <div
+      data-theme={isDark ? 'dark' : 'light'}
+      className={`min-h-screen scroll-smooth transition-colors duration-500 ${isDark ? 'bg-[#111] text-gray-100' : 'bg-white text-gray-900'}`}
+    >
+      <style>{PAGE_STYLES}</style>
 
       {/* ================= NAVIGATION (pill) ================= */}
       <nav className="fixed top-4 lg:top-9 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-32px)] max-w-[1100px]">
@@ -1551,7 +1681,9 @@ const designs = [
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  className={`text-sm transition-colors duration-200 ${
+                  className={`relative text-sm py-1 transition-colors duration-200 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-[1.5px] after:rounded-full after:bg-current after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                    isActive ? 'after:scale-x-100' : 'after:scale-x-0'
+                  } ${
                     isActive
                       ? isDark ? 'text-white' : 'text-gray-900'
                       : isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
@@ -1563,17 +1695,25 @@ const designs = [
             })}
           </div>
 
-          <div className="flex items-center gap-2 md:contents">
+          <div className="flex items-center gap-2">
             {/* Light / dark toggle */}
             <button
               type="button"
               onClick={() => setIsDark((d) => !d)}
-              aria-label="Toggle theme"
-              className={`w-10 h-8 rounded-lg border flex items-center justify-center transition-colors duration-300 ${
-                isDark ? 'bg-[#111] border-white/10 text-white' : 'bg-[#fbf8f7] border-gray-200 text-gray-900'
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+              className={`group relative w-10 h-10 rounded-full border flex items-center justify-center overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 ${
+                isDark ? 'bg-[#111] border-white/15 text-white hover:border-white/40' : 'bg-white border-gray-200 text-gray-900 hover:border-gray-400'
               }`}
             >
-              {isDark ? <Moon size={14} /> : <Sun size={14} />}
+              <Sun
+                size={16}
+                className={`absolute transition-all duration-500 ${isDark ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}
+              />
+              <Moon
+                size={16}
+                className={`absolute transition-all duration-500 ${isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`}
+              />
             </button>
 
             {/* Hire me */}
@@ -1653,6 +1793,9 @@ const designs = [
       `}</style>
       <section
         id="home"
+        ref={heroRef}
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={handleHeroMouseLeave}
         className={`relative overflow-hidden transition-colors duration-300 ${
           isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
         }`}
@@ -1668,6 +1811,26 @@ const designs = [
             WebkitMaskImage: 'radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%)',
           }}
         />
+
+        {/* Spotlight that follows the mouse */}
+        <div
+          aria-hidden="true"
+          className="hidden md:block absolute inset-0 pointer-events-none z-[1]"
+          style={{ background: `radial-gradient(520px circle at var(--px, 50%) var(--py, 40%), ${isDark ? 'rgba(200,49,111,.16)' : 'rgba(200,49,111,.09)'}, transparent 60%)` }}
+        />
+
+        {/* Twinkling sparkles */}
+        <div aria-hidden="true" className="hidden md:block absolute inset-0 pointer-events-none z-[2]">
+          {[
+            { pos: 'left-[8%] top-[32%]', size: 14, color: 'text-pink-400', delay: '0s' },
+            { pos: 'left-[22%] top-[78%]', size: 10, color: 'text-purple-400', delay: '1.1s' },
+            { pos: 'right-[10%] top-[30%]', size: 12, color: 'text-purple-400', delay: '.6s' },
+            { pos: 'right-[24%] top-[86%]', size: 16, color: 'text-pink-400', delay: '1.8s' },
+            { pos: 'left-[46%] top-[20%]', size: 9, color: 'text-pink-300', delay: '2.4s' },
+          ].map((s, i) => (
+            <Sparkle key={i} size={s.size} fill="currentColor" strokeWidth={0} className={`h-twinkle absolute ${s.pos} ${s.color}`} style={{ animationDelay: s.delay }} />
+          ))}
+        </div>
 
         <div className="relative flex flex-col pt-24 xl:pt-[40px] xl:min-h-screen">
 
@@ -1700,6 +1863,10 @@ const designs = [
 
           {/* ---------- PHOTO with glow ---------- */}
           <div className="relative z-[2] mx-auto w-[min(420px,88vw)] aspect-[3/4] -mt-[6vw] pointer-events-none xl:absolute xl:mt-0 xl:top-[118px] xl:bottom-0 xl:left-1/2 xl:-translate-x-1/2 xl:w-[52vw] xl:aspect-auto">
+            <div
+              className="h-parallax relative w-full h-full"
+              style={{ transform: 'translate3d(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * -8px), 0)' }}
+            >
             {/* glow behind */}
             <div
               aria-hidden="true"
@@ -1716,10 +1883,14 @@ const designs = [
                 className="object-contain object-[center_bottom]"
               />
             </div>
+            </div>
           </div>
 
           {/* ---------- FLOATING CHIPS around the photo (desktop) ---------- */}
-          <div className="hidden xl:block absolute inset-0 z-[3] pointer-events-none">
+          <div
+            className="h-parallax hidden xl:block absolute inset-0 z-[3] pointer-events-none"
+            style={{ transform: 'translate3d(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 12px), 0)' }}
+          >
             <div className="h-up absolute right-[calc(50%+14vw)] top-[50%]" style={{ animationDelay: '0.9s' }}>
               <div
                 className={`h-float flex items-center gap-2.5 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-md border ${
@@ -1807,7 +1978,7 @@ const designs = [
               >
                 Web Designer
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">&amp; Developer</span>
+                <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">&amp; Developer</span>
               </h2>
 
               <p className="h-up text-base sm:text-[17px] text-gray-500 leading-relaxed" style={{ animationDelay: '0.65s' }}>
@@ -1818,10 +1989,11 @@ const designs = [
                 <a
                   href="#work"
                   onClick={(e) => handleScrollTo(e, '#work')}
-                  className={`group flex-1 sm:flex-none sm:px-7 h-14 rounded-full inline-flex items-center justify-center gap-2 text-[15px] font-semibold shadow-lg hover:-translate-y-1 hover:shadow-xl active:scale-95 transition-all duration-300 ${
+                  className={`group relative overflow-hidden flex-1 sm:flex-none sm:px-7 h-14 rounded-full inline-flex items-center justify-center gap-2 text-[15px] font-semibold shadow-lg hover:-translate-y-1 hover:shadow-xl active:scale-95 transition-all duration-300 ${
                     isDark ? 'bg-white text-gray-900' : 'bg-[#1c1c1c] text-white'
                   }`}
                 >
+                  <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-white/25 skew-x-[-20deg] -translate-x-full group-hover:translate-x-[420%] transition-transform duration-700 ease-out" />
                   My Work
                   <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
@@ -1901,12 +2073,14 @@ const designs = [
               {/* mini stats */}
               <div className="h-up flex gap-8 mt-6" style={{ animationDelay: '0.9s' }}>
                 {[
-                  { value: `${projects.length}+`, label: 'Projects' },
-                  { value: `${designs.length}+`, label: 'Designs' },
-                  { value: '4+', label: 'Roles' },
+                  { value: projects.length, label: 'Projects' },
+                  { value: designs.length, label: 'Designs' },
+                  { value: 4, label: 'Roles' },
                 ].map((stat) => (
-                  <div key={stat.label}>
-                    <p className="text-3xl font-bold tracking-tight">{stat.value}</p>
+                  <div key={stat.label} className="group cursor-default">
+                    <p className="text-3xl font-bold tracking-tight transition-colors duration-300 group-hover:text-[#c8316f]">
+                      <CountUp end={stat.value} suffix="+" duration={1600} />
+                    </p>
                     <p className="text-xs uppercase tracking-wider text-gray-500 mt-1">{stat.label}</p>
                   </div>
                 ))}
@@ -1944,7 +2118,7 @@ const designs = [
                 <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
                   {['Figma', 'Adobe XD', 'Canva', 'Wix', 'Shopify', 'HTML', 'CSS', 'JavaScript', 'Next.js', 'Tailwind CSS'].map((tool) => (
                     <span key={tool} className="flex items-center">
-                      <span className="px-8 text-base md:text-lg whitespace-nowrap">{tool}</span>
+                      <span className="px-8 text-base md:text-lg whitespace-nowrap transition-colors duration-200 hover:text-[#ff7aac]">{tool}</span>
                       <span className="text-white/60">·</span>
                     </span>
                   ))}
@@ -1965,39 +2139,66 @@ const designs = [
         />
 
         {/* id="about" lives here so clicking About lands below the tools strip */}
-        <div id="about" className="relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch">
+        <div
+          id="about"
+          ref={aboutReveal.ref}
+          className={`ab ${aboutReveal.isVisible ? 'in' : ''} relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch`}
+        >
+          {/* soft color blobs */}
+          <div aria-hidden="true" className="ab-blob absolute -left-24 top-24 w-72 h-72 rounded-full blur-3xl opacity-40 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(200,49,111,.35), transparent 70%)' }} />
+          <div aria-hidden="true" className="ab-blob absolute right-0 bottom-10 w-80 h-80 rounded-full blur-3xl opacity-30 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(147,51,234,.35), transparent 70%)', animationDelay: '-4s' }} />
 
           {/* ---------- LEFT: STORY ---------- */}
-          <Reveal direction="left" className="min-w-0 pt-16 md:pt-24 lg:pb-24">
-            <p className="text-sm md:text-base font-semibold tracking-wide mb-8">
-              <span className="text-[#c8316f] font-bold">01 /</span>{' '}
-              <span className={isDark ? 'text-gray-200' : 'text-gray-900'}>ABOUT ME</span>
+          <div className="relative min-w-0 pt-16 md:pt-24 lg:pb-24">
+            <p className="ab-fade text-sm md:text-base font-semibold tracking-wide mb-8 inline-flex items-center gap-3" style={{ animationDelay: '.05s' }}>
+              <span className="ab-line h-px w-10 bg-[#c8316f]" />
+              <span>
+                <span className="text-[#c8316f] font-bold">01 /</span>{' '}
+                <span className={isDark ? 'text-gray-200' : 'text-gray-900'}>ABOUT ME</span>
+              </span>
             </p>
 
+            {/* Headline: words rise in one by one */}
             <h2 className="font-extrabold tracking-tight leading-[1.08] text-4xl sm:text-5xl xl:text-[58px]">
-              <span className={isDark ? 'text-white' : 'text-gray-900'}>Hi, I&apos;m Aicelle.</span>
-              <br />
-              <span className="text-[#c8316f]">I turn ideas into clean, easy-to-use digital experiences.</span>
+              {[
+                { text: "Hi, I'm Aicelle.", cls: isDark ? 'text-white' : 'text-gray-900' },
+                { text: 'I turn ideas into clean, easy-to-use digital experiences.', cls: 'text-[#c8316f]' },
+              ].map((line, li) => (
+                <span key={li} className={`block ${line.cls}`}>
+                  {line.text.split(' ').map((word, wi) => (
+                    <span key={wi} className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
+                      <span className="ab-word inline-block" style={{ animationDelay: `${0.15 + li * 0.25 + wi * 0.06}s` }}>
+                        {word}&nbsp;
+                      </span>
+                    </span>
+                  ))}
+                </span>
+              ))}
             </h2>
 
             <div className={`mt-10 space-y-5 text-base md:text-[17px] leading-snug max-w-xl ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
-              <p>
-                With a background in Information Technology, I bring design and development together
+              <p className="ab-fade" style={{ animationDelay: '.9s' }}>
+                With a background in Information Technology, I bring{' '}
+                <mark className="ab-hl" style={{ animationDelay: '1.4s' }}>design and development</mark> together
                 to create intuitive, responsive websites that work on every screen.
               </p>
-              <p>
+              <p className="ab-fade" style={{ animationDelay: '1.05s' }}>
                 I work on client websites, web and mobile interfaces, and social media content—from
                 planning and copywriting to design, video editing, and scheduling. My goal is to make
-                every brand&apos;s digital presence clear, consistent, and engaging.
+                every brand&apos;s digital presence{' '}
+                <mark className="ab-hl" style={{ animationDelay: '1.6s' }}>clear, consistent, and engaging.</mark>
               </p>
             </div>
 
             {/* Quick facts card */}
             <div
-              className={`mt-12 max-w-xl rounded-[1.75rem] px-6 sm:px-14 py-6 text-white grid grid-cols-1 sm:grid-cols-2 ${
+              className={`ab-fade group/card relative mt-12 max-w-xl rounded-[1.75rem] px-6 sm:px-14 py-6 text-white grid grid-cols-1 sm:grid-cols-2 overflow-hidden transition-shadow duration-500 hover:shadow-[0_30px_70px_-25px_rgba(200,49,111,.55)] ${
                 isDark ? 'bg-[#1c1c1c] border border-white/10' : 'bg-[#2b2b2b]'
               }`}
+              style={{ animationDelay: '1.2s' }}
             >
+              {/* moving shine on hover */}
+              <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg] -translate-x-full group-hover/card:translate-x-[450%] transition-transform duration-[1400ms] ease-out" />
               {[
                 { icon: MapPin, label: 'Based in', value: 'Philippines · Open to remote' },
                 { icon: GraduationCap, label: 'Education', value: 'BS Information Technology' },
@@ -2008,11 +2209,14 @@ const designs = [
                 return (
                   <div
                     key={fact.label}
-                    className={`flex items-center gap-3 py-6 sm:px-6 border-white/15 ${i < 3 ? 'border-b' : ''} ${
+                    className={`ab-fade group/fact relative flex items-center gap-3 py-6 sm:px-6 border-white/15 ${i < 3 ? 'border-b' : ''} ${
                       i >= 2 ? 'sm:border-b-0' : ''
                     } ${i % 2 === 0 ? 'sm:border-r' : ''}`}
+                    style={{ animationDelay: `${1.35 + i * 0.1}s` }}
                   >
-                    <FactIcon size={20} className="shrink-0" />
+                    <span className="w-9 h-9 shrink-0 rounded-xl bg-white/5 grid place-items-center transition-all duration-300 group-hover/fact:bg-[#c8316f] group-hover/fact:-rotate-6 group-hover/fact:scale-110">
+                      <FactIcon size={18} />
+                    </span>
                     <div className="min-w-0">
                       <p className="text-[9px] font-semibold uppercase tracking-wider text-white/70">{fact.label}</p>
                       <p className="text-sm font-semibold">{fact.value}</p>
@@ -2021,33 +2225,38 @@ const designs = [
                 )
               })}
             </div>
-          </Reveal>
+          </div>
 
           {/* ---------- RIGHT: PHOTO + CALLOUTS ---------- */}
-          <Reveal direction="right" className="relative min-w-0 min-h-[520px] sm:min-h-[640px] lg:min-h-0">
-            {/* Big "CREATE." behind the photo */}
+          <div className="relative min-w-0 min-h-[520px] sm:min-h-[640px] lg:min-h-0">
+            {/* Big "CREATE." behind the photo — letters drop in */}
             <span
               aria-hidden="true"
               className={`absolute top-8 md:top-12 right-0 select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
                 isDark ? 'text-white/10' : 'text-[#dcdcdc]'
               }`}
             >
-              CREATE.
+              {'CREATE.'.split('').map((ch, i) => (
+                <span key={i} className="ab-letter inline-block" style={{ animationDelay: `${0.1 + i * 0.07}s` }}>
+                  {ch}
+                </span>
+              ))}
             </span>
 
-            {/* Photo — swap the src for your new black & white photo */}
-            {/* mix-blend-multiply hides the photo's white background so the grid shows through */}
-            <div className="absolute bottom-0 top-[4%] left-1/2 -translate-x-1/2 w-full lg:w-[120%]">
-              <Image
-                src="/aicellewchair.png"
-                alt="Aicelle Rosales"
-                fill
-                sizes="(max-width: 1024px) 100vw, 65vw"
-                className={`object-contain object-bottom grayscale ${isDark ? '' : 'mix-blend-multiply'}`}
-              />
+            {/* Photo — mix-blend-multiply hides the white background in light mode */}
+            <div className="ab-photo absolute bottom-0 top-[4%] left-1/2 w-full lg:w-[120%]" style={{ animationDelay: '.3s' }}>
+              <div className="ab-breathe relative w-full h-full">
+                <Image
+                  src="/aicellewchair.png"
+                  alt="Aicelle Rosales"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 65vw"
+                  className={`object-contain object-bottom grayscale ${isDark ? '' : 'mix-blend-multiply'}`}
+                />
+              </div>
             </div>
 
-            {/* Callout labels (desktop / tablet) */}
+            {/* Callout labels (desktop / tablet) — line draws in, dot pulses */}
             <div className="hidden sm:block absolute inset-0 pointer-events-none text-[#c8316f] text-xs md:text-[13px] font-semibold uppercase tracking-wide leading-tight">
               {[
                 { label: ['UX/UI', 'Design'], pos: 'left-[4%] top-[44%]', side: 'left' },
@@ -2055,58 +2264,70 @@ const designs = [
                 { label: ['Graphic', 'Design'], pos: 'left-0 top-[72%]', side: 'left' },
                 { label: ['Video', 'Editing'], pos: 'right-[4%] top-[68%]', side: 'right' },
                 { label: ['Content Planning', '& Copywriting'], pos: 'right-0 top-[88%]', side: 'right' },
-              ].map((c) => (
-                <div key={c.label.join(' ')} className={`absolute flex items-center gap-1 ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}>
-                  <span>
-                    {c.label[0]}
-                    <br />
-                    {c.label[1]}
-                  </span>
-                  <svg
-                    width="48"
-                    height="22"
-                    viewBox="0 0 48 22"
-                    aria-hidden="true"
-                    className={`shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-800'} ${c.side === 'right' ? '-scale-x-100' : ''}`}
+              ].map((c, i) => {
+                const d = 1 + i * 0.18
+                return (
+                  <div
+                    key={c.label.join(' ')}
+                    className={`ab-callout pointer-events-auto group/cl absolute flex items-center gap-1 cursor-default ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}
                   >
-                    <path d="M0 6 H26 L42 16" fill="none" stroke="currentColor" strokeWidth="1" />
-                    <circle cx="44" cy="17" r="2.5" fill="none" stroke="currentColor" strokeWidth="1" />
-                  </svg>
-                </div>
-              ))}
+                    <span className="ab-fade transition-transform duration-300 group-hover/cl:scale-110" style={{ animationDelay: `${d + 0.35}s` }}>
+                      {c.label[0]}
+                      <br />
+                      {c.label[1]}
+                    </span>
+                    <svg
+                      width="48"
+                      height="22"
+                      viewBox="0 0 48 22"
+                      aria-hidden="true"
+                      className={`shrink-0 overflow-visible ${isDark ? 'text-gray-400' : 'text-gray-800'} ${c.side === 'right' ? '-scale-x-100' : ''}`}
+                    >
+                      <path className="ab-draw" style={{ animationDelay: `${d}s` }} d="M0 6 H26 L42 16" fill="none" stroke="currentColor" strokeWidth="1" pathLength={1} />
+                      <circle className="ab-dot" style={{ animationDelay: `${d + 0.4}s` }} cx="44" cy="17" r="2.5" fill="none" stroke="currentColor" strokeWidth="1" />
+                      <circle className="ab-ping" style={{ animationDelay: `${d + 0.8}s` }} cx="44" cy="17" r="2.5" fill="none" stroke="#c8316f" strokeWidth="1" />
+                    </svg>
+                  </div>
+                )
+              })}
             </div>
 
             {/* Mobile: skills as chips */}
             <div className="sm:hidden absolute left-0 right-0 top-[22%] flex flex-wrap justify-center gap-2 px-2 z-[1]">
-              {['UX/UI Design', 'Web Development', 'Graphic Design', 'Video Editing', 'Content & Copywriting'].map((s) => (
+              {['UX/UI Design', 'Web Development', 'Graphic Design', 'Video Editing', 'Content & Copywriting'].map((s, i) => (
                 <span
                   key={s}
-                  className={`text-[10px] font-semibold uppercase tracking-wide text-[#c8316f] px-2.5 py-1 rounded-full border ${
+                  className={`ab-fade text-[10px] font-semibold uppercase tracking-wide text-[#c8316f] px-2.5 py-1 rounded-full border ${
                     isDark ? 'border-white/15 bg-white/5' : 'border-[#c8316f]/25 bg-white/80'
                   }`}
+                  style={{ animationDelay: `${0.8 + i * 0.1}s` }}
                 >
                   {s}
                 </span>
               ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ================= 3. WORK SECTION (Projects + Designs + Videos) ================= */}
-      <section id="work" className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <section id="work" className="dm max-w-6xl mx-auto px-6 py-20 md:py-28">
 
         {/* Header */}
         <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-end mb-12 md:mb-16">
-          <h2 className="md:col-span-7 text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
-            Selected
-            <br />
-            work
-          </h2>
-          <p className="md:col-span-5 text-gray-600 text-base md:text-lg leading-relaxed max-w-md">
+          <Reveal direction="left" className="md:col-span-7">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
+              Selected
+              <br />
+              <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">work</span>
+            </h2>
+          </Reveal>
+          <Reveal direction="right" delay={150} className="md:col-span-5">
+          <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-md">
             Websites, app interfaces, brand visuals and video edits. Most projects open as
             Figma files, so you can see the full design.
           </p>
+          </Reveal>
         </div>
 
         {/* Tabs */}
@@ -2128,11 +2349,11 @@ const designs = [
                 }`}
               >
                 {tab.label}
-                <sup className={`ml-1 text-sm font-semibold tabular-nums ${isActive ? 'text-purple-600' : 'text-gray-300'}`}>
+                <sup className={`work-tab-count ml-1 text-sm font-semibold tabular-nums ${isActive ? 'text-purple-600' : 'text-gray-300'}`}>
                   {tab.count}
                 </sup>
                 <span
-                  className={`absolute left-0 right-0 bottom-0 h-[3px] rounded-full bg-purple-600 origin-left transition-transform duration-300 ${
+                  className={`absolute left-0 right-0 bottom-0 h-[3px] rounded-full bg-gradient-to-r from-purple-600 to-pink-500 origin-left transition-transform duration-500 ease-out ${
                     isActive ? 'scale-x-100' : 'scale-x-0'
                   }`}
                 />
@@ -2143,7 +2364,7 @@ const designs = [
 
         {/* ==================== PROJECTS ==================== */}
         {workTab === 'projects' && (
-          <div key="projects" className="animate-fade-in grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+          <div key="projects" className="work-swap grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             {/* Category list (Advanced / Academic / Trial) */}
             <nav aria-label="Project categories" className="lg:col-span-3 min-w-0">
               <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
@@ -2158,8 +2379,8 @@ const designs = [
                           setActiveCategory('All')
                         }}
                         className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                          isActive ? 'bg-purple-50 text-purple-700 font-semibold' : 'text-gray-600 hover:bg-gray-50'
-                        }`}
+                          isActive ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
+                        } transition-all duration-300`}
                       >
                         <span>{projectGroupLabel[group]}</span>
                         <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
@@ -2173,7 +2394,7 @@ const designs = [
             {/* Projects in the selected category */}
             <div className="lg:col-span-9 min-w-0">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
-                <p className="text-gray-600 max-w-[55ch]">{projectGroupBlurbs[activeProjectGroup]}</p>
+                <p key={activeProjectGroup} className="work-blurb text-gray-600 max-w-[55ch]">{projectGroupBlurbs[activeProjectGroup]}</p>
 
                 {projectTypes.length > 1 && (
                   <div className="flex flex-wrap gap-1.5">
@@ -2184,8 +2405,8 @@ const designs = [
                           key={type}
                           onClick={() => setActiveCategory(type)}
                           className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                            isActive ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'
-                          }`}
+                            isActive ? 'bg-gray-900 text-white scale-105 shadow-md' : 'text-gray-500 hover:bg-gray-100'
+                          } transition-all duration-300 active:scale-95`}
                         >
                           {type === 'All' ? 'All types' : projectTypePlural[type] ?? type}
                         </button>
@@ -2199,7 +2420,7 @@ const designs = [
               {showFeatured && featuredProject && featuredProject.website && (() => {
                 const { name, note } = splitProjectTitle(featuredProject.title)
                 return (
-                  <article className="grid xl:grid-cols-12 gap-8 xl:gap-10 items-center mb-16 md:mb-20">
+                  <article key={`featured-${activeProjectGroup}`} className="work-card grid xl:grid-cols-12 gap-8 xl:gap-10 items-center mb-16 md:mb-20">
                     <a
                       href={featuredProject.website}
                       target="_blank"
@@ -2267,27 +2488,28 @@ const designs = [
               })()}
 
               {/* Project grid */}
-              <div className="grid md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-16">
-                {gridProjects.map((project) => {
+              <div key={`${activeProjectGroup}-${activeCategory}`} className="grid md:grid-cols-2 gap-x-8 gap-y-14 md:gap-y-16">
+                {gridProjects.map((project, i) => {
                   const { name, note } = splitProjectTitle(project.title)
                   const href = project.website ?? project.link
                   const isLive = Boolean(project.website)
                   return (
-                    <article key={project.title} className="group">
+                    <article key={project.title} className="work-card group" style={{ animationDelay: `${(showFeatured ? 120 : 0) + i * 90}ms` }}>
                       <a
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Open ${name}`}
-                        className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                        className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 shadow-sm transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_24px_50px_-20px_rgba(124,58,237,.45)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
                       >
                         <Image
                           src={project.image}
                           alt={`${name} preview`}
                           fill
                           sizes="(max-width: 768px) 100vw, 420px"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                         />
+                        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                           {isLive ? 'Visit site' : 'Open in Figma'}
                           <ArrowUpRight size={15} />
@@ -2324,7 +2546,7 @@ const designs = [
 
         {/* ==================== DESIGNS ==================== */}
         {workTab === 'designs' && (
-          <div key="designs" className="animate-fade-in grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+          <div key="designs" className="work-swap grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             {/* Category list */}
             <nav aria-label="Design categories" className="lg:col-span-3 min-w-0">
               <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
@@ -2339,8 +2561,8 @@ const designs = [
                           setActiveSubFolder(null)
                         }}
                         className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                          isActive ? 'bg-purple-50 text-purple-700 font-semibold' : 'text-gray-600 hover:bg-gray-50'
-                        }`}
+                          isActive ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
+                        } transition-all duration-300`}
                       >
                         <span>{designCategoryLabel[category] ?? category}</span>
                         <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
@@ -2354,7 +2576,7 @@ const designs = [
             {/* Gallery */}
             <div className="lg:col-span-9 min-w-0">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                <p className="text-gray-600 max-w-[55ch]">{designCategoryBlurbs[currentDesignCategory]}</p>
+                <p key={currentDesignCategory} className="work-blurb text-gray-600 max-w-[55ch]">{designCategoryBlurbs[currentDesignCategory]}</p>
 
                 {designSets.length > 1 && (
                   <div className="flex flex-wrap gap-1.5">
@@ -2365,8 +2587,8 @@ const designs = [
                           key={set ?? 'all'}
                           onClick={() => setActiveSubFolder(set)}
                           className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                            isActive ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'
-                          }`}
+                            isActive ? 'bg-gray-900 text-white scale-105 shadow-md' : 'text-gray-500 hover:bg-gray-100'
+                          } transition-all duration-300 active:scale-95`}
                         >
                           {set ?? 'All sets'}
                         </button>
@@ -2376,14 +2598,15 @@ const designs = [
                 )}
               </div>
 
-              <div className="columns-2 md:columns-3 gap-4">
+              <div key={`${currentDesignCategory}-${activeSubFolder ?? 'all'}`} className="columns-2 md:columns-3 gap-4">
                 {designsShown.map((design, index) => (
                   <button
                     key={design.image}
                     type="button"
                     onClick={() => setLightboxIndex(index)}
                     aria-label={`View ${designCategoryLabel[currentDesignCategory] ?? currentDesignCategory} design ${index + 1}`}
-                    className="group mb-4 block w-full break-inside-avoid rounded-xl overflow-hidden bg-gray-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                    style={{ animationDelay: `${Math.min(index, 14) * 55}ms` }}
+                    className="work-card group relative mb-4 block w-full break-inside-avoid rounded-xl overflow-hidden bg-gray-100 transition-shadow duration-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
                   >
                     <Image
                       src={design.image}
@@ -2391,8 +2614,13 @@ const designs = [
                       width={600}
                       height={600}
                       sizes="(max-width: 768px) 50vw, 300px"
-                      className="w-full h-auto transition-opacity duration-300 group-hover:opacity-90"
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.05]"
                     />
+                    <span aria-hidden="true" className="absolute inset-0 grid place-items-center bg-black/0 group-hover:bg-black/30 transition-colors duration-300">
+                      <span className="w-11 h-11 rounded-full bg-white/90 text-gray-900 grid place-items-center scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300">
+                        <Search size={18} />
+                      </span>
+                    </span>
                   </button>
                 ))}
               </div>
@@ -2402,7 +2630,7 @@ const designs = [
 
         {/* ==================== VIDEOS ==================== */}
         {workTab === 'videos' && (
-          <div key="videos" className="animate-fade-in">
+          <div key="videos" className="work-swap">
             {videos.length === 0 ? (
               <div className="rounded-3xl border-2 border-dashed border-gray-200 px-8 py-16 md:py-20 text-center">
                 <Film size={32} className="mx-auto text-purple-300 mb-4" />
@@ -2414,7 +2642,7 @@ const designs = [
                 {videos.map((video, i) => {
                   const thumb = getVideoThumbnail(video)
                   return (
-                    <article key={video.title + i} className="group">
+                    <article key={video.title + i} className="work-card group" style={{ animationDelay: `${i * 90}ms` }}>
                       <button
                         type="button"
                         onClick={() => setSelectedVideo(video)}
@@ -2453,7 +2681,7 @@ const designs = [
       </section>
 
       {/* ================= 4. SKILLS SECTION ================= */}
-      <section id="skills" className="bg-gray-50 py-20 md:py-32 overflow-hidden relative">
+      <section id="skills" className={`dm py-20 md:py-32 overflow-hidden relative transition-colors duration-500 ${isDark ? 'bg-[#141414]' : 'bg-gray-50'}`}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-6xl mx-auto px-6">
@@ -2483,7 +2711,7 @@ const designs = [
       </section>
 
       {/* ================= 5. EXPERIENCE SECTION ================= */}
-      <section id="experience" className="bg-white py-20 md:py-32">
+      <section id="experience" className={`dm py-20 md:py-32 transition-colors duration-500 ${isDark ? 'bg-[#111]' : 'bg-white'}`}>
         <div className="max-w-6xl mx-auto px-6">
 
           {/* Section Header */}
@@ -2938,7 +3166,7 @@ const designs = [
       </section>
 
       {/* ================= 6. CERTIFICATES SECTION ================= */}
-      <section id="certificates" className="bg-gradient-to-b from-gray-50 via-pink-50/30 to-white py-20 md:py-32 relative overflow-hidden">
+      <section id="certificates" className={`dm py-20 md:py-32 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-b from-[#141414] via-[#1a1116] to-[#111]' : 'bg-gradient-to-b from-gray-50 via-pink-50/30 to-white'}`}>
         <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-100/30 rounded-full blur-3xl -z-0" />
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-100/30 rounded-full blur-3xl -z-0" />
 
@@ -3139,7 +3367,7 @@ const designs = [
       {/* Certificate Modal View */}
       {selectedCert && (
         <div
-          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
+          className="dm fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in"
           onClick={() => setSelectedCert(null)}
         >
           <div
