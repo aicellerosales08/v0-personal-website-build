@@ -2331,7 +2331,7 @@ const designs = [
         </div>
 
         {/* Tabs */}
-        <div role="tablist" aria-label="Type of work" className="flex items-end gap-x-6 sm:gap-x-10 overflow-x-auto border-b border-gray-200 mb-10">
+        <div role="tablist" aria-label="Type of work" className="flex items-end gap-x-6 sm:gap-x-10 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden border-b border-gray-200 mb-10">
           {[
             { key: 'projects' as const, label: 'Projects', count: projects.length },
             { key: 'designs' as const, label: 'Designs', count: designs.length },
@@ -2367,7 +2367,7 @@ const designs = [
           <div key="projects" className="work-swap grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             {/* Category list (Advanced / Academic / Trial) */}
             <nav aria-label="Project categories" className="lg:col-span-3 min-w-0">
-              <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
+              <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:pr-2 lg:sticky lg:top-28">
                 {projectGroupList.map((group) => {
                   const isActive = activeProjectGroup === group
                   const count = projects.filter((p) => p.group === group).length
@@ -2549,7 +2549,7 @@ const designs = [
           <div key="designs" className="work-swap grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
             {/* Category list */}
             <nav aria-label="Design categories" className="lg:col-span-3 min-w-0">
-              <ul className="flex lg:flex-col gap-1 overflow-x-auto -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:sticky lg:top-28">
+              <ul className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0 lg:pr-2 lg:sticky lg:top-28">
                 {designCategoryList.map((category) => {
                   const isActive = currentDesignCategory === category
                   const count = designs.filter((d) => d.category === category).length
