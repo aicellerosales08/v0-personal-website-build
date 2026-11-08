@@ -836,7 +836,7 @@ function WelcomeGate() {
                   <span className="relative">Explore My Portfolio</span>
                   <ArrowRight size={16} className="relative transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
-                <p className="mt-4 inline-flex items-center gap-1.5 text-[11px] text-white/45">
+                <p className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-white/45">
                   <Music size={12} /> Best experienced with sound on
                 </p>
               </div>
