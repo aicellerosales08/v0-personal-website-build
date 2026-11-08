@@ -2232,7 +2232,7 @@ const designs = [
             {/* Big "CREATE." behind the photo — letters drop in */}
             <span
               aria-hidden="true"
-              className={`absolute top-8 md:top-12 right-0 select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
+              className={`absolute top-8 md:top-12 right-0 whitespace-nowrap select-none font-black leading-none tracking-[-0.04em] text-[24vw] lg:text-[13vw] xl:text-[190px] ${
                 isDark ? 'text-white/10' : 'text-[#dcdcdc]'
               }`}
             >
