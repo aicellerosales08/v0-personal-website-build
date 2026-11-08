@@ -928,6 +928,14 @@ const PAGE_STYLES = String.raw`
 .work-tab-count { display: inline-block; transition: transform .3s; }
 button:hover > .work-tab-count { transform: translateY(-3px); }
 
+/* ---------- nav click: section entrance ---------- */
+/* background blobs (.absolute) are left alone so their positioning stays intact */
+.pf-hide > :not(.absolute) { opacity: 0; }
+.pf-replay > :not(.absolute) { animation: pf-rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.pf-replay > :not(.absolute):nth-child(2) { animation-delay: .12s; }
+.pf-replay > :not(.absolute):nth-child(3) { animation-delay: .24s; }
+.pf-replay > :not(.absolute):nth-child(n+4) { animation-delay: .36s; }
+
 /* ---------- generic section heading reveal ---------- */
 .pf-rise { animation: pf-rise .7s cubic-bezier(.2,.7,.2,1) both; }
 
@@ -1093,7 +1101,47 @@ export default function Portfolio() {
     const elem = document.getElementById(targetId)
 
     if (elem) {
+      animateOnArrival(elem, targetId)
       elem.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  // ================= REPLAY SECTION ANIMATION ON NAV CLICK =================
+  // Hides the section while scrolling, then plays its entrance animation once you arrive.
+  const [heroKey, setHeroKey] = useState(0)
+  const animateOnArrival = (elem: HTMLElement, targetId: string) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    // 1) hide right away
+    if (targetId === 'about') elem.classList.remove('in')
+    else if (targetId !== 'home') {
+      elem.classList.remove('pf-replay')
+      elem.classList.add('pf-hide')
+    }
+
+    // 2) play when the smooth scroll ends
+    let played = false
+    const play = () => {
+      if (played) return
+      played = true
+      window.removeEventListener('scrollend', play)
+      if (targetId === 'home') {
+        setHeroKey((k) => k + 1) // re-mounts the hero so all its animations run again
+        return
+      }
+      void elem.offsetWidth // restart CSS animations
+      if (targetId === 'about') elem.classList.add('in')
+      else {
+        elem.classList.remove('pf-hide')
+        elem.classList.add('pf-replay')
+      }
+    }
+    const alreadyThere = Math.abs(elem.getBoundingClientRect().top) < 8
+    if (alreadyThere) {
+      setTimeout(play, 60)
+    } else {
+      window.addEventListener('scrollend', play, { once: true })
+      setTimeout(play, 1000) // fallback for browsers without scrollend
     }
   }
 
@@ -1832,7 +1880,7 @@ const designs = [
           ))}
         </div>
 
-        <div className="relative flex flex-col pt-24 xl:pt-[40px] xl:min-h-screen">
+        <div key={heroKey} className="relative flex flex-col pt-24 xl:pt-[40px] xl:min-h-screen">
 
           {/* ---------- BIG MOVING TEXT: CREATIVE ✦ DESIGN ✦ ... ---------- */}
           <div aria-hidden="true" className="hero-marquee-wrap relative z-[1] w-full overflow-hidden select-none h-text-in" style={{ animationDelay: '0.05s' }}>
