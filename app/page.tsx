@@ -1716,7 +1716,6 @@ const designs = [
 
       {/* ================= 2. ABOUT SECTION ================= */}
       <section
-        id="about"
         className={`relative overflow-hidden transition-colors duration-300 ${
           isDark ? 'bg-[#111] text-white' : 'bg-[#fbf8f7] text-gray-900'
         }`}
@@ -1749,7 +1748,8 @@ const designs = [
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch">
+        {/* id="about" lives here so clicking About lands below the tools strip */}
+        <div id="about" className="relative max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-stretch">
 
           {/* ---------- LEFT: STORY ---------- */}
           <Reveal direction="left" className="min-w-0 pt-16 md:pt-24 lg:pb-24">
@@ -1820,13 +1820,13 @@ const designs = [
             </span>
 
             {/* Photo — swap the src for your new black & white photo */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[82%] sm:w-[70%] lg:w-[78%] h-[88%]">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full lg:w-[115%] h-[92%]">
               <Image
                 src="/aicellewchair.png"
                 alt="Aicelle Rosales"
                 fill
-                sizes="(max-width: 1024px) 80vw, 40vw"
-                className="object-contain object-bottom grayscale"
+                sizes="(max-width: 1024px) 100vw, 60vw"
+                className="object-contain object-bottom grayscale scale-[1.3] origin-bottom"
               />
             </div>
 
@@ -1837,10 +1837,10 @@ const designs = [
                 { label: ['Web', 'Development'], pos: 'right-[2%] top-[38%]', side: 'right' },
                 { label: ['Graphic', 'Design'], pos: 'left-0 top-[72%]', side: 'left' },
                 { label: ['Video', 'Editing'], pos: 'right-[4%] top-[68%]', side: 'right' },
-                { label: ['Content Planning', '& Copywriting'], pos: 'right-0 top-[88%]', side: 'right' },
+                { label: ['Content Planning', '& Copywriting'], pos: '-right-4 top-[90%]', side: 'right' },
               ].map((c) => (
                 <div key={c.label.join(' ')} className={`absolute flex items-center gap-1 ${c.pos} ${c.side === 'right' ? 'flex-row-reverse' : ''}`}>
-                  <span>
+                  <span className={`px-1 rounded ${isDark ? 'bg-[#111]/70' : 'bg-[#fbf8f7]/80'}`}>
                     {c.label[0]}
                     <br />
                     {c.label[1]}
