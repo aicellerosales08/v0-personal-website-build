@@ -1822,7 +1822,7 @@ const designs = [
             {/* Photo — swap the src for your new black & white photo */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[82%] sm:w-[70%] lg:w-[78%] h-[88%]">
               <Image
-                src="/PICTURE(HOME).png"
+                src="/1.png"
                 alt="Aicelle Rosales"
                 fill
                 sizes="(max-width: 1024px) 80vw, 40vw"
