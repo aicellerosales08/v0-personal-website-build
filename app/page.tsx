@@ -616,8 +616,8 @@ function ChatWidget() {
   return (
     <div className="dm fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
       {isOpen && (
-        <div className="w-[92vw] max-w-sm h-[70vh] max-h-[520px] bg-white rounded-3xl shadow-2xl border border-purple-100 flex flex-col overflow-hidden animate-slide-in-up">
-          <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 px-5 py-4 flex items-center justify-between overflow-hidden">
+        <div className="w-[92vw] max-w-sm h-[70vh] max-h-[520px] bg-white rounded-3xl shadow-2xl border border-[#c8316f]/25 flex flex-col overflow-hidden animate-slide-in-up">
+          <div className="relative bg-[#c8316f] px-5 py-4 flex items-center justify-between overflow-hidden">
             <Sparkle size={14} fill="currentColor" className="absolute top-2 right-16 text-white/30 animate-float" />
             <Sparkle size={10} fill="currentColor" className="absolute bottom-2 right-24 text-white/20 animate-float" style={{ animationDelay: '1s' }} />
 
@@ -645,7 +645,7 @@ function ChatWidget() {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-purple-50/40 to-pink-50/20">
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#c8316f]/5">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -654,7 +654,7 @@ function ChatWidget() {
                 <div
                   className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-br-md'
+                      ? 'bg-[#c8316f] text-white rounded-br-md'
                       : 'bg-white text-gray-700 border border-gray-100 rounded-bl-md'
                   }`}
                 >
@@ -664,7 +664,7 @@ function ChatWidget() {
                 {msg.action && (
                   <button
                     onClick={() => handleActionClick(msg.action!.href)}
-                    className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 px-3.5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 animate-slide-in-up"
+                    className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#c8316f] px-3.5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 animate-slide-in-up"
                   >
                     {msg.action.label}
                     <ExternalLink size={12} />
@@ -676,9 +676,9 @@ function ChatWidget() {
             {isTyping && (
               <div className="flex justify-start animate-fade-in">
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm inline-flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c8316f]/50 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c8316f]/50 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c8316f]/50 animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -692,7 +692,7 @@ function ChatWidget() {
                   key={q}
                   onClick={() => sendMessage(q)}
                   style={{ animationDelay: `${i * 80}ms` }}
-                  className="text-[11px] font-semibold text-purple-600 bg-purple-50 hover:bg-purple-100 hover:scale-105 active:scale-95 px-3 py-1.5 rounded-full transition-all duration-200 animate-fade-in"
+                  className="text-[11px] font-semibold text-[#c8316f] bg-[#c8316f]/10 hover:bg-[#c8316f]/15 hover:scale-105 active:scale-95 px-3 py-1.5 rounded-full transition-all duration-200 animate-fade-in"
                 >
                   {q}
                 </button>
@@ -712,12 +712,12 @@ function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask something about Aicelle..."
-              className="flex-1 text-sm px-4 py-2.5 rounded-full bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300 transition-all duration-200"
+              className="flex-1 text-sm px-4 py-2.5 rounded-full bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#c8316f]/40 transition-all duration-200"
             />
             <button
               type="submit"
               disabled={!input.trim()}
-              className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white flex items-center justify-center hover:scale-110 active:scale-90 disabled:opacity-40 disabled:hover:scale-100 transition-all duration-200"
+              className="w-10 h-10 shrink-0 rounded-full bg-[#c8316f] text-white flex items-center justify-center hover:scale-110 active:scale-90 disabled:opacity-40 disabled:hover:scale-100 transition-all duration-200"
               aria-label="Send"
             >
               <Send size={16} />
@@ -727,7 +727,7 @@ function ChatWidget() {
       )}
 
       {showTeaser && !isOpen && !hasOpenedOnce && (
-        <div className="mr-1 mb-1 bg-white rounded-2xl rounded-br-sm shadow-lg border border-purple-100 px-4 py-2.5 max-w-[220px] animate-slide-in-up relative">
+        <div className="mr-1 mb-1 bg-white rounded-2xl rounded-br-sm shadow-lg border border-[#c8316f]/25 px-4 py-2.5 max-w-[220px] animate-slide-in-up relative">
           <button
             onClick={() => setShowTeaser(false)}
             className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
@@ -743,10 +743,10 @@ function ChatWidget() {
 
       <button
         onClick={handleToggle}
-        className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all duration-300 group"
+        className="relative w-16 h-16 rounded-full bg-[#c8316f] shadow-xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all duration-300 group"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
-        {!isOpen && <span className="absolute inset-0 rounded-full bg-purple-400/50 blur-md animate-glow" />}
+        {!isOpen && <span className="absolute inset-0 rounded-full bg-[#c8316f]/50 blur-md animate-glow" />}
 
         <span className="relative">
           {isOpen ? (
@@ -758,8 +758,8 @@ function ChatWidget() {
 
         {!isOpen && !hasOpenedOnce && (
           <span className="absolute -top-1 -right-1 flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-300 opacity-75" />
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-pink-500 items-center justify-center text-[9px] font-bold">1</span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c8316f]/50 opacity-75" />
+            <span className="relative inline-flex rounded-full h-4 w-4 bg-[#c8316f] items-center justify-center text-[9px] font-bold">1</span>
           </span>
         )}
       </button>
@@ -856,7 +856,7 @@ function WelcomeGate() {
         @keyframes gate-out { to { opacity: 0; transform: scale(1.04); filter: blur(8px); } }
         @keyframes gate-bg-out { to { opacity: 0; backdrop-filter: blur(0); } }
         @keyframes gate-shine { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
-        @keyframes gate-ring { 0% { box-shadow: 0 0 0 0 rgba(236,72,153,.35); } 70% { box-shadow: 0 0 0 14px rgba(236,72,153,0); } 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); } }
+        @keyframes gate-ring { 0% { box-shadow: 0 0 0 0 rgba(200,49,111,.35); } 70% { box-shadow: 0 0 0 14px rgba(200,49,111,0); } 100% { box-shadow: 0 0 0 0 rgba(200,49,111,0); } }
         @keyframes eq { 0%,100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
         .gate-bg { animation: gate-bg-in .6s ease both; }
         .gate-bg.closing { animation: gate-bg-out .75s ease forwards; }
@@ -883,7 +883,7 @@ function WelcomeGate() {
             <div
               aria-hidden="true"
               className="absolute -top-32 left-1/2 -translate-x-1/2 w-[420px] h-[260px] rounded-full blur-3xl opacity-40"
-              style={{ background: 'radial-gradient(circle, rgba(200,49,111,.55), rgba(147,51,234,.25) 55%, transparent 75%)' }}
+              style={{ background: 'radial-gradient(circle, rgba(200,49,111,.55), rgba(200,49,111,.25) 55%, transparent 75%)' }}
             />
             <div
               aria-hidden="true"
@@ -896,8 +896,8 @@ function WelcomeGate() {
                 WebkitMaskImage: 'radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%)',
               }}
             />
-            <Sparkle aria-hidden="true" size={14} fill="currentColor" strokeWidth={0} className="absolute top-7 left-8 text-pink-400/70 animate-float" />
-            <Sparkle aria-hidden="true" size={10} fill="currentColor" strokeWidth={0} className="absolute bottom-10 right-10 text-purple-400/70 animate-float" style={{ animationDelay: '1s' }} />
+            <Sparkle aria-hidden="true" size={14} fill="currentColor" strokeWidth={0} className="absolute top-7 left-8 text-[#c8316f]/70 animate-float" />
+            <Sparkle aria-hidden="true" size={10} fill="currentColor" strokeWidth={0} className="absolute bottom-10 right-10 text-[#c8316f]/70 animate-float" style={{ animationDelay: '1s' }} />
 
             <div className="relative">
               {/* Logo */}
@@ -919,7 +919,7 @@ function WelcomeGate() {
                   A little creativity.
                 </span>
                 <span className="gate-item block text-[#bdbdbd]" style={{ animationDelay: '.75s' }}>
-                  A lot of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e0538d] to-[#c8316f]">purpose.</span>
+                  A lot of <span className="text-[#c8316f]">purpose.</span>
                 </span>
               </h2>
 
@@ -933,7 +933,7 @@ function WelcomeGate() {
                   type="button"
                   onClick={handleEnter}
                   autoFocus
-                  className="gate-btn group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border border-white/35 px-12 sm:px-20 py-4 text-sm sm:text-[15px] font-medium text-white transition-all duration-300 hover:bg-white hover:text-gray-900 hover:border-white focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] active:scale-[0.97]"
+                  className="gate-btn group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border border-white/35 px-12 sm:px-20 py-4 text-sm sm:text-[15px] font-medium text-white transition-all duration-300 hover:bg-white hover:text-gray-900 hover:border-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] active:scale-[0.97]"
                 >
                   <span aria-hidden="true" className="gate-btn-shine absolute inset-y-0 left-0 w-1/3 bg-white/25 -translate-x-[120%] skew-x-[-20deg]" />
                   <span className="relative">Explore My Portfolio</span>
@@ -964,7 +964,7 @@ function WelcomeGate() {
           {isPlaying ? (
             <span aria-hidden="true" className="flex items-end gap-[3px] h-4">
               {[0, 0.2, 0.4, 0.1].map((d, i) => (
-                <span key={i} className="eq-bar w-[3px] h-full rounded-full bg-gradient-to-t from-purple-400 to-pink-400" style={{ animationDelay: `${d}s` }} />
+                <span key={i} className="eq-bar w-[3px] h-full rounded-full bg-[#c8316f]" style={{ animationDelay: `${d}s` }} />
               ))}
             </span>
           ) : (
@@ -1004,7 +1004,7 @@ const PAGE_STYLES = String.raw`
 @keyframes pf-bob-sm { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
 /* ---------- HOME extras ---------- */
-.h-shimmer { background-size: 200% auto; animation: pf-shimmer 4s linear infinite; }
+.{ background-size: 200% auto; animation: pf-shimmer 4s linear infinite; }
 .h-twinkle { animation: pf-twinkle 3.2s ease-in-out infinite; }
 .h-parallax { transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; }
 
@@ -1076,17 +1076,11 @@ button:hover > .work-tab-count { transform: translateY(-3px); }
 [data-theme=dark] .dm .bg-white\/90 { background-color: rgba(26,26,26,.9); }
 [data-theme=dark] .dm .bg-gray-50 { background-color: #161616; }
 [data-theme=dark] .dm .bg-gray-100 { background-color: #232323; }
-[data-theme=dark] .dm .bg-purple-50 { background-color: rgba(168,85,247,.14); }
-[data-theme=dark] .dm .bg-pink-50 { background-color: rgba(236,72,153,.14); }
 [data-theme=dark] .dm .bg-gray-900 { background-color: #f4f4f4; }
 [data-theme=dark] .dm .bg-gray-900.text-white { color: #111; }
 [data-theme=dark] .dm .hover\:bg-gray-50:hover { background-color: #1f1f1f; }
 [data-theme=dark] .dm .hover\:bg-gray-100:hover { background-color: #262626; }
 [data-theme=dark] .dm .hover\:bg-gray-200:hover { background-color: #2e2e2e; }
-[data-theme=dark] .dm .hover\:bg-purple-50\/50:hover,
-[data-theme=dark] .dm .hover\:bg-purple-100:hover,
-[data-theme=dark] .dm .group:hover .group-hover\:bg-purple-100 { background-color: rgba(168,85,247,.22); }
-[data-theme=dark] .dm .hover\:bg-pink-100:hover { background-color: rgba(236,72,153,.22); }
 [data-theme=dark] .dm .group:hover .group-hover\:bg-white { background-color: #262626; }
 
 [data-theme=dark] .dm .text-gray-900 { color: #f5f5f5; }
@@ -1098,17 +1092,11 @@ button:hover > .work-tab-count { transform: translateY(-3px); }
 [data-theme=dark] .dm .text-gray-300 { color: #4f4f4f; }
 [data-theme=dark] .dm .hover\:text-gray-500:hover { color: #9b9b9b; }
 [data-theme=dark] .dm .hover\:text-gray-600:hover { color: #b5b5b5; }
-[data-theme=dark] .dm .text-purple-600,
-[data-theme=dark] .dm .hover\:text-purple-600:hover,
-[data-theme=dark] .dm .group:hover .group-hover\:text-purple-600 { color: #c084fc; }
-[data-theme=dark] .dm .text-purple-700 { color: #d8b4fe; }
 
 [data-theme=dark] .dm .border-gray-50,
 [data-theme=dark] .dm .border-gray-100,
 [data-theme=dark] .dm .border-gray-200 { border-color: rgba(255,255,255,.09); }
 [data-theme=dark] .dm .border-gray-300 { border-color: rgba(255,255,255,.2); }
-[data-theme=dark] .dm .border-purple-200,
-[data-theme=dark] .dm .hover\:border-purple-200:hover { border-color: rgba(192,132,252,.4); }
 [data-theme=dark] .dm .hover\:border-gray-900:hover { border-color: #f5f5f5; }
 [data-theme=dark] .dm .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,.4); }
 `
@@ -1992,11 +1980,11 @@ const designs = [
         {/* Twinkling sparkles */}
         <div aria-hidden="true" className="hidden md:block absolute inset-0 pointer-events-none z-[2]">
           {[
-            { pos: 'left-[8%] top-[32%]', size: 14, color: 'text-pink-400', delay: '0s' },
-            { pos: 'left-[22%] top-[78%]', size: 10, color: 'text-purple-400', delay: '1.1s' },
-            { pos: 'right-[10%] top-[30%]', size: 12, color: 'text-purple-400', delay: '.6s' },
-            { pos: 'right-[24%] top-[86%]', size: 16, color: 'text-pink-400', delay: '1.8s' },
-            { pos: 'left-[46%] top-[20%]', size: 9, color: 'text-pink-300', delay: '2.4s' },
+            { pos: 'left-[8%] top-[32%]', size: 14, color: 'text-[#c8316f]/60', delay: '0s' },
+            { pos: 'left-[22%] top-[78%]', size: 10, color: 'text-[#c8316f]/60', delay: '1.1s' },
+            { pos: 'right-[10%] top-[30%]', size: 12, color: 'text-[#c8316f]/60', delay: '.6s' },
+            { pos: 'right-[24%] top-[86%]', size: 16, color: 'text-[#c8316f]/60', delay: '1.8s' },
+            { pos: 'left-[46%] top-[20%]', size: 9, color: 'text-[#c8316f]/60', delay: '2.4s' },
           ].map((s, i) => (
             <Sparkle key={i} size={s.size} fill="currentColor" strokeWidth={0} className={`h-twinkle absolute ${s.pos} ${s.color}`} style={{ animationDelay: s.delay }} />
           ))}
@@ -2021,7 +2009,7 @@ const designs = [
                         fill="currentColor"
                         strokeWidth={0}
                         className={`mx-[3vw] w-[7vw] h-[7vw] xl:w-[5vw] xl:h-[5vw] shrink-0 ${
-                          i % 2 === 0 ? 'text-purple-500' : 'text-pink-500'
+                          i % 2 === 0 ? 'text-[#c8316f]' : 'text-[#c8316f]'
                         }`}
                       />
                     </span>
@@ -2041,7 +2029,7 @@ const designs = [
             <div
               aria-hidden="true"
               className="h-glow absolute left-1/2 bottom-[8%] w-[85%] aspect-square rounded-full blur-3xl -z-10"
-              style={{ background: 'radial-gradient(circle, rgba(168,85,247,.45) 0%, rgba(236,72,153,.30) 45%, transparent 70%)' }}
+              style={{ background: 'radial-gradient(circle, rgba(200,49,111,.45) 0%, rgba(200,49,111,.30) 45%, transparent 70%)' }}
             />
             <div className="h-photo relative w-full h-full">
               <Image
@@ -2067,7 +2055,7 @@ const designs = [
                   isDark ? 'bg-white/10 border-white/10' : 'bg-white/80 border-white'
                 }`}
               >
-                <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 grid place-items-center text-white">
+                <span className="w-9 h-9 rounded-xl bg-[#c8316f] grid place-items-center text-white">
                   <PenTool size={18} />
                 </span>
                 <span className="leading-tight">
@@ -2148,7 +2136,7 @@ const designs = [
               >
                 Web Designer
                 <br />
-                <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">&amp; Developer</span>
+                <span className="text-[#c8316f]">&amp; Developer</span>
               </h2>
 
               <p className="h-up text-base sm:text-[17px] text-gray-500 leading-relaxed" style={{ animationDelay: '0.65s' }}>
@@ -2326,7 +2314,7 @@ const designs = [
         >
           {/* soft color blobs */}
           <div aria-hidden="true" className="ab-blob absolute -left-24 top-24 w-72 h-72 rounded-full blur-3xl opacity-40 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(200,49,111,.35), transparent 70%)' }} />
-          <div aria-hidden="true" className="ab-blob absolute right-0 bottom-10 w-80 h-80 rounded-full blur-3xl opacity-30 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(147,51,234,.35), transparent 70%)', animationDelay: '-4s' }} />
+          <div aria-hidden="true" className="ab-blob absolute right-0 bottom-10 w-80 h-80 rounded-full blur-3xl opacity-30 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(200,49,111,.35), transparent 70%)', animationDelay: '-4s' }} />
 
           {/* ---------- LEFT: STORY ---------- */}
           <div className="relative min-w-0 pt-16 md:pt-24 lg:pb-24">
@@ -2445,10 +2433,10 @@ const designs = [
             {/* twinkling sparkles around the photo */}
             <div aria-hidden="true" className="hidden sm:block absolute inset-0 pointer-events-none">
               {[
-                { pos: 'left-[18%] top-[30%]', size: 14, color: 'text-pink-400', delay: '0s' },
-                { pos: 'right-[16%] top-[24%]', size: 10, color: 'text-purple-400', delay: '1.2s' },
-                { pos: 'left-[12%] top-[60%]', size: 9, color: 'text-purple-400', delay: '2s' },
-                { pos: 'right-[10%] top-[55%]', size: 13, color: 'text-pink-400', delay: '.7s' },
+                { pos: 'left-[18%] top-[30%]', size: 14, color: 'text-[#c8316f]/60', delay: '0s' },
+                { pos: 'right-[16%] top-[24%]', size: 10, color: 'text-[#c8316f]/60', delay: '1.2s' },
+                { pos: 'left-[12%] top-[60%]', size: 9, color: 'text-[#c8316f]/60', delay: '2s' },
+                { pos: 'right-[10%] top-[55%]', size: 13, color: 'text-[#c8316f]/60', delay: '.7s' },
               ].map((sp, i) => (
                 <Sparkle key={i} size={sp.size} fill="currentColor" strokeWidth={0} className={`h-twinkle absolute ${sp.pos} ${sp.color}`} style={{ animationDelay: sp.delay }} />
               ))}
@@ -2521,7 +2509,7 @@ const designs = [
             <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[0.92] text-gray-900">
               Selected
               <br />
-              <span className="h-shimmer text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600">work</span>
+              <span className="text-[#c8316f]">work</span>
             </h2>
           </Reveal>
           <Reveal direction="right" delay={150} className="md:col-span-5">
@@ -2546,16 +2534,16 @@ const designs = [
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => switchWorkTab(tab.key)}
-                className={`relative shrink-0 whitespace-nowrap pb-4 text-xl sm:text-3xl font-bold tracking-tight transition-colors duration-200 focus-visible:outline-none focus-visible:text-purple-600 ${
+                className={`relative shrink-0 whitespace-nowrap pb-4 text-xl sm:text-3xl font-bold tracking-tight transition-colors duration-200 focus-visible:outline-none focus-visible:text-[#c8316f] ${
                   isActive ? 'text-gray-900' : 'text-gray-300 hover:text-gray-500'
                 }`}
               >
                 {tab.label}
-                <sup className={`work-tab-count ml-1 text-sm font-semibold tabular-nums ${isActive ? 'text-purple-600' : 'text-gray-300'}`}>
+                <sup className={`work-tab-count ml-1 text-sm font-semibold tabular-nums ${isActive ? 'text-[#c8316f]' : 'text-gray-300'}`}>
                   {tab.count}
                 </sup>
                 <span
-                  className={`absolute left-0 right-0 bottom-0 h-[3px] rounded-full bg-gradient-to-r from-purple-600 to-pink-500 origin-left transition-transform duration-500 ease-out ${
+                  className={`absolute left-0 right-0 bottom-0 h-[3px] rounded-full bg-[#c8316f] origin-left transition-transform duration-500 ease-out ${
                     isActive ? 'scale-x-100' : 'scale-x-0'
                   }`}
                 />
@@ -2580,12 +2568,12 @@ const designs = [
                           setActiveProjectGroup(group)
                           setActiveCategory('All')
                         }}
-                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                          isActive ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
+                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/40 ${
+                          isActive ? 'bg-[#c8316f]/10 text-[#c8316f] font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
                         } transition-all duration-300`}
                       >
                         <span>{projectGroupLabel[group]}</span>
-                        <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
+                        <span className={`text-sm tabular-nums ${isActive ? 'text-[#c8316f]/60' : 'text-gray-400'}`}>{count}</span>
                       </button>
                     </li>
                   )
@@ -2606,7 +2594,7 @@ const designs = [
                         <button
                           key={type}
                           onClick={() => setActiveCategory(type)}
-                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/40 ${
                             isActive ? 'bg-gray-900 text-white scale-105 shadow-md' : 'text-gray-500 hover:bg-gray-100'
                           } transition-all duration-300 active:scale-95`}
                         >
@@ -2627,7 +2615,7 @@ const designs = [
                       href={featuredProject.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group xl:col-span-7 block relative aspect-[16/10] rounded-3xl overflow-hidden bg-purple-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                      className="group xl:col-span-7 block relative aspect-[16/10] rounded-3xl overflow-hidden bg-[#c8316f]/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c8316f]/40"
                     >
                       <Image
                         src={featuredProject.image}
@@ -2639,7 +2627,7 @@ const designs = [
                     </a>
 
                     <div className="xl:col-span-5">
-                      <p className="text-sm font-semibold text-purple-600 mb-3">
+                      <p className="text-sm font-semibold text-[#c8316f] mb-3">
                         Featured{note ? `, ${note.toLowerCase()}` : ''}
                       </p>
                       <h3 className="text-4xl font-extrabold tracking-tight text-gray-900 mb-5">{name}</h3>
@@ -2668,7 +2656,7 @@ const designs = [
                           href={featuredProject.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-purple-700 transition-colors duration-200"
+                          className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-[#c8316f] transition-colors duration-200"
                         >
                           Visit live site
                           <ArrowUpRight size={16} />
@@ -2702,7 +2690,7 @@ const designs = [
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Open ${name}`}
-                        className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-purple-50 shadow-sm transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_24px_50px_-20px_rgba(124,58,237,.45)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                        className="block relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#c8316f]/10 shadow-sm transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_24px_50px_-20px_rgba(200,49,111,.45)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c8316f]/40"
                       >
                         <Image
                           src={project.image}
@@ -2720,7 +2708,7 @@ const designs = [
 
                       <div className="mt-5 flex items-baseline justify-between gap-4">
                         <h3 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
-                          <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-purple-600 transition-colors">
+                          <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-[#c8316f] transition-colors">
                             {name}
                           </a>
                         </h3>
@@ -2762,12 +2750,12 @@ const designs = [
                           setActiveDesignCategory(category)
                           setActiveSubFolder(null)
                         }}
-                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
-                          isActive ? 'bg-purple-50 text-purple-700 font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
+                        className={`w-full flex items-baseline justify-between gap-6 whitespace-nowrap text-left px-4 py-2.5 rounded-xl transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/40 ${
+                          isActive ? 'bg-[#c8316f]/10 text-[#c8316f] font-semibold lg:translate-x-1.5' : 'text-gray-600 hover:bg-gray-50 lg:hover:translate-x-1'
                         } transition-all duration-300`}
                       >
                         <span>{designCategoryLabel[category] ?? category}</span>
-                        <span className={`text-sm tabular-nums ${isActive ? 'text-purple-400' : 'text-gray-400'}`}>{count}</span>
+                        <span className={`text-sm tabular-nums ${isActive ? 'text-[#c8316f]/60' : 'text-gray-400'}`}>{count}</span>
                       </button>
                     </li>
                   )
@@ -2788,7 +2776,7 @@ const designs = [
                         <button
                           key={set ?? 'all'}
                           onClick={() => setActiveSubFolder(set)}
-                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 ${
+                          className={`px-3 py-1.5 rounded-full text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8316f]/40 ${
                             isActive ? 'bg-gray-900 text-white scale-105 shadow-md' : 'text-gray-500 hover:bg-gray-100'
                           } transition-all duration-300 active:scale-95`}
                         >
@@ -2808,7 +2796,7 @@ const designs = [
                     onClick={() => setLightboxIndex(index)}
                     aria-label={`View ${designCategoryLabel[currentDesignCategory] ?? currentDesignCategory} design ${index + 1}`}
                     style={{ animationDelay: `${Math.min(index, 14) * 55}ms` }}
-                    className="work-card group relative mb-4 block w-full break-inside-avoid rounded-xl overflow-hidden bg-gray-100 transition-shadow duration-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                    className="work-card group relative mb-4 block w-full break-inside-avoid rounded-xl overflow-hidden bg-gray-100 transition-shadow duration-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c8316f]/40"
                   >
                     <Image
                       src={design.image}
@@ -2835,7 +2823,7 @@ const designs = [
           <div key="videos" className="work-swap">
             {videos.length === 0 ? (
               <div className="rounded-3xl border-2 border-dashed border-gray-200 px-8 py-16 md:py-20 text-center">
-                <Film size={32} className="mx-auto text-purple-300 mb-4" />
+                <Film size={32} className="mx-auto text-[#c8316f]/60 mb-4" />
                 <p className="text-xl font-bold text-gray-900">No video edits posted yet</p>
                 <p className="text-gray-500 mt-2">Reels, ads and short-form edits will show up here soon.</p>
               </div>
@@ -2849,7 +2837,7 @@ const designs = [
                         type="button"
                         onClick={() => setSelectedVideo(video)}
                         aria-label={`Play ${video.title}`}
-                        className="block w-full relative aspect-video rounded-2xl overflow-hidden bg-gray-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300"
+                        className="block w-full relative aspect-video rounded-2xl overflow-hidden bg-gray-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c8316f]/40"
                       >
                         {thumb ? (
                           // Plain <img> so remote thumbnails (YouTube) work without extra Next.js config
@@ -2894,16 +2882,16 @@ const designs = [
             <Sparkle
               size={18}
               fill="currentColor"
-              className="hidden md:block absolute -top-2 left-[28%] text-pink-300 animate-float"
+              className="hidden md:block absolute -top-2 left-[28%] text-[#c8316f]/60 animate-float"
             />
             <Sparkle
               size={14}
               fill="currentColor"
-              className="hidden md:block absolute top-4 right-[28%] text-purple-300 animate-float"
+              className="hidden md:block absolute top-4 right-[28%] text-[#c8316f]/60 animate-float"
               style={{ animationDelay: '1s' }}
             />
 
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#c8316f] bg-[#c8316f]/10 px-3 py-1 rounded-full">
               <Briefcase size={12} />
               Experience
             </span>
@@ -2922,12 +2910,12 @@ const designs = [
           <div className="max-w-4xl mx-auto">
 
             {/* ================= MALAMA ================= */}
-            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm">
-                <span className="absolute inset-0 rounded-full bg-purple-400 animate-ping opacity-75" />
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-[#c8316f]/25">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-[#c8316f] border-4 border-white shadow-sm">
+                <span className="absolute inset-0 rounded-full bg-[#c8316f]/50 animate-ping opacity-75" />
               </div>
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#c8316f]/25 transition-all duration-300">
 
                 <div className="flex flex-col sm:flex-row gap-5">
 
@@ -2949,7 +2937,7 @@ const designs = [
                           Web Designer & Developer
                         </h3>
 
-                        <p className="text-purple-600 font-semibold mt-1">
+                        <p className="text-[#c8316f] font-semibold mt-1">
                           Malama Co. · Part-time
                         </p>
                       </div>
@@ -3021,7 +3009,7 @@ const designs = [
                         <span
                           key={skill}
                           style={{ animationDelay: `${i * 60}ms` }}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
+                          className="px-3 py-1 bg-[#c8316f]/10 text-[#c8316f] text-xs font-semibold rounded-full hover:bg-[#c8316f]/15 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -3035,10 +3023,10 @@ const designs = [
 
 
             {/* ================= OUTLIER ================= */}
-            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-[#c8316f]/25">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-[#c8316f] border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#c8316f]/25 transition-all duration-300">
 
                 <div className="flex flex-col sm:flex-row gap-5">
 
@@ -3060,7 +3048,7 @@ const designs = [
                           AI Training Data Contributor
                         </h3>
 
-                        <p className="text-pink-500 font-semibold mt-1">
+                        <p className="text-[#c8316f] font-semibold mt-1">
                           Outlier · Part-time
                         </p>
                       </div>
@@ -3114,7 +3102,7 @@ const designs = [
                         <span
                           key={skill}
                           style={{ animationDelay: `${i * 60}ms` }}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200 animate-fade-in"
+                          className="px-3 py-1 bg-[#c8316f]/10 text-[#c8316f] text-xs font-semibold rounded-full hover:bg-[#c8316f]/15 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -3128,10 +3116,10 @@ const designs = [
 
 
             {/* ================= TORRES TECHNOLOGY ================= */}
-            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-purple-200">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
+            <Reveal direction="left" className="relative pl-8 md:pl-12 pb-10 border-l-2 border-[#c8316f]/25">
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-[#c8316f] border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#c8316f]/25 transition-all duration-300">
 
                 <div className="flex flex-col sm:flex-row gap-5">
 
@@ -3153,7 +3141,7 @@ const designs = [
                           Front-End Developer / IT Technical Support
                         </h3>
 
-                        <p className="text-purple-600 font-semibold mt-1">
+                        <p className="text-[#c8316f] font-semibold mt-1">
                           Torres Technology Center Corp. · Internship
                         </p>
                       </div>
@@ -3207,7 +3195,7 @@ const designs = [
                       </li>
                     </ul>
 
-                    <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:bg-purple-50/50 transition-colors duration-300">
+                    <div className="mt-6 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-4 hover:bg-[#c8316f]/10 transition-colors duration-300">
                       <div className="w-12 h-12 shrink-0 rounded-lg bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                         <Image
                           src="/ojt-certificate.png"
@@ -3243,7 +3231,7 @@ const designs = [
                         <span
                           key={skill}
                           style={{ animationDelay: `${i * 60}ms` }}
-                          className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full hover:bg-purple-100 hover:scale-105 transition-all duration-200 animate-fade-in"
+                          className="px-3 py-1 bg-[#c8316f]/10 text-[#c8316f] text-xs font-semibold rounded-full hover:bg-[#c8316f]/15 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -3258,9 +3246,9 @@ const designs = [
 
             {/* ================= CROWDGEN PRO ================= */}
             <Reveal direction="left" className="relative pl-8 md:pl-12 border-l-2 border-transparent">
-              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-pink-500 border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
+              <div className="absolute -left-[10px] top-0 w-5 h-5 rounded-full bg-[#c8316f] border-4 border-white shadow-sm hover:scale-125 transition-transform duration-300" />
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-purple-200 transition-all duration-300">
+              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#c8316f]/25 transition-all duration-300">
 
                 <div className="flex flex-col sm:flex-row gap-5">
 
@@ -3282,7 +3270,7 @@ const designs = [
                           Data Annotator / Data Labelling
                         </h3>
 
-                        <p className="text-pink-500 font-semibold mt-1">
+                        <p className="text-[#c8316f] font-semibold mt-1">
                           CrowdGen Pro · Part-time
                         </p>
                       </div>
@@ -3324,7 +3312,7 @@ const designs = [
                         <span
                           key={skill}
                           style={{ animationDelay: `${i * 60}ms` }}
-                          className="px-3 py-1 bg-pink-50 text-pink-600 text-xs font-semibold rounded-full hover:bg-pink-100 hover:scale-105 transition-all duration-200 animate-fade-in"
+                          className="px-3 py-1 bg-[#c8316f]/10 text-[#c8316f] text-xs font-semibold rounded-full hover:bg-[#c8316f]/15 hover:scale-105 transition-all duration-200 animate-fade-in"
                         >
                           {skill}
                         </span>
@@ -3341,24 +3329,24 @@ const designs = [
       </section>
 
       {/* ================= 6. CERTIFICATES SECTION ================= */}
-      <section id="certificates" className={`dm py-20 md:py-32 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-b from-[#141414] via-[#1a1116] to-[#111]' : 'bg-gradient-to-b from-gray-50 via-pink-50/30 to-white'}`}>
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-100/30 rounded-full blur-3xl -z-0" />
-        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-pink-100/30 rounded-full blur-3xl -z-0" />
+      <section id="certificates" className={`dm py-20 md:py-32 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-gradient-to-b from-[#141414] via-[#1a1116] to-[#111]' : 'bg-[#fbf8f7]'}`}>
+        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-[#c8316f]/10 rounded-full blur-3xl -z-0" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#c8316f]/10 rounded-full blur-3xl -z-0" />
 
         <div className="max-w-6xl mx-auto px-6 relative">
           <Reveal direction="up" className="text-center mb-12 relative">
             <Sparkle
               size={16}
               fill="currentColor"
-              className="hidden md:block absolute -top-1 left-[34%] text-pink-300 animate-float"
+              className="hidden md:block absolute -top-1 left-[34%] text-[#c8316f]/60 animate-float"
             />
             <Star
               size={14}
               fill="currentColor"
-              className="hidden md:block absolute top-3 right-[34%] text-purple-300 animate-[spin_8s_linear_infinite]"
+              className="hidden md:block absolute top-3 right-[34%] text-[#c8316f]/60 animate-[spin_8s_linear_infinite]"
             />
 
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full mb-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#c8316f] bg-[#c8316f]/10 px-3 py-1 rounded-full mb-4">
               <GraduationCap size={12} />
               Achievements
             </span>
@@ -3373,18 +3361,18 @@ const designs = [
               <div
                 key={cert.title}
                 style={{ animationDelay: `${i * 100}ms` }}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-purple-200 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer animate-slide-in-up relative"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 hover:border-[#c8316f]/25 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer animate-slide-in-up relative"
                 onClick={() => setSelectedCert(cert)}
               >
                 {/* Corner ribbon accent */}
                 <div className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-                  <Award size={14} className="text-purple-400 group-hover:text-purple-600 transition-colors" />
+                  <Award size={14} className="text-[#c8316f]/60 group-hover:text-[#c8316f] transition-colors" />
                 </div>
 
                 {/* Certificate BADGE Display */}
                 <div className="aspect-[4/3] w-full relative bg-gray-50 flex items-center justify-center border-b border-gray-100 p-8 overflow-hidden">
                   {/* Soft glow pulse behind the badge */}
-                  <div className="absolute w-24 h-24 rounded-full bg-purple-200/30 blur-2xl animate-glow" />
+                  <div className="absolute w-24 h-24 rounded-full bg-[#c8316f]/10 blur-2xl animate-glow" />
 
                   <div className="relative w-full h-full transform group-hover:scale-110 transition-transform duration-500 animate-float" style={{ animationDelay: `${i * 0.3}s` }}>
                     <Image
@@ -3400,7 +3388,7 @@ const designs = [
                     <div className="absolute -inset-y-8 -left-1/2 w-1/4 bg-white/40 rotate-12 -translate-x-[200%] group-hover:translate-x-[600%] transition-transform duration-[1100ms] ease-out" />
                   </div>
 
-                  <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-[#c8316f]/10 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
                     <span className="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1 scale-90 group-hover:scale-100 transition-transform duration-300">
                       View Certificate <ExternalLink size={12} />
                     </span>
@@ -3411,22 +3399,22 @@ const designs = [
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded group-hover:bg-purple-100 transition-colors duration-300">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-[#c8316f] bg-[#c8316f]/10 px-2 py-0.5 rounded group-hover:bg-[#c8316f]/15 transition-colors duration-300">
                         {cert.issuer}
                       </span>
                       <span className="text-[11px] text-gray-400 font-medium">{cert.issueDate}</span>
                     </div>
-                    <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-purple-600 transition-colors">
+                    <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-[#c8316f] transition-colors">
                       {cert.title}
                     </h3>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-purple-600 transition-colors">
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-50 text-xs font-semibold text-gray-500 group-hover:text-[#c8316f] transition-colors">
                     <span className="inline-flex items-center gap-1">
                       Enlarge Document
                       <ExternalLink size={10} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
                     </span>
-                    <Award size={14} className="text-gray-400 group-hover:text-purple-500 group-hover:scale-110 transition-all duration-300" />
+                    <Award size={14} className="text-gray-400 group-hover:text-[#c8316f] group-hover:scale-110 transition-all duration-300" />
                   </div>
                 </div>
               </div>
@@ -3553,7 +3541,7 @@ const designs = [
               <div>
                 <h3 className="text-xl font-bold text-gray-900 inline-flex items-center gap-2">
                   {selectedCert.title}
-                  <Award size={16} className="text-purple-400 animate-pulse" />
+                  <Award size={16} className="text-[#c8316f]/60 animate-pulse" />
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">Issued by {selectedCert.issuer} • {selectedCert.issueDate}</p>
               </div>
@@ -3586,7 +3574,7 @@ const designs = [
               <a
                 href={selectedCert.image}
                 download
-                className="px-5 py-2 text-sm bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 hover:scale-105 transition-all duration-300 flex items-center gap-1.5"
+                className="px-5 py-2 text-sm bg-[#c8316f] text-white rounded-xl font-semibold hover:bg-[#c8316f] hover:scale-105 transition-all duration-300 flex items-center gap-1.5"
               >
                 <Download size={16} />
                 Download
@@ -3597,7 +3585,7 @@ const designs = [
       )}
 
       {/* Contact Banner */}
-      <Reveal as="section" direction="up" className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 py-20 md:py-28">
+      <Reveal as="section" direction="up" className="relative overflow-hidden bg-[#c8316f] py-20 md:py-28">
         {/* Floating decorative sparkles, hearts, and stars */}
         <Heart size={22} fill="currentColor" className="absolute top-8 left-[8%] text-white/20 animate-float" style={{ animationDelay: '0.2s' }} />
         <Sparkle size={18} fill="currentColor" className="absolute top-16 left-[18%] text-white/25 animate-float" style={{ animationDelay: '1.1s' }} />
@@ -3615,7 +3603,7 @@ const designs = [
         <div className="max-w-4xl mx-auto px-6 text-center space-y-6 relative">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight inline-flex items-center gap-3 flex-wrap justify-center">
             Let&apos;s Create Something Amazing
-            <Heart size={28} fill="currentColor" className="text-pink-200 animate-pulse" />
+            <Heart size={28} fill="currentColor" className="text-white/80 animate-pulse" />
           </h2>
           <p className="text-lg text-white/90 max-w-xl mx-auto">
             I&apos;m always open to discussing web development initiatives, UI/UX design opportunities, or collaborative projects.
@@ -3625,11 +3613,11 @@ const designs = [
             <span className="absolute inset-0 rounded-full bg-white/40 blur-md animate-glow" />
             <a
               href="mailto:aicellerosales08@gmail.com?subject=Project%20Inquiry%20-%20UI/UX%20%26%20Frontend&body=Hi%20Aicelle,%0D%0A%0D%0AI%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20project%20with%20you."
-              className="relative px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-90 transition-all duration-300 inline-flex items-center gap-2 shadow-lg group"
+              className="relative px-8 py-4 bg-white text-[#c8316f] rounded-full font-bold hover:bg-gray-50 hover:scale-105 active:scale-90 transition-all duration-300 inline-flex items-center gap-2 shadow-lg group"
             >
               Get In Touch
               <Mail size={18} className="group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300" />
-              <Sparkle size={14} fill="currentColor" className="absolute -top-1 -right-1 text-pink-400 animate-pulse" />
+              <Sparkle size={14} fill="currentColor" className="absolute -top-1 -right-1 text-[#c8316f]/60 animate-pulse" />
             </a>
           </div>
         </div>
@@ -3637,18 +3625,18 @@ const designs = [
 
       {/* Footer */}
       <footer className="relative overflow-hidden bg-gray-900 text-white py-12 border-t border-gray-800">
-        <Sparkle size={16} fill="currentColor" className="absolute top-6 left-[6%] text-purple-400/40 animate-float" style={{ animationDelay: '0.3s' }} />
-        <Star size={14} fill="currentColor" className="absolute top-10 left-[20%] text-pink-400/30 animate-[spin_8s_linear_infinite]" />
-        <Heart size={14} fill="currentColor" className="absolute bottom-10 left-[14%] text-pink-400/30 animate-float" style={{ animationDelay: '1.2s' }} />
-        <Sparkles size={20} className="absolute top-8 right-[8%] text-purple-400/40 animate-float" style={{ animationDelay: '0.8s' }} />
-        <Star size={12} fill="currentColor" className="absolute bottom-14 right-[18%] text-pink-400/30 animate-[spin_10s_linear_infinite]" />
-        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute bottom-6 right-[35%] text-purple-400/30 animate-float" style={{ animationDelay: '1.8s' }} />
-        <Heart size={10} fill="currentColor" className="hidden md:block absolute top-1/2 left-[45%] text-pink-400/20 animate-float" style={{ animationDelay: '2.4s' }} />
+        <Sparkle size={16} fill="currentColor" className="absolute top-6 left-[6%] text-[#c8316f]/40 animate-float" style={{ animationDelay: '0.3s' }} />
+        <Star size={14} fill="currentColor" className="absolute top-10 left-[20%] text-[#c8316f]/30 animate-[spin_8s_linear_infinite]" />
+        <Heart size={14} fill="currentColor" className="absolute bottom-10 left-[14%] text-[#c8316f]/30 animate-float" style={{ animationDelay: '1.2s' }} />
+        <Sparkles size={20} className="absolute top-8 right-[8%] text-[#c8316f]/40 animate-float" style={{ animationDelay: '0.8s' }} />
+        <Star size={12} fill="currentColor" className="absolute bottom-14 right-[18%] text-[#c8316f]/30 animate-[spin_10s_linear_infinite]" />
+        <Sparkle size={12} fill="currentColor" className="hidden md:block absolute bottom-6 right-[35%] text-[#c8316f]/30 animate-float" style={{ animationDelay: '1.8s' }} />
+        <Heart size={10} fill="currentColor" className="hidden md:block absolute top-1/2 left-[45%] text-[#c8316f]/20 animate-float" style={{ animationDelay: '2.4s' }} />
 
         <div className="max-w-6xl mx-auto px-6 relative">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <p className="font-bold text-lg mb-1 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 inline-block">
+              <p className="font-bold text-lg mb-1 text-[#c8316f] inline-block">
                 Aicelle Rosales
               </p>
               <p className="text-gray-400 text-sm">UI/UX · Web Dev · Creative Design</p>
@@ -3678,12 +3666,12 @@ const designs = [
                       key={social.name}
                       type="button"
                       onClick={handleCopyDiscord}
-                      className="relative p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      className="relative p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-[#c8316f] hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={copiedDiscord ? 'Copied!' : `Discord: ${DISCORD_USERNAME} (click to copy)`}
                     >
                       {copiedDiscord ? <Check size={20} className="text-green-400" /> : social.icon}
                       {copiedDiscord && (
-                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-purple-600 text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
+                        <span className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#c8316f] text-white text-[10px] font-semibold px-2 py-1 rounded-md animate-fade-in">
                           Copied!
                         </span>
                       )}
@@ -3694,7 +3682,7 @@ const designs = [
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-purple-600 hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
+                      className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-white hover:bg-[#c8316f] hover:-translate-y-1 active:scale-90 transition-all duration-300 flex items-center justify-center"
                       title={social.name}
                     >
                       {social.icon}
@@ -3707,7 +3695,7 @@ const designs = [
           <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-xs space-y-1">
             <p>© {new Date().getFullYear()} Aicelle Rosales. All rights reserved.</p>
             <p className="inline-flex items-center gap-1 justify-center">
-              Designed with <Heart size={11} fill="currentColor" className="text-pink-400 animate-pulse" /> in the Philippines
+              Designed with <Heart size={11} fill="currentColor" className="text-[#c8316f]/60 animate-pulse" /> in the Philippines
             </p>
           </div>
         </div>
