@@ -74,6 +74,9 @@ import {
   Play,
   Sun,
   Moon,
+  ArrowRight,
+  Music,
+  VolumeX,
 } from 'lucide-react'
 
 const pacifico = Pacifico({ weight: '400', subsets: ['latin'] })
@@ -655,6 +658,219 @@ function ChatWidget() {
         )}
       </button>
     </div>
+  )
+}
+
+// ================= WELCOME GATE + BACKGROUND MUSIC =================
+// 1. Put your song inside /public/music/ (e.g. /public/music/bg-music.mp3)
+// 2. Change BG_MUSIC_SRC below if you use a different file name.
+const BG_MUSIC_SRC = '/music/bg-music.mp3'
+const BG_MUSIC_VOLUME = 0.35 // 0 = silent, 1 = full volume
+
+function WelcomeGate() {
+  const [stage, setStage] = useState<'open' | 'closing' | 'closed'>('open')
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const fadeFrame = useRef<number | null>(null)
+
+  // Lock page scroll while the welcome popup is showing
+  useEffect(() => {
+    if (stage === 'closed') {
+      document.body.style.overflow = ''
+      return
+    }
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [stage])
+
+  // Smoothly fade the music volume
+  const fadeVolume = (target: number, duration = 1200, onDone?: () => void) => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (fadeFrame.current) cancelAnimationFrame(fadeFrame.current)
+    const from = audio.volume
+    let start: number | null = null
+    const step = (t: number) => {
+      if (start === null) start = t
+      const p = Math.min((t - start) / duration, 1)
+      audio.volume = Math.min(1, Math.max(0, from + (target - from) * p))
+      if (p < 1) fadeFrame.current = requestAnimationFrame(step)
+      else onDone?.()
+    }
+    fadeFrame.current = requestAnimationFrame(step)
+  }
+
+  const playMusic = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.volume = 0
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true)
+        fadeVolume(BG_MUSIC_VOLUME, 1800)
+      })
+      .catch(() => setIsPlaying(false)) // file missing or blocked — site still works
+  }
+
+  const pauseMusic = () => {
+    fadeVolume(0, 500, () => audioRef.current?.pause())
+    setIsPlaying(false)
+  }
+
+  const handleEnter = () => {
+    if (stage !== 'open') return
+    playMusic()
+    window.scrollTo({ top: 0 })
+    setStage('closing')
+    setTimeout(() => setStage('closed'), 750)
+  }
+
+  // Press Enter to go in, too
+  useEffect(() => {
+    if (stage !== 'open') return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') handleEnter()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage])
+
+  return (
+    <>
+      <audio ref={audioRef} src={BG_MUSIC_SRC} loop preload="auto" />
+
+      <style>{`
+        @keyframes gate-bg-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes gate-card-in { from { opacity: 0; transform: translateY(24px) scale(.96); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+        @keyframes gate-item-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+        @keyframes gate-out { to { opacity: 0; transform: scale(1.04); filter: blur(8px); } }
+        @keyframes gate-bg-out { to { opacity: 0; backdrop-filter: blur(0); } }
+        @keyframes gate-shine { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
+        @keyframes gate-ring { 0% { box-shadow: 0 0 0 0 rgba(236,72,153,.35); } 70% { box-shadow: 0 0 0 14px rgba(236,72,153,0); } 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); } }
+        @keyframes eq { 0%,100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+        .gate-bg { animation: gate-bg-in .6s ease both; }
+        .gate-bg.closing { animation: gate-bg-out .75s ease forwards; }
+        .gate-card { animation: gate-card-in .9s cubic-bezier(.2,.7,.2,1) .15s both; }
+        .gate-card.closing { animation: gate-out .6s cubic-bezier(.4,0,.2,1) forwards; }
+        .gate-item { animation: gate-item-in .8s cubic-bezier(.2,.7,.2,1) both; }
+        .gate-btn:hover .gate-btn-shine { animation: gate-shine .9s ease; }
+        .gate-btn { animation: gate-ring 2.4s ease-out 1.6s infinite; }
+        .eq-bar { transform-origin: bottom; animation: eq .9s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .gate-bg, .gate-card, .gate-item, .gate-btn, .eq-bar { animation: none !important; }
+        }
+      `}</style>
+
+      {/* ---------- WELCOME POPUP ---------- */}
+      {stage !== 'closed' && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="gate-title"
+          className={`gate-bg ${stage === 'closing' ? 'closing' : ''} fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/45 backdrop-blur-[6px]`}
+        >
+          <div
+            className={`gate-card ${stage === 'closing' ? 'closing' : ''} relative w-full max-w-[640px] overflow-hidden rounded-[28px] border border-white/10 bg-[#151515]/90 px-7 sm:px-14 py-12 sm:py-14 text-center text-white shadow-[0_40px_120px_-20px_rgba(0,0,0,.7)]`}
+          >
+            {/* soft glow + faint grid inside the card */}
+            <div
+              aria-hidden="true"
+              className="absolute -top-32 left-1/2 -translate-x-1/2 w-[420px] h-[260px] rounded-full blur-3xl opacity-40"
+              style={{ background: 'radial-gradient(circle, rgba(200,49,111,.55), rgba(147,51,234,.25) 55%, transparent 75%)' }}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 opacity-[0.35] pointer-events-none"
+              style={{
+                backgroundImage:
+                  'linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px)',
+                backgroundSize: '32px 32px',
+                maskImage: 'radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%)',
+                WebkitMaskImage: 'radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%)',
+              }}
+            />
+            <Sparkle aria-hidden="true" size={14} fill="currentColor" strokeWidth={0} className="absolute top-7 left-8 text-pink-400/70 animate-float" />
+            <Sparkle aria-hidden="true" size={10} fill="currentColor" strokeWidth={0} className="absolute bottom-10 right-10 text-purple-400/70 animate-float" style={{ animationDelay: '1s' }} />
+
+            <div className="relative">
+              {/* Logo */}
+              <p className={`gate-item ${pacifico.className} text-3xl sm:text-[34px] leading-none`} style={{ animationDelay: '.35s' }}>
+                Aicelle
+              </p>
+              <p
+                className="gate-item mt-3 flex items-center justify-center gap-3 text-[10px] sm:text-[11px] font-medium tracking-[0.22em] text-white/60"
+                style={{ animationDelay: '.45s' }}
+              >
+                <span>AICELLE ROSALES</span>
+                <span className="w-px h-3 bg-white/30" />
+                <span>WEB DESIGNER &amp; DEVELOPER</span>
+              </p>
+
+              {/* Headline */}
+              <h2 id="gate-title" className="mt-9 font-extrabold tracking-tight leading-[1.05] text-[38px] sm:text-[52px]">
+                <span className="gate-item block" style={{ animationDelay: '.6s' }}>
+                  A little creativity.
+                </span>
+                <span className="gate-item block text-[#bdbdbd]" style={{ animationDelay: '.75s' }}>
+                  A lot of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e0538d] to-[#c8316f]">purpose.</span>
+                </span>
+              </h2>
+
+              <p className="gate-item mt-6 text-sm sm:text-[15px] text-white/65 leading-relaxed max-w-sm mx-auto" style={{ animationDelay: '.9s' }}>
+                Welcome to my space for design, development, and everything creative.
+              </p>
+
+              {/* Enter button */}
+              <div className="gate-item mt-10" style={{ animationDelay: '1.05s' }}>
+                <button
+                  type="button"
+                  onClick={handleEnter}
+                  autoFocus
+                  className="gate-btn group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full border border-white/35 px-12 sm:px-20 py-4 text-sm sm:text-[15px] font-medium text-white transition-all duration-300 hover:bg-white hover:text-gray-900 hover:border-white focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#151515] active:scale-[0.97]"
+                >
+                  <span aria-hidden="true" className="gate-btn-shine absolute inset-y-0 left-0 w-1/3 bg-white/25 -translate-x-[120%] skew-x-[-20deg]" />
+                  <span className="relative">Explore My Portfolio</span>
+                  <ArrowRight size={16} className="relative transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+                <p className="mt-4 inline-flex items-center gap-1.5 text-[11px] text-white/45">
+                  <Music size={12} /> Best experienced with sound on
+                </p>
+              </div>
+
+              <p className="gate-item mt-9 text-[9px] font-semibold tracking-[0.25em] text-white/35" style={{ animationDelay: '1.2s' }}>
+                DESIGNED WITH INTENTION. BUILT WITH CARE.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------- MUSIC TOGGLE (after entering) ---------- */}
+      {stage === 'closed' && (
+        <button
+          type="button"
+          onClick={isPlaying ? pauseMusic : playMusic}
+          aria-label={isPlaying ? 'Pause music' : 'Play music'}
+          title={isPlaying ? 'Pause music' : 'Play music'}
+          className="fixed bottom-6 left-6 z-[60] h-12 pl-4 pr-5 rounded-full bg-[#1c1c1c]/90 backdrop-blur-md border border-white/10 text-white shadow-xl flex items-center gap-2.5 hover:scale-105 active:scale-95 transition-transform duration-200 animate-slide-in-up"
+        >
+          {isPlaying ? (
+            <span aria-hidden="true" className="flex items-end gap-[3px] h-4">
+              {[0, 0.2, 0.4, 0.1].map((d, i) => (
+                <span key={i} className="eq-bar w-[3px] h-full rounded-full bg-gradient-to-t from-purple-400 to-pink-400" style={{ animationDelay: `${d}s` }} />
+              ))}
+            </span>
+          ) : (
+            <VolumeX size={16} aria-hidden="true" />
+          )}
+          <span className="text-xs font-semibold tracking-wide">{isPlaying ? 'Music on' : 'Music off'}</span>
+        </button>
+      )}
+    </>
   )
 }
 
@@ -3094,6 +3310,7 @@ const designs = [
         </div>
       </footer>
 
+      <WelcomeGate />
       <ChatWidget />
     </div>
   )
